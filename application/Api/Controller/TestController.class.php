@@ -1,0 +1,196 @@
+<?php
+// 微信支付JSAPI版本
+// 基于版本 V3
+// By App 2015-1-20
+namespace Api\Controller;
+
+use Think\Controller;
+
+class TestController extends Controller
+{
+    public function __construct()
+    {
+        parent::__construct();
+		header("Content-type: text/html; charset=utf-8");
+    }
+	
+	public function paypal(){
+$post = array (
+  'transaction_subject' => 'WW201712011325299575',
+  'payment_date' => '21:26:40 Nov 30, 2017 PST',
+  'txn_type' => 'express_checkout',
+  'last_name' => 'Lo',
+  'residence_country' => 'HK',
+  'item_name' => 'WW201712011325299575',
+  'payment_gross' => '0.01',
+  'mc_currency' => 'USD',
+  'business' => 'linxiaodong@aizhua.net',
+  'payment_type' => 'instant',
+  'protection_eligibility' => 'Ineligible',
+  'verify_sign' => 'AQzo9Dng62RAzHAAta--mqT4iJ.eA46PUkd6QXUc0YxM4B.1C.MBqMai',
+  'payer_status' => 'unverified',
+  'payer_email' => '17088991@qq.com',
+  'txn_id' => '0HU032821K793991S',
+  'quantity' => '1',
+  'receiver_email' => 'linxiaodong@aizhua.net',
+  'first_name' => 'Yuen Shun',
+  'payer_id' => '5WMZ3CW4KRR64',
+  'receiver_id' => 'PENS9XNPVP6DQ',
+  'item_number' => '',
+  'payment_status' => 'Completed',
+  'payment_fee' => '0.01',
+  'mc_fee' => '0.01',
+  'mc_gross' => '0.01',
+  'custom' => 'WW201712011325299575',
+  'charset' => 'gb2312',
+  'notify_version' => '3.8',
+  'ipn_track_id' => '9d8501c92e448',
+);
+
+echo 'https://ipnpb.paypal.com/cgi-bin/webscr?cmd=_notify-validate&'.http_build_query($post);
+		
+	}
+	
+	public function redis_test(){
+		include_once THINK_PATH.'../../simplewind/Lib/Extend/TPRedis.php';
+		$redis = new \TPRedis(array('host' => C('REDIS_HOST'), 'auth' => C('REDIS_AUTH'), 'prefix' => C('REDIS_PREFIX')));
+		
+		$keys = $redis->keys('*');
+		print_r($keys);
+		$redis->delete('*');
+		print_r($list);
+	}
+	
+	public function im_send(){
+		$g = strval(I('g'));
+		if(!is_numeric($g))$g = '1';
+		include_once THINK_PATH.'../../simplewind/Lib/Extend/TIMServerSdk/TimRestApi.php';
+		$api = \createRestAPI();
+		$ret = $api->group_send_group_msg(false, strval($g), 'test');
+		echo json_format($ret);
+	}
+
+	public function test(){
+		include_once THINK_PATH.'../../simplewind/Lib/Extend/TIMServerSdk/TimRestApi.php';
+		$api = \createRestAPI();
+		
+		//创建群组
+		$ret = $api->group_create_group2('AVChatRoom', strval(0), '', array('group_id' => strval(0)));
+		$list = M('game_room')->select();
+		foreach($list as $v){			
+			$ret = $api->group_create_group2('AVChatRoom', strval($v['id']), '', array('group_id' => strval($v['id'])));
+		}
+		
+		//$ret = $api->group_create_group2('AVChatRoom', strval(2), '', array('group_id' => strval(2)));
+		//$ret = $api->group_create_group2('AVChatRoom', strval(8), '', array('group_id' => strval(8)));
+		//$ret = $api->group_create_group2('AVChatRoom', strval(9), '', array('group_id' => strval(9)));
+		//删除群组
+		//$ret = $api->group_destroy_group(strval(7));
+		//获取群组
+		//$ret = $api->group_get_appid_group_list2(1000, 0, 'Public');
+		//独立模式导入用户
+		//$ret = $api->account_import(strval(17), '', '');
+		//托管模式导入用户
+		$list = M('users')->select();
+		foreach($list as $v){			
+			$ret = $api->register_account('wawaji_'.$v['id'], 3, 'wawaji_'.$v['id']);
+			//$ret = $api->group_add_group_member('0', 'wawaji_'.$v['id'], 1);
+		}
+		//发送消息 
+		//$ret = $api->openim_send_msg(false, 'wawaji_17', '{"type":11,"room_id":1}');
+
+		/*独立模式生成user_sign
+		$filename = THINK_PATH.'../../simplewind/Lib/Extend/TIMServerSdk/TimRestApiConfig.json';
+		$json_config = file_get_contents($filename);
+		$app_config = json_decode($json_config, true);
+		$sdkappid = $app_config["sdkappid"];
+		$identifier = $app_config["identifier"];
+		$private_pem_path = THINK_PATH.'../../simplewind/Lib/Extend/TIMServerSdk/'.$app_config["private_pem_path"];
+		$user_sig = $app_config["user_sig"];
+		if(is_64bit()){
+			if(PATH_SEPARATOR==':'){
+				$signature = realpath(THINK_PATH.'../../simplewind/Lib/Extend/TIMServerSdk/signature/linux-signature64');
+			}else{
+				$signature = realpath(THINK_PATH.'../../simplewind/Lib/Extend/TIMServerSdk/signature/windows-signature64.exe');
+			}			
+		}else{
+			if(PATH_SEPARATOR==':')
+			{
+				$signature = realpath(THINK_PATH.'../../simplewind/Lib/Extend/TIMServerSdk/signature/linux-signature32');
+			}else{
+				$signature = realpath(THINK_PATH.'../../simplewind/Lib/Extend/TIMServerSdk/signature\\windows-signature32.exe');
+			}
+		}
+		$ret = $api->generate_user_sig(strval(17), '36000', $private_pem_path, $signature);*/
+		//$ret = $api->group_send_group_msg(false, strval(1), 'test');
+		echo json_format($ret);
+	}
+	
+	public function umeng(){
+		$androidtoken = trim(I('androidtoken'));
+		$iphonetoken = trim(I('iphonetoken'));
+		$this->umengpush($androidtoken, $iphonetoken, trim(I('title')), trim(I('message')));
+	}
+
+	protected function umengpush($androidtoken, $iphonetoken, $title, $message){
+		require_once(THINK_PATH . '../../simplewind/Lib/Extend/umeng_php_sdk_v1.5/php/src/notification/android/AndroidBroadcast.php');
+		require_once(THINK_PATH . '../../simplewind/Lib/Extend/umeng_php_sdk_v1.5/php/src/notification/android/AndroidFilecast.php');
+		require_once(THINK_PATH . '../../simplewind/Lib/Extend/umeng_php_sdk_v1.5/php/src/notification/android/AndroidGroupcast.php');
+		require_once(THINK_PATH . '../../simplewind/Lib/Extend/umeng_php_sdk_v1.5/php/src/notification/android/AndroidUnicast.php');
+		require_once(THINK_PATH . '../../simplewind/Lib/Extend/umeng_php_sdk_v1.5/php/src/notification/android/AndroidCustomizedcast.php');
+		require_once(THINK_PATH . '../../simplewind/Lib/Extend/umeng_php_sdk_v1.5/php/src/notification/ios/IOSBroadcast.php');
+		require_once(THINK_PATH . '../../simplewind/Lib/Extend/umeng_php_sdk_v1.5/php/src/notification/ios/IOSFilecast.php');
+		require_once(THINK_PATH . '../../simplewind/Lib/Extend/umeng_php_sdk_v1.5/php/src/notification/ios/IOSGroupcast.php');
+		require_once(THINK_PATH . '../../simplewind/Lib/Extend/umeng_php_sdk_v1.5/php/src/notification/ios/IOSUnicast.php');
+		require_once(THINK_PATH . '../../simplewind/Lib/Extend/umeng_php_sdk_v1.5/php/src/notification/ios/IOSCustomizedcast.php');
+		
+		if(!empty($androidtoken)){
+			try {
+				$unicast = new \AndroidUnicast();
+				$unicast->setAppMasterSecret('yftyxfo9mce09rhwt69l3t5uurku1kqc');
+				$unicast->setPredefinedKeyValue("appkey",           '5a1e663ef29d986cf9000160');
+				$unicast->setPredefinedKeyValue("timestamp",        time());
+				// Set your device tokens here
+				$unicast->setPredefinedKeyValue("device_tokens",    $androidtoken); 
+				$unicast->setPredefinedKeyValue("ticker",           $title);
+				$unicast->setPredefinedKeyValue("title",            $title);
+				$unicast->setPredefinedKeyValue("text",             $message);
+				$unicast->setPredefinedKeyValue("after_open",       "go_custom");
+				$unicast->setPredefinedKeyValue("custom",       "go_custom");
+				$unicast->setPredefinedKeyValue('icon', 'small_app_logo');
+				$unicast->setPredefinedKeyValue('largeIcon', 'app_logo');
+				//$unicast-?setPredefinedKeyValue('img', 'http://');					
+				// Set 'production_mode' to 'false' if it's a test device. 
+				// For how to register a test device, please see the developer doc.
+				$unicast->setPredefinedKeyValue("production_mode", "true");
+				// Set extra fields
+				//$unicast->setExtraField("id", $v['id']);
+				//$unicast->setExtraField("order_id", $order_id);
+				$unicast->send();
+			} catch (Exception $e) {
+				//
+			}
+		}
+		if(!empty($iphonetoken)){
+			try {
+				$unicast = new \IOSUnicast();
+				$unicast->setAppMasterSecret('1awu0wjgjxv5w0wfupbpjgivnbwpufrl');
+				$unicast->setPredefinedKeyValue("appkey",           '5a1e45a08f4a9d570c000142');
+				$unicast->setPredefinedKeyValue("timestamp",        time());
+				// Set your device tokens here
+				$unicast->setPredefinedKeyValue("device_tokens",    $iphonetoken); 
+				$unicast->setPredefinedKeyValue("alert", $message);
+				$unicast->setPredefinedKeyValue("badge", 0);
+				$unicast->setPredefinedKeyValue("sound", "chime");
+				// Set 'production_mode' to 'true' if your app is under production mode
+				$unicast->setPredefinedKeyValue("production_mode", "false");
+				// Set customized fields
+				//$unicast->setCustomizedField("id", $v['id']);
+				//$unicast->setCustomizedField("order_id", $order_id);
+				$unicast->send();
+			} catch (Exception $e) {
+				//
+			}
+		}		
+	}
+} 

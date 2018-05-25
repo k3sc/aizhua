@@ -1,0 +1,52 @@
+<admintpl file="header" />
+</head>
+<body>
+<div class="wrap">
+    <ul class="nav nav-tabs">
+        <!--<li ><a href="{:U('Probability/index')}">所有概率</a></li>-->
+        <li ><a href="{:U('Probability/room')}">房间概率模式</a></li>
+        <li ><a href="{:U('Probability/sell')}">用户贩卖模式</a></li>
+        <li class="active"><a href="">用户贩卖模式规则列表</a></li>
+    </ul>
+
+    <table class="table table-hover table-bordered">
+        <tbody>
+        <foreach name="row" item="vo">
+            <tr>
+                <td align="center">
+                    一次性充值 <strong class="text-error">{$vo.money}</strong> 元以上，送 <strong class="text-error">{$vo.zj_count}</strong> 次中奖抓力，每抓 <strong class="text-error">{$vo.count}</strong> 次随机出一次
+                </td>
+
+                <td align="center">
+                    <a class="btn btn-success btn-small edit" href="{:U('Probability/sellmodel_edit',array('id'=>$vo['id']))}">编辑</a>
+                    <a class="btn btn-danger btn-small del" href="{:U('Probability/sellmodel_del',array('id'=>$vo['id']))}">删除</a>
+                </td>
+            </tr>
+        </foreach>
+        <tr>
+            <td>
+                <form id="sellmodel_add_form" action="{:U('Probability/sellmodel_add')}" method="post">
+                    一次性充值 <input type="text" name="money" style="width: 50px;"> 元以上，送 <input type="text" name="zj_count" style="width: 50px;"> 次中奖抓力，每抓 <input type="text" name="count" style="width: 50px;"> 次随机出一次
+                </form>
+            </td>
+            <td>
+                <a href="javascript:;" class="btn btn-default btn-small" id="sellmodel_btn">新增规则</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+</body>
+<script src="__PUBLIC__/js/common.js"></script>
+
+<script>
+    $(function () {
+        $("#sellmodel_btn").click(function () {
+            $("#sellmodel_add_form").submit();
+        });
+    });
+</script>
+
+</html>

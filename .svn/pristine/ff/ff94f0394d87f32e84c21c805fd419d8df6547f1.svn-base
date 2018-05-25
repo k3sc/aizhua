@@ -1,0 +1,48 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a >VIP列表</a></li>
+			<li><a href="{:U('Vip/add')}">VIP添加</a></li>
+		</ul>
+		<form method="post" class="js-ajax-form" action="{:U('Gift/listorders')}">
+
+		
+			<table class="table table-hover table-bordered">
+				<thead>
+					<tr>
+					  
+						<th align="center">ID</th>
+						<th>昵称</th>
+					
+						<th>到期时间</th>
+
+						<th align="center">{:L('ACTIONS')}</th>
+					</tr>
+				</thead>
+				<tbody>
+					<php>$type=array("0"=>"普通礼物","1"=>"可连送礼物");</php>
+					<foreach name="list" item="vo">
+					<tr>
+					
+						<td align="center">{$vo.id}</td>
+						<td>{$vo['user_nicename']}</td>
+
+						<td>{$vo.endtime|date="Y-m-d H:i:s",###}</td>
+
+						<td align="center">	
+							<a href="{:U('Vip/edit',array('uid'=>$vo['uid']))}" >编辑</a>
+
+						</td>
+					</tr>
+					</foreach>
+				</tbody>
+			</table>
+			<div class="pagination">{$page}</div>
+
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

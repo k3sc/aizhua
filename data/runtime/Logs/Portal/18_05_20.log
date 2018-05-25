@@ -1,0 +1,35 @@
+[ 2018-05-20T16:40:32+08:00 ] 119.123.157.64 /index.php?g=Portal&m=AdminPage&a=index&menuid=338
+NOTIC: D方法实例化没找到模型类Common\Model\PostsModel
+
+[ 2018-05-20T16:40:35+08:00 ] 119.123.157.64 /index.php?g=Portal&m=AdminPage&a=edit&id=2
+NOTIC: D方法实例化没找到模型类Common\Model\PostsModel
+
+[ 2018-05-20T16:40:38+08:00 ] 119.123.157.64 /index.php?g=Portal&m=AdminPage&a=index
+NOTIC: D方法实例化没找到模型类Common\Model\PostsModel
+
+[ 2018-05-20T16:41:02+08:00 ] 119.123.157.64 /index.php?g=Portal&m=AdminPage&a=index
+NOTIC: D方法实例化没找到模型类Common\Model\PostsModel
+
+[ 2018-05-20T16:41:09+08:00 ] 119.123.157.64 /index.php?g=Portal&m=AdminPage&a=index
+NOTIC: D方法实例化没找到模型类Common\Model\PostsModel
+
+[ 2018-05-20T16:41:15+08:00 ] 119.123.157.64 /index.php?g=Portal&m=AdminPage&a=index&menuid=338
+NOTIC: D方法实例化没找到模型类Common\Model\PostsModel
+
+[ 2018-05-20T16:41:17+08:00 ] 119.123.157.64 /index.php?g=Portal&m=AdminPage&a=edit&id=2
+NOTIC: D方法实例化没找到模型类Common\Model\PostsModel
+
+[ 2018-05-20T16:41:34+08:00 ] 119.123.157.64 /index.php?g=Portal&m=AdminPage&a=edit_post
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000404s ]
+INFO: Run Behavior\CheckLangBehavior [ RunTime:0.000638s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001315s ]
+SQL: SHOW COLUMNS FROM `cmf_users` [ RunTime:0.0029s ]
+SQL: SELECT * FROM `cmf_users` WHERE ( id=1 ) LIMIT 1   [ RunTime:0.0019s ]
+NOTIC: D方法实例化没找到模型类Common\Model\PostsModel
+SQL: SHOW COLUMNS FROM `cmf_posts` [ RunTime:0.0021s ]
+SQL: SHOW COLUMNS FROM `cmf_terms` [ RunTime:0.0021s ]
+SQL: SHOW COLUMNS FROM `cmf_posts` [ RunTime:0.0021s ]
+SQL: SELECT * FROM `cmf_posts` WHERE `post_title` = '常见问题' LIMIT 1   [ RunTime:0.0018s ]
+SQL: UPDATE `cmf_posts` SET `post_title`='常见问题',`type`='2',`post_keywords`='',`post_excerpt`='',`post_modified`='2016-04-12 18:19:30',`post_status`='1',`post_content`='<p><img src=\"http://imgstore.aizhua.net/ueditor_20180520_5b0134bca8936.jpg\" title=\"poster180520_faq.jpg\" alt=\"poster180520_faq.jpg\"/></p>',`smeta`='{\"template\":\"page\",\"thumb\":\"\"}' WHERE `id` = '2' [ RunTime:0.0027s ]
+

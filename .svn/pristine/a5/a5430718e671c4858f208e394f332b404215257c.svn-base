@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>分享</title>
+		<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+		<link rel="stylesheet" type="text/css" href="common.css"/>
+	</head>
+	<style type="text/css">
+		body{
+			background-image: url(../img/bg0.png);
+			background-size: 100% 100%;
+		}
+		header{
+			background-image: url(../img/bg.png);
+			width: 100%;
+			height: 1rem;
+			text-align: center;
+			font-size: 0.36rem;
+			line-height: 1rem;
+			color: #fff;
+			background-size: 100%;
+		}
+		.b_b{
+			width: 100%;
+			height: 0.4rem;
+			background-image: url(../img/bg1.png);
+			background-size: 100% 100%;
+		}
+		.logo{
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			padding: 0.4rem 0;
+			position: relative;
+		}
+		.logo video{
+			width: 80%;
+		    border-radius: 12px;
+		}
+		.logo button{
+			position: absolute;
+		    background: initial;
+		    outline: none;
+		    border: none;
+		    display: none;
+		}
+		#main{
+			width: 90%;
+			padding:5% 0;
+			margin: 0 auto;
+			background-color: rgba(255,255,255,0.5);
+			border-radius: 8px;
+			font-size: 0.28rem;
+		}
+		#main div{
+			width: 60%;
+			display: flex;
+			justify-content: space-around;
+			align-items: center;
+			padding: 3% 0;
+			margin: 0 auto 2%;
+			background-size: 100% 100%;
+			background-repeat: no-repeat;
+			color: #66c9f2;
+			font-weight: 600;
+		}
+		#main div span:last-of-type{font-size: 0.34rem;}
+		#main  p{
+			color: #666;
+			text-align: center;
+
+		}
+		#main  p b{color: #66c9f2;font-size: 0.36rem;margin:0 1%;}
+		.btn{
+			width: 2.36rem;
+			height: 0.92rem;
+			background-image: url(../img/btn.png);
+			margin: 0 auto;
+			display: block;
+			border: none;
+			outline: none;
+			background-color: initial;
+			background-repeat: no-repeat;
+			    background-size: 100% 100%;
+		}
+		#video1{
+			background-image: url(../img/bann.png);
+			background-size: 100% 100%;
+		}
+		.icon{
+			display: flex;
+		    justify-content: space-around;
+		    margin: 0 auto 3%;
+		    width: 80%;
+		}
+		.icon li{
+			    color: #fff;
+		    background: #ff8dc1;
+		    font-size: 0.48rem;
+		    padding: 1% 0;
+		    border-radius: 6px;
+		        width: 10%;
+		    text-align: center;
+		}
+	</style>
+	<body>
+		<header></header>
+		<p class="b_b"></p>
+		<div class="logo">
+			<!--<img src="../img/logo.png" style="width: 20%;margin-bottom: 3%;border-radius: 100%;"/>-->
+			<video id="video1" src="../img/01.mp4">
+
+            </video>
+            <button onclick="playPause()" class="ctrl"><img src="../img/play.png" style=" width: 50%;"/></button>
+		</div>
+		<button class="btn"></button>
+		<div id="main">
+			<!--<div><span>我的邀请码</span></div>
+			<ul class="icon">
+				<li>f</li>
+				<li>5</li>
+				<li>6</li>
+				<li>4</li>
+				<li>1</li>
+				<li>1</li>
+			</ul>-->
+			<p>现在注册即可获得<b class="register_coin">0</b>游戏币！</p>
+			<p>别忘了输入朋友的邀请码啊！</p>
+			<p>你们双方都可以获得<b class="str">0</b>游戏币奖励噢！</p>
+		</div>
+		<p style="position: relative;font-size: 0.24rem;bottom: 3%;width: 100%;text-align: center;margin: 20% auto 5%;">*本活动时间有限，先到先得，最终解释权归爱抓所有</p>
+	</body>
+</html>
+<script src="jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="dlc.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	//$('.code').text(getUrlParam('code'))
+	if(getUrlParam('code')){
+		var code = getUrlParam('code')
+		$('#main').prepend('<div><span>我的邀请码</span></div><ul class="icon"></ul>')
+		for(i in code.split('')){
+			$('.icon').append('<li>'+code.split('')[i]+'</li>')
+		}
+	}
+	if(getUrlParam('video')){
+		$('body').css('height','initial')
+		$('#video1').attr('src',getUrlParam('video'))
+	}
+	var myVideo=document.getElementById("video1");
+	
+	if(getUrlParam('game_id')){
+		dlc_request('api/room/api',{api_name:'game_link',game_id:getUrlParam('game_id')},function(res){
+			console.log(res)
+			$('body').css('height','initial')
+			$('#video1').attr('src',res.data)
+		})
+	}
+	
+function playPause(){ 
+    if (myVideo.paused) {
+        myVideo.play(); 
+        $('.ctrl img').attr('src','../img/pause.png')
+        timer()
+    }else {
+        myVideo.pause(); 
+        $('.ctrl img').attr('src','../img/play.png')
+        clearInterval(timer)
+    }
+} 
+function timer(){
+	var timer=setInterval(function(){
+		if($('#video1')[0].parentNode.currentTime >= $('#video1')[0].parentNode.duration)
+		{$('.ctrl img').attr('src','../img/play.png');clearInterval(timer)};
+		},100)
+}
+$('.btn').click(function(){
+	if (navigator.userAgent.match(/(iPhone|iPod|iPad);?/i)) {
+		window.location ='itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewSoftware?id=1310186987'
+	}else if (navigator.userAgent.match(/android/i)) {
+		window.location =getUrlParam('url')
+	}
+})
+dlc_request('api/usercode/api',{api_name:'get_code_config'},function(res){
+	console.log(res)
+	$('.str').text(res.data.num);
+	$('.register_coin').text(res.data.register_coin)
+})
+</script>

@@ -1,0 +1,63 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li><a href="{:U('guild/index')}">工会列表</a></li>
+			<li class="active"><a href="{:U('guild/add')}">工会添加</a></li>
+		</ul>
+		<form method="post" class="form-horizontal js-ajax-form" action="{:U('guild/add_post')}">
+			<fieldset>
+				<div class="control-group">
+					<label class="control-label">名称:</label>
+					<div class="controls">
+						<input type="text" name="name" id="name">
+						<span class="form-required">*</span>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">会长用户名:</label>
+					<div class="controls">
+						<input type="text" name="manager_name" id="manager_name">
+						<span class="form-required">*</span>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">主播分成比例:</label>
+					<div class="controls">
+						<input type="text" name="anchor_percent" id="anchor_percent">
+						<span class="form-required">*</span>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">会长分成比例:</label>
+					<div class="controls">
+						<input type="text" name="manager_percent" id="manager_percent">
+						<span class="form-required">*</span>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">工会描述:</label>
+					<div class="controls">
+						<textarea name="desc" rows="5" cols="57" style="width: 500px;"></textarea>
+					</div>
+				</div>
+				<!--div class="control-group">
+					<label class="control-label">状态:</label>
+					<div class="controls">
+						<select name="status">
+							<option value="1">显示</option>
+							<option value="0">隐藏</option>
+						</select>
+					</div>
+				</div-->
+			</fieldset>
+			<div class="form-actions">
+				<button type="submit" class="btn btn-primary js-ajax-submit">{:L('ADD')}</button>
+				<a class="btn" href="{:U('guild/index')}">{:L('BACK')}</a>
+			</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

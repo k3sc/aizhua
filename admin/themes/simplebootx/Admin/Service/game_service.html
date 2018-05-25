@@ -1,0 +1,28 @@
+<admintpl file="header" />
+</head>
+<body>
+<div class="wrap">
+    <ul class="nav nav-tabs">
+        <li ><a href="{:U('Service/index')}">人工服务列表</a></li>
+        <li ><a href="{:U('Service/text')}">人工服务文案列表</a></li>
+        <li class="active"><a >人工服务开关</a></li>
+    </ul>
+    <form method="post" class="form-horizontal js-ajax-form" action="{:U('Service/game_service')}">
+        <fieldset>
+            <div class="control-group">
+                <label class="control-label">请选择开启或关闭</label>
+                <div class="controls">
+                    <input type="radio" name="game_service" value="1" <eq name="row.game_service" value="1">checked</eq> >开启&nbsp;&nbsp;&nbsp;
+                    <input type="radio" name="game_service" value="2" <eq name="row.game_service" value="2">checked</eq> >关闭
+                </div>
+            </div>
+        </fieldset>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary js-ajax-submit">设定</button>
+            <a class="btn" href="{:U('Service/index')}">{:L('BACK')}</a>
+        </div>
+    </form>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

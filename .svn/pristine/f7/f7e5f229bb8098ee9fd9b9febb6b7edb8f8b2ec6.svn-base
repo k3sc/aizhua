@@ -1,0 +1,160 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="">反馈列表</a></li>
+		</ul>
+
+		<!--<form id="export_form" action="{:U('Feedback/export')}" method="post" enctype="multipart/form-data">-->
+			<!--<a href="javascript:;" id="export" class="btn btn-success btn-sm">导出数据 +-->
+				<!--<input type="file" name="feedback_data" style="position:absolute;width:130px;height:120px;top:0;left:0;margin:0;padding:0;opacity:0;">-->
+			<!--</a>-->
+		<!--</form>-->
+
+		<form action="{:U('Feedback/export')}" id="export_form" method="post">
+			<div class="">
+				  <span style="float:left;display:none;" id="dateTime">
+					<input type="text" name="startTime" class="js-date date" autocomplete="off">
+					至
+					<input type="text" name="endTime" class="js-date date" autocomplete="off">
+				  </span>
+					<a href="javascript:;" id="export" class="btn btn-sm btn-danger" style="float:left;margin-left:8px;">导出数据</a>
+					<div style="clear:both"></div>
+			</div>
+		</form>
+
+
+		<form class="well form-search" method="post" action="{:U('Feedback/index')}">
+		  状态：
+			<select class="select_2" name="status">
+				<option value="">全部</option>
+				<option value="0" <if condition="$formget.status eq '0'">selected</if> >处理中</option>
+				<option value="1" <if condition="$formget.status eq '1'">selected</if> >已处理</option>			
+			</select>
+			提交时间：
+			<input type="text" name="start_time" class="js-date date" value="{$formget.start_time}" style="width: 80px;" autocomplete="off">-
+			<input type="text" class="js-date date" name="end_time" value="{$formget.end_time}" style="width: 80px;" autocomplete="off"> &nbsp; &nbsp;
+			用户ID：
+			<input type="text" name="keyword" style="width: 200px;" value="{$formget.keyword}" placeholder="请输入会员ID">
+			联系方式：
+			<input type="text" name="contact" value="{$formget.contact}" placeholder="请输入手机号码或邮箱">
+			反馈内容：
+			<input type="text" name="content" value="{$formget.content}" placeholder="请输入反馈内容">
+			<input type="submit" class="btn btn-primary" value="搜索">
+		</form>				
+		<form method="post" class="js-ajax-form" >
+
+		
+			<table class="table table-hover table-bordered">
+				<thead>
+					<tr>
+						<th align="center">ID</th>
+						<th>会员</th>						
+						<th>联系方式</th>
+						<th>系统版本</th>
+						<th>手机型号</th>
+						<th>APP版本</th>
+						<th>反馈信息</th>
+						<th>状态</th>
+						<th>提交时间</th>
+						<th>处理时间</th>
+
+						<th align="center">{:L('ACTIONS')}</th>
+					</tr>
+				</thead>
+				<tbody>
+					<php>$status=array("0"=>"处理中","1"=>"已处理", "2"=>"审核失败");</php>
+					<foreach name="lists" item="vo">
+					<tr>
+						<td align="center">{$vo.id}</td>
+						<td>{$vo['userinfo']['user_nicename']} ( {$vo['uid']} )</td>	
+						<td>{$vo['contact']}</td>
+						<td>{$vo['version']}</td>
+						<td>{$vo['model']}</td>
+						<td>{$vo['appversion']}</td>
+						<td>
+							<a href="javascript:;" class="detail" data-toggle="modal" data-target="#myModal" data="{$vo.content}"><?php echo mb_substr($vo['content'],0,25,'utf-8');?></a>
+						</td>
+						<td <eq name="vo.status" value="0">class="text-error"<else/>class="text-success"</eq> ><strong>{$status[$vo['status']]}</strong></td>
+						<td>{$vo.addtime|date="Y-m-d H:i:s",###}</td>						
+						<td>
+						 <if condition="$vo['status'] eq '0'" >
+						    处理中
+						 <else/>
+						     {$vo.uptime|date="Y-m-d H:i:s",###}
+						 </if>						
+						 </td>
+
+						<td align="center">	
+							<if condition="$vo['status'] eq '0'" >
+						    <a class="btn btn-danger btn-small" href="{:U('Feedback/setstatus',array('id'=>$vo['id']))}" >标记处理</a>  |
+							</if>
+							
+							<a href="{:U('Feedback/del',array('id'=>$vo['id']))}" class="js-ajax-dialog-btn" data-msg="您确定要删除吗？">删除</a>
+						</td>
+					</tr>
+					</foreach>
+				</tbody>
+			</table>
+			<div class="pagination">{$page}</div>
+
+		</form>
+	</div>
+
+	<!-- 模态框（Modal） -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">
+						游戏参数配置信息
+					</h4>
+				</div>
+				<div class="modal-body">
+					xxxxx
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+					</button>
+					<!--<button type="button" class="btn btn-primary">-->
+					<!--提交更改-->
+					<!--</button>-->
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal -->
+	</div>
+
+</body>
+<script src="__PUBLIC__/js/common.js"></script>
+<script>
+    $(function(){
+        // 导出csv数据
+        $("#export").click(function(){
+			// 隐藏则显示
+			if ($("#dateTime").is(":hidden")) {
+				$("#dateTime").css('display', 'block');
+				$('input[name="startTime"]').val('{$smarty.get.createtime1}');
+				$('input[name="endTime"]').val('{$smarty.get.createtime2}');
+				// 显示则获取时间范围,然后导出
+			} else {
+				var startTime = $.trim($('input[name="startTime"]').val());
+				var endTime = $.trim($('input[name="endTime"]').val());
+				if (startTime != '' && endTime != '') {
+                    $("#export_form").submit();
+				}
+			}
+        });
+
+        $(".detail").click(function () {
+            var content = $(this).attr('data');
+			$("#myModalLabel").text('反馈内容详情');
+			$("#myModal .modal-body").html(content);
+        });
+
+    });
+</script>
+
+
+</html>

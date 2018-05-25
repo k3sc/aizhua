@@ -1,0 +1,267 @@
+.icon-cate {
+	background-image: url(http://p3.qhimg.com/d/inn/338fc2f8/sprite-cate.png)
+}
+
+.icon-feed {
+	background-image: url(http://p9.qhimg.com/d/inn/338fc2f8/sprite-feed.png)
+}
+
+.icon-global {
+	background-image: url(http://p2.qhimg.com/d/inn/338fc2f8/sprite-global.png)
+}
+
+.icon-pics {
+	background-image: url(http://p0.qhimg.com/d/inn/338fc2f8/sprite-pics.png)
+}
+
+.icon-top {
+	background-image: url(http://p2.qhimg.com/d/inn/338fc2f8/sprite-top.png)
+}
+
+.icon-up {
+	background-image: url(http://p7.qhimg.com/d/inn/338fc2f8/sprite-up.png)
+}
+
+.icon-cate {
+	background-image: url(http://p3.qhimg.com/d/inn/338fc2f8/sprite-cate.png)
+}
+
+.icon-feed {
+	background-image: url(http://p9.qhimg.com/d/inn/338fc2f8/sprite-feed.png)
+}
+
+.icon-global {
+	background-image: url(http://p2.qhimg.com/d/inn/338fc2f8/sprite-global.png)
+}
+
+.icon-pics {
+	background-image: url(http://p0.qhimg.com/d/inn/338fc2f8/sprite-pics.png)
+}
+
+.icon-top {
+	background-image: url(http://p2.qhimg.com/d/inn/338fc2f8/sprite-top.png)
+}
+
+.icon-up {
+	background-image: url(http://p7.qhimg.com/d/inn/338fc2f8/sprite-up.png)
+}
+
+.feed-list .list {
+	margin: -10px -8px 10px -7px;
+	font-size: 0
+}
+
+.feed-list .feed {
+	position: relative;
+	display: inline-block;
+	vertical-align: top;
+	margin: 10px 8px 10px 7px;
+	width: 172px;
+	height: 340px;
+	font-size: 12px
+}
+
+.feed-list .feed .hj-emoji {
+	vertical-align: text-bottom;
+	width: 14px
+}
+
+.feed-list .feed .link {
+	display: block;
+	text-decoration: none;
+	height: 100%
+}
+
+.feed-list .feed .link:hover {
+	margin: -1px;
+	border: 1px solid #fc4e53;
+	box-shadow: 0 -1px 12px 4px rgba(0,0,0,0.2);
+	color: inherit
+}
+
+.feed-list .feed .link:hover:before {
+	content: '';
+	position: absolute;
+	display: block;
+	width: 100%;
+	height: 245px;
+	top: 0;
+	left: 0;
+	z-index: 1;
+	background: url(http://p6.qhimg.com/t0170dde3607ef83fb2.png) center 55% no-repeat;
+	background-color: rgba(0,0,0,0.2)
+}
+
+.feed-list .feed .screenshot {
+	width: 100%;
+	height: 245px;
+	display: block
+}
+
+.feed-list .feed .user {
+	position: relative;
+	height: 35px;
+	width: 100%;
+	z-index: 2;
+	margin-top: -10px;
+	line-height: 40px;
+	padding-top: 5px;
+	white-space: nowrap;
+	overflow: hidden;
+	color: #313131
+}
+
+.feed-list .feed .user .avatar {
+	width: 38px;
+	height: 38px;
+	margin: -5px 3px 0 5px;
+	border-radius: 100%;
+	border: 1px solid #eee;
+	display: inline-block;
+	vertical-align: top
+}
+
+.feed-list .feed .user .username {
+	color: #fc4e53;
+	margin: 0 3px;
+	display: inline-block;
+	vertical-align: top;
+	overflow: hidden;
+	text-overflow: ellipsis
+}
+
+.feed-list .feed .title {
+	margin: 7px 5px auto 5px;
+	line-height: 20px;
+	text-align: center;
+	font-size: 13px
+}
+
+.feed-list .feed .comment {
+	height: 36px;
+	position: relative;
+	border: 1px solid #e5e5e5;
+	background: #eee;
+	color: #313131;
+	line-height: 18px;
+	padding: 7px 5px;
+	margin-top: 13px;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	-ms-flex-align: center;
+	align-items: center
+}
+
+.feed-list .feed .comment .comment-inner {
+	max-height: 100%;
+	overflow: hidden;
+	text-overflow: ellipsis
+}
+
+.feed-list .feed .comment em {
+	font-style: normal;
+	color: #ff9624
+}
+
+.feed-list .feed .comment:after {
+	content: '';
+	position: absolute;
+	top: -10px;
+	left: 16px;
+	width: 17px;
+	height: 11px;
+	background: url(http://p5.qhimg.com/t015853562593159672.png)
+}
+
+.feed-list .feed:before {
+	position: absolute;
+	display: block;
+	width: 50px;
+	height: 20px;
+	color: #fff;
+	text-align: center;
+	line-height: 20px;
+	right: 0;
+	top: 0;
+	z-index: 3
+}
+
+.feed-list .feed.live:before {
+	background: url("http://p5.qhimg.com/t01a7f7915724641500.png") no-repeat center;
+	content: '\76f4\64ad';
+	width: 45px
+}
+
+.feed-list .feed.live .user .username {
+	max-width: 70px
+}
+
+.feed-list .feed.live .user:after {
+	content: '\7684\76f4\64ad'
+}
+
+.feed-list .feed.review:before {
+	background: url("http://p7.qhimg.com/t01dcdc97477f20fe9b.png") no-repeat center;
+	content: '\91cd\64ad';
+	width: 45px
+}
+
+.feed-list .feed.review .user .username {
+	max-width: 110px
+}
+
+.oldie .feed-list .feed {
+	display: inline
+}
+
+.oldie .feed-list .feed .comment {
+	margin-top: 10px
+}
+
+.ie .comment .comment-inner {
+	display: inline-block
+}
+
+.ie .comment:before {
+	content: '';
+	width: 0;
+	height: 48px;
+	margin-left: -4px;
+	display: inline-block;
+	vertical-align: middle
+}
+
+.main {
+	float: left;
+	width: 920px;
+	padding-bottom: 50px
+}
+
+.sidebar {
+	float: right;
+	width: 270px
+}
+
+.download {
+	padding-left: 10px;
+	padding-right: 10px
+}
+
+#feed-topic .box-title .icon {
+	background-position: 0 -15px;
+	background-repeat: no-repeat;
+	overflow: hidden;
+	display: inline-block;
+	width: 16px;
+	height: 16px
+}
+
+.g-box .box-hd .tag {
+	float: left;
+	margin-top: 5px;
+	margin-right: 5px
+}

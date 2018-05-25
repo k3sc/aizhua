@@ -1,0 +1,33 @@
+<admintpl file="header" />
+</head>
+<body>
+<div class="wrap">
+    <ul class="nav nav-tabs">
+        <!--<li class="active"><a href="javascript:;">所有概率</a></li>-->
+        <li ><a href="{:U('Probability/room')}">房间概率模式</a></li>
+        <li ><a href="{:U('Probability/sell')}">用户贩卖模式</a></li>
+    </ul>
+    <form method="post" class="form-horizontal js-ajax-form" action="{:U('Probability/index')}">
+        <fieldset>
+            <div class="control-group">
+                <label class="control-label">充值金额</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="text" name="money" value="{$row.money}">
+            </div>
+            <div class="control-group">
+                <label class="control-label">送强抓力次数</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="text" name="present_count" value="{$row.present_count}">
+            </div>
+            <div class="control-group">
+                <label class="control-label">抓几次出一次强抓力</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="text" name="claw_count" value="{$row.claw_count}">
+            </div>
+        </fieldset>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary js-ajax-submit">{:L('EDIT')}</button>
+            <a class="btn" href="{:U('Probability/index')}">{:L('BACK')}</a>
+        </div>
+    </form>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

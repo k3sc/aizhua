@@ -1,0 +1,68 @@
+<admintpl file="header" />
+</head>
+<body>
+    <div class="wrap">
+        <ul class="nav nav-tabs">
+            <li class="active"><a >工会列表</a></li>
+            <if condition="$is_limit eq 0">
+            <li><a href="{:U('Guild/add')}">工会添加</a></li>
+            </if>
+        </ul>
+
+        <form class="well form-search" name="form1" method="post" style="float:left" action="">
+            关键字： 
+            <input type="text" name="keyword" style="width: 200px;" value="{$formget.keyword}" placeholder="请输入工会名称">
+            <input type="button" class="btn btn-primary" value="搜索" onclick="form1.action='{:U('Guild/index')}';form1.submit();"/>
+            <!--input type="button" class="btn btn-primary" style="background-color: #1dccaa;" value="导出" onclick="form1.action='{:U('Guild/export')}';form1.submit();"/-->
+        </form> 
+        <form method="post" class="js-ajax-form" action="{:U('Guild/listorders')}">
+            <!--div class="table-actions">
+                <button class="btn btn-primary btn-small js-ajax-submit" type="submit">{:L('SORT')}</button>
+            </div-->
+        
+            <table class="table table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th align="center">ID</th>
+                        <th>工会名称</th>
+                        <th>工会人数</th>
+                        <th>会长</th>
+                        <th>会长分成比例</th>
+                        <th>主播分成比例</th>
+                        <th>会长分成(元)</th>
+                        <th>创建时间</th>
+                        <th align="center">{:L('ACTIONS')}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <foreach name="guilds" item="vo">
+                    <tr>
+                        <td align="center">{$vo['id']}</td>
+                        <td>{$vo['name']}</td>
+                        <td>{$vo['member_count']}</td>
+                        <td>{$vo['manager_name']}</td>
+                        <td>{$vo['manager_percent']}%</td>
+                        <td>{$vo['anchor_percent']}%</td>
+                        <td>{$vo['manager_cash']}</td>
+                        <td>{$vo['create_tm']}</td>
+
+                        <td align="center"> 
+                            <!--a href="{:U('Guild/edit',array('id'=>$vo['id']))}" >编辑</a-->                         
+                            <a href="{:U('Guild/list_member',array('id'=>$vo['id']))}" >查看工会成员</a>                         
+							<if condition="$is_limit eq 0">
+                            <a href="{:U('Guild/del',array('id'=>$vo['id']))}" class="js-ajax-dialog-btn" data-msg="您确定要删除吗？">删除</a>
+							</if>
+                        </td>
+                    </tr>
+                    </foreach>
+                </tbody>
+            </table>
+            <div class="pagination">{$page}</div>
+            <!--div class="table-actions">
+                <button class="btn btn-primary btn-small js-ajax-submit" type="submit">{:L('SORT')}</button>
+            </div-->
+        </form>
+    </div>
+    <script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

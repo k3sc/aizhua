@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<meta content="telephone=no" name="format-detection" />
+		<title>我的等级</title>
+		<link href='__PUBLIC__/appapi/css/level.css' rel="stylesheet" type="text/css" >
+	</head>
+<body >
+
+	<div class="main">
+		
+		<div class="level">
+			<div class="speed">
+				<div class="info">
+					<div class="image">
+						<div class="ding"></div>
+						<div class="img" style="background-image:url({$info['avatar']})">
+						</div>
+						<div class="name">LV.{$level['levelid']}</div>
+					</div>
+				</div>
+				<div class="level_val">
+					<ul>
+						<a>累计经验值：<span id="total">{$experience}</span></a>
+						<if condition="$type eq '1'">
+							<a>距离升级还差：<span id="next_diff">{$cha}</span></a>
+						<else/>
+							<a>你已经达到最高级别</a>
+						</if>
+					</ul>
+				</div>
+				<div class="jindu">
+					<div class="level-1_1">
+						<div class="levelnp">
+							<div class="leveln n2" id="progress" style="width:{$baifen}%; border-radius: 4px;"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="text">
+			<h2>等级权益</h2>
+			<p>1. 不同等级图标不同，越高越尊贵</p>
+			<p>2. 你的身份一眼可见，尊贵显而易见</p>
+			<h2 style="margin-top:30px">如何升级</h2>
+			<p>1. 送礼物是升级最快的办法，送的越多升级越快！</p>
+		</div>
+	</div>
+</body>
+
+<script src="__PUBLIC__/js/jquery.js"></script>
+<script>
+
+</script>
+</body>
+</html>

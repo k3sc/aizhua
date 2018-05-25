@@ -1,0 +1,65 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a >故障列表</a></li>
+			<!--<li><a href="{:U('Fault/setphone')}">设置值班管理员手机号</a></li>-->
+		</ul>
+
+		<table class="table table-hover table-bordered">
+			<thead>
+				<tr>
+					<!--<th align="center">ID</th>-->
+					<th>设备号</th>
+					<th>房间名</th>
+					<th>房间号</th>
+					<th>故障原因</th>
+					<th>时间</th>
+					<th align="center">{:L('ACTIONS')}</th>
+				</tr>
+			</thead>
+			<tbody>
+				<foreach name="fault" item="vo">
+				<tr>
+					<!--<td align="center">{$vo.id}</td>-->
+					<td>{$vo.device_no}</td>
+					<td>{$vo.room_name}</td>
+					<td>{$vo.room_no}</td>
+					<td>{$vo.content}</td>
+					<td>{$vo.ctime|date="Y-m-d H:i:s",###}</td>
+					<td align="center">
+						<a href="{:U('Fault/del',array('id'=>$vo['id']))}" class="js-ajax-dialog-btn" data-msg="您确定要删除吗？">删除</a>
+					</td>
+				</tr>
+				</foreach>
+			</tbody>
+		</table>
+		<a id="clear" href="javascript:;" class="btn btn-danger">清空</a>
+		<div class="pagination">{$page}</div>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+</body>
+
+<script>
+	$(function () {
+		$("#clear").click(function () {
+			$.ajax({
+				url : "{:U('Fault/clear')}",
+				type : 'post',
+				dataType : 'json',
+				success : function (res) {
+					if( res.status == 1 ){
+					    alert('清除完毕');
+					    location.reload();
+					}
+                },
+				error : function () {
+					alert('系统内部错误');
+                }
+			});
+        });
+    })
+</script>
+
+</html>

@@ -1,0 +1,6 @@
+[ 2018-04-29T00:24:37+08:00 ] 119.123.158.123 /index.php?g=Portal&m=AdminPage&a=index
+NOTIC: D方法实例化没找到模型类Common\Model\PostsModel
+
+[ 2018-04-29T00:28:29+08:00 ] 119.123.158.123 /index.php?g=Portal&m=AdminPage&a=index
+NOTIC: D方法实例化没找到模型类Common\Model\PostsModel
+

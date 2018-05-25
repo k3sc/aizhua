@@ -1,0 +1,34 @@
+<admintpl file="header" />
+</head>
+<body>
+<div class="wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:U('Users/index')}">用户列表</a></li>
+        <li class="active"><a >用户收货地址列表</a></li>
+    </ul>
+    <table class="table table-hover table-bordered">
+        <thead>
+        <tr>
+            <th align="center">ID</th>
+            <th>收件人</th>
+            <th>联系号码</th>
+            <th>地址</th>
+            <th>创建时间</th>
+        </tr>
+        </thead>
+        <tbody>
+        <foreach name="row" item="vo">
+            <tr>
+                <td>{$vo.addr_id} </td>
+                <td>{$vo.username}</td>
+                <td>{$vo.mobile}</td>
+                <td>{$vo.addr}{$vo.addr_info}</td>
+                <td>{$vo.ctime|date="Y-m-d H:i:s",###}</td>
+            </tr>
+        </foreach>
+        </tbody>
+    </table>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

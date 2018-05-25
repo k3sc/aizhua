@@ -1,0 +1,58 @@
+<admintpl file="header" />
+</head>
+<body>
+<div class="wrap">
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="javascript:;">其他活动设置</a></li>
+  </ul>
+  <form method="post" class="form-horizontal js-ajax-form" action="{:U('Activeconfig/other')}">
+    <fieldset>
+      <input type="hidden" name="id" value="{$arrAct['id']}">
+
+      <div class="control-group">
+        <label class="control-label">邀请码功能开关</label>
+        <div class="controls">
+          <label class="control-label" style="width:60px;text-align:left;"><input style="margin-top:-2px" type="radio" value="1" name="invitation_code" <if condition="$arrAct['invitation_code'] eq '1'">checked</if>>开启</label>
+          <label class="control-label" style="width:60px;text-align:left;"><input style="margin-top:-2px" type="radio" value="2" name="invitation_code" <if condition="$arrAct['invitation_code'] eq '2'">checked</if>>关闭</label>
+        </div>
+      </div>
+
+      <div style="height:1px;width:100%;background:#dce4ec;margin-bottom:15px;"></div>
+
+      <div class="control-group">
+        <label class="control-label">注册送娃娃币数量</label>
+        <div class="controls">
+          <input type="text" name="register_coin" value="{$arrAct['register_coin']}">
+          <span class="form-required">*</span>
+        </div>
+      </div>
+
+      <div style="height:1px;width:100%;background:#dce4ec;margin-bottom:15px;"></div>
+
+      <div class="control-group">
+        <label class="control-label">首冲活动</label>
+        <div class="controls">
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label">首次充值</label>
+        <div class="controls"><input type="text" style="width:120px;" name="first_pay" value="{$arrAct['first_pay']}"> 元以上可额外获得 <input style="width:120px;" type="text" name="first_pay_coin" value="{$arrAct['first_pay_coin']}">娃娃币
+          <span class="form-required">*</span>
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label">活动时间</label>
+        <div class="controls"><input class="js-date date" type="text" style="width:120px;" name="sdate" value="{$arrAct['sdate']|date="Y-m-d",###}"> 至 <input class="js-date date" style="width:120px;" type="text" name="edate" value="{$arrAct['edate']|date="Y-m-d",###}">
+          <span class="form-required">*</span>
+        </div>
+      </div>
+
+    </fieldset>
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary js-ajax-submit">提交</button>
+    </div>
+  </form>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

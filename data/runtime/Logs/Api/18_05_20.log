@@ -1,0 +1,16 @@
+[ 2018-05-20T14:08:15+08:00 ] 125.92.126.126 /index.php?g=Api&m=Record&a=api
+ERR: 1048:Column 'money' cannot be null
+ [ SQL语句 ] : INSERT INTO `cmf_pay_record` (`oid`,`money`,`coin`,`coingive`,`ctime`,`user_id`,`pay_id`,`room_id`,`type`) VALUES ('WW201805201408159306',NULL,'0',NULL,'1526796495','256774','60','0','1')
+
+[ 2018-05-20T14:08:19+08:00 ] 125.92.126.126 /index.php?g=Api&m=Record&a=api
+ERR: 1048:Column 'money' cannot be null
+ [ SQL语句 ] : INSERT INTO `cmf_pay_record` (`oid`,`money`,`coin`,`coingive`,`ctime`,`user_id`,`pay_id`,`room_id`,`type`) VALUES ('WW201805201408199370',NULL,'0',NULL,'1526796499','256774','60','0','1')
+
+[ 2018-05-20T14:08:22+08:00 ] 125.92.126.126 /index.php?g=Api&m=Record&a=api
+ERR: 1048:Column 'money' cannot be null
+ [ SQL语句 ] : INSERT INTO `cmf_pay_record` (`oid`,`money`,`coin`,`coingive`,`ctime`,`user_id`,`pay_id`,`room_id`,`type`) VALUES ('WW201805201408223506',NULL,'0',NULL,'1526796502','256774','60','0','1')
+
+[ 2018-05-20T14:08:26+08:00 ] 125.92.126.126 /index.php?g=Api&m=Record&a=api
+ERR: 1048:Column 'money' cannot be null
+ [ SQL语句 ] : INSERT INTO `cmf_pay_record` (`oid`,`money`,`coin`,`coingive`,`ctime`,`user_id`,`pay_id`,`room_id`,`type`) VALUES ('WW201805201408261997',NULL,'0',NULL,'1526796506','256774','60','0','1')
+

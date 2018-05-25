@@ -1,0 +1,370 @@
+<admintpl file="header" />
+</head>
+<body>
+<style>
+input{
+  width:500px;
+}
+.form-horizontal textarea{
+ width:500px;
+}
+
+.nav-tabs>.current>a{
+    color: #95a5a6;
+    cursor: default;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-bottom-color: transparent;
+}
+.nav li
+{
+	cursor:pointer
+}
+.nav li:hover
+{
+	cursor:pointer
+}
+</style>
+
+
+	<div class="wrap js-check-wrap">
+		<!-- <ul class="nav nav-tabs">
+			<li class="active"><a href="{:U('Configprivate/index')}">设置</a></li>
+			<li><a href="{:U('Configprivate/lists')}">管理</a></li>
+			<li><a href="{:U('Configprivate/add')}">添加</a></li>
+		</ul>
+		<div class="form-actions">
+			<span style="color:#ff0000">提示：新加设置请清空下缓存！</span>
+		</div> -->
+		<ul class="nav nav-tabs js-tabs-nav">
+			<li><a>基本设置</a></li>
+			<li><a>登录配置</a></li>
+			<li><a>提现配置</a></li>
+			<li><a>推送配置</a></li>
+			<li><a>支付管理</a></li>
+		</ul>
+		
+		<form method="post" class="form-horizontal js-ajax-form" action="{:U('Configprivate/set_post')}">
+		  <input type="hidden" name="post['id']" value="1">
+			
+			<div class="js-tabs-content">
+				<!-- 基本配置 -->
+				<div>
+					<fieldset>
+						<div class="control-group">
+							<label class="control-label">缓存开关</label>
+							<div class="controls">				
+								<label class="radio inline"><input type="radio" value="0" name="post[cache_switch]" <eq name="config['cache_switch']" value="0">checked="checked"</eq>>关闭</label>
+								<label class="radio inline"><input type="radio" value="1" name="post[cache_switch]" <eq name="config['cache_switch']" value="1">checked="checked"</eq>>开启</label>
+								<label class="checkbox inline"></label>
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">缓存时间</label>
+							<div class="controls">				
+								<input type="text" name="post[cache_time]" value="{$config['cache_time']}">网站数据的缓存时间
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">用户列表请求间隔</label>
+							<div class="controls">				
+								<input type="text" name="post[userlist_time]" value="{$config['userlist_time']}"> 直播间用户列表刷新间隔时间
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">弹幕费用</label>
+							<div class="controls">				
+								<input type="text" name="post[barrage_fee]" value="{$config['barrage_fee']}"> 每条弹幕的价格（整数）
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">认证限制</label>
+							<div class="controls">				
+								<label class="radio inline"><input type="radio" value="0" name="post[auth_islimit]" <eq name="config['auth_islimit']" value="0">checked="checked"</eq>>关闭</label>
+								<label class="radio inline"><input type="radio" value="1" name="post[auth_islimit]" <eq name="config['auth_islimit']" value="1">checked="checked"</eq>>开启</label>
+								<label class="checkbox inline">主播开播是否需要身份认证</label>
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">直播等级控制</label>
+							<div class="controls">				
+								<label class="radio inline"><input type="radio" value="0" name="post[level_islimit]" <eq name="config['level_islimit']" value="0">checked="checked"</eq>>关闭</label>
+								<label class="radio inline"><input type="radio" value="1" name="post[level_islimit]" <eq name="config['level_islimit']" value="1">checked="checked"</eq>>开启</label>
+								<label class="checkbox inline">直播等级控制是否开启</label>
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">限制等级</label>
+							<div class="controls">				
+								<input type="text" name="post[level_limit]" value="{$config['level_limit']}"> 直播等级限制开启时，最低开播等级
+							</div>
+						</div>
+						
+						<div class="control-group">
+							<label class="control-label">推流服务器地址</label>
+							<div class="controls">
+								<input type="text" name="post[push_url]" value="{$config['push_url']}"> 格式：域名(:端口) 或者 IP(:端口)
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">播流服务器地址</label>
+							<div class="controls">				
+								<input type="text" name="post[pull_url]" value="{$config['pull_url']}"> 格式：域名(:端口) 或者 IP(:端口)
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">聊天服务器带端口</label>
+							<div class="controls">				
+								<input type="text" name="post[chatserver]" value="{$config['chatserver']}"> 格式：http://域名(:端口) 或者 http://IP(:端口)
+							</div>
+						</div>
+					</fieldset>
+				</div>
+				<!-- 登录配置 -->
+				<div>
+					<fieldset>
+						<div class="control-group">
+							<label class="control-label">APP QQ登录</label>
+							<div class="controls">				
+								<label class="radio inline"><input type="radio" value="0" name="post[login_qq]" <eq name="config['login_qq']" value="0">checked="checked"</eq>>关闭</label>
+								<label class="radio inline"><input type="radio" value="1" name="post[login_qq]" <eq name="config['login_qq']" value="1">checked="checked"</eq>>开启</label>
+								<label class="checkbox inline">APP QQ登录开关</label>
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">APP 微信登录</label>
+							<div class="controls">				
+								<label class="radio inline"><input type="radio" value="0" name="post[login_wx]" <eq name="config['login_wx']" value="0">checked="checked"</eq>>关闭</label>
+								<label class="radio inline"><input type="radio" value="1" name="post[login_wx]" <eq name="config['login_wx']" value="1">checked="checked"</eq>>开启</label>
+								<label class="checkbox inline">APP 微信登录开关</label>
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">APP 新浪微博登陆</label>
+							<div class="controls">				
+								<label class="radio inline"><input type="radio" value="0" name="post[login_sina]" <eq name="config['login_sina']" value="0">checked="checked"</eq>>关闭</label>
+								<label class="radio inline"><input type="radio" value="1" name="post[login_sina]" <eq name="config['login_sina']" value="1">checked="checked"</eq>>开启</label>
+								<label class="checkbox inline">APP 新浪微博登陆开关</label>
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">PC QQ登录</label>
+							<div class="controls">				
+								<label class="radio inline"><input type="radio" value="0" name="post[login_qq_pc]" <eq name="config['login_qq_pc']" value="0">checked="checked"</eq>>关闭</label>
+								<label class="radio inline"><input type="radio" value="1" name="post[login_qq_pc]" <eq name="config['login_qq_pc']" value="1">checked="checked"</eq>>开启</label>
+								<label class="checkbox inline">PC QQ登录</label>
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">PC 微信登录</label>
+							<div class="controls">				
+								<label class="radio inline"><input type="radio" value="0" name="post[login_wx_pc]" <eq name="config['login_wx_pc']" value="0">checked="checked"</eq>>关闭</label>
+								<label class="radio inline"><input type="radio" value="1" name="post[login_wx_pc]" <eq name="config['login_wx_pc']" value="1">checked="checked"</eq>>开启</label>
+								<label class="checkbox inline">PC 微信登录</label>
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">PC 新浪微博登录</label>
+							<div class="controls">				
+								<label class="radio inline"><input type="radio" value="0" name="post[login_sina_pc]" <eq name="config['login_sina_pc']" value="0">checked="checked"</eq>>关闭</label>
+								<label class="radio inline"><input type="radio" value="1" name="post[login_sina_pc]" <eq name="config['login_sina_pc']" value="1">checked="checked"</eq>>开启</label>
+								<label class="checkbox inline">PC 新浪微博登录</label>
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">PC 微信登录appid</label>
+							<div class="controls">				
+									<input type="text" name="post[login_wx_pc_appid]" value="{$config['login_wx_pc_appid']}"> PC 微信登录appid								</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">PC 微信登录appsecret</label>
+							<div class="controls">				
+									<input type="text" name="post[login_wx_pc_appsecret]" value="{$config['login_wx_pc_appsecret']}"> PC 微信登录appsecret								</div>
+						</div><div class="control-group">
+							<label class="control-label">PC微博登陆akey</label>
+							<div class="controls">				
+								<input type="text" name="post[login_sina_pc_akey]" value="{$config['login_sina_pc_akey']}"> PC微博登陆akey
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">PC新浪微博skey</label>
+							<div class="controls">				
+								<input type="text" name="post[login_sina_pc_skey]" value="{$config['login_sina_pc_skey']}"> PC新浪微博skey	
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">微信公众平台Appid</label>
+							<div class="controls">				
+								<input type="text" name="post[login_wx_appid]" value="{$config['login_wx_appid']}"> 微信公众平台Appid	
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">微信公众平台AppSecret</label>
+							<div class="controls">				
+								<input type="text" name="post[login_wx_appsecret]" value="{$config['login_wx_appsecret']}"> 微信公众平台AppSecret	
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">互亿无线APIID</label>
+							<div class="controls">				
+								<input type="text" name="post[ihuyi_account]" value="{$config['ihuyi_account']}"> 短信验证码   http://www.ihuyi.com/  互亿无线后台-》验证码、短信通知-》账号及签名->APIID
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">互亿无线key</label>
+							<div class="controls">				
+								<input type="text" name="post[ihuyi_ps]" value="{$config['ihuyi_ps']}"> 短信验证码 互亿无线后台-》验证码、短信通知-》账号及签名->APIKEY
+							</div>
+						</div>
+					</fieldset>
+				</div>
+				<!-- 短信配置 -->
+				<div>
+					<fieldset>
+						<div class="control-group">
+							<label class="control-label">提现比例</label>
+							<div class="controls">				
+								<input type="text" name="post[cash_rate]" value="{$config['cash_rate']}"> 提现一元人名币需要的票数	
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">提现最低额度（元）</label>
+							<div class="controls">				
+								<input type="text" name="post[cash_min]" value="{$config['cash_min']}"> 可提现的最小额度，低于该额度无法体现
+							</div>
+						</div>
+					</fieldset>
+				</div>
+				<!-- 三方配置 -->
+				<div>
+					<fieldset>
+						<div class="control-group">
+							<label class="control-label">极光推送模式</label>
+							<div class="controls">				
+								<label class="radio inline"><input type="radio" value="0" name="post[jpush_sandbox]" <eq name="config['jpush_sandbox']" value="0">checked="checked"</eq>>开发</label>
+								<label class="radio inline"><input type="radio" value="1" name="post[jpush_sandbox]" <eq name="config['jpush_sandbox']" value="1">checked="checked"</eq>>生产</label>
+								<label class="checkbox inline">极光推送模式</label>
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">极光推送APP_KEY</label>
+							<div class="controls">				
+								<input type="text" name="post[jpush_key]" value="{$config['jpush_key']}">
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">极光推送master_secret</label>
+							<div class="controls">				
+								<input type="text" name="post[jpush_secret]" value="{$config['jpush_secret']}">
+							</div>
+						</div>
+					</fieldset>
+				</div>
+				<!-- 支付管理 -->
+				<div>
+					<fieldset>
+						<div class="control-group">
+							<label class="control-label">支付宝APP</label>
+							<div class="controls">				
+								<label class="radio inline"><input type="radio" value="0" name="post[aliapp_switch]" <eq name="config['aliapp_switch']" value="0">checked="checked"</eq>>关闭</label>
+								<label class="radio inline"><input type="radio" value="1" name="post[aliapp_switch]" <eq name="config['aliapp_switch']" value="1">checked="checked"</eq>>开启</label>
+								<label class="checkbox inline">支付宝APP支付是否开启</label>
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">合作者身份ID</label>
+							<div class="controls">				
+								<input type="text" name="post[aliapp_partner]" value="{$config['aliapp_partner']}">支付宝合作者身份ID
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">支付宝帐号</label>
+							<div class="controls">				
+								<input type="text" name="post[aliapp_seller_id]" value="{$config['aliapp_seller_id']}">支付宝登录账号
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">支付宝安卓密钥</label>
+							<div class="controls">				
+									<textarea name="post[aliapp_key_android]">{$config['aliapp_key_android']}</textarea>支付宝安卓密钥
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">支付宝苹果密钥</label>
+							<div class="controls">				
+								<textarea name="post[aliapp_key_ios]">{$config['aliapp_key_ios']}</textarea>支付宝苹果密钥
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">支付宝校验码</label>
+							<div class="controls">				
+								<input type="text" name="post[aliapp_check]" value="{$config['aliapp_check']}"> 支付宝校验码（扫码支付）
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">苹果支付模式</label>
+							<div class="controls">				
+								<label class="radio inline"><input type="radio" value="0" name="post[ios_sandbox]" <eq name="config['ios_sandbox']" value="0">checked="checked"</eq>>沙盒</label>
+								<label class="radio inline"><input type="radio" value="1" name="post[ios_sandbox]" <eq name="config['ios_sandbox']" value="1">checked="checked"</eq>>生产</label>
+								<label class="checkbox inline">苹果支付模式</label>
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">支付宝PC</label>
+							<div class="controls">				
+								<label class="radio inline"><input type="radio" value="0" name="post[aliapp_pc]" <eq name="config['aliapp_pc']" value="0">checked="checked"</eq>>关闭</label>
+								<label class="radio inline"><input type="radio" value="1" name="post[aliapp_pc]" <eq name="config['aliapp_pc']" value="1">checked="checked"</eq>>开启</label>
+								<label class="checkbox inline">支付宝PC扫码支付是否开启</label>
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">微信支付PC</label>
+							<div class="controls">				
+								<label class="radio inline"><input type="radio" value="0" name="post[wx_switch_pc]" <eq name="config['wx_switch_pc']" value="0">checked="checked"</eq>>关闭</label>
+								<label class="radio inline"><input type="radio" value="1" name="post[wx_switch_pc]" <eq name="config['wx_switch_pc']" value="1">checked="checked"</eq>>开启</label>
+								<label class="checkbox inline">微信支付PC 是否开启</label>
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">微信支付</label>
+							<div class="controls">				
+								<label class="radio inline"><input type="radio" value="0" name="post[wx_switch]" <eq name="config['wx_switch']" value="0">checked="checked"</eq>>关闭</label>
+								<label class="radio inline"><input type="radio" value="1" name="post[wx_switch]" <eq name="config['wx_switch']" value="1">checked="checked"</eq>>开启</label>
+								<label class="checkbox inline">微信支付开关</label>
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">开放平台账号AppID</label>
+							<div class="controls">				
+								<input type="text" name="post[wx_appid]" value="{$config['wx_appid']}">微信开放平台账号AppID
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">微信应用appsecret</label>
+							<div class="controls">				
+								<input type="text" name="post[wx_appsecret]" value="{$config['wx_appsecret']}">微信应用appsecret
+							</div>
+						</div
+						><div class="control-group">
+							<label class="control-label">微信商户号mchid</label>
+							<div class="controls">				
+								<input type="text" name="post[wx_mchid]" value="{$config['wx_mchid']}">微信商户号mchid
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">微信密钥key</label>
+							<div class="controls">				
+								<input type="text" name="post[wx_key]" value="{$config['wx_key']}">微信密钥key
+							</div>
+						</div>
+					</fieldset>
+				</div>
+			</div>
+			<div class="form-actions">
+				<button type="submit" class="btn btn-primary js-ajax-submit">{:L('SAVE')}</button>
+			</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

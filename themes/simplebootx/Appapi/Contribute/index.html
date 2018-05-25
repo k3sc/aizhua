@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<meta content="telephone=no" name="format-detection" />
+		<title>贡献</title>
+		<link href='__PUBLIC__/appapi/contribute/css/contribute.css' rel="stylesheet" type="text/css" >
+	</head>
+	<body>
+		<div>
+			<ul class="list">
+				<volist name="list" id="v">
+					<if condition="$i eq 1">
+					<li class="order1">
+						<div class="nums">
+							NO.1
+						</div>
+						<div class="info">
+							<div class="avatar">
+								<a href="/personal/homepage/{$v['userinfo']['id']}"><img src="{$v['userinfo']['avatar_thumb']}" onerror="this.src='__PUBLIC__/images/headicon.png'"></a>
+								<span></span>
+							</div>
+							<div class="name">
+								<a href="/personal/homepage/{$v['userinfo']['id']}">{$v['userinfo']['user_nicename']} <img src="__PUBLIC__/appapi/images/<if condition="$v['userinfo']['sex'] eq 1">man<else/>woman</if>.png" class="sex"> <img src="__PUBLIC__/appapi/images/level/{$v['userinfo']['level']}.png" class="level"></a>
+							</div>
+							<div class="contribute">
+								贡献<span class="contribute-nums">{$v['total']}</span>收入
+							</div>
+						</div>				
+					</li>					
+					<elseif condition="$i eq 2"/>
+					<li class="order2">
+						<div class="nums">
+							NO.2
+						</div>
+						<div class="info">
+							<div class="avatar">
+								<a href="/personal/homepage/{$v['userinfo']['id']}"><img src="{$v['userinfo']['avatar_thumb']}" onerror="this.src='__PUBLIC__/images/headicon.png'"></a>
+								<span></span>
+							</div>
+							<div class="name">
+								<a href="/personal/homepage/{$v['userinfo']['id']}">{$v['userinfo']['user_nicename']} <img src="__PUBLIC__/appapi/images/<if condition="$v['userinfo']['sex'] eq 1">man<else/>woman</if>.png" class="sex"> <img src="__PUBLIC__/appapi/images/level/{$v['userinfo']['level']}.png" class="level"></a>
+							</div>
+							<div class="contribute">
+								贡献<span class="contribute-nums">{$v['total']}</span>收入
+							</div>
+						</div>				
+					</li>					
+					<elseif condition="$i eq 3"/>
+					<li class="order3">
+						<div class="nums">
+							NO.3
+						</div>
+						<div class="info">
+							<div class="avatar">
+								<a href="/personal/homepage/{$v['userinfo']['id']}"><img src="{$v['userinfo']['avatar_thumb']}" onerror="this.src='__PUBLIC__/images/headicon.png'"></a>
+								<span></span>
+							</div>
+							<div class="name">
+								<a href="/personal/homepage/{$v['userinfo']['id']}">{$v['userinfo']['user_nicename']} <img src="__PUBLIC__/appapi/images/<if condition="$v['userinfo']['sex'] eq 1">man<else/>woman</if>.png" class="sex"> <img src="__PUBLIC__/appapi/images/level/{$v['userinfo']['level']}.png" class="level"></a>
+							</div>
+							<div class="contribute">
+								贡献<span class="contribute-nums">{$v['total']}</span>收入
+							</div>
+						</div>				
+					</li>					
+					<else/>
+					<li>
+						<div class="nums">
+							NO.{$i}
+						</div>
+						<div class="avatar">
+							<a href="/personal/homepage/{$v['userinfo']['id']}"><img src="{$v['userinfo']['avatar_thumb']}" onerror="this.src='__PUBLIC__/images/headicon.png'"></a>
+						</div>
+						<div class="info">
+							<div class="name">
+								<a href="/personal/homepage/{$v['userinfo']['id']}">{$v['userinfo']['user_nicename']} <img src="__PUBLIC__/appapi/images/<if condition="$v['userinfo']['sex'] eq 1">man<else/>woman</if>.png" class="sex"> <img src="__PUBLIC__/appapi/images/level/{$v['userinfo']['level']}.png" class="level"></a>
+							</div>
+							<div class="contribute">
+								贡献<span class="contribute-nums">{$v['total']}</span>收入
+							</div>
+						</div>
+					</li>					
+					</if>
+				</volist>
+
+
+			</ul>
+		</div>
+
+	<script src="__PUBLIC__/js/jquery.js"></script>
+	<script>
+	$(function(){
+		function getlistmore(){
+			$.ajax({
+					url:'./index.php?g=appapi&m=Contribute&a=getmore',
+					data:{'page':page,'uid':uid},
+					type:'post',
+					dataType:'json',
+					success:function(data){
+						if(data.nums>0){
+								var nums=data.nums;
+								var start=data.start;
+								var list=data.data;
+								var html='';
+								var sex='';
+								var n=0;
+								for(var i=0;i<nums;i++){
+									sex=list[i]['userinfo']['sex']==1?'man':'woman';
+									n=start+1+i;
+									html='<li>\
+										<div class="nums">\
+											NO.'+n+'\
+										</div>\
+										<div class="avatar">\
+											<img src="'+list[i]['userinfo']['avatar_thumb']+'" onerror="this.src=\'__PUBLIC__/images/headicon.png\'">\
+										</div>\
+										<div class="info">\
+											<div class="name">\
+												'+list[i]['userinfo']['user_nicename']+' <img src="__PUBLIC__/appapi/images/'+sex+'.png" class="sex"> <img src="__PUBLIC__/appapi/images/level/'+list[i]['userinfo']['level']+'.png" class="level">\
+											</div>\
+											<div class="contribute">\
+												贡献<span class="contribute-nums">'+list[i]['total']+'</span>收入\
+											</div>\
+										</div>\
+									</li>	';
+								}
+							
+							$(".list").append(html);
+						}
+						
+						if(data.isscroll==1){
+								page++;
+								isscroll=true;
+						}
+					}
+			})
+		}
+		var uid={$uid}; 
+		var page={$p}; 
+		var isscroll=true; 
+
+		$(window).scroll(function(){  
+				var srollPos = $(window).scrollTop();    //滚动条距顶部距离(页面超出窗口的高度)  		
+				totalheight = parseFloat($(window).height()) + parseFloat(srollPos);  
+				if(($(document).height()-50) <= totalheight  && isscroll) {  
+						isscroll=false;
+						getlistmore()
+				}  
+		});  
+
+	})
+	</script>
+	</body>
+</html>

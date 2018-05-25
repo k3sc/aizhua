@@ -1,0 +1,103 @@
+<admintpl file="header" />
+</head>
+<body>
+<div class="wrap">
+  <ul class="nav nav-tabs">
+    <li><a href="{:U('Activeconfig/timing_list')}">定时活动列表</a></li>
+    <li class="active"><a href="javascript:;">添加定时活动</a></li>
+  </ul>
+  <form method="post" class="form-horizontal js-ajax-form" action="{:U('Activeconfig/set_timing')}">
+    <fieldset>
+      <input type="hidden" name="id" value="{$arrAct['id']}">
+      <div class="control-group">
+        <label class="control-label">活动标题</label>
+        <div class="controls">
+          <input type="text" name="title" value="{$arrAct['title']}">
+          <span class="form-required">*</span>
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label">活动简介</label>
+        <div class="controls">
+          <textarea name="about" style="width: 400px;height:150px;">{$arrAct['about']}</textarea>
+          <span class="form-required">*</span>
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label">活动时间</label>
+        <div class="controls">
+          <input class="js-date date" style="width:100px;" type="text" name="start_date" <if condition="$arrAct['start_date'] neq ''">value="{$arrAct['start_date']|date="Y-m-d",###}"</if> placeholder="开始日期">
+          至
+          <input class="js-date date" style="width:100px;" type="text" name="end_date" <if condition="$arrAct['end_date'] neq ''">value="{$arrAct['end_date']|date="Y-m-d",###}"</if> placeholder="结束日期">
+          <span class="form-required">*</span>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <label class="control-label">活动类型</label>
+        <div class="controls">
+          <label class="control-label toggleBtn" style="width:80px;text-align:left;"><input style="margin-top:-2px" type="radio" value="1" name="type" <if condition="$arrAct['type'] eq '1'">checked</if>>单次</label>
+          <label class="control-label toggleBtn" style="width:150px;text-align:left;"><input style="margin-top:-2px" type="radio" value="2" name="type" <if condition="$arrAct['type'] neq '1'">checked</if>>周期</label>
+        </div>
+      </div>
+      <div class="control-group" id="timeMain" <if condition="$arrAct['type'] eq '1'">style="display:none;"</if>>
+        <label class="control-label"></label>
+        <div class="controls" style="border: 2px solid #dce4ec;border-radius:3px;width:416px;padding:10px;box-sizing: border-box">
+          <div style="height:30px;">
+            <label class="control-label" id="setDay" style="width:60px;text-align:left;"><input style="margin-top:-2px" type="checkbox" value="1" name="is_every_day" <if condition="$arrAct['is_every_day'] eq '1'">checked</if>>每天</label>
+          </div>
+          <foreach name="arrDate" item="v" key="k">
+          <label class="control-label" style="width:56px;text-align:left;"><input style="margin-top:-2px" type="checkbox" class="week_list" value="{$k+1}" <if condition="strpos($arrAct['str_week'], strval($k+1)) nheq false">checked="checked"</if> name="week[]">{$v}</label>
+          </foreach>
+          <div style="clear:both"></div>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <label class="control-label">每位用户获得币</label>
+        <div class="controls">
+          <input type="text" name="coin" value="{$arrAct['coin']}">
+          <span class="form-required">*</span>
+        </div>
+      </div>
+</fieldset>
+<div class="form-actions">
+  <button type="submit" class="btn btn-primary js-ajax-submit">提交</button>
+</div>
+</form>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+<script>
+
+  // 选择参与用户切换界面
+  $('.toggleBtn').click(function(){
+    var type = $(this).children('input').val();
+    if(parseInt(type) == 1){
+      $('#timeMain').css('display', 'none');
+    }else{
+      $('#timeMain').css('display', 'block');
+    }
+  });
+  // 选择每天则禁用下面选择周几
+  $('#setDay').click(function(){
+    if($(this).children('input').is(':checked')){
+      $('.week_list').attr('disabled', true);
+      $('.week_list').attr('checked', false);
+    }else{
+      $('.week_list').attr('disabled', false);
+    }
+  });
+
+  <if condition="$arrAct['is_every_day'] eq '1'">
+      var s = 1;
+  <else/>
+      var s = 0;
+  </if>
+  if(s == 1){
+    $('.week_list').attr('disabled', true);
+    $('.week_list').attr('checked', false);
+  }
+
+</script>
+</body>
+</html>

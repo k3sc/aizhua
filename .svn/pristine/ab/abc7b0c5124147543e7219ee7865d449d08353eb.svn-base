@@ -1,0 +1,34 @@
+<tc_include file="Public:head" />
+<title>{$site_name}</title>
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/common.css"/>
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/Personal.css"/>
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/font-awesome.min.css"/>
+ 
+</head>
+<body style="background-color:#f3f3f3">
+<tc_include file="Public:header" />
+<tc_include file="Home/Personal:header" />
+<div class="container">
+  <div class="Firstfloor">
+  <div class="Leftlayout">
+		<tc_include file="Home/Personal:navigation" />
+	</div>
+	<div class="rightlayout">
+	 <div class="jiben">
+	   <h3>修改头像</h3>
+           
+      </div>
+	 </div>
+	 
+	</div>
+  </div>
+
+</div>
+<tc_include file="Public:footer" />
+
+<script type="text/javascript" src="__PUBLIC__/home/js/Personal.js"></script>  
+
+
+
+</body>
+</html>

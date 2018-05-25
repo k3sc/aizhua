@@ -1,0 +1,35 @@
+<admintpl file="header" />
+</head>
+<body>
+<div class="wrap">
+    <ul class="nav nav-tabs">
+        <li ><a href="{:U('Service/index')}">人工服务列表</a></li>
+        <li ><a href="{:U('Service/text')}">人工服务文案列表</a></li>
+        <li class="active"><a >添加文案</a></li>
+    </ul>
+    <form method="post" class="form-horizontal js-ajax-form" action="{:U('Service/text_add',array('id'=>$row['id']))}">
+        <fieldset>
+            <div class="control-group">
+                <label class="control-label">文案内容</label>
+                <div class="controls">
+                    <input type="text" value="{$row.content}" name="content">
+                    <span class="form-required">*</span>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">服务所需娃娃币</label>
+                <div class="controls">
+                    <input type="text" value="{$row.coin}" name="coin">
+                    <span class="form-required">*</span>
+                </div>
+            </div>
+        </fieldset>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary js-ajax-submit">{:L('ADD')}</button>
+            <a class="btn" href="{:U('Service/text')}">{:L('BACK')}</a>
+        </div>
+    </form>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

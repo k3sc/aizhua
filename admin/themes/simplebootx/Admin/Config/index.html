@@ -1,0 +1,219 @@
+<admintpl file="header" />
+</head>
+<body>
+<style>
+input{
+  width:500px;
+}
+.form-horizontal textarea{
+ width:500px;
+}
+.nav-tabs>.current>a{
+    color: #95a5a6;
+    cursor: default;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-bottom-color: transparent;
+}
+.nav li
+{
+	cursor:pointer
+}
+.nav li:hover
+{
+	cursor:pointer
+}
+</style>
+
+
+	<div class="wrap js-check-wrap">
+		<!-- <ul class="nav nav-tabs">
+			<li class="active"><a href="{:U('Config/index')}">设置</a></li>
+			<li><a href="{:U('Config/lists')}">管理</a></li>
+			<li><a href="{:U('Config/add')}">添加</a></li>
+		</ul> -->
+		<ul class="nav nav-tabs js-tabs-nav">
+			<li><a>网站信息</a></li>
+			<li><a>APP版本管理</a></li>
+			<li><a>分享设置</a></li>
+			<li><a>PC推流设置</a></li>
+		</ul>
+		
+		<form method="post" class="form-horizontal js-ajax-form" action="{:U('Config/set_post')}">
+			<input type="hidden" name="post['id']" value="1">
+			<div class="js-tabs-content">
+				<!-- 网站信息 -->
+				<div>
+					<fieldset>
+						<div class="control-group">
+							<label class="control-label">网站标题</label>
+							<div class="controls">				
+								<input type="text" name="post[sitename]" value="{$config['sitename']}">网站标题
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">网站域名</label>
+							<div class="controls">				
+								<input type="text" name="post[site]" value="{$config['site']}"> 网站域名，http:// 开头  尾部不带 /
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">接口域名</label>
+							<div class="controls">				
+								<input type="text" name="post[site_url]" value="{$config['site_url']}"> 接口访问域名
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">钻石名称</label>
+							<div class="controls">				
+								<input type="text" name="post[name_coin]" value="{$config['name_coin']}">用户充值得到的虚拟币名称
+							</div>
+						</div><div class="control-group">
+							<label class="control-label">映票名称</label>
+							<div class="controls">				
+								<input type="text" name="post[name_votes]" value="{$config['name_votes']}">主播获得的虚拟票名称
+							</div>
+						</div><div class="control-group">
+							<label class="control-label">金光一闪提示</label>
+							<div class="controls">				
+									<input type="text" name="post[enter_tip_level]" value="{$config['enter_tip_level']}"> 用户等级大于该值时，进入房间有金光一闪效果
+							</div>
+						</div><div class="control-group">
+							<label class="control-label">IOS上架控制</label>
+							<div class="controls">				
+								<label class="radio inline"><input type="radio" value="0" name="post[ios_shelves]" <eq name="config['ios_shelves']" value="0">checked="checked"</eq>>隐藏</label>
+								<label class="radio inline"><input type="radio" value="1" name="post[ios_shelves]" <eq name="config['ios_shelves']" value="1">checked="checked"</eq>>显示</label>
+								<label class="checkbox inline"></label>
+							</div>
+						</div>
+					</fieldset>
+				</div>
+				<!-- APP版本管理 -->
+				<div>
+					<fieldset>
+						<div class="control-group">
+							<label class="control-label">APK版本号</label>
+							<div class="controls">				
+								<input type="text" name="post[apk_ver]" value="{$config['apk_ver']}"> 安卓APP最新的版本号，请勿随意修改
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">APK下载链接</label>
+							<div class="controls">				
+								<input type="text" name="post[apk_url]" value="{$config['apk_url']}"> 安卓最新版APK下载链接
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">IPA版本号</label>
+							<div class="controls">				
+								<input type="text" name="post[ipa_ver]" value="{$config['ipa_ver']}"> IOS APP最新的版本号，请勿随意修改
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">IPA下载链接</label>
+							<div class="controls">				
+								<input type="text" name="post[ipa_url]" value="{$config['ipa_url']}"> IOS最新版IPA下载链接
+							</div>
+						</div>
+					<div class="control-group">
+						<label class="control-label">二维码下载链接</label>
+						<div class="controls">
+								<div >
+									<input type="hidden" name="post[qr_url]" id="thumb" value="{$config['qr_url']}">
+									<a href="javascript:void(0);" onclick="flashuploadcut('thumb_images', '附件上传','thumb',thumb_images,'1,jpg|jpeg|gif|png|bmp,1,,,1','','','');return false;">
+									  <if condition="$config['qr_url'] neq ''">
+												<img src="{$config['qr_url']}" id="thumb_preview" width="135" style="cursor: hand" />
+										<else/>
+										    <img src="__TMPL__Public/assets/images/default-thumbnail.png" id="thumb_preview" width="135" style="cursor: hand" />
+										</if>
+									</a>
+									<input type="button" class="btn btn-small" onclick="$('#thumb_preview').attr('src','__TMPL__Public/assets/images/default-thumbnail.png');$('#thumb').val('');return false;" value="取消图片">
+								</div>
+							<span class="form-required"></span>
+						</div>
+					</div>
+						
+					</fieldset>
+				</div>
+				<!-- 分享设置 -->
+				<div>
+					<fieldset>
+						<div class="control-group">
+							<label class="control-label">微信推广域名</label>
+							<div class="controls">				
+								<input type="text" name="post[wx_siteurl]" value="{$config['wx_siteurl']}"> http:// 开头 参数值为用户ID
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">分享标题</label>
+							<div class="controls">				
+								<input type="text" name="post[share_title]" value="{$config['share_title']}"> 分享标题
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">分享话术</label>
+							<div class="controls">				
+								<input type="text" name="post[share_des]" value="{$config['share_des']}"> 分享话术
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">AndroidAPP下载链接</label>
+							<div class="controls">				
+								<input type="text" name="post[app_android]" value="{$config['app_android']}"> 分享用Android APP 下载链接
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">IOSAPP下载链接</label>
+							<div class="controls">				
+								<input type="text" name="post[app_ios]" value="{$config['app_ios']}"> 分享用IOS APP 下载链接
+							</div>
+						</div>
+						<div class="control-group">
+					
+				</div>
+						
+					</fieldset>
+				</div>
+				<!-- PC推流设置 -->
+				<div>
+					<fieldset>
+						<div class="control-group">
+							<label class="control-label">推流分辨率宽度</label>
+							<div class="controls">				
+								<input type="text" name="post[live_width]" value="{$config['live_width']}">PC主播端flash分辨路宽度
+							</div>
+						</div><div class="control-group">
+							<label class="control-label">推流分辨率高度</label>
+							<div class="controls">				
+								<input type="text" name="post[live_height]" value="{$config['live_height']}">PC主播端flash分辨路高度
+							</div>
+						</div><div class="control-group">
+							<label class="control-label">关键帧</label>
+							<div class="controls">				
+								<input type="text" name="post[keyframe]" value="{$config['keyframe']}">PC主播端flash关键帧（推荐15-30）
+							</div>
+						</div><div class="control-group">
+							<label class="control-label">fps帧数</label>
+							<div class="controls">				
+								<input type="text" name="post[fps]" value="{$config['fps']}">PC主播端flash FPS帧数（推荐30）
+							</div>
+						</div><div class="control-group">
+							<label class="control-label">品质</label>
+							<div class="controls">				
+								<input type="text" name="post[quality]" value="{$config['quality']}">PC主播端flash 画面品质（推荐90-100）
+							</div>
+						</div>
+						
+					</fieldset>
+				</div>
+			</div>
+			<div class="form-actions">
+				<button type="submit" class="btn btn-primary js-ajax-submit">{:L('SAVE')}</button>
+				<a class="btn" href="{:U('user/index')}">{:L('BACK')}</a>
+			</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/js/content_addtop.js"></script>
+</body>
+</html>

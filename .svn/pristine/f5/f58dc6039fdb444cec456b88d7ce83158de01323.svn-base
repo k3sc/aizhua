@@ -1,0 +1,30 @@
+<admintpl file="header" />
+</head>
+<body>
+<div class="wrap">
+    <ul class="nav nav-tabs">
+        <li ><a href="{:U('Labelwawa/index')}">娃娃标签列表</a></li>
+        <li class="active"><a>娃娃标签编辑</a></li>
+    </ul>
+    <form method="post" class="form-horizontal js-ajax-form" action="{:U('Labelwawa/add_post')}">
+        <fieldset>
+            <div class="control-group">
+                <label class="control-label">标签名称</label>
+                <div class="controls">
+                    <input type="text" value="{$wawa_label['name']}" name="name">
+                    <span class="form-required">*</span>
+                </div>
+            </div>
+
+            <input type="hidden" name="id" value="{$wawa_label['id']}">
+
+        </fieldset>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary js-ajax-submit">{:L('ADD')}</button>
+            <a class="btn" href="{:U('Labelwawa/index')}">{:L('BACK')}</a>
+        </div>
+    </form>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

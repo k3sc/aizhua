@@ -1,0 +1,186 @@
+body div {margin: 0; padding: 0}
+body {
+	padding:0px;
+	margin: 0 auto;
+	min-width: 300px;
+	max-width: 620px;
+}
+.main {
+	position: relative;
+	margin: 0 auto;
+	width: 100%;
+}
+.level {
+	position: relative;
+  width: 100%;
+  margin-bottom: 40px;
+}
+.text {
+	width:100%;
+	height:100%;
+	background: #fffefd;
+	padding-top: 15px;
+	padding-left: 15px;
+	padding-right: 15px;
+	box-sizing:border-box;
+}
+.level_val {
+	
+}
+.level_text {
+	text-align: left;
+	height:200px;
+}
+
+
+.mask {
+	width: 120px;
+	height: 120px;
+	border-radius: 50%;
+	left: 7px;
+	top: 7px;
+	background: #FFF;
+	position: relative;
+	text-align: center;
+	line-height: 120px;
+	font-size: 20px;
+	font-family: Arial;
+	color: #666666;
+}
+
+.level_val a {
+ color:#ffd350
+}
+.jindu{
+	width:100%;
+	overflow: hidden;
+}
+#level{
+	display:block; 
+	height:30px; 
+	font-size:2.8rem; 
+	position: absolute; 
+	width:100%; 
+	top: -10px;
+}
+#mylevel{
+	display:inline-block;
+	font-size:12px;
+	margin-top:25px;
+	text-align: center; 
+	height:15px;
+}
+h2 {
+	font-size: 20px;
+	text-align: left;
+	padding-bottom:10px;
+	line-height: 10px;
+	color: #666666;
+}
+.clear{ clear:both}
+p {
+	color: #666666;
+	margin: 6px;
+} 
+/*新版等级页面样式*/
+.level .speed
+{
+	overflow: hidden;
+}
+.level .speed .info
+{
+	width:100%;
+	background-image:url(../images/beijing.png);
+	background-size: 100% 100%;
+	margin-top: -50px;
+}
+.level .speed .info .image
+{
+  width: 40%;
+  margin: 0 auto;
+	text-align:center;
+	overflow: hidden;
+}
+.level .speed .info .image .img
+{
+  width: 50%;
+  display: inline-block;
+  font-size: 12px;
+  position: relative;
+  vertical-align: middle;
+  background-size: 100% 100%;
+  border-radius: 50%;
+  margin-left: 10px;
+}
+.level .speed .info .image .img:before
+{
+  content:"";
+  display: inline-block;
+  padding-bottom: 100%;
+  width: .1px;
+  vertical-align: middle;
+ }
+.level .speed .info .image .ding
+{
+	width:100%;
+  display: inline-block;
+  font-size: 12px;
+  position: relative;
+  vertical-align: middle;
+}
+.level .speed .info .image .ding:before
+{
+  content:"";
+  display: inline-block;
+  padding-bottom: 100%;
+  width: .1px;
+  vertical-align: middle;
+ }
+.level-1_1 {
+  cursor: pointer;
+  height: 12px;
+  margin-top: 8px;
+  position: relative;
+  width: 80%;
+  margin: 0 auto;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #ffd350;
+  border-radius: 4px;
+}
+.level .speed .info .image .name{
+	margin-bottom: 10px;
+  height: 20px;
+  margin-left: 10px;
+  font-size: 14px;
+  color: #fff;
+	font-weight:800
+}
+.level-1_1 .levelnp {
+  display: block;
+  height: 8px;
+  width: 98%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 10;
+  background: #ffffff;
+  border-radius: 4px;
+  text-align: center;
+  margin-left: 3px;
+  margin-top: 2px;
+}
+.level-1_1 .leveln {
+    height: 8px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    z-index: 5;
+}
+
+.level-1_1 .n1 {
+    background-color: #fff300;
+}
+.level-1_1 .n2 {
+    background-color: #fff300;
+}

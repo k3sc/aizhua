@@ -1,0 +1,281 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li><a href="{:U('Room/index')}">房间列表</a></li>
+			<li class="active"><a href="javascript:;">房间详细配置</a></li>
+		</ul>
+		<form method="post" class="form-horizontal js-ajax-form" enctype="multipart/form-data" action="{:U('Room/edit_post',array('id'=>$row['id']))}">
+			<fieldset>
+				<div class="control-group">
+					<label class="control-label">房间号</label>
+					<div class="controls">
+						<input type="text" name="room_no" value="{$row.room_no}">
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">房间名</label>
+					<div class="controls">
+						<input type="text" name="room_name" value="{$row.room_name}">
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">产品名称</label>
+					<div class="controls">
+						<select id="gift" name="type_id">
+							<foreach name="giftarr" item="vo">
+								<option <eq name="vo.id" value="$row.type_id">selected</eq> value="{$vo.id}">{$vo.giftname}( <php>echo str_pad($vo['id'],4,"0",STR_PAD_LEFT);</php> )</option>
+							</foreach>
+						</select>
+					</div>
+				</div>
+				<!--<div class="control-group">-->
+					<!--<label class="control-label">产品号</label>-->
+					<!--<div class="controls">-->
+						<!--<input id="wawa_no" type="text" readonly value="{$row.wawa_no}">-->
+					<!--</div>-->
+				<!--</div>-->
+				<div class="control-group">
+					<label class="control-label">产品图片</label>
+					<div class="controls">
+						<img id="goodsimg" src="{$row.gifticon}" style="width: 100px;height: 100px;">
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">绑定设备</label>
+					<div class="controls">
+						<select name="device_id">
+							<option value="0">选择设备</option>
+							<foreach name="device" item="vo">
+								<option <eq name="row.device_id" value="$vo.id">selected</eq> value="{$vo.id}">{$vo.deveci_no}</option>
+							</foreach>
+						</select>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">库存</label>
+					<div class="controls">
+						<input type="text" name="wawa_num" value="{$row.wawa_num}">
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">预警库存</label>
+					<div class="controls">
+						<input type="text" name="yj_kc" value="{$row.yj_kc}">
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">最多人数</label>
+					<div class="controls">
+						<input type="text" name="max_user" value="{$row.max_user}">
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">抓中次数</label>
+					<div class="controls">
+						<input type="text" name="zhuazhong_count" value="{$row.zhuazhong_count}" readonly>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">抓取总次数</label>
+					<div class="controls">
+						<input type="text" name="count" value="{$row.count}" readonly>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">房间状态</label>
+					<div class="controls">
+						<select name="status">
+							<option value="0" <eq name="row.status" value="0">selected</eq> >在线</option>
+							<option value="1" <eq name="row.status" value="1">selected</eq> >补货中</option>
+							<option value="2" <eq name="row.status" value="2">selected</eq> >维修中</option>
+                            <option value="3" <eq name="row.status" value="3">selected</eq> >游戏中</option>
+                            <option value="4" <eq name="row.status" value="4">selected</eq> >离线</option>
+						</select>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">上架/下架</label>
+					<div class="controls">
+						<select name="is_show">
+							<option value="1" <eq name="row.is_show" value="1">selected</eq> >上架</option>
+							<option value="0" <eq name="row.is_show" value="0">selected</eq> >下架</option>
+						</select>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">视频1推流</label>
+					<div class="controls">
+						{$row.video1_push}
+					</div>
+				</div>
+                <div class="control-group">
+					<label class="control-label">视频1拉流</label>
+					<div class="controls">
+						{$row.video1_pull}
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">视频2推流</label>
+					<div class="controls">
+						{$row.video2_push}
+					</div>
+				</div>
+                <div class="control-group">
+					<label class="control-label">视频2拉流</label>
+					<div class="controls">
+						{$row.video2_pull}
+					</div>
+				</div>
+                <div class="control-group">
+					<label class="control-label">音频推流</label>
+					<div class="controls">
+						{$row.audio_push}
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">音频拉流</label>
+					<div class="controls">
+						{$row.audio_pull}
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">背景音乐</label>
+					<div class="controls">
+						<select name="bgmusic_id">
+							<foreach name="bgmusic" item="vo">
+								<option value="{$vo.id}" <eq name="row.bgmusic_id" value="$vo.id">selected</eq> >{$vo.title}&nbsp;({$vo.id})</option>
+							</foreach>
+						</select>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">按钮音效</label>
+					<div class="controls">
+						<select name="yx_anniu">
+							<foreach name="anniu" item="vo">
+								<option value="{$vo.id}" <eq name="row.yx_anniu" value="$vo.id">selected</eq> >{$vo.title}&nbsp;({$vo.id})</option>
+							</foreach>
+						</select>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">成功音效</label>
+					<div class="controls">
+						<select name="yx_chenggong">
+							<foreach name="chenggong" item="vo">
+								<option value="{$vo.id}" <eq name="row.yx_chenggong" value="$vo.id">selected</eq> >{$vo.title}&nbsp;({$vo.id})</option>
+							</foreach>
+						</select>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">倒计时音效</label>
+					<div class="controls">
+						<select name="yx_daojishi">
+							<foreach name="daojishi" item="vo">
+								<option value="{$vo.id}" <eq name="row.yx_daojishi" value="$vo.id">selected</eq> >{$vo.title}&nbsp;({$vo.id})</option>
+							</foreach>
+						</select>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">开始音效</label>
+					<div class="controls">
+						<select name="yx_kaishi">
+							<foreach name="kaishi" item="vo">
+								<option value="{$vo.id}" <eq name="row.yx_kaishi" value="$vo.id">selected</eq> >{$vo.title}&nbsp;({$vo.id})</option>
+							</foreach>
+						</select>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">失败音效</label>
+					<div class="controls">
+						<select name="yx_shibai">
+							<foreach name="shibai" item="vo">
+								<option value="{$vo.id}" <eq name="row.yx_shibai" value="$vo.id">selected</eq> >{$vo.title}&nbsp;({$vo.id})</option>
+							</foreach>
+						</select>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">下抓音效</label>
+					<div class="controls">
+						<select name="yx_xiazhua">
+							<foreach name="xiazhua" item="vo">
+								<option value="{$vo.id}" <eq name="row.yx_xiazhua" value="$vo.id">selected</eq> >{$vo.title}&nbsp;({$vo.id})</option>
+							</foreach>
+						</select>
+					</div>
+				</div>
+
+				<div class="control-group">
+					<label class="control-label">概率模式</label>
+					<div class="controls">
+						<php>
+							if( $row['is_sellmodel'] == 0 && $row['is_roommodel'] == 0 ){
+								echo '暂无配置';
+							}else{
+								if( $row['is_sellmodel'] == 1 )echo '用户贩卖模式、';
+								if( $row['is_roommodel'] == 1 )echo '房间概率模式   【抓'.$row['claw_count'].'次出一次强抓力】、';
+							}
+						</php>
+					</div>
+				</div>
+				
+				<!--<div class="control-group">-->
+					<!--<label class="control-label">概率模式</label>-->
+					<!--<div class="controls">-->
+						<!--<input type="checkbox" name="proba_model[]" value="1"-->
+							<!--<foreach name="row.proba_model" item="vo">-->
+								<!--<if condition="$vo eq 1">checked</if>-->
+							<!--</foreach>-->
+						<!--&gt;公共模式&nbsp;&nbsp;-->
+						<!--<input type="checkbox" name="proba_model[]" value="2"-->
+							<!--<foreach name="row.proba_model" item="vo">-->
+								<!--<if condition="$vo eq 2">checked</if>-->
+							<!--</foreach>-->
+						<!--&gt;房间概率模式&nbsp;&nbsp;-->
+						<!--<input type="checkbox" name="proba_model[]" value="3"-->
+							<!--<foreach name="row.proba_model" item="vo">-->
+								<!--<if condition="$vo eq 3">checked</if>-->
+							<!--</foreach>-->
+						<!--&gt;用户贩卖模式&nbsp;&nbsp;-->
+					<!--</div>-->
+				<!--</div>-->
+			</fieldset>
+			<div class="form-actions">
+				<button type="submit" class="btn btn-primary js-ajax-submit">{:L('EDIT')}</button>
+				<a class="btn" href="{:U('Room/index')}">{:L('BACK')}</a>
+			</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+</body>
+<script>
+	$(function(){
+	    $("#gift").change(function(){
+	        var giftid = $(this).val();
+	        $.ajax({
+				url : "{:U('Room/handle_ajax')}",
+				type : 'post',
+				data : 'id='+giftid,
+				dataType : 'json',
+				success : function(res){
+				    if( res.status == 1 ){
+                        $("#wawa_no").val(res.wawa_no);
+                        $("#goodsimg").attr('src',res.gifticon);
+					}
+
+				},
+				error : function(){
+				    alert('系统内部错误');
+				}
+			});
+		});
+
+	});
+</script>
+</html>

@@ -1,0 +1,36 @@
+<admintpl file="header" />
+</head>
+<body>
+<div class="wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:U('Users/index')}">用户列表</a></li>
+        <li class="active"><a >故障上报记录</a></li>
+    </ul>
+    <table class="table table-hover table-bordered">
+        <thead>
+        <tr>
+            <th align="center">ID</th>
+            <th>内容</th>
+            <th>花费金币</th>
+            <th>房间名（房间号）</th>
+            <th>处理状态</th>
+            <th>时间</th>
+        </tr>
+        </thead>
+        <tbody>
+        <foreach name="row" item="vo">
+            <tr>
+                <td>{$vo.id} </td>
+                <td>{$vo.content}</td>
+                <td>{$vo.coin}</td>
+                <td>{$vo.room_name}({$vo.room_no})</td>
+                <td><eq name="vo.status" value="1">已处理<else/>未处理</eq></td>
+                <td>{$vo.ctime|date="Y-m-d H:i:s",###}</td>
+            </tr>
+        </foreach>
+        </tbody>
+    </table>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

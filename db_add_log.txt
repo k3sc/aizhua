@@ -1,0 +1,23 @@
+
+
+1、cmf_pay_record 娃娃币充值记录表
+2、cmf_coin_bill  娃娃币账单记录表
+3、cmf_waybill    运单表
+4、cmf_user_wawas 我的娃娃表（用户已经抓到的娃娃）
+5、cmf_charge_rules	充值规则表
+6、cmf_gift  娃娃管理表(所有的娃娃)
+7、cmf_users 用户表  新增字段user_setting : 用户个人设置，包括语言切换，音乐、音效控制(保存json数组)
+8、cmf_users_gift 用户礼品表
+9、cmf_give_gift  赠送礼品表
+10、cmf_code_record 邀请码兑换记录表
+11、cmf_config 新增字段code_wawabi:用户填写邀请码获赠的娃娃币数量，code_wawabi_max：用户填写邀请码获赠的娃娃币数量最大上限，FAQ：常见问题，user_agreement：用户协议
+12、cmf_users_convert 用户兑换礼品记录表
+13、cmf_notice  消息通知表
+14、cmf_game_history 抓取娃娃历史记录表(游戏记录表)
+15、cmf_game_appeal 用户申诉表
+16、cmf_game_audience 房间观众表
+17、cmf_gift_type 娃娃分类表
+18、cmf_gift_label 娃娃标签表
+19、cmf_kd   快递公司表
+20、cmf_fault    故障表
+21、cmf_appeal_text 申诉文案表

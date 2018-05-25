@@ -1,0 +1,68 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li ><a href="{:U('Level/author')}">等级列表</a></li>
+			<li class="active"><a >等级添加</a></li>
+		</ul>
+		<form method="post" class="form-horizontal js-ajax-form" action="{:U('Level/author_addpost')}">
+			<fieldset>
+
+				<div class="control-group">
+					<label class="control-label">等级</label>
+					<div class="controls">
+						<input type="text" name="levelid" value="">
+						<span class="form-required">*</span>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">等级名称</label>
+					<div class="controls">
+						<input type="text" name="levelname">
+						<span class="form-required">*</span>
+					</div>
+				</div>
+                <div class="control-group">
+					<label class="control-label">图标</label>
+					<div class="controls">
+								<div >
+									<input type="hidden" name="levelthumb" id="thumb" value="">
+									<a href="javascript:void(0);" onClick="flashupload('thumb_images', '附件上传','thumb',thumb_images,'1,jpg|jpeg|gif|png|bmp,1,,,1','','','');return false;">
+									  
+										    <img src="__TMPL__Public/assets/images/default-thumbnail.png" id="thumb_preview" width="135" style="cursor: hand" />
+										
+									</a>
+									<input type="button" class="btn btn-small" onClick="$('#thumb_preview').attr('src','__TMPL__Public/assets/images/default-thumbnail.png');$('#thumb').val('');return false;" value="取消图片">
+								</div>
+						<span class="form-required"></span>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">礼物数量上限</label>
+					<div class="controls">
+						<input type="text" name="level_up" maxlength="9">
+						<span class="form-required">*</span>
+					</div>
+				</div>
+                
+                <div class="control-group">
+					<label class="control-label">管理房间数量</label>
+					<div class="controls">
+						<input type="text" name="level_room">
+						<span class="form-required">*</span>
+					</div>
+				</div>
+
+
+			</fieldset>
+			<div class="form-actions">
+				<button type="submit" class="btn btn-primary js-ajax-submit">{:L('ADD')}</button>
+				<a class="btn" href="{:U('Level/author')}">{:L('BACK')}</a>
+			</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/content_addtop.js"></script>
+</body>
+</html>

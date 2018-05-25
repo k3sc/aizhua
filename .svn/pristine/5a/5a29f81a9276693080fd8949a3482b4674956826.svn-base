@@ -1,0 +1,34 @@
+<admintpl file="header" />
+</head>
+<body>
+<div class="wrap">
+    <ul class="nav nav-tabs">
+        <li ><a href="{:U('Rechargeconfig/index')}">充值设置</a></li>
+        <li><a href="{:U('Rechargeconfig/add')}">添加设置</a></li>
+        <li class="active"><a >充值方式开关</a></li>
+    </ul>
+    <form method="post" class="form-horizontal js-ajax-form" action="">
+        <fieldset>
+            <div class="control-group">
+                <label class="control-label">充值方式</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                <foreach name="payarr" item="vo" key="ko">
+                    <input type="checkbox" name="paytype[]" value="{$ko}"
+
+                    <foreach name="row.paytype" item="v">
+                        <eq name="v" value="$ko">checked</eq>
+                    </foreach>
+
+                    >{$vo}&nbsp;&nbsp;
+                </foreach>
+            </div>
+
+        </fieldset>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary js-ajax-submit">{:L('EDIT')}</button>
+            <a class="btn" href="{:U('Rechargeconfig/index')}">{:L('BACK')}</a>
+        </div>
+    </form>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

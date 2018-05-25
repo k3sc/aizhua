@@ -1,0 +1,24 @@
+<admintpl file="header" />
+</head>
+<body>
+<div class="wrap">
+	<ul class="nav nav-tabs">
+		<li class="active"><a href="">设置值班管理员手机号</a></li>
+		<li ><a href="{:U('Fault/index')}">故障列表</a></li>
+	</ul>
+	<form method="post" class="form-horizontal js-ajax-form" action="{:U('Fault/setphone')}">
+		<fieldset>
+			<div class="control-group">
+				<label class="control-label">管理员手机号</label>&nbsp;&nbsp;&nbsp;&nbsp;
+				<input type="text" name="phone" value="{$config.phone}">
+			</div>
+		</fieldset>
+		<div class="form-actions">
+			<button type="submit" class="btn btn-primary js-ajax-submit">{:L('EDIT')}</button>
+			<a class="btn" href="{:U('Fault/index')}">{:L('BACK')}</a>
+		</div>
+	</form>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

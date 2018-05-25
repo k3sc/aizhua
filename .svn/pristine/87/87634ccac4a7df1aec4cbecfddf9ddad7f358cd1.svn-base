@@ -1,0 +1,90 @@
+<admintpl file="header" />
+</head>
+<body>
+<div class="wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="">上币活动列表</a></li>
+        <li><a href="{:U('Activeconfig/add_act')}">添加上币活动</a></li>
+    </ul>
+
+    <a href="{:U('Activeconfig/add_act')}" class="btn btn-success btn-sm">+ 添加上币活动</a>
+    <span class="text-error"><strong>启用上币活动需要一定时间，请耐心等待系统执行完毕...</strong></span>
+    <div style="height:20px;"></div>
+    <form method="post" class="well form-search" action="{:U('Activeconfig/index')}">
+        <span>启用时间：</span>
+        <input class="js-date date" style="width:100px;margin-top:5px;" type="text" name="sdate" value="{$Think.post.sdate}" placeholder="">
+        至
+        <input class="js-date date" style="width:100px;margin-top:5px;" type="text" name="edate" value="{$Think.post.edate}" placeholder="">
+        <span style="">活动状态：</span>
+        <select name="status" style="width:auto;margin-top:5px;">
+            <option value="">全部</option>
+            <option value="1" <if condition="$Think.post.status eq '1'">selected="selected"</if>>已启用</option>
+            <option value="2" <if condition="$Think.post.status eq '2'">selected="selected"</if>>未启用</option>
+        </select>
+        <span style="">活动标题：</span>
+        <input type="text" name="title" value="{$Think.post.title}" style="width:100px;margin-top:5px;" placeholder="请输入活动标题">
+        <span style="">活动ID：</span>
+        <input type="text" name="id" value="{$Think.post.id}" style="width:100px;margin-top:5px;" placeholder="请输入活动ID">
+        <input type="submit" class="btn btn-primary" value="搜索">
+    </form>
+    <form method="post" class="js-ajax-form" action="{:U('Ads/listorders')}">
+        <table class="table table-hover table-bordered">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>活动标题</th>
+                <th>活动简介</th>
+                <th>赠送金币</th>
+                <th>参与用户</th>
+                <th>活动状态</th>
+                <th>启用时间</th>
+                <th>发布时间</th>
+                <th style="text-align:center;">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <foreach name="list" item="vo">
+                <tr>
+                    <td>{$vo['id']}</td>
+                    <td>{$vo['title']}</td>
+                    <td>{$vo['about']}</td>
+                    <td>{$vo['coin']}</td>
+                    <td>
+                    <if condition="$vo['type'] eq 1">
+                        {$vo['users']}
+                    <else/>
+                        所有用户
+                    </if>
+                    </td>
+                    <td>
+                        <if condition="$vo['status'] eq 1">
+                            已启用
+                        <else/>
+                            未启用
+                        </if>
+                    </td>
+                    <td>
+                        <if condition="$vo['atime'] neq 0">
+                            {$vo['atime']|date="Y-m-d H:i:s",###}</td>
+                        <else/>
+                            无
+                        </if>
+                    </td>
+                    <td>{$vo['ctime']|date="Y-m-d H:i:s",###}</td>
+                    <td style="text-align:center;">
+                        <a href="{:U('Activeconfig/del',array('id'=>$vo['id']))}" class="js-ajax-dialog-btn" data-msg="您确定要删除吗？">删除</a>
+                        <if condition="$vo['status'] neq 1">
+                            | <a href="{:U('Activeconfig/action',array('id'=>$vo['id']))}" class="js-ajax-dialog-btn" data-msg="启用上币活动需要一定时间，请耐心等待系统执行完毕...">启用</a>
+                            | <a href="{:U('Activeconfig/add_act',array('id'=>$vo['id']))}" >编辑</a>
+                        </if>
+                    </td>
+                </tr>
+            </foreach>
+            </tbody>
+        </table>
+        <div class="pagination">{$page}</div>
+    </form>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

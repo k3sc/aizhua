@@ -1,0 +1,74 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a >人工服务列表</a></li>
+			<li ><a href="{:U('Service/text')}">人工服务文案列表</a></li>
+			<li ><a href="{:U('Service/game_service')}">人工服务开关</a></li>
+		</ul>
+
+		<table class="table table-hover table-bordered">
+			<thead>
+				<tr>
+					<!--<th align="center">ID</th>-->
+					<th>房间名</th>
+					<th>房间号</th>
+					<th>设备号</th>
+					<th>用户昵称</th>
+					<th>用户ID</th>
+					<th>内容</th>
+					<th>状态</th>
+					<th>时间</th>
+					<th align="center">{:L('ACTIONS')}</th>
+				</tr>
+			</thead>
+			<tbody>
+				<foreach name="row" item="vo">
+				<tr>
+					<!--<td align="center">{$vo.id}</td>-->
+					<td>{$vo.room_name}</td>
+					<td>{$vo.room_no}</td>
+					<td>{$vo.device_no}</td>
+					<td>{$vo.user_nicename}</td>
+					<td>{$vo.user_id}</td>
+					<td>{$vo.content}</td>
+					<td <eq name="vo.status" value="0">class="text-error"<else/>class="text-success"</eq> ><strong>{$statusArr[$vo['status']]}</strong></td>
+					<td>{$vo.ctime|date="Y-m-d H:i:s",###}</td>
+					<td align="center">
+						<eq name="vo.status" value="0">
+							<a href="{:U('Service/handle',array('id'=>$vo['id']))}" class="btn btn-danger btn-small">标记处理</a>
+						<else/>
+							<a href="javascript:;" class="btn btn-success btn-small">已处理</a>
+						</eq>
+						<a href="{:U('Service/del',array('id'=>$vo['id']))}" class="js-ajax-dialog-btn" data-msg="您确定要删除吗？">删除</a>
+					</td>
+				</tr>
+				</foreach>
+			</tbody>
+		</table>
+		<div class="pagination">{$page}</div>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+</body>
+
+<script>
+	$(function(){
+	    $("#handle").click(function(){
+	        var id = $(this).attr('data');
+	        $.ajax({
+				url : "{:U('Service/handle',array('id'=>"+id+"))}",
+				type : 'post',
+				dataType : 'json',
+				success : function (res) {
+					if( res.status == 1 ){
+
+					}
+
+                }
+			});
+		});
+	});
+</script>
+
+</html>

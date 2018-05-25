@@ -1,0 +1,17 @@
+@CHARSET "UTF-8";
+
+.input-order{width:30px;}
+.wrap {
+padding: 20px 20px 70px;
+}
+.table td {font-size:12px;}
+
+
+/*多项单选*/
+.multi-radio{ display:inline-block; vertical-align:middle; *display:inline; }
+.multi-radio:after{ clear:both; content:"."; display:block; height:0; visibility:hidden; }
+.multi-radio .boxwrap{ display:inline-block; vertical-align:middle; *display:inline;}
+.multi-radio a{ display:inline-block; margin-right:-1px; float:left; padding:5px 15px; height:30px; line-height:20px; border:1px solid #d4d4d4; vertical-align:middle; color:#333; font-size:100%; cursor:pointer; }
+.multi-radio a:hover{ background:#C9E1EF; text-decoration:none; }
+.multi-radio a:active{ text-decoration:none; }
+.multi-radio a.selected{ background:#16a0d3; border-color:#1096c7; color:#fff; }

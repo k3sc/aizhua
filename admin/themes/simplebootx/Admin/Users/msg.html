@@ -1,0 +1,55 @@
+<admintpl file="header" />
+</head>
+<body>
+<div class="wrap">
+    <ul class="nav nav-tabs">
+
+        <li class="active"><a href="javascript:;">消息推送</a></li>
+    </ul>
+    <form method="post" class="form-horizontal js-ajax-form" action="{:U('users/msg')}">
+        <fieldset>
+		<input type="hidden" name="t" value="{$t}">
+            <div class="control-group">
+                <label class="control-label">推送用户</label>
+                <div class="controls">
+                    <label class="control-label toggleBtn" style="width:150px;text-align:left;"><input style="margin-top:-2px" type="radio" value="1" name="type" checked >部分用户(id)</label>
+                    <label class="control-label toggleBtn" style="width:150px;text-align:left;"><input style="margin-top:-2px" type="radio" value="2" name="type" >所有用户</label>
+                </div>
+            </div>
+            <div class="control-group" id="userMain" style="">
+                <label class="control-label"></label>
+                <div class="controls">
+                    <textarea name="users" id="userList" style="width:400px;height:150px;"> {$ids}</textarea>
+                    <span class="form-required">
+              可添加多个用户,以逗号隔开!
+              <br><font color="red"><strong>注意：请使用英文逗号，请勿输入多余字符和空格</strong></font>
+              <br><font color="green">正确示例：1,2,3,4,5</font>
+            </span>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label">推送标题</label>
+                <div class="controls">
+                    <input type="text" name="title" value="{$msg['title']}">
+                    <span class="form-required">*</span>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">推送内容</label>
+                <div class="controls">
+                    <textarea name="about" style="width: 400px;height:150px;">{$msg['about']}</textarea>
+                    <span class="form-required">*</span>
+                </div>
+            </div>
+
+        </fieldset>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary js-ajax-submit" >提交</button>
+        </div>
+    </form>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>
+

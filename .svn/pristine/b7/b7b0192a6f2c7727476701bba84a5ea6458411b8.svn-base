@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta content="telephone=no" name="format-detection">
+    <title>申请资料</title>
+    <style type="text/css">
+        *{margin: 0;padding:0;font-family: Helvetica;}
+        .title{color: #000;font-weight: 600;font-size:1em;width: 97%;padding-left: 3%;line-height: 52px;margin-top:12px;}
+        .line{width: 92%;margin-left: 4%;background-color:#EBEBEB;height: 1px;border: none;}
+        #tab-img{width: 100%;}
+        #tab-img img{width: 45%;margin-top: 17px;}
+        .test-personal{color: #A9A9A9;font-size: 0.8em;padding-left: 4%;height: 20px;line-height: 50px;}
+        .prompt{color: #D7D8D8;font-size: 0.8em;width: 61%;margin-left: 88px;letter-spacing: -1px;}
+        .prompt2{width:80%;margin-left:88px;color: #D7D8D8;font-size: 0.8em;word-wrap: break-word;}
+        .fl{float: left;}
+        .fr{float: right;}
+        .cb{clear: both;}
+        .cl{clear: left;}
+        .r-img{width: 24px;float: right;margin-top: 6px;margin-right: 4%;display:none;}
+        input[type="text"]{border: solid 1px #D3D4D4; border-radius: 4px;padding-left: 4px;height: 34px;width: 62%;font-size:1em;color:#C9CACA;outline:none;}
+        input[type="radio"]{margin: 0 9%;}
+        input[type="file"]{display: none;}
+        .box-data{color: #535353;font-size:1em;height: 40px;padding-left: 11%;margin-top: 14px;}
+        .star{color: red;}
+        .personal{margin-left: 4%;}
+        .company{margin-right: 4%;}
+        .padd{padding-left: 3%;}
+        select{height: 34px;width: 63.5%;background-color: #fff;}
+        /*#val-baidu{margin-left: 15%;width:70%;}*/
+        #resident{margin-top: 24px;position: relative;}
+        .img-sfz{width: 30%;margin-left: 2.5%;}
+        .exam{width: 78%;margin-left: 3%;margin-top: 12px;}
+        #smt{width: 80%;height:47px;font-size:1em;letter-spacing:2px;background-color: #fff;color: #C6C9C9;border:solid 1px #C6C9C9;border-radius: 30px;margin-top:17px;margin-left:10%;margin-bottom:70px;}
+        #progress1,#progress2,#progress3{margin-left:10%;width:80%;margin-top:17%;height: 6px;border:solid 1px #fff;background-color:#ccc;border-radius: 20px;position:relative;}
+        .progress{width:0;height:4px;border:1px solid #fff;border-radius:20px;position:absolute;left:0;top:0;background-color:#fff;}
+        .shadd{width: 29%;position:absolute;top:1px;background: rgba(0,0,0,0.4);display: none;}
+        .shad{left: 3%;}
+        .shad2{left: 35.5%;}
+        .shad3{left: 68%;}
+        .img-upload{height:100%;position: absolute;left: 0px;right: 0px;top: 0px;bottom: 0px;margin: 0 auto;}
+        .box-upload1{left: 3%;}
+        .box-upload2{left: 36%;}
+        .box-upload3{left: 68%;}
+        .box-upload{width: 28%;height:53%;position: absolute;top: 13%;display: none;}
+        .title-upload{width: 100%;font-size: 0.8em;color: #fff;margin-top: 15%;text-align: center;}
+        #box-popup{width: 258px;height: 120px;position:fixed;left: 0;right: 0;top: 0;bottom: 0;margin:240px auto;background-color:#fff;z-index:3;border-radius:5px;border:1px solid #ECECEC;display: none; }
+        #tab{margin-top:13px;width: 100%;position: relative;border-top: solid 1px #ECECEC;border-bottom-left-radius: 5px;border-bottom-right-radius: 5px;height: 47px;}
+        .tab-cancel,.tab-determine{width:49%;font-size: 1.1em;color: #000000;text-align: center;line-height: 47px;}
+
+        .s-add-img{width: 44%;margin-left: 74.5px}
+        .s-box-data{color: #535353;font-size: 1em;margin-top: 14px;position: relative;}
+        .s-shad{width: 41.5%;height:92%;position:absolute;top:1%;left:87px;background: rgba(0,0,0,0.4);display: none;}
+        .s-shad2{width: 38%;height:88%;position:absolute;top:4%;left:90px;background: #fff;display: none;}
+        #s-progress{margin-left:10%;width:80%;margin-top:17%;height: 10px;border:solid 1px #fff;background-color:#ccc;border-radius: 20px;position:relative;}
+        .s-box-upload{width: 107%;height: 65%;position: absolute;top: 14%}
+        .s-ipt-file{width: 0;height: 8px;border: 1px solid #fff;border-radius: 20px;position: absolute;left: 0;top: 0;background-color: #fff;}
+    </style>
+    <script src="__PUBLIC__/js/jquery.js"></script>    
+		<script src="__PUBLIC__/rz/js/ajaxfileupload.js"></script></head>
+<body>
+<img src="__PUBLIC__/rz/images/id_top.jpg" style="position:absolute;left: 0;top: 0;width:100%;">
+<p class="title" style="margin-top: 34px;">选择注册帐号类型</p>
+<div class="line"></div>
+<div id="tab-img">
+    <img src="__PUBLIC__/rz/images/personal.jpg" class="personal fl">
+    <img src="__PUBLIC__/rz/images/company.jpg" class="company fr">
+    <div class="cb"></div>
+</div>
+<div class="test-personal">适用于映客用户个人身份的认证</div>
+<p class="title">基本资料</p>
+<div class="line"></div>
+<form method="post" action="./index.php?g=User&m=Rz&a=submitsave" enctype="multipart/form-data">
+    <div class="box-data" style="margin-top:20px;">昵称<span class="star">* </span><span class="fos-name" style="color:#444;display:inline-block;margin-left:20px;"></span>
+				<input type="text" value="{$userinfo['user_nicename']}" disabled='disabled' name="nickname" style="width:70%;" id="val-nick" data-index="img-nick" placeholder="  请输入您的昵称"><img src="" class="r-img" id="img-nick">
+    </div>
+    <div class="box-data" style="margin-top:2px;">性别<span class="star" style="color: red;">* </span><span class="fos-reg" style="color:#444;display:inline-block;margin-left:20px;"></span>
+        <span style="color:#444;"></span><input type="radio" disabled='disabled' name="gender"
+        class="ipt-radio-b" <eq name="userinfo['id']" value="1">checked</eq> value="1"
+        "><span class="people">男</span><input type="radio" disabled='disabled' name="gender"
+        class="ipt-radio-g" <eq name="userinfo['id']" value="2">checked</eq>  value="2"
+        "><span class="people">女</span>
+    </div>
+    <p class="title" style="margin-top:-5px;">认证消息</p>
+
+    <div class="line"></div>
+
+    <div class="box-data padd">认证类型<span style="color: red;">* </span>
+        <select name="auth_type" onchange="s_type($(this))">
+            <option value="1">影视演员</option>
+            <option value="2" selected>视频达人</option>
+        </select>
+    </div>
+    <div class="prompt">平台内粉丝数达到<span style="color: #535353;">3万</span>及以上,作品不少于<span style="color: #535353;">20</span></div>
+    <div class="box-data padd">认证名称<span style="color: red;">* </span><input value="" type="text" name="real_name"
+                                                         data-index="img-name" onblur="empty_val($(this))"
+                                                         placeholder="  请输入您的真实姓名"><img src="" class="r-img"
+                                                                                        id="img-name"></div>
+    <div class="box-data padd">联系方式<span style="color: red;">* </span><input value="" type="text" name="phone" id="val-phone" data-index="img-phone"
+                                                         onblur="phone_test($(this))" placeholder="  请输入你的联系方式"><img
+            src="" class="r-img" id="img-phone"></div>
+    <div class="prompt">请填写真实有效的联系方式</div>
+    <div class="box-yingshi" style="display: none;">
+        <div class="box-data padd">影视作品<span style="color: red;">* </span><input value="" type="text" name="video_url[]" id="val-movie"
+                                                             data-index="img-movie" onblur="movie_url($(this))"
+                                                             placeholder="  请输入或粘贴作品链接"><img src="" class="r-img"
+                                                                                             id="img-movie"></div>
+        <div class="prompt2">链接从手机浏览器中复制</div>
+        <div class="box-data" style="padding-left:0;width:97%;"><input value="" type="text" name="video_url[]" class="ipt"
+                                                                       id="val-movie2" data-index="img-movie2"
+                                                                       onblur="movie_url($(this))"
+                                                                       onfocus="movie_judge($(this))"
+                                                                       placeholder="  请输入或粘贴作品链接"><img src="" class="r-img"
+                                                                                                       style="margin-right:4px;"
+                                                                                                       id="img-movie2">
+        </div>
+        <div class="box-data" style="padding-left:0;width:97%;"><input value="" type="text" name="video_url[]" class="ipt"
+                                                                       id="val-movie3" data-index="img-movie3"
+                                                                       onblur="movie_url($(this))"
+                                                                       onfocus="movie_judge($(this))"
+                                                                       placeholder="  请输入或粘贴作品链接"><img src="" class="r-img"
+                                                                                                       style="margin-right:4px;"
+                                                                                                       id="img-movie3">
+        </div>
+        <div class="prompt2" style="color: #999999">影视作品要求：院线和网络<span style="color: #e86d83">公开发行</span>的影视作品（作品总点击量不低于1000次）担任<span style="color: #e86d83">主要角色</span>[仅支持优酷、土豆、爱奇艺、乐视、腾讯视频网站的链接]</div>
+    </div>
+    <div class="box-shipin">
+        <div class="box-data padd">来自平台<span style="color: red;">* </span>
+            <select name="platform_name" data-index="s-select" onchange="s_change($(this))">
+                <option value="">请选择你所在平台的名称</option>
+                <option value="美拍">美拍</option>
+                <option value="秒拍">秒拍</option>
+                <option value="小咖秀">小咖秀</option>
+                <option value="快手">快手</option>
+                <option value="唱吧">唱吧</option>
+            </select>
+            <img src="" class="r-img" id="s-select" style="display: none;">
+        </div>
+        <div class="s-plats" style="display: none;">
+            <div class="box-data padd">平台<span style="color: #fff">我</span>ID<span style="color: red;">* </span><input value="" type="text" name="platform_id"
+                                                                                                                       data-index="img-platid" onblur="s_change($(this))"
+                                                                                                                       placeholder="  请输入你在该平台的ID号"><img src="" class="r-img" id="img-platid"></div>
+            <div class="prompt">请填写真实有效的ID,方便您通过审核</div>
+            <div class="padd s-box-data">
+                <span style="position: absolute;top: 1px;">个人主页</span>
+                <span style="color: red;position: absolute;top: 1px;left: 75px;">* </span>
+                <img src="__PUBLIC__/rz/images/add.jpg" class="s-add-img" onclick="file_click2()">
+                <div class="s-shad">
+                    <div class="title-upload">正在上传中...</div>
+                    <div id="s-progress">
+                        <div class="progress s-ipt-file"></div>
+                    </div>
+                </div>
+                <div class="s-shad2">
+                    <div class="s-box-upload" onclick="file_click2()">
+                        <img src="__PUBLIC__/rz/images/ok2.jpg" class="img-upload" >
+                    </div>
+                </div>
+            </div>
+            <div class="prompt">上传该平台个人主页截图</div>
+        </div>
+        <input value="" type="hidden" name="platform_pic" class="s-plat-pic">
+        <div id="s-upload"></div>
+    </div>
+    <div class="box-data padd">百度百科<span style="color:white">* </span><input value="" type="text" name="baike_url" id="val-baidu"
+                                                                             data-index="img-baidu"
+                                                                             onblur="baike($(this))"
+                                                                             placeholder=" 请填写个人百度百科链接"><img src=""
+                                                                                                             class="r-img"
+                                                                                                             id="img-baidu">
+    </div>
+    <p class="title">身份认证</p>
+    <div class="line"></div>
+    <div id="resident">
+        <img src="__PUBLIC__/rz/images/identity_face2.jpg" class="fl img-sfz" data-index="ipt-file1" onclick="file_click($(this))">
+        <img src="__PUBLIC__/rz/images/identity_back2.jpg" class="fl img-sfz" data-index="ipt-file2" onclick="file_click($(this))">
+        <img src="__PUBLIC__/rz/images/identity_handle2.jpg" class="fl img-sfz" data-index="ipt-file3" onclick="file_click($(this))">
+        <div class="cl"></div>
+        <div class="shad shadd" data-select="ipt-file1">
+            <div class="title-upload">正在上传中...</div>
+            <div id="progress1">
+                <div class="progress ipt-file1"></div>
+            </div>
+        </div>
+        <div class="shad2 shadd" data-select="ipt-file2">
+            <div class="title-upload">正在上传中...</div>
+            <div id="progress2">
+                <div class="progress ipt-file2"></div>
+            </div>
+        </div>
+        <div class="shad3 shadd" data-select="ipt-file3">
+            <div class="title-upload">正在上传中...</div>
+            <div id="progress3">
+                <div class="progress ipt-file3"></div>
+            </div>
+        </div>
+        <div class="box-upload1 box-upload" data-index="ipt-file1" onclick="file_click($(this))"><img src="" class="img-upload" ></div>
+        <div class="box-upload2 box-upload" data-index="ipt-file2" onclick="file_click($(this))"><img src="" class="img-upload"></div>
+        <div class="box-upload3 box-upload" data-index="ipt-file3" onclick="file_click($(this))"><img src="" class="img-upload"></div>
+        <input value="" type="hidden" name="identity_face" class="sf1">
+        <input value="" type="hidden" name="identity_back" class="sf2">
+        <input value="" type="hidden" name="identity_handle" class="sf3">
+        <input name="_csrf" type="hidden" id="_csrf" value="Ri1BOG1HTS1wTC5KPB0HeTdjBVY.NT5mKlxzfQshK2wDYHAOXX8ueg==">
+    </div>
+    <img src="__PUBLIC__/rz/images/id_handle.jpg" class="exam">
+    <input type="hidden" id="reg" value="男">
+
+    <div id="upload"></div>
+    <button id="smt" disabled>提交</button>
+</form>
+</body>
+</html>
+<script>
+    var isiPad = /iPad/i.test(navigator.userAgent);
+    var isiPhone = /iPhone|iPod/i.test(navigator.userAgent);
+    var isIOS = (isiPad || isiPhone);
+		var uid={$userinfo['id']};
+    $(function(){
+        if($(window).width()==320){$("select").css({"width":"61.5%"}); $(":text").css({"width":"59%"});$("#baidu").css({"width":"69%"});$("input[data-index='img-nick']").css({"width":"67%"})};
+        $(".prompt2").css({"width":$(":text").width()});
+        $(".prompt2,.prompt,.ipt").css({"marginLeft":$(window).width()*0.03+74+"px"});
+        //解决ios输入框的阴影问题
+        var system ={
+            win : false,
+            mac : false,
+            xll : false
+        };
+        var p = navigator.platform;
+        system.win = p.indexOf("Win") == 0;
+        system.mac = p.indexOf("Mac") == 0;
+        system.x11 = (p == "X11") || (p.indexOf("Linux") == 0);
+        if(system.win||system.mac||system.xll){
+
+        }else{
+            if(isIOS){$(":text").css({"-webkit-appearance":"caret","-moz-appearance":"caret"})}
+        }
+        $(":text").bind("input",function(){
+            $(this).css({"color":"#444"});
+        })
+        $(".shad,.shad2,.shad3").css({"height":$(".img-sfz").height()*71/92+"px"});
+        if($("#val-nick").val()!==""){
+            $("#img-nick").show();
+            $("#img-nick").attr("src","__PUBLIC__/rz/images/ok.jpg");
+        }else{
+            $("#val-nick").on("blur",function(){
+                empty_val($(this));
+            })
+        }
+        $("#smt").click(function(){
+            var aa=confirm("提交后将进入审核流程，是否确认提交？");
+            if(aa==true){
+                return true;
+            }else{
+                return false;
+            }
+        })
+        if($("#val-nick").val()!==""){
+            $(".fos-name,.fos-reg").show();
+            $(".star").html("");
+            $(".fos-name").html($("#val-nick").val());
+            $("#val-nick").hide();
+            $(":radio").hide();
+            $(".people").hide();
+            $(".r-img:eq(0)").hide();
+            /*console.log($(".ipt-radio-b").prop("checked"));
+             console.log($(".ipt-radio-g").prop("checked"));*/
+
+            var gender=2;
+            switch (gender){
+                case 1:
+                    $(".fos-reg").html("未知");
+                    break;
+                case 2:
+                    $(".fos-reg").html("男");
+                    break;
+                case 3:
+                    $(".fos-reg").html("女");
+                    break;
+            }
+        } else {
+            $(".fos-name,.fos-reg").hide();
+        }
+
+        //页面加载判断
+        var auth_type="";
+
+            if($(".sf1").val()!==""||$(".sf2").val()!==""||$(".sf3").val()!==""){
+                $(".box-upload").show();
+                $(".box-upload img").attr("src","__PUBLIC__/rz/images/ok2.jpg");
+                var arr_img2=new Array("__PUBLIC__/rz/images/identity_face.jpg","__PUBLIC__/rz/images/identity_back.jpg","__PUBLIC__/rz/images/identity_handle.jpg");
+                $(".img-sfz[data-index='ipt-file1']").attr("src",arr_img2[0]);
+                $(".img-sfz[data-index='ipt-file2']").attr("src",arr_img2[1]);
+                $(".img-sfz[data-index='ipt-file3']").attr("src",arr_img2[2]);
+                $(".r-img").show();
+                $(".r-img").attr("src","__PUBLIC__/rz/images/ok.jpg");
+                if(auth_type==2||$("select[name='auth_type']").val()==2){
+                    $("#img-movie").attr("src","__PUBLIC__/rz/images/no.jpg").hide();
+                }else if(auth_type==1||$("select[name='auth_type']").val()==1){
+                    $("#img-platid").attr("src","__PUBLIC__/rz/images/no.jpg").hide();
+                    $("#s-select").attr("src","__PUBLIC__/rz/images/no.jpg").hide();
+                    $(".s-shad2").hide();
+                }
+                if($("#val-baidu").val()==""||$("#val-baidu").val().indexOf("baike.baidu.com")==-1){
+                    $("#img-baidu").hide();
+                }
+                if($("#val-movie1").val()==""){
+                    $("#img-movie1").attr("src","__PUBLIC__/rz/images/no.jpg");
+                }
+                if($("#val-movie2").val()==""){
+                    $("#img-movie2").hide();
+                }
+                if($("#val-movie3").val()==""){
+                    $("#img-movie3").hide();
+                }
+            }
+       // console.log(auth_type);
+        $("option[value="+auth_type+"]").prop("selected",true);
+        if(auth_type==2||$("select[name='auth_type']").val()==2){
+            $(".box-yingshi").hide();
+            $(".box-shipin").show();
+        }else if(auth_type==1||$("select[name='auth_type']").val()==1){
+            $(".box-shipin").hide();
+            $(".box-yingshi").show();
+        }
+
+        var platform_name="";
+       // console.log(platform_name);
+        $("option[value="+platform_name+"]").prop("selected",true);
+        if($("select[name='platform_name']").val()==""){
+            $("#s-select").attr("src","__PUBLIC__/rz/images/no.jpg");
+            $(".s-plats").hide();
+        }else{
+            $("#s-select").attr("src","__PUBLIC__/rz/images/ok.jpg");
+            $(".s-plats").show();
+        }
+        //console.log("");
+
+        if($("input[name='platform_id']").val()!==""){
+            $("#img-platid").attr("src","__PUBLIC__/rz/images/ok.jpg");
+        }else{
+            $("#img-platid").attr("src","__PUBLIC__/rz/images/no.jpg");
+        }
+
+        if($(".s-plat-pic").val()!==""){
+            $(".s-shad2").show();
+            $(".s-box-upload").show();
+            $(".s-box-upload img").attr("src","__PUBLIC__/rz/images/ok2.jpg");
+        }
+    })
+    var nick="";
+    function s_type(e){
+        if(e.val()==2){
+            $(".box-yingshi").hide();
+            $(".box-shipin").show();
+        }else if(e.val()==1){
+            $(".box-shipin").hide();
+            $(".box-yingshi").show();
+        }
+        if(nick==""){
+            btn_fos();
+        }
+    }
+    function empty_val(e){
+        var n= e.attr("data-index");
+        $("#"+n).show();
+        if(e.val()!==""){
+            $("#"+n).attr("src","__PUBLIC__/rz/images/ok.jpg");
+        }else{
+            $("#"+n).attr("src","__PUBLIC__/rz/images/no.jpg");
+        }
+        btn_fos();
+    }
+    function phone_test(e){
+        var reg=/^(\d{5}|\d{6}|\d{7}|\d{8}|\d{9}|\d{10}|\d{11}|\d{12}|\d{13}|\d{14}\d{15}|\d{16}|\d{17}|\d{18}\d{19}|\d{20})$/;
+        var n= e.attr("data-index");
+        $("#"+n).show();
+        if(reg.test(e.val())==false||e.val()==""){
+            $("#"+n).attr("src","__PUBLIC__/rz/images/no.jpg");
+        }else{
+            $("#"+n).attr("src","__PUBLIC__/rz/images/ok.jpg");
+        }
+        btn_fos();
+    }
+    function movie_url(e){
+        var n= e.attr("data-index");
+        $("#"+n).show();
+        if(e.val().indexOf("mgtv.com")!==-1||e.val().indexOf("youku.com")!==-1||e.val().indexOf("tudou.com")!==-1||e.val().indexOf("iqiyi.com")!==-1||e.val().indexOf("le.com")!==-1||e.val().indexOf("v.qq.com")!==-1||e.val().indexOf("film.qq.com")!==-1){
+            $("#"+n).attr("src","__PUBLIC__/rz/images/ok.jpg");
+        }else{
+            $("#"+n).attr("src","__PUBLIC__/rz/images/no.jpg");
+        }
+        if(n=="img-movie2"){
+            if(e.val()==""){$("#"+n).hide();}
+        }
+        if(n=="img-movie3"){
+            if(e.val()==""){$("#"+n).hide();}
+        }
+        btn_fos();
+    }
+    function baike(e){
+        var n= e.attr("data-index");
+        $("#"+n).show();
+        if(e.val().indexOf("baike.baidu.com")!==-1){
+            $("#"+n).attr("src","__PUBLIC__/rz/images/ok.jpg");
+        }else{
+            if(e.val()==""){
+                $("#"+n).attr("src","");
+                $("#"+n).hide();
+            }else{
+                $("#"+n).attr("src","__PUBLIC__/rz/images/no.jpg");
+            }
+        }
+        btn_fos();
+    }
+    function movie_judge(e){
+        if(e.attr("data-index")=="img-movie2"){
+            var val=$("#val-movie").val();
+            if(val.indexOf("mgtv.com")!==-1||val.indexOf("youku.com")!==-1||val.indexOf("tudou.com")!==-1||val.indexOf("iqiyi.com")!==-1||val.indexOf("le.com")!==-1||val.indexOf("v.qq.com")!==-1||val.indexOf("film.qq.com")!==-1){
+                e.removeAttr("readonly");
+                $("#img-movie3").removeAttr("readonly");
+            }else{
+                e.attr("readonly","readonly");
+                $("#img-movie3").attr("readonly","readonly");
+            }
+        }
+        if(e.attr("data-index")=="img-movie3"){
+            var val2=$("#val-movie2").val();
+            if(val2.indexOf("mgtv.com")==-1 && val2.indexOf("youku.com")==-1&&val2.indexOf("tudou.com")==-1&&val2.indexOf("iqiyi.com")==-1&&val2.indexOf("le.com")==-1&&val2.indexOf("v.qq.com")==-1&&val2.indexOf("film.qq.com")==-1){
+                e.attr("readonly","readonly");
+            }else{
+                e.removeAttr("readonly");
+            }
+        }
+    }
+    function btn_fos(){
+        if($("select:eq(0)").val()==1){
+                if($(".r-img:eq("+0+")").attr("src")=="__PUBLIC__/rz/images/ok.jpg"&&$(".r-img:eq("+1+")").attr("src")=="__PUBLIC__/rz/images/ok.jpg"&&$(".r-img:eq("+2+")").attr("src")=="__PUBLIC__/rz/images/ok.jpg"&&$(".r-img:eq("+3+")").attr("src")=="__PUBLIC__/rz/images/ok.jpg"&&$(".sf1").val()!==""&&$(".sf2").val()!==""&&$(".sf3").val()!==""){
+                    $("#smt").css({"backgroundColor":"#8EE2D3","color":"#fff","border":"solid 1px #8EE2D3"});
+                    $("#smt").removeAttr("disabled");
+                }else{
+                    $("#smt").css({"backgroundColor":"#fff","color":"#C6C9C9","border":"solid 1px #C6C9C9"});
+                    $("#smt").attr("disabled","true");
+                }
+        }else if($("select:eq(0)").val()==2){
+                if($(".r-img:eq("+0+")").attr("src")=="__PUBLIC__/rz/images/ok.jpg"&&$(".r-img:eq("+1+")").attr("src")=="__PUBLIC__/rz/images/ok.jpg"&&$(".r-img:eq("+2+")").attr("src")=="__PUBLIC__/rz/images/ok.jpg"&&$(".r-img:eq("+6+")").attr("src")=="__PUBLIC__/rz/images/ok.jpg"&&$(".r-img:eq("+7+")").attr("src")=="__PUBLIC__/rz/images/ok.jpg"&&$(".s-plat-pic").val()!==""&&$(".sf1").val()!==""&&$(".sf2").val()!==""&&$(".sf3").val()!==""){
+                    $("#smt").css({"backgroundColor":"#8EE2D3","color":"#fff","border":"solid 1px #8EE2D3"});
+                    $("#smt").removeAttr("disabled");
+                }else{
+                    $("#smt").css({"backgroundColor":"#fff","color":"#C6C9C9","border":"solid 1px #C6C9C9"});
+                    $("#smt").attr("disabled","true");
+                }
+        }
+
+    }
+    function file_click(e){
+        var n= e.attr("data-index");
+        upload(n);
+    }
+    function upload(index) {
+        $('#upload').empty();
+        var input = '<input type="file" id="ipt-file1" name="face" /><input type="file" id="ipt-file2" name="back" /><input type="file" id="ipt-file3" name="handle" />';
+        $('#upload').html(input);
+        var iptt=document.getElementById(index);
+        if(window.addEventListener) { // Mozilla, Netscape, Firefox
+            iptt.addEventListener('change',function(){
+                ajaxFileUpload(index);
+                var arr_img=new Array("__PUBLIC__/rz/images/identity_face.jpg","__PUBLIC__/rz/images/identity_back.jpg","__PUBLIC__/rz/images/identity_handle.jpg");
+                var sub=index.substr(8,1);
+                $(".img-sfz[data-index="+index+"]").attr("src",arr_img[sub-1]);
+                $(".shadd[data-select="+index+"]").show();
+            },false);
+        }else{
+            iptt.attachEvent('onchange',function(){
+                ajaxFileUpload(index);
+                var arr_img=new Array("__PUBLIC__/rz/images/identity_face.jpg","__PUBLIC__/rz/images/identity_back.jpg","__PUBLIC__/rz/images/identity_handle.jpg");
+                var sub=index.substr(8,1);
+                $(".img-sfz[data-index="+index+"]").attr("src",arr_img[sub-1]);
+                $(".shadd[data-select="+index+"]").show();
+            });
+        }
+        $('#'+index).click();
+    }
+    function ajaxFileUpload(img) {
+        var imgPath = $("#"+img).val();
+        var strExtension = imgPath.substr(imgPath.lastIndexOf('.') + 1);
+
+        $("."+img).css({"width":"0px"});
+        $(".box-upload[data-index="+img+"]").hide();
+        $("."+img).animate({"width":"100%"},700,function(){
+            var id= img;
+						var num=img.substr(8,1);
+            $.ajaxFileUpload
+            (
+                    {
+                        url: './index.php?g=User&m=Rz&a=upload',
+                        secureuri: false,
+												data: { saveName:'auth_'+uid+'_'+num },
+                        fileElementId: id,
+                        dataType: 'html',
+                        success: function(data) {
+												    //console.log(data);
+                            data=data.replace(/<[^>]+>/g,"");
+                            var str=JSON.parse(data);
+                            if(str.ret==200){
+                                var sub=img.substr(8,1);
+                                $(".sf"+sub).attr("value",str.data.url);
+//                                alert("上传成功");
+                                $(".shadd[data-select="+img+"]").hide();
+                                $(".box-upload[data-index="+img+"]").show();
+                                $(".box-upload[data-index="+img+"] img").attr("src","__PUBLIC__/rz/images/ok2.jpg");
+                                // console.log(arr);
+                                btn_fos();
+                            }else{
+                                alert(str.msg);
+                                $(".shadd[data-select="+img+"]").hide();
+                                $(".box-upload[data-index="+img+"]").show();
+                                $(".box-upload[data-index="+img+"] img").attr("src","__PUBLIC__/rz/images/no2.jpg");
+                            }
+                        },
+                        error: function(data, status, e) {
+												    
+                            alert("上传失败");
+                            $(".shadd[data-select="+img+"]").hide();
+                            $(".box-upload[data-index="+img+"]").show();
+                            $(".box-upload[data-index="+img+"] img").attr("src","__PUBLIC__/rz/images/no2.jpg");
+                        }
+                    }
+            )
+            return true;
+        });
+    }
+
+//视频达人
+    function file_click2(){
+        $('#s-upload').empty();
+        var input = '<input type="file" id="s-file" name="s-file"/>';
+        $('#s-upload').html(input);
+        var iptt=document.getElementById("s-file");
+        if(window.addEventListener) { // Mozilla, Netscape, Firefox
+            iptt.addEventListener('change',function(){
+                ajaxFileUpload2();
+            },false);
+        }else{
+            iptt.attachEvent('onchange',function(){
+                ajaxFileUpload2();
+            });
+        }
+        $('#s-file').click();
+    }
+
+    function ajaxFileUpload2() {
+        $(".s-shad2").hide();
+        $(".s-box-upload").hide();
+        $(".s-shad").show();
+        $(".s-ipt-file").css({"width":"0px"});
+        $(".s-ipt-file").animate({"width":"100%"},700,function(){
+            console.log($("#s-file").val());
+            $.ajaxFileUpload
+            (
+                    {
+                        url: './index.php?g=User&m=Rz&a=upload',
+                        secureuri: false,
+                        fileElementId: 's-file',
+												data: { saveName:'homepage_'+uid },
+                        dataType: 'html',
+                        success: function(data) {
+                            //data=data.replace(/<[^>]+>/g,"");
+                            var str=JSON.parse(data);
+                            console.log(str);
+                            if(str.dm_error==0){
+                                $(".s-plat-pic").attr("value",str.data.img);
+//                                alert("上传成功");
+                                $(".s-shad").hide();
+                                $(".s-shad2").show();
+                                $(".s-box-upload").show();
+                                $(".s-box-upload img").attr("src","__PUBLIC__/rz/images/ok2.jpg");
+                                // console.log(arr);
+                                btn_fos();
+                            }else{
+                                alert(str.error_msg);
+                                $(".s-shad").hide();
+                                $(".s-shad2").show();
+                                $(".s-box-upload").show();
+                                $(".s-box-upload img").attr("src","__PUBLIC__/rz/images/no2.jpg");
+                            }
+                        },
+                        error: function(data, status, e) {
+                            alert("上传失败");
+                            $(".s-shad").hide();
+                            $(".s-shad2").show();
+                            $(".s-box-upload").show();
+                            $(".s-box-upload img").attr("src","__PUBLIC__/rz/images/no2.jpg");
+                        }
+                    }
+            )
+            return true;
+        });
+    }
+    function s_change(e){
+        var n= e.attr("data-index");
+        $("#"+n).show();
+        //$("#s-select").hide();
+        if(e.val()==""){
+            $("#"+n).attr("src","__PUBLIC__/rz/images/no.jpg");
+            if(e.attr("data-index")=="s-select"){
+                $(".s-plats").hide();
+            }
+        }else{
+            $("#"+n).attr("src","__PUBLIC__/rz/images/ok.jpg");
+            $(".s-plats").show();
+            if(e.attr("data-index")=="s-select"){
+                $("input[name='platform_id']").val("");
+                $("#img-platid").attr("src","__PUBLIC__/rz/images/no.jpg").hide();
+                $(".s-plat-pic").val("");
+                $(".s-shad2").hide();
+            }
+        }
+        btn_fos();
+    }
+</script>

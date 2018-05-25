@@ -1,0 +1,44 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li ><a href="{:U('Level/experlevel_index')}">等级列表</a></li>
+			<li class="active"><a >等级添加</a></li>
+		</ul>
+		<form method="post" class="form-horizontal js-ajax-form" action="{:U('Level/experlevel_add_post')}">
+			<fieldset>
+
+				<div class="control-group">
+					<label class="control-label">等级</label>
+					<div class="controls">
+						<input type="text" name="levelid" value="">
+						<span class="form-required">*</span>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">等级名称</label>
+					<div class="controls">
+						<input type="text" name="levelname">
+						<span class="form-required">*</span>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">等级经验上限</label>
+					<div class="controls">
+						<input type="text" name="level_up" maxlength="9">
+						<span class="form-required">*</span>
+					</div>
+				</div>
+
+
+			</fieldset>
+			<div class="form-actions">
+				<button type="submit" class="btn btn-primary js-ajax-submit">{:L('ADD')}</button>
+				<a class="btn" href="{:U('Level/experlevel_index')}">{:L('BACK')}</a>
+			</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

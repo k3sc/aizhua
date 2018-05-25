@@ -1,0 +1,511 @@
+<?php
+/**
+ * 营业报表
+ * Created by PhpStorm.
+ * User: xiajunwei
+ * Date: 2017/10/23
+ * Time: 15:07
+ */
+
+namespace Admin\Controller;
+
+use Common\Controller\AdminbaseController;
+
+class StatmentController extends AdminbaseController
+{
+
+    /**
+     * 按时间查询
+     */
+    /*
+    public function index()
+    {
+        $where = '1=1';
+        $post = I('post.');
+        if( $post['date1'] && $post['date2'] ){
+            $where .= ' and a.ctime >= '.strtotime($post['date1'].' 00:00:00');
+            $where .= ' and a.ctime <= '.strtotime($post['date2'].' 23:59:59');
+            $this->assign('date1',$post['date1']);
+            $this->assign('date2',$post['date2']);
+        }else{
+//            $where .= ' and ctime >= '.strtotime(date('Y-m-d 00:00:00'));
+//            $where .= ' and ctime <= '.strtotime(date('Y-m-d 23:59:59'));
+
+            if( empty($post['open']) || !isset($post['open']) )$post['open'] = 1;//默认本月
+
+            if( $post['open'] == 4 ){//本周
+                $stime = date("Y-m-d H:i:s",mktime(0, 0 , 0,date("m"),date("d")-date("w")+1,date("Y")));
+                $etime = date("Y-m-d H:i:s",mktime(23,59,59,date("m"),date("d")-date("w")+7,date("Y")));
+            }else if ( $post['open'] == 1 ){//本月
+                $stime = date("Y-m-d H:i:s",mktime(0, 0 , 0,date("m"),1,date("Y")));
+                $etime = date("Y-m-d H:i:s",mktime(23,59,59,date("m"),date("t"),date("Y")));
+            }else if( $post['open'] == 2 ){//半年
+                $stime = date("Y-m-d H:i:s",mktime(0, 0 , 0,date("m")-6,date("d"),date("Y")));
+                $etime = date("Y-m-d H:i:s",mktime(23,59,59,date("m"),date("t"),date("Y")));
+            }else{//今日
+                $stime = date('Y-m-d 00:00:00');
+                $etime = date('Y-m-d 23:59:59');
+            }
+            $this->assign('open',$post['open']);
+            $stime = strtotime($stime);
+            $etime = strtotime($etime);
+            $where .= " and a.ctime >= $stime and a.ctime <= $etime";
+        }
+
+
+        $sql = "SELECT COUNT(*) AS count FROM cmf_pay_record AS a WHERE $where GROUP BY FROM_UNIXTIME(ctime,'%Y-%m-%d')";
+
+        $count = M('pay_record')->query($sql);
+        $page = $this->page($count['count'],20);
+
+        $sql = "SELECT FROM_UNIXTIME(ctime,'%Y-%m-%d') AS adate,
+                SUM(money) AS totalmoney,
+                SUM(CASE WHEN TYPE=1 THEN money ELSE 0 END) AS wxtotalmoney,
+                SUM(CASE WHEN TYPE=2 THEN money ELSE 0 END) AS zfbtotalmoney,
+                SUM(CASE WHEN TYPE=3 THEN money ELSE 0 END) AS paypaltotalmoney,
+                SUM(CASE WHEN TYPE=4 THEN money ELSE 0 END) AS appletotalmoney 
+                FROM cmf_pay_record AS a WHERE $where GROUP BY FROM_UNIXTIME(ctime,'%Y-%m-%d')
+                LIMIT $page->firstRow , $page->listRows";
+        $data = M('pay_record')->query($sql);
+        $this->assign('page',$page->show('Admin'));
+
+        foreach ($data as $k => $v) {
+            $data[$v['adate']] = $data[$k];
+            unset($data[$k]);
+        }
+
+        //计算总毛利 = 充值总额 - 被夹走娃娃的成本总额
+        //被夹走娃娃成本总额
+        $wawaSuccessCost = [];
+        foreach ($data as $v) {
+            $sql = "SELECT SUM(c.cost) AS cost 
+                      FROM cmf_game_history AS a 
+                      LEFT JOIN cmf_user_wawas AS b ON a.success = b.id 
+                      LEFT JOIN cmf_gift AS c ON b.wawa_id = c.id 
+                      WHERE $where AND a.success > 0 AND FROM_UNIXTIME(a.ctime,'%Y-%m-%d') = '".$v['adate']."'";
+            $wawaSuccessCost = M('game_history')->query($sql);
+            foreach ($wawaSuccessCost as $kk => $vv) {
+                if( empty($vv['adate']) ){
+                    $wawaSuccessCost[$kk]['adate'] = $v['adate'];
+                    unset($wawaSuccessCost[$vv['adate']]);
+                }
+            }
+        }
+
+        foreach ($data as $k => $v) {
+            foreach ($wawaSuccessCost as $kk => $vv) {
+                $wawaSuccessCost[$k] = $vv['cost'];
+                unset($wawaSuccessCost[$kk]);
+            }
+        }
+
+        foreach ($data as $k => $v) {
+            foreach ($wawaSuccessCost as $kk => $vv) {
+                if( $k == $kk ){
+                    $wawaSuccessCost[$kk] = (int)$v['totalmoney'] - (int)$vv;
+                }
+            }
+        }
+
+        //计算总消费额
+        $totalConsume = [];
+        foreach ($data as $k => $v) {
+            $sql = "SELECT FROM_UNIXTIME(ctime,'%Y-%m-%d') AS adate,
+                      SUM(totals)/10 AS totalconsume,
+                      SUM(coin_sys_give)/10 AS totalgiveconsume
+                      FROM cmf_game_history AS a WHERE $where AND FROM_UNIXTIME(ctime,'%Y-%m-%d') = '$v[adate]' ";
+            $totalConsume = M('game_history')->query($sql);
+            foreach ($totalConsume as $kk => $vv) {
+                if( empty($vv['adate']) ){
+                    $totalConsume[$kk]['adate'] = $v['adate'];
+                    unset($totalConsume[$vv['adate']]);
+                }
+            }
+        }
+        foreach ($totalConsume as $k => $v) {
+            $totalConsume[$v['adate']] = array('totalconsume'=>number_format($totalConsume[$k]['totalconsume'],2),'totalgiveconsume'=>number_format($totalConsume[$k]['totalgiveconsume'],2));
+            unset($totalConsume[$k]);
+        }
+
+        //计算夹娃娃次数
+        $capt = [];
+        foreach ($data as $k => $v) {
+            $sql = "SELECT FROM_UNIXTIME(ctime,'%Y-%m-%d') AS adate,COUNT(*) AS captcount,
+                      SUM(CASE WHEN success>0 THEN 1 ELSE 0 END) AS captsuccesscount
+                      FROM cmf_game_history AS a WHERE $where AND FROM_UNIXTIME(ctime,'%Y-%m-%d') = '$v[adate]' ";
+            $capt = M('game_history')->query($sql);
+            foreach ($capt as $kk => $vv) {
+                if( empty($vv['adate']) ){
+                    $capt[$kk]['adate'] = $v['adate'];
+                    unset($capt[$vv['adate']]);
+                }
+            }
+        }
+        foreach ($capt as $k => $v) {
+            $capt[$v['adate']] = array('captcount'=>$capt[$k]['captcount'],'captsuccesscount'=>$capt[$k]['captsuccesscount']);
+            unset($capt[$k]);
+        }
+
+        //计算出货量
+        $chcount = [];
+        foreach ($data as $k => $v) {
+            $sql = "SELECT FROM_UNIXTIME(ctime,'%Y-%m-%d') AS adate,COUNT(*) AS chcount FROM cmf_waybill AS a WHERE $where AND STATUS=2 AND FROM_UNIXTIME(ctime,'%Y-%m-%d') = '$v[adate]' ";
+            $chcount = M('waybill')->query($sql);
+            foreach ($chcount as $kk => $vv) {
+                if( empty($vv['adate']) ){
+                    $chcount[$kk]['adate'] = $v['adate'];
+                    unset($chcount[$vv['adate']]);
+                }
+            }
+        }
+
+        foreach ($chcount as $k => $v) {
+            $chcount[$v['adate']] = $v['chcount'];
+            unset($chcount[$k]);
+        }
+
+
+
+
+        foreach ($data as $k => $v) {
+            $data[$k]['zongmaoli'] = $wawaSuccessCost[$k] == '' ? 0 : $wawaSuccessCost[$k];
+            $data[$k]['totalconsume'] = $totalConsume[$k]['totalconsume'] == '' ? 0 : $totalConsume[$k]['totalconsume'];
+            $data[$k]['totalgiveconsume'] = $totalConsume[$k]['totalgiveconsume'] == '' ? 0 : $totalConsume[$k]['totalgiveconsume'];
+            $data[$k]['captcount'] = $capt[$k]['captcount'] == '' ? 0 : $capt[$k]['captcount'];
+            $data[$k]['captsuccesscount'] = $capt[$k]['captsuccesscount'] == '' ? 0 : $capt[$k]['captsuccesscount'];
+            $data[$k]['chcount'] = $chcount[$k];
+
+//            p($data,0);
+//
+            M('statment_temp')->save($data[$k]);
+
+            if( $post['rechargemoney1'] && $post['rechargemoney2'] ){
+                if( $v['totalmoney'] < $post['rechargemoney1'] || $v['totalmoney'] > $post['rechargemoney2'] )
+                    unset($data[$k]);
+            }else if( $post['totalmoney1'] && $post['totalmoney2'] ){
+                if( $v['totalconsume'] < $post['totalmoney1'] || $v['totalconsume'] > $post['totalmoney2'] )
+                    unset($data[$k]);
+            }if( $post['rechargemoney1'] && $post['rechargemoney2'] && $post['totalmoney1'] && $post['totalmoney2'] ){
+                if( $v['totalmoney'] < $post['rechargemoney1'] || $v['totalmoney'] > $post['rechargemoney2'] || $v['totalconsume'] < $post['totalmoney1'] || $v['totalconsume'] > $post['totalmoney2'] )
+                    unset($data[$k]);
+            }
+
+        }
+        $data = array_values($data);
+//        p($post,0);
+        $this->assign('row',$data);
+        $this->display();
+
+    }
+*/
+    /**
+     * 按时间查询
+     */
+    public function index()
+    {
+
+        // 时间筛选
+        $get_time = I('gettime');
+
+
+        $sdate = I('date1');
+        $edate = I('date2');
+
+        if (!empty($sdate) && !empty($edate)) {
+			$get_time = array();
+            $get_time[0] = strtotime($sdate);
+            $get_time[1] = strtotime($edate . ' 23:59:59');
+            $get_time[2] = '';
+
+        } else {
+
+		    $get_time = explode(',', $get_time);
+		  
+		    // 无则默认今天
+		    if(empty($get_time[0])){
+				$get_time = array();
+                $get_time[0] = strtotime(date('Y-m-d'));
+                $get_time[1] = time();
+                $get_time[2] = 'day';
+            } else {
+
+            }
+        }
+
+        $result = array();
+        if ($get_time[2] == 'day' || $get_time[2] == 'week') {
+
+            $d = date('Y-m-d');
+
+            // 各个支付平台充值总额
+            $pay = M('pay_record')->field('type, sum(money) as money')->where('paytime >= ' . $get_time[0] . ' and paytime <= ' . $get_time[1] . ' and status = 1')->group('type')->select();
+            // 各个平台充值总额
+            foreach ($pay as $k => $v) {
+                if ($v['type'] == 1) $result[$d]['wx_pay'] = $v['money']; // 微信支付总额
+                if ($v['type'] == 2) $result[$d]['zfb_pay'] = $v['money']; // 支付宝支付总额
+                if ($v['type'] == 3) $result[$d]['paypal_pay'] = $v['money']; // paypal支付总额
+                if ($v['type'] == 4) $result[$d]['apple_pay'] = $v['money']; // ApplePay支付总额
+            }
+            // 充值总额
+            $result[$d]['total_pay'] = $result[$d]['wx_pay'] + $result[$d]['zfb_pay'] + $result[$d]['paypal_pay'] + $result[$d]['apple_pay'];
+
+            // 夹走娃娃总成本
+            $cb = M('game_history')->alias('a')
+                ->field('sum(c.cost) as cost')
+                ->join('cmf_game_room as b on a.room_id = b.id')
+                ->join('cmf_gift as c on b.type_id = c.id')
+                ->where('success > 0 and a.ctime >= ' . $get_time[0] . ' and a.ctime <= ' . $get_time[1])->find();
+            // 总毛利(充值总额-总成本)
+            $result[$d]['maoli'] = $result[$d]['total_pay'] - $cb['cost'];
+
+            // 消费总额,消费增币
+            $xf = M('users_coinrecord')
+                ->field('sum(totalcoin) as money,sum(givemoney) as gmoney')
+                ->where('type = "expend" and addtime >= ' . $get_time[0] . ' and addtime <= ' . $get_time[1])->find();
+            // 消费总额
+            $result[$d]['xfze'] = $xf['money']/10;
+            // 消费增币
+            $result[$d]['xfzb'] = $xf['gmoney'];
+
+            // 夹娃娃次数
+            $arrJnums = M('game_history')->field('count(*) as total')->where('ctime >= ' . $get_time[0] . ' and ctime <= ' . $get_time[1])->find();
+            $result[$d]['game_totals'] = $arrJnums['total'];
+            // 夹娃娃夹中次数
+            $arrJZnums = M('game_history')->field('count(*) as total')->where('ctime >= ' . $get_time[0] . ' and ctime <= ' . $get_time[1] . ' and success > 0')->find();
+            $result[$d]['game_gtotals'] = $arrJZnums['total'];
+
+            // 商品出货量
+            $fh = M('waybill')->field('count(*) as total')->where('fhtime >= ' . $get_time[0] . ' and fhtime <= ' . $get_time[1] . ' and status = 2')->find();
+            $result[$d]['fh_totals'] = $fh['total'];
+
+            // 按天分组
+        } else {
+
+            if ($get_time[2] == 'year') {
+                $sTime = 7;
+            } else {
+                $sTime = 10;
+            }
+
+            // 充值总额
+            $pay = M('pay_record')->field('sum(money) as money, left(FROM_UNIXTIME(ctime),' . $sTime . ') as time')->where('paytime >= ' . $get_time[0] . ' and paytime <= ' . $get_time[1] . ' and status = 1')->group('time')->select();
+            foreach ($pay as $k => $v) {
+                $result[$v['time']]['total_pay'] = $v['money'];
+            }
+            // 微信充值总额
+            $wx_pay = M('pay_record')->field('sum(money) as money, left(FROM_UNIXTIME(ctime),' . $sTime . ') as time')->where('paytime >= ' . $get_time[0] . ' and paytime <= ' . $get_time[1] . ' and status = 1 and type = 1')->group('time')->select();
+            foreach ($wx_pay as $k => $v) {
+                $result[$v['time']]['wx_pay'] = $v['money'];
+            }
+            // 支付宝充值总额
+            $zfb_pay = M('pay_record')->field('sum(money) as money, left(FROM_UNIXTIME(ctime),' . $sTime . ') as time')->where('paytime >= ' . $get_time[0] . ' and paytime <= ' . $get_time[1] . ' and status = 1 and type = 2')->group('time')->select();
+            foreach ($zfb_pay as $k => $v) {
+                $result[$v['time']]['zfb_pay'] = $v['money'];
+            }
+            // paypal充值总额
+            $paypal_pay = M('pay_record')->field('sum(money) as money, left(FROM_UNIXTIME(ctime),' . $sTime . ') as time')->where('paytime >= ' . $get_time[0] . ' and paytime <= ' . $get_time[1] . ' and status = 1 and type = 3')->group('time')->select();
+            foreach ($paypal_pay as $k => $v) {
+                $result[$v['time']]['paypal_pay'] = $v['money'];
+            }
+            // 苹果充值总额
+            $apple_pay = M('pay_record')->field('sum(money) as money, left(FROM_UNIXTIME(ctime),' . $sTime . ') as time')->where('paytime >= ' . $get_time[0] . ' and paytime <= ' . $get_time[1] . ' and status = 1 and type = 4')->group('time')->select();
+            foreach ($apple_pay as $k => $v) {
+                $result[$v['time']]['apple_pay'] = $v['money'];
+            }
+
+            // 夹走娃娃总成本
+            $cb = M('game_history')->alias('a')
+                ->field('sum(c.cost) as cost, left(FROM_UNIXTIME(a.ctime),' . $sTime . ') as time')
+                ->join('cmf_game_room as b on a.room_id = b.id')
+                ->join('cmf_gift as c on b.type_id = c.id')
+                ->where('success > 0 and a.ctime >= ' . $get_time[0] . ' and a.ctime <= ' . $get_time[1])->group('time')->select();
+            // 总毛利(充值总额-总成本)
+            foreach ($cb as $k => $v) {
+                $result[$v['time']]['maoli'] = intval($result[$v['time']]['total_pay']) - $v['cost'];
+            }
+
+            // 消费总额,消费增币
+            $xf = M('users_coinrecord')
+                ->field('sum(totalcoin) as money,sum(givemoney) as gmoney, left(FROM_UNIXTIME(addtime),' . $sTime . ') as time')
+                ->where('action = "zhuawawa" and addtime >= ' . $get_time[0] . ' and addtime <= ' . $get_time[1])->group('time')->select();
+            foreach ($xf as $k => $v) {
+                $result[$v['time']]['xfze'] = $v['money']/10;
+                $result[$v['time']]['xfzb'] = $v['gmoney'];
+            }
+
+            // 夹娃娃次数
+            $arrJnums = M('game_history')->field('count(*) as total, left(FROM_UNIXTIME(ctime),' . $sTime . ') as time')->where('ctime >= ' . $get_time[0] . ' and ctime <= ' . $get_time[1])->group('time')->select();
+            foreach ($arrJnums as $k => $v) {
+                $result[$v['time']]['game_totals'] = $v['total'];
+            }
+
+            // 夹娃娃夹中次数
+            $arrJZnums = M('game_history')->field('count(*) as total, left(FROM_UNIXTIME(ctime),' . $sTime . ') as time')->where('ctime >= ' . $get_time[0] . ' and ctime <= ' . $get_time[1] . ' and success > 0')->group('time')->select();
+            foreach ($arrJZnums as $k => $v) {
+                $result[$v['time']]['game_gtotals'] = $v['total'];
+            }
+            // 商品出货量
+            $fh = M('waybill')->field('count(*) as total, left(FROM_UNIXTIME(fhtime),' . $sTime . ') as time')->where('fhtime >= ' . $get_time[0] . ' and fhtime <= ' . $get_time[1] . ' and status = 2')->group('time')->select();
+            foreach ($fh as $k => $v) {
+                $result[$v['time']]['fh_totals'] = $v['total'];
+            }
+        }
+
+        // 今日时间戳
+        $arrTime = array();
+        $arrTime['sday'] = strtotime(date('Y-m-d'));
+        $arrTime['eday'] = time();
+        // 本周时间戳
+		$arrTime['sweek'] = strtotime(date('Y-m-d')." -".(date('w') ? date('w') - 1 : 6).' days');  
+		//$arrTime['sweek'] = mktime(23,59,59,date('m'),date('d')-date('w'),date('Y'))+1;
+        $arrTime['eweek'] = time();
+        // 本月时间戳
+        $arrTime['smonth'] = mktime(0, 0, 0, date('m'), 1, date('Y'));
+        $arrTime['emonth'] = time();
+        // 获取半年时间戳
+        $month = intval(date('m'));
+        if ($month <= 6) {
+            $arrTime['syear'] = strtotime(date('Y-01-01'));
+            $arrTime['eyear'] = strtotime(date('Y-06-31 23:59:59'));
+        } else {
+            $arrTime['syear'] = strtotime(date('Y-07-01'));
+            $arrTime['eyear'] = strtotime(date('Y-12-31 23:59:59'));
+        }
+
+        ksort($result);
+
+        $this->assign('time_type', $get_time[2]);
+        $this->assign('result', $result);
+        $this->assign('arrTime', $arrTime);
+        $this->display();
+
+    }
+
+    /**
+     * 按设备查询
+     */
+    public function from_device()
+    {
+
+        // 时间筛选
+        $get_time = I('gettime');
+        $sdate = I('date1');
+        $edate = I('date2');
+//        $money1 = I('money1');
+//        $money2 = I('money2');
+//        $room_no = I('room_no','');
+//        $device_no = I('device_no','');
+//        $device_uni = I('device_uni','');
+
+        if (!empty($sdate) && !empty($edate)) {
+			$get_time = array();
+            $get_time[0] = strtotime($sdate);
+            $get_time[1] = strtotime($edate . ' 23:59:59');
+            $get_time[2] = '';
+
+        } else {
+
+		    $get_time = explode(',', $get_time);
+		  
+		    // 无则默认今天
+		    if(empty($get_time[0])){
+				$get_time = array();
+                $get_time[0] = strtotime(date('Y-m-d'));
+                $get_time[1] = time();
+                $get_time[2] = 'day';
+            } else {
+
+            }
+        }
+
+        $result = array();
+        // 房间号, 房间编号, 设备编号, 娃娃库存, 地址, 产品号, 娃娃名称, 抓需币, 夹中娃娃数，设备地址
+        $gArr = M('game_history')->alias('a')
+            ->field('a.room_id,b.`room_name`,b.`room_no`,c.deveci_no,b.wawa_num,c.device_addr,e.wawa_no,e.`giftname`,e.`spendcoin`,f.addr,e.`id` as gift_id')
+            ->join('cmf_game_room as b on a.`room_id` = b.`id`', 'left')
+            ->join('cmf_device AS c ON b.device_id = c.`id`', 'left')
+            ->join('cmf_user_wawas AS d ON a.`success` = b.`id`', 'left')
+            ->join('cmf_gift AS e ON b.`type_id` = e.`id`', 'left')
+            ->join('cmf_device_addr as f on c.device_addr_id = f.id')
+            ->where('a.success > 0 and a.ctime >= ' . $get_time[0] . ' and a.ctime <= ' . $get_time[1])
+            ->group('a.`room_id`')
+            ->select();
+
+        foreach ($gArr as $k => $v) {
+            $result[$v['room_id']] = $v;
+        }
+
+        // 消费总额,消费增币
+        $xf = M('users_coinrecord')
+            ->field('sum(realmoney) as money,sum(givemoney) as gmoney, room_id')
+            ->where('room_id != 0 and type="expend" and addtime >= ' . $get_time[0] . ' and addtime <= ' . $get_time[1])->group('room_id')->select();
+        
+        foreach ($xf as $k => $v) { 
+            $result[$v['room_id']]['xfze'] = $v['money'];
+            $result[$v['room_id']]['xfzb'] = $v['gmoney'];
+        }
+
+        // 夹娃娃次数
+        $arrJ = M('game_history')->field('room_id, count(*) as games_total')->where('ctime >= ' . $get_time[0] . ' and ctime <= ' . $get_time[1])->group('room_id')->select();
+        foreach ($arrJ as $k => $v) {
+            $result[$v['room_id']]['games_total'] = $v['games_total'];
+        }
+
+        // 夹中娃娃次数
+        $arrJ = M('game_history')->field('room_id, count(*) as games_total')->where('ctime >= ' . $get_time[0] . ' and ctime <= ' . $get_time[1] . ' and success>0')->group('room_id')->select();
+        foreach ($arrJ as $k => $v) {
+            $result[$v['room_id']]['ggames_total'] = $v['games_total'];
+        }
+
+        // 夹中概率(放前端计算)
+
+        // 强抓力次数
+        $arrQ = M('game_history')->field('room_id, count(*) as total')->where('ctime >= ' . $get_time[0] . ' and ctime <= ' . $get_time[1] . ' and is_strong=1')->group('room_id')->select();
+        foreach ($arrQ as $k => $v) {
+            $result[$v['room_id']]['strong_total'] = $v['total'];
+        }
+
+        // 游戏用户数
+        $sql = "select room_id,count(user_id) as total from (select DISTINCT room_id,user_id from cmf_game_history where ctime >= " . $get_time[0] . " and ctime <= " . $get_time[1] . ') a group by room_id';
+        $Model = M();
+        $arrY = $Model->query($sql);
+        foreach ($arrY as $k => $v) {
+            $result[$v['room_id']]['game_users'] = $v['total'];
+        }
+        // 夹中用户数
+        $sql = "select room_id,count(user_id) as total from (select DISTINCT room_id,user_id from cmf_game_history where ctime >= " . $get_time[0] . " and ctime <= " . $get_time[1] . ' and success > 0) a  group by room_id';
+        $Model1 = M();
+        $arrJZ = $Model1->query($sql);
+        foreach ($arrJZ as $k => $v) {
+            $result[$v['room_id']]['zgame_users'] = $v['total'];
+        }
+
+        // 今日时间戳
+        $arrTime = array();
+        $arrTime['sday'] = strtotime(date('Y-m-d'));
+        $arrTime['eday'] = time();
+        // 本周时间戳
+		$arrTime['sweek'] = strtotime(date('Y-m-d')." -".(date('w') ? date('w') - 1 : 6).' days');  
+		//$arrTime['sweek'] = mktime(23,59,59,date('m'),date('d')-date('w'),date('Y'))+1;
+        $arrTime['eweek'] = time();
+        // 本月时间戳
+        $arrTime['smonth'] = mktime(0, 0, 0, date('m'), 1, date('Y'));
+        $arrTime['emonth'] = time();
+        // 获取半年时间戳
+        $month = intval(date('m'));
+        if ($month <= 6) {
+            $arrTime['syear'] = strtotime(date('Y-01-01'));
+            $arrTime['eyear'] = strtotime(date('Y-06-31 23:59:59'));
+        } else {
+            $arrTime['syear'] = strtotime(date('Y-07-01'));
+            $arrTime['eyear'] = strtotime(date('Y-12-31 23:59:59'));
+        }
+
+        $this->assign('time_type', $get_time[2]);
+        $this->assign('result', $result);
+        $this->assign('arrTime', $arrTime);
+        $this->display();
+    }
+
+
+}

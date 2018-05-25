@@ -1,0 +1,44 @@
+<admintpl file="header" />
+</head>
+<body>
+<div class="wrap">
+    <ul class="nav nav-tabs">
+        <li ><a href="{:U('Users/index')}">用户列表</a></li>
+        <li ><a href="{:U('Users/bill',array('id'=>$_GET['id']))}">充值流水</a></li>
+        <li class="active"><a href="">消费流水</a></li>
+        <li ><a href="{:U('Users/sysbill',array('id'=>$_GET['id']))}">系统赠送流水</a></li>
+    </ul>
+    <php>
+        $type=array("income"=>"收入","expend"=>"支出");
+        $action=array("loginbonus"=>"登录奖励","zhuawawa"=>"抓娃娃游戏","service"=>"人工服务","claw"=>"甩抓");
+    </php>
+
+        <table class="table table-hover table-bordered">
+            <thead>
+            <tr>
+                <th align="center">ID</th>
+                <th>收入/支出</th>
+                <th>收支行为</th>
+                <th>消费金币</th>
+                <th>消耗获赠金币</th>
+                <th>时间</th>
+            </tr>
+            </thead>
+            <tbody>
+            <foreach name="row" item="vo">
+                <tr>
+                    <td align="center">{$vo.id}</td>
+                    <td>{$type[$vo['type']]}</td>
+                    <td>{$action[$vo['action']]}</td>
+                    <td>{$vo.totalcoin}</td>
+                    <td>{$vo.givecoin}</td>
+                    <td>{$vo.addtime|date="Y-m-d H:i:s",###}</td>
+                </tr>
+            </foreach>
+            </tbody>
+        </table>
+        <div class="pagination">{$page} 共&nbsp;&nbsp;{$count}&nbsp;&nbsp;条</div>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

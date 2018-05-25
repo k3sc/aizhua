@@ -1,0 +1,170 @@
+<?php
+// 支付宝支付
+// 基于版本 V3
+// By App 2015-1-20
+namespace Api\Controller;
+use Think\Controller;
+
+class AlipayController extends Controller
+{
+    //App全局相关
+    public static $_url; //动态刷新
+    public static $_opt; //参数缓存
+    public static $_logs = ''; //log地址
+    //JOELCMS设置缓存
+    protected static $SET;
+    protected static $SHOP;
+	
+	//支付宝配置
+	protected  $gatewayUrl = "https://openapi.alipay.com/gateway.do";
+	protected  $appId = "2017101509313781";
+	protected  $rsaPrivateKey = "MIIEpAIBAAKCAQEAom7Rz1bPOZaLBs2NaG87XpckpH10IPmZs9B7xrFHLokgNJGFqDqT2kpw9ZXRs9VPgh5swTg01Se2IfeibK7+HFYZ0e1HJDyBIyMwtYYYORDrupxvMomS9KF4ZFEwetdo423n5tudzq0qV4OA8HPqhzRO6foG8o/UY2qun4CMS11inRN1Wy6Ff5syNyq4X+Kjo/EtCtmYLkust3T85WqsgFC+Sbu07ljLKeRMLBsTB4LUCYOE0yzthw4wzHG8VaqHjJPDx0o+hNpicqSXrGMnkyAqwrLaliMxXSULx9IHpGPnaVHs5uHbs/UE/78IzId9MDLZB+942UBVJCujgzGO1wIDAQABAoIBAF9fUjG7dtEJY3gLGQxIw0M223z5bEYwR98cepCfZnwcZ5x2FVRBkK6LJugLn6VHifeMha6todfGCVrIW8YUuX9Jzr9D4pGUNP68msz6fx6CoOZhE6lIvdCFPnsocJ6v/BYNYixapr3DTykzPXHxnbLlM7CN7aZebQYyjXV5tOZKbxwFYqS3HUiBJvIrWdA4Su0TW8aDK00vjNF98XQO/7EnGvNLRgMdDCUjTRf5IXhwnjN0sDcHEk80Eojqsr0PfgVY9e97nzm6kF4ooIfhFh+cd1oCDnse11aP0+TIS1A/Y4qyXQoH/K6SURgLXPsC3VeuvhbI5kP9rr7NJUHkWAECgYEA0d487yzWPq2os7IbTuyOOYvEzkcpTRRp3pvWZbTKl/go8EobxGgNhZUW/YIECoqfGGGmGZ3ezdlFEVicyQJs1RDHmoTAhsxjll/loyK8umuvdmVu2DxiRnxWuQC9m3qFnGdZf8zFiP7dQYqtqCGLRM6OSrKNDieJk6G7zLgTdBcCgYEAxiNKxVeUnhuC1lCRTSpmphf4yr2FmM2zpd1iUruIbKrPsbiw6KiMhwfEI19uQVGot+cuL6Co2/AqMGWxbUJoahGgH9Yqq8Nc3ScfnazfY0ADBRzpDHtNMg3I0znaTY6Zt57v9y9dvfXRZ9iC0H/FBrU6ZFuDAi+cqJ/zDwCzs0ECgYA6XwmrrFjajgqCEGOwC/Ny5gETLo+6NJdNpyJ2n1ZJ9mfMjZAzjI1WPiVq1SKym+OsMFy2e0ZhErE3JeJVtir3B/e8bnfuBiMczAde3GaJozHmSEgQNJtQ53xncGFMQUOwQL6P4TB/7gM0G5I5VTsbJChHdmntKeoF+dH2GqyueQKBgQCX/9MIeRuF/0zr5HrTW8fLe3Bc9+9ZPdSnVaJsHXmXA6K5kBoHIeZMYGTTTg5jBaYNDsibuQBRWXjED/+A9gTr+gGA6udpRUIkVjMm3suwdBbdAUS3Uo/x6ik6AZO7E75Q4xjr4+ZiKAYxSCNyl9IqRzU4cAuczbG8mpf31m4FAQKBgQCSz6oK1nKap6gp1aGIREZzhQohND/9ECIfRS2w7yWN1OcxvmbNb4fS8t6ManNaRj7vsqsT7d3Us3CzvwtTfyYlvHBkH6gDy0Py6IqqyPtwh+3hpi9vjYuyJ9zBJUuyH/NJS3b1RZKmizj6Ta/HjLzaprxjadQKHUiuyYP/ZbD14Q==";
+	protected  $format = "json";
+	protected  $charset = "UTF-8";
+	protected  $signType = "RSA";
+	protected  $alipayrsaPublicKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA2/rliDepdtL7aPURcMGTeHW6pKK/BfdBpybc+Q81rteCGnZSljNvwfjYvGBL5kbPZBT374uqalWGFjs00qGpxoE3MQfCYSoOdDyTxcAX0J5aPY8zr2s5sFI2DJaGoyu8mrRovUSpfgr7NPihXrWqccXKLhRMPYr08+demiivDsPqydbx3HDRdYJ7xOJ434zyYnR/JTCfuu5xcTvU4GoLoABc7+79LqK+VsWWhoLXpxGcApVnoys7qzv5od0ocTRA+VxVFFlZ3BaaqxSalsyIyOF7Y1T++aDoaQnD/Dedoacztbf/a2eezlHJbr8A5ZFdUtp5ioaVVi780+I7ag6HwQIDAQAB";
+	
+	
+    public function __construct()
+    {
+
+        //App自定义全局
+        parent::__construct();
+        header("Content-type: text/html; charset=utf-8");
+        Vendor('Alipay.AopSdk');
+    }
+	
+    //娃娃币充值支付宝支付接口
+    public function gold_recharge_alipay($oid, $payprice=0)
+    {   
+        $money = $payprice;
+        $o_id   = $oid;
+        $aop = new \AopClient;
+		$aop->gatewayUrl = $this->gatewayUrl;
+        $aop->appId = $this->appId;
+        $aop->rsaPrivateKey = $this->rsaPrivateKey;
+        $aop->format = $this->format;
+        $aop->charset = $this->charset;
+        $aop->signType = $this->signType;
+        $aop->alipayrsaPublicKey = $this->alipayrsaPublicKey;
+		
+        $request = new \AlipayTradeAppPayRequest();
+        //SDK已经封装掉了公共参数，这里只需要传入业务参数
+        $recharge = M('pay_record');
+        $olist = $recharge->where("oid = '".$o_id."'")->find();
+        
+        if($olist){
+			$arr['body'] = '娃娃币充值';
+			$arr['subject'] = '支付宝娃娃币充值';
+			$arr['out_trade_no'] = $olist['oid'];
+			$arr['timeout_express'] = '30m';
+			$arr['total_amount'] = $money;
+			$arr['product_code'] = 'QUICK_MSECURITY_PAY';
+			$bizcontent = json_encode($arr);
+			$request->setNotifyUrl('http://'.$_SERVER['HTTP_HOST'].'/Api/Alipay/notify_pay_recharge');
+			$request->setBizContent($bizcontent);
+			//这里和普通的接口调用不同，使用的是sdkExecute
+			$response = $aop->sdkExecute($request);
+			$info['code'] = 1;
+			$info['msg'] = '请求成功';
+			$info['data']['paycode'] = $response;
+			$this->ajaxReturn($info);
+		 }else{
+			$info['code'] = -1;
+			$info['msg'] = '请求失败';
+			$this->ajaxReturn($info);
+		}
+        
+    }
+
+
+	//支付宝充值娃娃币回调
+	public function notify_pay_recharge(){
+		$post = I('post.');
+		//$aop = new \AopClient;
+		//$aop->rsaPrivateKey = $this->rsaPrivateKey;
+		$result = true;
+		//$this->ajaxReturn($aop);
+		//$result = $aop->rsaCheckV1($post, NULL, $config['signType']);  //检验密匙
+		if ($result && ($post['trade_status'] == 'TRADE_FINISHED' || $post['trade_status'] == 'TRADE_SUCCESS')) {
+			 $out_trade_no = $post['out_trade_no'];
+
+			 $recharge = M('pay_record');//充值记录
+             $olist = $recharge->where("oid = '".$out_trade_no."'")->find();
+             $rule_list = M('charge_rules')->where('id='.$olist['pay_id'].'')->find();//充值规则
+             //$this->ajaxReturn($rule_list);
+ 			 if($olist['status'] == 0){
+ 			 	//赠送礼品
+ 			 	$num = 0;
+                $name = '';
+ 			 	if($rule_list['give'] !== 0){
+ 			 		$name = M('give_gift')->where('id='.$rule_list['give'].'')->getField('name');
+ 			 		$num = $rule_list['number'];
+ 			 		for($i = 1; $i<=$num; $i++){
+ 			 			$gift['gift_id'] = $rule_list['give'];
+ 			 			$gift['type']    = 1;
+ 			 			$gift['user_id'] = $olist['user_id'];
+ 			 			$gift['ctime']   = time();
+ 			 			$re1 = M('users_gift')->add($gift);
+ 			 		}
+ 			 	}
+ 			 	
+ 			 	$update = array();
+                $update['claw'] = array('exp', 'claw+'.$rule_list['claw']);
+                $update['coin'] = array('exp', 'coin+'.$olist['coin']);
+                $update['coin_sys_give'] = array('exp', 'coin_sys_give+'.$olist['coingive']);
+                $re2 = M('users')->where("id={$olist['user_id']}")->save($update);
+
+
+				/* 读取用户贩卖模式规则， 送强抓力 */
+				$config = M('sellmodel')->order('money desc')->select();
+                 foreach ($config as $v) {
+                     if( $olist['money'] >= $v['money'] ){
+                         M('users')->where("id={$olist['user_id']}")->setInc('strong',$v['zj_count']);
+                         break;
+                     }
+				}
+
+				 //修改用户的充值订单
+                $give_coin = $olist['coingive'];
+                $claw       = $rule_list['claw'];
+                $number = $olist['coin']-$give_coin;
+                $first_coin = $olist['coin'];
+	            if($give_coin != 0 && $claw != 0){
+	            	 $data['log'] = '赠送娃娃币X'.$first_coin.'个，'.$claw.'次甩爪';
+                }elseif($give_coin != 0 && $claw != 0 && $rule_list['give'] != 0){
+                    $data['log'] = '赠送娃娃币X'.$first_coin.'个，'.$claw.'次甩爪，"'.$name.'"'. $num.'个';
+                }elseif($give_coin != 0 && $rule_list['give'] != 0 ){//$give_coin != 0　&&　
+                    $data['log'] = '赠送娃娃币X'.$first_coin.'个，"'.$name.'"'. $num.'个';
+                }elseif( $give_coin != 0){
+                    $data['log'] = '赠送娃娃币X'.$first_coin.'个';
+                }elseif($claw != 0 && $rule_list['give'] != 0){
+                    $data['log'] = '赠送娃娃币X'. $number.'个，'.$claw.'次甩爪'.'，"'.$name.'"'. $num.'个';
+                }elseif($rule_list['give'] != 0){
+                    $data['log'] = '赠送娃娃币X'.$number.'，"'.$name.'"'. $num.'个';
+                }elseif($claw != 0){
+                    $data['log'] = '赠送娃娃币X'.$number.'，'.$claw.'次甩爪';
+                }else{
+                     $data['log'] ='赠送娃娃币X'.$olist['coin'];
+                } 
+
+				$data['paytime']= time();
+				$data['status'] = 1;
+				$data['type']   = 2;
+
+				$re4 = $recharge->where('id = '.$olist['id'])->save($data);
+               //$this->ajaxReturn($data);
+
+				//流水表
+				$insert=array("type"=>'income',"action"=>'coin',"uid"=>$olist['user_id'],"touid"=>0,"giftid"=>intval($rule_list['give']),"giftcount"=>intval($num),"totalcoin"=>$olist['coin'],"givecoin"=>$olist['coingive'],"giveclaw"=>intval($claw),"realmoney"=>$olist['money'],"givemoney"=>$olist['coingive']/10,"showid"=>0,"addtime"=>time() );
+				M('users_coinrecord')->add($insert);		
+
+			}
+		
+		}
+		echo 'success';
+	}
+	
+
+	
+} 

@@ -1,0 +1,22 @@
+	<div id="doc-ft">
+		<div class="container">
+			<p class="footer">
+				泰安云豹网络科技有限公司 地址：山东省泰安市泰山区万达广场8号楼2405 电话：0538-8270220
+			</p>
+			<p class="footer">
+				Copyright©  2012-2016, ICP备15017218号-1
+			</p>
+		</div>
+	</div>
+		
+	 <!--  <script src="__PUBLIC__/home/js/jquery.1.10.2.js"></script>  -->
+		<script src="http://yunbaolivein.oss-cn-hangzhou.aliyuncs.com/yunbaozhibo/jquery.1.10.2.js"></script> 
+		<script src="http://yunbaolivein.oss-cn-hangzhou.aliyuncs.com/yunbaozhibo/jquery.lazyload.min.js"></script> 
+<!-- 	  <script src="__PUBLIC__/home/js/jquery.lazyload.min.js"></script> -->
+		<script type="text/javascript">
+			window._DATA = window._DATA || {};
+			window._DATA.user = {$userinfo};
+		</script> 
+		<script type="text/javascript" src="__PUBLIC__/home/js/login.js"></script> 
+		<script type="text/javascript" src="__PUBLIC__/home/js/layer.js"></script> 
+

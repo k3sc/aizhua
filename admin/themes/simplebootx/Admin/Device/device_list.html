@@ -1,0 +1,76 @@
+<admintpl file="header" />
+</head>
+<body>
+<div class="wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="">设备列表</a></li>
+        <li><a href="{:U('Device/device_add')}">设备添加</a></li>
+    </ul>
+
+    <form action="{:U('Device/device_list')}" method="post" class="well form-search">
+        设备唯一码：<input type="text" name="unicode" value="{$Think.post.unicode}">
+        设备号：<input type="text" name="device_no" value="{$Think.post.device_no}">
+        所在地：
+        <select name="device_addr_id" style="width: 150px;">
+            <option value=""> -- 全部 --</option>
+            <foreach name="addr" item="vo">
+                <option value="{$vo.id}" <eq name="Think.post.device_addr_id" value="$vo.id">selected</eq> >{$vo.addr}</option>
+            </foreach>
+        </select>
+        设备状态：
+        <select name="status" style="width: 100px;">
+            <option value="">-- 全部 --</option>
+            <option value="1" <eq name="Think.post.status" value="1">selected</eq> >-- 正常 --</option>
+            <option value="0" <eq name="Think.post.status" value="0">selected</eq> >-- 故障 --</option>
+            <option value="2" <eq name="Think.post.status" value="2">selected</eq> >-- 离线 --</option>
+        </select>
+        <input type="submit" value="搜索" class="btn btn-primary">
+    </form>
+
+    <form method="post" class="js-ajax-form" >
+        <table class="table table-hover table-bordered">
+            <thead>
+            <tr>
+                <th>设备唯一码</th>
+                <th>设备号</th>
+                <th>设备所在地</th>
+                <!--<th>库存</th>-->
+                <!--<th>预警库存</th>-->
+                <!--<th>产品名称</th>-->
+                <!--<th>产品价格（元）</th>-->
+                <th>绑定房间</th>
+                <th>设备状态</th>
+                <th>创建时间</th>
+                <th align="center">{:L('ACTIONS')}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <foreach name="device_list" item="vo">
+                <tr>
+                    <td>{$vo['device_unique_code']}</td>
+                    <td>{$vo['deveci_no']}</td>
+                    <td>{$vo['addr']}</td>
+                    <!--<td>{$vo['device_stock']}</td>-->
+                    <!--<td>{$vo['device_stock_predict']}</td>-->
+                    <!--<td>{$vo['giftname']}</td>-->
+                    <!--<td>{$vo['cost']}</td>-->
+                    <td>{$vo['room_no']}&nbsp;&nbsp; <notempty name="vo.room_name">【{$vo['room_name']}】<else/>暂未被房间绑定，可前往房间管理进行绑定</notempty></td>
+                    <td <eq name="vo.status" value="1">class="text-success"<else/>class="text-error"</eq> ><strong>{$statusArr[$vo['status']]}</strong></td>
+                    <td>{$vo.ctime|date="Y-m-d H:i:s",###}</td>
+
+                    <td align="center">
+                        <a href="{:U('Device/device_edit',array('id'=>$vo['id']))}" >编辑</a> |
+                        <a href="{:U('Device/device_del',array('id'=>$vo['id']))}" class="js-ajax-dialog-btn" data-msg="您确定要删除吗？">删除</a> |
+                        <a href="{:U('Device/device_fault',array('deveci_no'=>$vo['device_unique_code']))}">故障记录</a>
+                    </td>
+                </tr>
+            </foreach>
+            </tbody>
+        </table>
+        <div class="pagination">{$page}</div>
+
+    </form>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

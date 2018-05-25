@@ -1,0 +1,46 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a >号码列表</a></li>
+			<li><a href="{:U('Traffic/add')}">号码添加</a></li>
+		</ul>
+			<table class="table table-hover table-bordered">
+				<thead>
+					<tr>
+	
+						<th align="center">ID</th>
+						<th>号码</th>
+						<th>会员（ID）</th>
+
+						<th align="center">{:L('ACTIONS')}</th>
+					</tr>
+				</thead>
+				<tbody>
+					<foreach name="lists" item="vo">
+					<tr>
+						<td align="center">{$vo.id}</td>
+	
+						<td>{$vo['mobile']}</td>
+						<td>{$vo['user_nicename']} ({$vo['uid']})</td>
+	
+						<td align="center">	
+						 <if condition="$vo['isactive'] eq '1'">
+						      <a >已激活</a> |
+						 <else/>
+								  <a href="{:U('Traffic/active',array('id'=>$vo['id'],'mobile'=>$vo['mobile']))}" class="js-ajax-dialog-btn" data-msg="您确定要激活吗？">激活</a> |
+						 </if>
+						
+							<a href="{:U('Traffic/del',array('id'=>$vo['id']))}" class="js-ajax-dialog-btn" data-msg="您确定要删除吗？">删除</a>
+						</td>
+					</tr>
+					</foreach>
+				</tbody>
+			</table>
+			<div class="pagination">{$page}</div>
+
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

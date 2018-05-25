@@ -1,0 +1,57 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a >奖项列表</a></li>
+			<li><a href="{:U('Lottery/add')}">奖项添加</a></li>
+		</ul>
+		<form method="post" class="js-ajax-form" action="{:U('Lottery/listorders')}">
+
+		
+			<table class="table table-hover table-bordered">
+				<thead>
+					<tr>
+					
+						<th align="center">ID</th>
+						<th>名称</th>
+						<th>中奖几率（除以中奖基数即为中奖概率）</th>
+						<th>倍率</th>
+						<th>奖品级别（越小等级越大）</th>
+
+						<th align="center">{:L('ACTIONS')}</th>
+					</tr>
+				</thead>
+				<tbody>
+				
+					<foreach name="list" item="vo">
+					<tr>
+
+						<td align="center">{$vo.id}</td>
+						<td>{$vo.title}</td>
+						<td>{$vo.percentage}</td>
+						<td>{$vo.ratio}</td>
+						<td>{$vo.lottery_level}</td>
+
+
+
+						<td align="center">	
+							<a href="{:U('Lottery/edit',array('id'=>$vo['id']))}" >编辑</a>
+							<if condition="in_array($vo['id'],array('9','19','21','22') )">
+							
+							<else/>
+							 |
+							  <a href="{:U('Lottery/del',array('id'=>$vo['id']))}" class="js-ajax-dialog-btn" data-msg="您确定要删除吗？">删除</a>
+							</if>
+						</td>
+					</tr>
+					</foreach>
+				</tbody>
+			</table>
+			<div class="pagination">{$page}</div>
+
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<admintpl file="header" />
+</head>
+<body>
+<div class="wrap">
+    <ul class="nav nav-tabs">
+        <li ><a href="{:U('Rechargeconfig/index')}">充值设置</a></li>
+        <li class="active"><a >添加设置</a></li>
+    </ul>
+    <form method="post" class="form-horizontal js-ajax-form" action="{:U('Rechargeconfig/add_post')}">
+        <fieldset>
+            <div class="control-group">
+                <label class="control-label">充值金额</label>
+                <div class="controls">
+                    <input type="text" name="money">
+                    <span class="form-required">*</span>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">获得娃娃币个数</label>
+                <div class="controls">
+                    <input type="text" name="coin">
+                    <span class="form-required">*</span>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">赠送礼品</label>
+                <div class="controls">
+                    <foreach name="gift" item="v">
+                        <input type="checkbox" name="gift[]" value="{$v.id}">{$v.name}&nbsp;&nbsp;
+                    </foreach>
+
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">赠送甩爪次数</label>
+                <div class="controls">
+                    <input type="text" name="claw">
+                    <span class="form-required">*</span>
+                </div>
+            </div>
+
+        </fieldset>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary js-ajax-submit">{:L('ADD')}</button>
+            <a class="btn" href="{:U('Rechargeconfig/index')}">{:L('BACK')}</a>
+        </div>
+    </form>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

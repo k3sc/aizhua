@@ -1,0 +1,53 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a >申诉列表</a></li>
+			<li ><a href="{:U('Appeal/text')}">申诉文案列表</a></li>
+		</ul>
+
+		<table class="table table-hover table-bordered">
+			<thead>
+				<tr>
+					<!--<th align="center">ID</th>-->
+					<th>申诉问题</th>
+					<th>用户名</th>
+					<th>用户ID</th>
+					<th>相关游戏记录</th>
+					<th>游戏记录ID</th>
+					<th>申诉时间</th>
+					<th align="center">{:L('ACTIONS')}</th>
+				</tr>
+			</thead>
+			<tbody>
+				<foreach name="row" item="vo">
+				<tr>
+					<!--<td align="center">{$vo.id}</td>-->
+					<td>{$vo.appeal_type}</td>
+					<td>{$vo.user_nicename}</td>
+					<td>{$vo.user_id}</td>
+					<td>
+						<!--<video height="150px" width="200px" src="{$vo.video}" controls="controls"></video>-->
+						<a href="{:U('Appeal/video',array('id'=>$vo['id']))}" target="_blank" class="btn btn-success">查看视频</a>
+					</td>
+					<td>{$vo.game_id}</td>
+					<td>{$vo.ctime|date="Y-m-d H:i:s",###}</td>
+					<td align="center">
+						<eq name="vo.status" value="0">
+							<a href="{:U('Appeal/handle',array('id'=>$vo['id']))}" class="btn btn-danger btn-small">标记处理</a>
+						<else/>
+							<a href="javascript:;" class="btn btn-primary btn-small">已经处理</a>
+						</eq>
+						<a href="{:U('Appeal/del',array('id'=>$vo['id']))}" class="js-ajax-dialog-btn" data-msg="您确定要删除吗？">删除</a> |
+						<a href="{:U('Users/msg',array('users'=>$vo['user_id'],'t'=>'appeal'))}">推送</a>
+					</td>
+				</tr>
+				</foreach>
+			</tbody>
+		</table>
+		<div class="pagination">{$page}</div>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

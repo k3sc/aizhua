@@ -1,0 +1,24 @@
+<admintpl file="header" />
+</head>
+<body>
+<div class="wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a >填写快递信息</a></li>
+    </ul>
+
+    <form action="{:U('Waybill/fahuo')}" method="post">
+        快递公司：
+        <select name="kdname">
+            <foreach name="kd" item="vo">
+                <option>{$vo.name}</option>
+            </foreach>
+        </select>
+        快递单号：<input type="text" name="kdno"> *
+        <input type="hidden" name="waybillno" value="{$waybillno}">
+        <input type="submit" name="sbt" value="提交" class="btn btn-success">
+    </form>
+
+</div>
+</body>
+<script src="__PUBLIC__/js/common.js"></script>
+</html>

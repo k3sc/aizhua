@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>.org.eclipse.dltk.core.external.folders</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+	</buildSpec>
+	<natures>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>.link3</name>
+			<type>2</type>
+			<location>/Users/nikkolin/Desktop/项目/抓娃娃机/开发/迪尔西/交付/交付文档1221/移交源代码/后台/房一起/房一起/.metadata/.plugins/org.eclipse.php.core/__language__/a2ec99b7</location>
+		</link>
+		<link>
+			<name>.link4</name>
+			<type>2</type>
+			<location>/Users/nikkolin/Desktop/项目/抓娃娃机/开发/迪尔西/交付/交付文档1221/移交源代码/后台/房一起/房一起/.metadata/.plugins/com.zend.php.core/__language__/f52c861a</location>
+		</link>
+		<link>
+			<name>.link5</name>
+			<type>2</type>
+			<location>/Users/nikkolin/Desktop/项目/抓娃娃机/开发/迪尔西/交付/交付文档1221/移交源代码/后台/房一起/房一起/.metadata/.plugins/com.zend.php.core/__language__/7927351f</location>
+		</link>
+	</linkedResources>
+</projectDescription>

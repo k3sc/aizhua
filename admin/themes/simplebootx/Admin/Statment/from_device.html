@@ -1,0 +1,128 @@
+<admintpl file="header" />
+<style>
+	.settime{
+		float:left;
+		width:60px;
+		heigth:45px;
+		text-align:center;
+		line-height:45px;
+		border: 1px solid #dce4ec;
+		cursor:pointer
+	}
+	.active1{
+		background:#1DCCAA;
+		color:#fff;
+		border: 1px solid #1DCCAA;
+	}
+</style>
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li><a href="{:U('Statment/index')}">按时间统计</a></li>
+			<li class="active"><a href="javascript:;">按设备统计</a></li>
+		</ul>
+
+		<form action="{:U('Statment/from_device')}" method="post" class="well form-search">
+			<div>
+				<div class="settime <if condition="$time_type eq 'day' or ''">active1</if>" ghref="{$arrTime['sday']},{$arrTime['eday']},day">今日</div>
+				<div class="settime <if condition="$time_type eq 'week'">active1</if>" ghref="{$arrTime['sweek']},{$arrTime['eweek']},week">本周</div>
+				<div class="settime <if condition="$time_type eq 'month'">active1</if>" ghref="{$arrTime['smonth']},{$arrTime['emonth']},month">本月</div>
+				<div class="settime <if condition="$time_type eq 'year'">active1</if>" ghref="{$arrTime['syear']},{$arrTime['eyear']},year">半年</div>
+				<input type="hidden" id="gettime" name="gettime" value="<php>echo $arrTime['s'.$time_type].','.$arrTime['e'.$time_type];</php>,{$time_type}">
+			</div>
+			&nbsp;&nbsp;&nbsp;
+			<input type="text" name="date1" class="js-date date" placeholder="选择日期" style="width: 100px;" value="{$Think.post.date1}" > 至 <input type="text" name="date2" class="js-date date" placeholder="选择日期" style="width: 100px;" value="{$Think.post.date2}" >
+			<!--消费额区间：<input type="number" value="{$Think.post.money1}" name="money1" style="width: 80px;">-->
+			<!--至-->
+			<!--<input type="number" value="{$Think.post.money2}" name="moeny2" style="width: 80px;">-->
+			<!--设备唯一码：<input type="text" name="device_uni" value="{$Think.post.device_uni}" style="width: 80px;">-->
+			<!--设备号：<input type="text" name="device_no" value="{$Think.post.device_no}" style="width: 80px;">-->
+			<br><br>
+			<button class="btn btn-primary">搜索</button>
+		</form>
+
+		<table class="table table-hover table-bordered">
+			<thead>
+				<tr>
+					<th>房间号</th>
+					<th>房间名</th>
+					<th>设备编号</th>
+					<th>房间库存</th>
+					<th>所在地</th>
+					<!-- <th>商品号</th> -->
+					<th>商品名</th>
+					<th>价格</th>
+					<th>消费总额</th>
+					<th>消费增币</th>
+					<th>夹娃娃次数</th>
+					<th>夹中次数</th>
+					<th>夹中概率</th>
+					<th>强抓力次数</th>
+					<th>游戏用户数</th>
+					<th>夹中用户</th>
+				</tr>
+			</thead>
+			<tbody>
+			<foreach name="result" item="v" key="k">
+            	<notempty name="v.room_no">
+				<tr>
+					<td align="center">{$v['room_no']}</td>
+					<td align="center">{$v['room_name']}</td>
+					<td align="center">{$v['deveci_no']}</td>
+					<td align="center">{$v['wawa_num']|default=0}</td>
+					<td align="center">{$v['addr']}</td>
+					<!-- <td align="center">{$v['wawa_no']}</td> -->
+					<td align="center">{$v['giftname']}( ID:{$v['gift_id']} )</td>
+					<td align="center">{$v['spendcoin']|default=0}</td>
+					<td align="center">{$v['xfze']|default=0}</td>
+					<td align="center">{$v['xfzb']|default=0}</td>
+					<td align="center">{$v['games_total']|default=0}</td>
+					<td align="center">{$v['ggames_total']|default=0}</td>
+					<td align="center">{$v['ggames_total']/$v['games_total']*100|round=###,2}%</td>
+					<td align="center">{$v['strong_total']}</td>
+					<td align="center">{$v['game_users']|default=0}</td>
+					<td align="center">{$v['zgame_users']|default=0}</td>
+				</tr>
+                </notempty>
+			</foreach>
+			</tbody>
+			<div class="pagination">{$page}</div>
+		</table>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+</body>
+
+<script>
+$(function(){
+	$('.table').tablesort().data('tablesort');
+	$('.table th').data('sortBy', function(th, td, sorter) {
+		return Math.abs(parseInt(td.text(), 10));
+	});
+
+	$('.settime').click(function(){
+		$('#gettime').val($(this).attr('ghref'));
+		$(this).addClass('active1');
+		$(this).siblings('div').removeClass('active1');
+	});
+
+	$("#clear").click(function(){
+		var flag = confirm('确定吗？');
+		if( flag ){
+			$.ajax({
+				url : "{:U('Notice/clear')}",
+				type : 'post',
+				data : null,
+				success : function(e){
+					window.location.href = "{:U('Notice/index')}";
+				},
+				error : function(e){
+						alert('系统内部错误');
+				}
+			});
+		}
+	});
+
+});
+</script>
+</html>

@@ -1,0 +1,32 @@
+2018-01-11 14:54:27|ERROR|User.getBaseInfo|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-01-11 14:54:36|ERROR|Home.getHot|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-01-11 14:54:37|ERROR|User.getBaseInfo|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-01-11 14:54:41|ERROR|Home.getHot|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}

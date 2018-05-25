@@ -1,0 +1,206 @@
+<admintpl file="header" />
+</head>
+<body>
+<div class="wrap">
+    <ul class="nav nav-tabs">
+        <li ><a href="{:U('Device/device_list')}">设备列表</a></li>
+        <li class="active"><a >编辑</a></li>
+    </ul>
+    <form method="post" class="form-horizontal js-ajax-form" action="{:U('Device/device_edit_post',array('id'=>$device['id']))}">
+        <fieldset>
+
+            <div class="control-group">
+                <label class="control-label">设备唯一码</label>
+                <div class="controls">
+                    <input type="text" value="{$device['device_unique_code']}" readonly>
+                    <span class="form-required">*</span>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">设备编号</label>
+                <div class="controls">
+                    <input type="text" name="deveci_no" value="{$device['deveci_no']}">
+                    <span class="form-required">*</span>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">所在地</label>
+                <div class="controls">
+                    <select name="device_addr_id">
+                        <foreach name="addr" item="vo">
+                            <option <eq name="vo.id" value="$device.device_addr_id">selected</eq> value="{$vo['id']}">{$vo['addr']}</option>
+                        </foreach>
+                    </select>
+                    <span class="form-required">*</span>
+                </div>
+            </div>
+            <!--<div class="control-group">-->
+                <!--<label class="control-label">选择娃娃</label>-->
+                <!--<div class="controls">-->
+                    <!--<select name="wawa_id">-->
+                        <!--<foreach name="wawa" item="vo">-->
+                            <!--<option <eq name="vo.id" value="$device.wawa_id">selected</eq> value="{$vo['id']}">{$vo['giftname']}</option>-->
+                        <!--</foreach>-->
+                    <!--</select>-->
+                    <!--<span class="form-required">*</span>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="control-group">-->
+                <!--<label class="control-label">库存</label>-->
+                <!--<div class="controls">-->
+                    <!--<input type="text" name="device_stock" value="{$device['device_stock']}">-->
+                    <!--<span class="form-required">*</span>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="control-group">-->
+                <!--<label class="control-label">预警库存</label>-->
+                <!--<div class="controls">-->
+                    <!--<input type="text" name="device_stock_predict" value="{$device['device_stock_predict']}">-->
+                    <!--<span class="form-required">*</span>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="control-group">-->
+                <!--<label class="control-label">绑定房间</label>-->
+                <!--<div class="controls">-->
+                    <!--<select name="room_id">-->
+                        <!--<foreach name="room" item="vo">-->
+                            <!--<option <eq name="vo.id" value="$device.room_id">selected</eq> value="{$vo['id']}">{$vo['room_name']}</option>-->
+                        <!--</foreach>-->
+                    <!--</select>-->
+                    <!--<span class="form-required">*</span>-->
+                <!--</div>-->
+            <!--</div>-->
+
+            <div class="control-group">
+                <label class="control-label"><font color="#6495ed"><b>选择游戏参数</b></font></label>
+                <div class="controls">
+                    <select id="game_config_id" name="game_config_id">
+                        <foreach name="game_config" item="vo">
+                            <option value="{$vo['id']}" <eq name="device.game_config_id" value="$vo.id">selected</eq> >{$vo.name}</option>
+                        </foreach>
+                    </select>
+                    <!--<input type="button" id="use" class="btn btn-follow" value="应用">-->
+                </div>
+            </div>
+
+            <!--<div class="control-group">-->
+                <!--<label class="control-label">游戏时间</label>-->
+                <!--<div class="controls">-->
+                    <!--<input type="text" value="{$device['game_time']}" name="game_time">-->
+                    <!--<span class="form-required">*</span>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="control-group">-->
+                <!--<label class="control-label">天车前后速度</label>-->
+                <!--<div class="controls">-->
+                    <!--<input type="text" value="{$device['qh_speed']}" name="qh_speed">-->
+                    <!--<span class="form-required">*</span>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="control-group">-->
+                <!--<label class="control-label">天车左右速度</label>-->
+                <!--<div class="controls">-->
+                    <!--<input type="text" value="{$device['zy_speed']}" name="zy_speed">-->
+                    <!--<span class="form-required">*</span>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="control-group">-->
+                <!--<label class="control-label">天车上下速度</label>-->
+                <!--<div class="controls">-->
+                    <!--<input type="text" value="{$device['sx_speed']}" name="sx_speed">-->
+                    <!--<span class="form-required">*</span>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="control-group">-->
+                <!--<label class="control-label">中奖第一段抓力</label>-->
+                <!--<div class="controls">-->
+                    <!--<input type="text" value="{$device['zj_first_zhuali']}" name="zj_first_zhuali">-->
+                    <!--<span class="form-required">*</span>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="control-group">-->
+                <!--<label class="control-label">中奖第二段抓力</label>-->
+                <!--<div class="controls">-->
+                    <!--<input type="text" value="{$device['zj_second_zhuali']}" name="zj_second_zhuali">-->
+                    <!--<span class="form-required">*</span>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="control-group">-->
+                <!--<label class="control-label">指定高度转二段抓力(中奖)</label>-->
+                <!--<div class="controls">-->
+                    <!--<input type="text" value="{$device['zj_top']}" name="zj_top">-->
+                    <!--<span class="form-required">*</span>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="control-group">-->
+                <!--<label class="control-label">保持抓力时间(中奖)</label>-->
+                <!--<div class="controls">-->
+                    <!--<input type="text" value="{$device['zj_top_time']}" name="zj_top_time">-->
+                    <!--<span class="form-required">*</span>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="control-group">-->
+                <!--<label class="control-label">不中奖第一段抓力</label>-->
+                <!--<div class="controls">-->
+                    <!--<input type="text" value="{$device['bzj_first_zhuali']}" name="bzj_first_zhuali">-->
+                    <!--<span class="form-required">*</span>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="control-group">-->
+                <!--<label class="control-label">不中奖第二段抓力</label>-->
+                <!--<div class="controls">-->
+                    <!--<input type="text" value="{$device['bzj_second_zhuali']}" name="bzj_second_zhuali">-->
+                    <!--<span class="form-required">*</span>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="control-group">-->
+                <!--<label class="control-label">指定高度转二段抓力(不中奖)</label>-->
+                <!--<div class="controls">-->
+                    <!--<input type="text" value="{$device['bzj_top']}" name="bzj_top">-->
+                    <!--<span class="form-required">*</span>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="control-group">-->
+                <!--<label class="control-label">保持抓力时间(不中奖)</label>-->
+                <!--<div class="controls">-->
+                    <!--<input type="text" value="{$device['bzj_top_time']}" name="bzj_top_time">-->
+                    <!--<span class="form-required">*</span>-->
+                <!--</div>-->
+            <!--</div>-->
+
+
+            <input type="hidden" name="device_id" value="{$device['id']}">
+
+        </fieldset>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary js-ajax-submit">{:L('EDIT')}</button>
+            <a class="btn" href="{:U('Device/device_list')}">{:L('BACK')}</a>
+        </div>
+    </form>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+</body>
+
+<script>
+    $(function () {
+        $("#use").click(function () {
+            var game_config_id = $("#game_config").val();
+            $.ajax({
+                url : "{:U('Device/response_ajax')}",
+                type : 'post',
+                data : 'id='+game_config_id,
+                success : function(e){
+                    for(var key in e){
+                        $("input[name='"+key+"']").val(e[key]);
+                    }
+                },
+                error : function(e){
+                    alert('系统内部错误');
+                }
+            });
+        });
+    });
+
+</script>
+
+</html>

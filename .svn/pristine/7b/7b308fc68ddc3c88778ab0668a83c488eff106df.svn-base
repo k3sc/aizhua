@@ -1,0 +1,29 @@
+<admintpl file="header" />
+</head>
+<body>
+<div class="wrap">
+	<ul class="nav nav-tabs">
+		<li><a href="{:U('Gift/type_list')}" >礼品分类列表</a></li>
+		<li class="active"><a>礼品分类编辑</a></li>
+	</ul>
+	<form method="post" class="form-horizontal js-ajax-form" action="{:U('Gift/type_add')}">
+		<fieldset>
+			<div class="control-group">
+				<label class="control-label">分类名称</label>
+				<div class="controls">
+					<input type="text" name="name" value="{$arrInfo['name']}">
+					<span class="form-required">*</span>
+				</div>
+			</div>
+		</fieldset>
+		<input type="hidden" name="id" value="{$arrInfo['id']}">
+		<div class="form-actions">
+			<button type="submit" class="btn btn-primary js-ajax-submit"><empty name="arrInfo.id">{:L('ADD')}<else/>{:L('EDIT')}</empty></button>
+			<a class="btn" href="{:U('Gift/type_list')}">{:L('BACK')}</a>
+		</div>
+	</form>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/content_addtop.js"></script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<admintpl file="header" />
+</head>
+<body>
+<div class="wrap">
+    <ul class="nav nav-tabs">
+        <li ><a href="{:U('Waybill/lists')}">运单列表</a></li>
+        <li class="active"><a href="javascript:;">编辑运单</a></li>
+    </ul>
+    <form action="{:U('waybill/edit_post',array('waybillno'=>$data[0]['waybillno']))}" method="post">
+        <table class="table table-hover table-bordered">
+            <tr>
+                <td>订单编号：<font color="red"><b>{$data[0].waybillno}</b></font></td>
+                <td>收件人姓名：<input type="text" name="uname" value="{$data[0].uname}" <neq name="data[0].status" value="1">readonly</neq> ></td>
+                <td>收件人手机号：<input type="text" name="phone" value="{$data[0].phone}" <neq name="data[0].status" value="1">readonly</neq> ></td>
+            </tr>
+            <tr>
+                <td colspan="3">收件人详细地址：<input type="text" name="addr" value="{$data[0].addr}{$data[0].addr_info}" style="width: 1175px;" <neq name="data[0].status" value="1">readonly</neq> ></td>
+            </tr>
+            <tr>
+                <td colspan="3">物品数量：<input type="text" value="{$num}" readonly></td>
+            </tr>
+            <tr>
+                <td colspan="3">物品名称：<input type="text" value="{$data[0].goodsname}" <neq name="data[0].status" value="1">readonly</neq> ></td>
+            </tr>
+            <tr>
+                <td colspan="3">物品明细
+                    <table border="1px solid black">
+                        <foreach name="data[0].goods" item="vo">
+                            <tr>
+                                <td>{$vo.name}( ID:<empty name="vo.wawa_id">{$vo.gift_id}<else/>{$vo.wawa_id}</empty> )</td>
+                                <td>{$vo.num}</td>
+                            </tr>
+                        </foreach>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">用户留言备注：<b>{$data[0].remark}</b></td>
+            </tr>
+            <br><br>
+            <tr>
+                <td>用户ID：{$data[0].user_id}</td>
+                <td>用户昵称：{$data[0].user_nicename}</td>
+                <td>下单时间：{$data[0].ctime|date="Y-m-d H:i:s",###}</td>
+            </tr>
+            <tr>
+                <td>快递公司: <input type="text" name="kdname" value="{$data[0].kdname}" <neq name="data[0].status" value="1">readonly</neq> ></td>
+                <td colspan="2">快递单号: <input type="text" name="kdno" value="{$data[0].kdno}" <neq name="data[0].status" value="1">readonly</neq> ></td>
+            </tr>
+            <tr>
+                <td colspan="3">系统备注： <textarea style="width: 725px; height: 50px;" name="sys_remark" <eq name="data[0].status" value="3">readonly</eq> >{$data[0].sys_remark}</textarea></td>
+            </tr>
+            <tr>
+                <td colspan="3" style="text-align: center"><input class="btn btn-success" type="submit" value="保存"></td>
+            </tr>
+        </table>
+    </form>
+</div>
+<!--<script src="__PUBLIC__/js/jqprint/jquery-1.4.4.min.js"></script>-->
+<script src="__PUBLIC__/js/common.js"></script>
+<script src="__PUBLIC__/js/jqprint/jquery.jqprint.js"></script>
+
+</body>
+</html>

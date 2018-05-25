@@ -1,0 +1,46 @@
+<admintpl file="header" />
+</head>
+<body>
+<div class="wrap">
+    <ul class="nav nav-tabs">
+        <li ><a href="{:U('Users/index')}">用户列表</a></li>
+        <li class="active"><a >充值流水</a></li>
+        <li ><a href="{:U('Users/consume',array('id'=>$_GET['id']))}">消费流水</a></li>
+        <li ><a href="{:U('Users/sysbill',array('id'=>$_GET['id']))}">系统赠送流水</a></li>
+    </ul>
+
+        <table class="table table-hover table-bordered">
+            <thead>
+            <tr>
+                <!--<th align="center">ID</th>-->
+                <th>充值订单号</th>
+                <th>充值描述</th>
+                <th>支付类型</th>
+                <th>充值金额</th>
+                <th>兑换点数(包含赠送)</th>
+                <th>获赠点数</th>
+                <th>状态</th>
+                <th>时间</th>
+                <!--<th align="center">{:L('ACTIONS')}</th>-->
+            </tr>
+            </thead>
+            <tbody>
+            <foreach name="row" item="vo">
+                <tr>
+                    <td align="center">{$vo.oid}</td>
+                    <td>{$vo.log}</td>
+                    <td>{$paytype[$vo['type']]}</td>
+                    <td>{$vo.money}</td>
+                    <td>{$vo.coin}</td>
+                    <td>{$vo.coingive}</td>
+                    <td>{$status[$vo['status']]}</td>
+                    <td>{$vo.ctime|date="Y-m-d H:i:s",###}</td>
+                </tr>
+            </foreach>
+            </tbody>
+        </table>
+        <div class="pagination">{$page} 共&nbsp;&nbsp;{$count}&nbsp;&nbsp;条</div>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

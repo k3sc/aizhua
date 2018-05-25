@@ -1,0 +1,83 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li><a href="{:U('Chargerules/index')}">充值规则列表</a></li>
+			<li class="active"><a >充值规则修改</a></li>
+		</ul>
+		<form method="post" class="form-horizontal js-ajax-form" action="{:U('Chargerules/do_edit')}">
+		   <input type="hidden" name="id" value="{$rules['id']}">
+			<fieldset>
+				<div class="control-group">
+					<label class="control-label">充值金额</label>
+					<div class="controls">
+						<input type="text" name="money" value="{$rules['money']}">
+						<span class="form-required">*</span>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">充值娃娃币</label>
+					<div class="controls">
+						<input type="text" name="coin" value="{$rules['coin']}">
+						<span class="form-required">*</span>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">赠送娃娃币</label>
+					<div class="controls">
+						<input type="text" name="give_coin" value="{$rules['give_coin']}">
+						<span class="form-required">*</span>
+					</div>
+				</div>
+
+				<div class="control-group" id="gvie">
+					<label class="control-label">赠送的礼品</label>
+					<div class="controls">
+						{$gift}
+					</div>
+				</div><div class="control-group">
+					<label class="control-label">赠送的礼品的数量</label>
+					<div class="controls">
+						<input type="text" name="number" value="{$rules['number']}">
+						<span class="form-required">*</span>
+					</div>
+				</div>
+				<div class="control-group" id="claw">
+					<label class="control-label">赠送甩爪次数</label>
+					<div class="controls">
+						<input type="text" name="claw" value="{$rules['claw']}">
+						<span class="form-required">*</span>
+					</div>
+				</div>
+                <!--<div class="control-group">-->
+					<!--<label class="control-label">首充送娃娃币</label>-->
+					<!--<div class="controls">-->
+						<!--<input type="text" name="firstgive" value="{$rules['firstgive']}">-->
+						<!--<span class="form-required">*</span>-->
+					<!--</div>-->
+				<!--</div>-->
+			</fieldset>
+			<div class="form-actions">
+				<button type="submit" class="btn btn-primary js-ajax-submit">{:L('EDIT')}</button>
+				<a class="btn" href="{:U('Chargerules/index')}">{:L('BACK')}</a>
+			</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+</body>
+<script>
+  	var aa = $('#gvie input[name="give"]:checked ').val();
+  	if(aa){
+  		$("#claw").show()
+  	}else{
+  		$('#claw').hide();
+  	}
+	
+	$('.gift').click(function() {
+		$("#claw").show()
+	});
+	
+
+</script>
+</html>

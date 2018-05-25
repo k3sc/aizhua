@@ -1,0 +1,50 @@
+<admintpl file="header" />
+</head>
+<body>
+<div class="wrap">
+    <ul class="nav nav-tabs">
+        <li ><a href="{:U('Users/index')}">用户列表</a></li>
+        <li ><a href="{:U('Users/bill',array('id'=>$_GET['id']))}">充值流水</a></li>
+        <li ><a href="{:U('Users/consume',array('id'=>$_GET['id']))}">消费流水</a></li>
+        <li class="active"><a >系统赠送流水</a></li>
+    </ul>
+    <php>
+        $type=array("income"=>"收入","expend"=>"支出");
+        $action=array(
+            "loginbonus"=>"登录奖励",
+            "zhuawawa"=>"抓娃娃游戏",
+            "service"=>"人工服务",
+            "claw"=>"甩抓",
+            "active_dingshi"=>"定时活动",
+            "active_shangbi"=>"上币活动",
+            "regcoin"=>"注册送币",
+            "invite"=>"邀请奖励",
+        );
+    </php>
+
+        <table class="table table-hover table-bordered">
+            <thead>
+            <tr>
+                <th align="center">ID</th>
+                <th>来源</th>
+                <th>赠送金币</th>
+                <th>时间</th>
+                <!--<th align="center">{:L('ACTIONS')}</th>-->
+            </tr>
+            </thead>
+            <tbody>
+            <foreach name="row" item="vo">
+                <tr>
+                    <td align="center">{$vo.id}</td>
+                    <td>{$action[$vo['action']]}</td>
+                    <td>{$vo.totalcoin}</td>
+                    <td>{$vo.addtime|date="Y-m-d H:i:s",###}</td>
+                </tr>
+            </foreach>
+            </tbody>
+        </table>
+        <div class="pagination">{$page} 共&nbsp;&nbsp;{$count}&nbsp;&nbsp;条</div>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

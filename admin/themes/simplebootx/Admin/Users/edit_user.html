@@ -1,0 +1,156 @@
+<admintpl file="header" />
+
+<script src="__PUBLIC__/admin/jquery.js"></script>
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/admin/diyUpload/css/webuploader.css">
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/admin/diyUpload/css/diyUpload.css">
+<script type="text/javascript" src="__PUBLIC__/admin/diyUpload/js/webuploader.html5only.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/diyUpload/js/diyUpload.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/content_addtop.js"></script>
+
+</head>
+<body>
+<div class="wrap">
+    <ul class="nav nav-tabs">
+        <li ><a href="{:U('Users/index')}">用户列表</a></li>
+        <li class="active"><a >编辑</a></li>
+    </ul>
+    <form method="post" class="form-horizontal js-ajax-form" action="{:U('Users/edit_user',array('id'=>$row['id']))}">
+        <fieldset>
+            <div class="control-group">
+                <label class="control-label">用户ID</label>
+                <div class="controls">
+                    <span class="text-error">{$row.id}</span>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">微信openID</label>
+                <div class="controls">
+                    <span class="text-error">{$row.openid}</span>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">昵称</label>
+                <div class="controls">
+                    <span class="text-error">{$row.user_nicename}</span>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">邮箱</label>
+                <div class="controls">
+                    <span class="text-error">{$row.user_email}</span>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">头像</label>
+                <div class="controls">
+                    <div >
+                        <input type="hidden" name="avatar" id="thumb2" value="<empty name='row.avatar'>__TMPL__Public/assets/images/default-thumbnail.png<else/>{$row.avatar}</empty>">
+                        <a href="javascript:void(0);" onClick="flashupload('thumb_images', '附件上传','thumb2',thumb_images,'1,jpg|jpeg|gif|png|bmp,1,,,1','','','');return false;">
+                            <img src="<empty name='row.avatar'>__TMPL__Public/assets/images/default-thumbnail.png<else/>{$row.avatar}</empty>" id="thumb2_preview" width="135" style="cursor: hand" />
+                        </a>
+                        <input type="button" class="btn btn-small" onClick="$('#thumb2_preview').attr('src','__TMPL__Public/assets/images/default-thumbnail.png');$('#thumb2').val('');return false;" value="取消图片">
+                    </div>
+                    <span class="form-required"></span>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">性别</label>
+                <div class="controls">
+                    <span class="text-error"><switch name="row.sex"><case value="1">男</case><case value="2">女</case><default/>保密</switch></span>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">娃娃币余额</label>
+                <div class="controls">
+                    <input type="text" name="coin" value="{$row.coin}">
+                    <span class="form-required">*</span>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">充值获赠娃娃币</label>
+                <div class="controls">
+                    <input type="text" name="coin_sys_give" value="{$row.coin_sys_give}">
+                    <span class="form-required">*</span>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">夹娃娃次数</label>
+                <div class="controls">
+                    <input type="text" value="{$wawa_count}" readonly>
+                    <span class="form-required">*</span>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">夹中次数</label>
+                <div class="controls">
+                    <input type="text" value="{$wawa_count_success}" readonly>
+                    <span class="form-required">*</span>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">剩余甩抓次数</label>
+                <div class="controls">
+                    <input type="text" name="claw" value="{$row.claw}" >
+                    <span class="form-required">*</span>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">剩余强抓力次数</label>
+                <div class="controls">
+                    <input type="text" name="strong" value="{$row.strong}" >
+                    <span class="form-required">*</span>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">邀请获赠娃娃币</label>
+                <div class="controls">
+                    <input type="text" value="{$row.invite_coin}" readonly >
+                    <span class="form-required">*</span>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">活动赠币</label>
+                <div class="controls">
+                    <input type="text" value="{$row.active_coin}" readonly >
+                    <span class="form-required">*</span>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">邀请人数</label>
+                <div class="controls">
+                    <input type="text" value="{$invite_count}" readonly >
+                    <span class="form-required">*</span>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">推荐人</label>
+                <div class="controls">
+                    <span class="text-error"><notempty name="invite_person">{$invite_person.user_nicename}  ( ID：{$invite_person.id} )  </notempty></span>
+                </div>
+            </div>
+            <!--
+            <div class="control-group">
+					<label class="control-label">{:L('ROLE')}</label>
+					<div class="controls">
+						<foreach name="roles" item="vo">
+						<label class="checkbox inline">
+							<php>$role_id_checked=in_array($vo['id'],$role_ids)?"checked":"";</php>
+							<input value="{$vo.id}" type="checkbox" name="role_id[]" {$role_id_checked}>{$vo.name}
+						</label>
+						</foreach>
+					</div>
+				</div>
+			-->
+        </fieldset>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary js-ajax-submit">{:L('EDIT')}</button>
+            <a class="btn" href="{:U('Users/index')}">{:L('BACK')}</a>
+        </div>
+    </form>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+</body>
+
+
+
+</html>

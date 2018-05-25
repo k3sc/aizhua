@@ -1,0 +1,58 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+		<li class="active"><a >vip配置</a></li>
+
+		
+
+		</ul>
+		<form method="post" class="form-horizontal js-ajax-form" action="{:U('Vip/p_vip')}">
+
+			<fieldset>
+
+
+
+				<div class="control-group">
+					<label class="control-label">vip名称</label>
+					<div class="controls">
+						<input type="text" name="name" value="{$data['name']}">
+						<span class="form-required">*</span>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">钻石数</label>
+					<div class="controls">
+						<input type="text" name="coin"  value="{$data['coin']}">
+						<span class="form-required">*</span>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">图片</label>
+					<div class="controls">
+								<div >
+									<input type="hidden" name="thumb" id="thumb2" value="{$data['thumb']}">
+									<a href="javascript:void(0);" onclick="flashupload('thumb_images', '附件上传','thumb2',thumb_images,'1,jpg|jpeg|gif|png|bmp,1,,,1','','','');return false;">
+											<if condition="$data['thumb'] neq ''">
+														<img src="{$data['thumb']}" id="thumb2_preview" width="135" style="cursor: hand" />
+												<else/>
+														<img src="__TMPL__Public/assets/images/default-thumbnail.png" id="thumb2_preview" width="135" style="cursor: hand" />
+												</if>
+									</a>
+									<input type="button" class="btn btn-small" onclick="$('#thumb2_preview').attr('src','__TMPL__Public/assets/images/default-thumbnail.png');$('#thumb2').val('');return false;" value="取消图片">
+								</div>
+						<span class="form-required"></span>
+					</div>
+				</div>
+			</fieldset>
+			<div class="form-actions">
+				<button type="submit" class="btn btn-primary js-ajax-submit">{:L('EDIT')}</button>
+				<a class="btn" href="{:U('Gift/index')}">{:L('BACK')}</a>
+			</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/js/content_addtop.js"></script>
+</body>
+</html>

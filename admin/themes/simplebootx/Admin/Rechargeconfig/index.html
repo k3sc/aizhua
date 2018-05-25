@@ -1,0 +1,42 @@
+<admintpl file="header" />
+</head>
+<body>
+<div class="wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a >充值设置</a></li>
+        <li><a href="{:U('Rechargeconfig/add')}">添加设置</a></li>
+        <li><a href="{:U('Rechargeconfig/type')}">设置充值方式</a></li>
+    </ul>
+    <form method="post" class="js-ajax-form" >
+        <table class="table table-hover table-bordered">
+            <thead>
+            <tr>
+                <th>充值金额</th>
+                <th>获得娃娃币个数</th>
+                <th>赠送礼品</th>
+                <th>赠送甩爪次数</th>
+                <th>创建时间</th>
+                <th align="center">{:L('ACTIONS')}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <foreach name="recharge_config" item="vo">
+                <tr>
+                    <td>{$vo['money']}</td>
+                    <td>{$vo['coin']}</td>
+                    <td>{$vo['gift']}</td>
+                    <td>{$vo['claw']}</td>
+                    <td>{$vo.ctime|date="Y-m-d H:i:s",###}</td>
+                    <td align="center">
+                        <a href="{:U('Rechargeconfig/edit',array('id'=>$vo['id']))}" >编辑</a> |
+                        <a href="{:U('Rechargeconfig/del',array('id'=>$vo['id']))}" class="js-ajax-dialog-btn" data-msg="您确定要删除吗？">删除</a>
+                    </td>
+                </tr>
+            </foreach>
+            </tbody>
+        </table>
+    </form>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

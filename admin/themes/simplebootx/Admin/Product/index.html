@@ -1,0 +1,95 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="">娃娃列表</a></li>
+			<li><a href="{:U('Capturewawa/add')}">娃娃添加</a></li>
+		</ul>
+		<form method="post" class="well form-search" action="{:U('Product/index')}">
+			<input type="text" name="keyword" value="{$keyword}"  placeholder="请输入娃娃姓名或ID">
+
+			<select name="type">
+		        <option value="">-- 选择娃娃类别 --</option>
+				<foreach name="wawa_type" item="vo">
+					<option value="{$vo.id}" <eq name="vo.id" value="$type">selected</eq> >{$vo.name}</option>
+				</foreach>
+	       	</select>
+
+			<input type="submit" class="btn btn-primary" value="搜索">
+		</form>
+		<form method="post" class="js-ajax-form" action="{:U('Product/listorders')}">
+			<!--<div class="table-actions">-->
+				<!--<button class="btn btn-primary btn-small js-ajax-submit" type="submit">{:L('SORT')}</button>-->
+			<!--</div>-->
+			<table class="table table-hover table-bordered">
+				<thead>
+					<tr>
+					    <!--<th>排序</th>-->
+						<th align="center">ID</th>
+						<th>类别</th>
+						<th>娃娃名称</th>
+						<th>兑币数</th>
+						<th>娃娃图片</th>
+						<th>成本</th>
+						<th>游戏价格</th>
+						<th>库存</th>
+						<th>寄存</th>
+						<th>待发货</th>
+						<th>已发货</th>
+						<th>已转赠</th>
+						<th>已兑币</th>
+						<th>已兑礼品</th>
+						<th>出货量</th>
+						<th>抓中总次数</th>
+						<th>抓取总次数</th>
+						<th>兑换设置</th>
+						<th>发布时间</th>
+
+						<th align="center">{:L('ACTIONS')}</th>
+					</tr>
+				</thead>
+				<tbody>
+					<php>$type=array("1"=>"普通娃娃","2"=>"高级娃娃");</php>
+					<foreach name="lists" item="vo">
+					<tr>
+					    <!--<td><input name="listorders[{$vo['id']}]" type="text" size="3" value="{$vo['orderno']}" class="input input-order"></td>-->
+						<td class="text-error"><php>echo str_pad($vo['id'],4,"0",STR_PAD_LEFT);</php></td>
+						<td>{$vo['name']}</td>
+						<td>{$vo['giftname']}</td>
+						<td>{$vo['needcoin']}</td>
+						<td><img width="25" height="25" src="{$vo['gifticon']}" /></td>
+						<td>{$vo.cost}</td>
+						<td>{$vo.spendcoin}</td>
+						<td>{$vo.stock}</td>
+						<td>{$vo.totalcount}</td>
+						<td>{$vo.applysendcount}</td>
+						<td>{$vo.hassendcount}</td>
+						<td>{$vo.giveoutcount}</td>
+						<td>{$vo.convertcoin}</td>
+						<td>{$vo.convertgift}</td>
+						<td>{$vo.chuhuo}</td>
+						<td>{$vo.count_success}</td>
+						<td>{$vo.count}</td>
+						<td>{$vo.convert}</td>
+						<td>{$vo.addtime|date="Y-m-d H:i:s",###}</td>
+
+						<td align="center">	
+						<!-- 	<a href="{:U('Gift/look',array('id'=>$vo['id']))}" >查看</a> |  -->
+							<a href="{:U('Capturewawa/edit',array('id'=>$vo['id']))}" class="btn btn-success btn-small" >编辑</a> |
+							<a href="{:U('Capturewawa/del',array('id'=>$vo['id']))}" class="js-ajax-dialog-btn btn btn-danger btn-small" data-msg="您确定要删除吗？">删除</a>
+							
+						</td>
+					</tr>
+					</foreach>
+				</tbody>
+			</table>
+			<div class="pagination">{$page}</div>
+			<!--<div class="table-actions">-->
+				<!--<button class="btn btn-primary btn-small js-ajax-submit" type="submit">{:L('SORT')}</button>-->
+			<!--</div>-->
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

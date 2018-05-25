@@ -1,0 +1,28 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li ><a href="{:U('Appeal/index')}">申诉列表</a></li>
+			<li ><a href="{:U('Appeal/text')}">申诉文案列表</a></li>
+			<li class="active"><a >添加申诉文案</a></li>
+		</ul>
+		<form method="post" class="form-horizontal js-ajax-form" action="{:U('Appeal/text_add')}">
+			<fieldset>
+				<div class="control-group">
+					<label class="control-label">文案内容</label>
+					<div class="controls">
+						<input type="text" name="text">
+						<span class="form-required">*</span>
+					</div>
+				</div>
+			</fieldset>
+			<div class="form-actions">
+				<button type="submit" class="btn btn-primary js-ajax-submit">{:L('ADD')}</button>
+				<a class="btn" href="{:U('Appeal/text')}">{:L('BACK')}</a>
+			</div>
+		</form>
+	</div>
+</body>
+<script src="__PUBLIC__/js/common.js"></script>
+</html>

@@ -1,0 +1,182 @@
+<?php
+/**
+ * 娃娃管理
+ * Created by PhpStorm.
+ * User: xiajunwei
+ * Date: 2017/10/17
+ * Time: 20:56
+ */
+
+namespace Admin\Controller;
+
+use Common\Controller\AdminbaseController;
+
+class CapturewawaController extends AdminbaseController
+{
+
+    public function index()
+    {
+    }
+
+
+    public function lists()
+    {
+        $map = " 1=1 ";
+        $type_id = I('get.type_id', '');
+        $keyword = I('get.keyword', '');
+
+        if ($type_id) {
+            $map .= " and a.type_id = $type_id ";
+//            $this->assign('type_id',$type_id);
+        }
+        if ($keyword) {
+            $map .= " and a.giftname like '%{$keyword}%' or a.id = '$keyword'";
+//            $this->assign('keyword',$keyword);
+        }
+
+        $this->assign('get', I('get.'));
+
+        $gift_model = M("gift as a");
+        $count = $gift_model->where($map)->count();
+        $page = $this->page($count, 20);
+        $lists = $gift_model
+            ->join('left join cmf_gift_type as b on a.type_id = b.id')
+            ->where($map)
+            ->order("a.id DESC")
+            ->limit($page->firstRow . ',' . $page->listRows)
+            ->field('a.*,b.name as type_name')
+            ->select();
+        $this->assign('lists', $lists);
+        $this->assign("page", $page->show('Admin'));
+
+        $wawa_type = M('gift_type')->select();
+        $this->assign('wawa_type', $wawa_type);
+
+        $this->display();
+    }
+
+
+    public function del()
+    {
+        $id = intval($_GET['id']);
+        if ($id) {
+            $result = M("gift")->delete($id);
+            if ($result) {
+                $this->success('删除成功');
+            } else {
+                $this->error('删除失败');
+            }
+        } else {
+            $this->error('数据传入失败！');
+        }
+        $this->display();
+    }
+
+
+    public function edit()
+    {
+        $id = intval($_GET['id']);
+        $this->assign('get_id', $id);
+        if ($id) {
+            $wawa_type = M('gift_type')->select();
+            $this->assign('wawa_type', $wawa_type);
+            $wawa_label = M('gift_label')->select();
+            $this->assign('wawa_label', $wawa_label);
+            $give_gift = M('give_gift')->select();
+            $this->assign('give_gift', $give_gift);
+            $wawa = M('gift')->where('id=' . $id)->find();
+            $wawa['img'] = explode(',', $wawa['img']);
+            $wawa['convert'] = explode(',', $wawa['convert']);
+            $this->assign('wawa', $wawa);
+        } else {
+            $this->error('数据传入失败！');
+        }
+
+        $this->display();
+    }
+
+
+    public function edit_post()
+    {
+        if (IS_POST) {
+            $post = I('post.');
+            foreach ($post['file'] as $k => $value) {
+                $post['file'][$k] = str_replace('sttp', 'http', $value);
+            }
+            if( empty($post['file']) ) $this->error('没有上传图片！');
+            $filestr = implode(',', $post['file']);
+            $post['img'] = $filestr;
+            if( isset($post['convert']) && !empty($post['convert']) ){
+                $post['convert'] = implode(',', $post['convert']);
+            }else{
+                $post['convert'] = 1;
+            }
+            if( $post['convert_lipin'] ) $post['convert_lipin'] = implode(',', $post['convert_lipin']);
+            unset($post['file']);
+
+            if ($post['id']) {
+                M('gift')->where(['id' => $post['id']])->save($post);
+                if (mysqli_affected_rows() >= 0)
+                    $this->success('修改成功');
+                $this->error('修改失败');
+            } else {
+                $post['addtime'] = time();
+                if (M('gift')->add($post)) {
+                    $this->success('新增成功');
+                }
+            }
+        }
+    }
+
+
+    public function add()
+    {
+        $wawa_type = M('gift_type')->select();
+        $this->assign('wawa_type', $wawa_type);
+        $wawa_label = M('gift_label')->select();
+        $this->assign('wawa_label', $wawa_label);
+        $give_gift = M('give_gift')->select();
+        $this->assign('give_gift', $give_gift);
+        $this->display();
+    }
+
+    public function add_post()
+    {
+        if (IS_POST) {
+            $post = I('post.');
+            if (M('gift')->where(['giftname' => $post['giftname']])->find()) $this->error('娃娃名称已存在');
+            foreach ($post['file'] as $k => $value) {
+                $post['file'][$k] = str_replace('sttp', 'http', $value);
+            }
+            if( empty($post['file']) ) $this->error('没有上传图片！');
+            $filestr = implode(',', $post['file']);
+            $post['img'] = $filestr;
+            if( isset($post['convert']) && !empty($post['convert']) ){
+                $post['convert'] = implode(',', $post['convert']);
+            }else{
+                $post['convert'] = 1;
+            }
+            if( $post['convert_lipin'] )$post['convert_lipin'] = implode(',', $post['convert_lipin']);
+            unset($post['file']);
+            $post['addtime'] = time();
+            if (M('gift')->add($post))
+                $this->success('添加成功');
+            $this->error('添加失败');
+        } else {
+            $this->error('数据传入失败！');
+        }
+
+    }
+
+
+    public function getFile()
+    {
+        if (empty($_FILES)) {
+            $this->error('未上传图片');
+        }
+        $file = $this->uploadImage($_FILES);
+        $this->ajaxReturn($file);
+    }
+
+
+}

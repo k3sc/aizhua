@@ -1,0 +1,67 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li ><a href="{:U('Level/author')}">等级列表</a></li>
+			<li class="active"><a >编辑</a></li>
+		</ul>
+		<form method="post" class="form-horizontal js-ajax-form" action="{:U('Level/author_editpost')}">
+			<fieldset>
+				<div class="control-group">
+					<label class="control-label">等级</label>
+					<div class="controls">
+						<input type="text" name="levelid" value="{$author['levelid']}">
+						<span class="form-required">*</span>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">等级名称</label>
+					<div class="controls">
+						<input type="text" name="levelname" value="{$author['levelname']}">
+						<span class="form-required">*</span>
+					</div>
+				</div>
+                <div class="control-group">
+					<label class="control-label">图标</label>
+					<div class="controls">
+								<div >
+									<input type="hidden" name="levelthumb" id="thumb" value="{$author['levelthumb']}">
+									<a href="javascript:void(0);" onClick="flashuploadcut('thumb_images', '附件上传','thumb',thumb_images,'1,jpg|jpeg|gif|png|bmp,1,,,1','','','');return false;">
+									  <if condition="$author['levelthumb'] neq ''">
+												<img src="{$author['levelthumb']}" id="thumb_preview" width="135" style="cursor: hand" />
+										<else/>
+										    <img src="__TMPL__Public/assets/images/default-thumbnail.png" id="thumb_preview" width="135" style="cursor: hand" />
+										</if>
+									</a>
+									<input type="button" class="btn btn-small" onClick="$('#thumb_preview').attr('src','__TMPL__Public/assets/images/default-thumbnail.png');$('#thumb').val('');return false;" value="取消图片">
+								</div>
+						<span class="form-required"></span>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">礼物数量上限</label>
+					<div class="controls">
+						<input type="text" name="level_up" value="{$author['level_up']}" maxlength="9">
+						<span class="form-required">*</span>
+					</div>
+				</div>
+                <div class="control-group">
+					<label class="control-label">管理房间数量</label>
+					<div class="controls">
+						<input type="text" name="level_room" value="{$author['level_room']}" maxlength="9">
+						<span class="form-required">*</span>
+					</div>
+				</div>				
+	
+			</fieldset>
+			<div class="form-actions">
+				<button type="submit" class="btn btn-primary js-ajax-submit">{:L('EDIT')}</button>
+				<a class="btn" href="{:U('Level/author')}">{:L('BACK')}</a>
+			</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/content_addtop.js"></script>
+</body>
+</html>

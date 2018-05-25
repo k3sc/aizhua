@@ -1,0 +1,72 @@
+<admintpl file="header" />
+</head>
+<body>
+<div class="wrap">
+
+    <table class="table table-hover table-bordered">
+        <thead>
+        <tr>
+            <th align="center">运单号</th>
+            <th>寄件人(昵称，ID)</th>
+            <th>物品明细</th>
+            <th>收货人</th>
+            <th>地址</th>
+            <th>手机号</th>
+            <th>邮寄备注</th>
+            <th>快递公司</th>
+            <th>快递单号</th>
+            <th>运单状态</th>
+            <th>时间</th>
+            <!--<th align="center">{:L('ACTIONS')}</th>-->
+        </tr>
+        </thead>
+        <tbody>
+
+            <tr>
+                <td align="center">{$vo['waybillno']}</td>
+                <td>{$vo['user_nicename']}，{$vo['user_id']}</td>
+                <td>
+                    <foreach name="vo.goods" item="v">
+                        {$v['name']} X {$v['num']}<br>
+                    </foreach>
+                </td>
+                <td>{$vo['uname']}</td>
+                <td>{$vo['addr']}{$vo['addr_info']}</td>
+                <td>{$vo['phone']}</td>
+                <td>{$vo['remark']}</td>
+                <td>{$vo['kdname']}</td>
+                <td>{$vo['kdno']}</td>
+                <td>{$status_name[$vo['status']]}</td>
+
+                <switch name="vo.status" >
+                    <case value="1"><td>{$vo['ctime']|date='Y-m-d H:i:s',###}</td></case>
+                    <case value="2"><td>{$vo['fhtime']|date='Y-m-d H:i:s',###}</td></case>
+                    <case value="3"><td>{$vo['shtime']|date='Y-m-d H:i:s',###}</td></case>
+                    <default /><td>-</td>
+                </switch>
+
+                <!--<td align="center">-->
+                    <!--<eq name="vo.status" value="2">-->
+                        <!--<input type="button" onclick="prints()" value="打印单号">-->
+                    <!--</eq>-->
+                <!--</td>-->
+            </tr>
+
+        </tbody>
+    </table>
+</div>
+<center><input class="btn btn-success" type="button" onclick="prints()" value="确认打印"></center>
+<script src="__PUBLIC__/js/common.js"></script>
+<script src="__PUBLIC__/js/jqprint/jquery.jqprint.js"></script>
+
+</body>
+
+
+<script>
+    function prints(){
+        $(".wrap").jqprint();
+    }
+</script>
+
+
+</html>

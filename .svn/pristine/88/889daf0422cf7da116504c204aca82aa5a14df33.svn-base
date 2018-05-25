@@ -1,0 +1,57 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="{:U('Chargerules/index')}">充值规则列表</a></li>
+			<li><a href="{:U('Chargerules/add')}">充值规则添加</a></li>
+		</ul>
+		<form method="post" class="js-ajax-form" action="{:U('Chargerules/listorders')}">
+		  <div class="table-actions">
+			<!-- 	<button class="btn btn-primary btn-small js-ajax-submit" type="submit">{:L('SORT')}</button> -->
+			</div>
+			<table class="table table-hover table-bordered">
+				<thead>
+					<tr>
+						<th align="center">ID</th>
+						<th>充值金额（元）</th>
+						<th>充值娃娃币</th>
+						<th>赠送娃娃币</th>
+						<!--<th>首冲赠送的娃娃币</th>-->
+						<th>赠送的礼品名称</th>
+						<th>赠品数</th>
+						<th>赠送的赠送甩爪次数</th>
+						<th>创建时间</th>
+						<th align="center">{:L('ACTIONS')}</th>
+					</tr>
+				</thead>
+				<tbody>
+					<foreach name="lists" item="vo">
+					<tr>
+						<td align="center">{$vo.id}</td>
+						<td>{$vo['money']}</td>
+						<td>{$vo['coin']}</td>
+						<td>{$vo['give_coin']}</td>
+						<!--<td>{$vo['firstgive']}</td>-->
+						<td>{$vo['gift_name']}</td>
+						<td>{$vo['number']}</td>
+						<td>{$vo['claw']}</td>
+						<td>{$vo.addtime|date="Y-m-d H:i:s",###}</td>
+
+						<td align="center">	
+							<a href="{:U('Chargerules/edit',array('id'=>$vo['id']))}" >编辑</a>
+							<a href="{:U('Chargerules/del',array('id'=>$vo['id']))}"  class="js-ajax-dialog-btn" data-msg="您确定要删除吗？">删除</a>
+						</td>
+					</tr>
+					</foreach>
+				</tbody>
+			</table>
+			<div class="pagination">{$page} 共{$count}条</div>
+				<div class="table-actions">
+				<!-- <button class="btn btn-primary btn-small js-ajax-submit" type="submit">{:L('SORT')}</button> -->
+			</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

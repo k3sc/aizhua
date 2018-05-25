@@ -1,0 +1,99 @@
+<admintpl file="header"/>
+</head>
+<body>
+<div class="wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a>营业简报</a></li>
+    </ul>
+    <table class="table table-hover table-bordered">
+        <!--<thead>
+        <tr>
+          <th>今日充值总额</th>
+          <th>今日消费总额</th>
+          <th>设备在线数量</th>
+          <th>故障设备报告</th>
+          <th>发货情况</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>{$result.recharge_money}</td>
+          <td>{$result.total_cost}</td>
+          <td>{$result.online_total}</td>
+          <td>{$result.fault_total}</td>
+          <td>{$result.waybill_total}</td>
+        </tr>
+
+        </tbody>-->
+        <thead>
+        <tr>
+            <th>今日充值总额</th>
+            <foreach name="result.recharge_money_info" item="v">
+                <th>{$pay_arr[$v['type']]}</th>
+            </foreach>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>{$result.recharge_money}</td>
+            <foreach name="result.recharge_money_info" item="v">
+                <td>{$v.money} 元</td>
+            </foreach>
+        </tr>
+        </tbody>
+    </table>
+    <table class="table table-hover table-bordered">
+        <thead>
+        <tr>
+            <th>今日消费总额</th>
+            <th>消费增币</th>
+            <th>夹娃娃次数</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>{$result.total_cost} 币</td>
+            <td>{$result.total_givemoney} 币</td>
+            <td>{$result.game_total} 次</td>
+        </tr>
+        </tbody>
+    </table>
+    <table class="table table-hover table-bordered">
+        <thead>
+        <tr>
+            <th>当前设备在线数</th>
+            <th>今日故障数</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>{$result.online_total}</td>
+            <td>
+                <a class="text-error" href="{:U('Fault/index')}"><u><strong>{$result.fault_total}</strong></u></a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <table class="table table-hover table-bordered">
+        <thead>
+        <tr>
+            <th>待处理发货申请</th>
+            <th>今天已出货</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>
+                <a class="text-warning" href="{:U('Waybill/lists',array('status'=>1))}"><u><strong>{$result.waydbill_total}</strong></u></a>
+            </td>
+            <td>
+                <a class="text-success" href="{:U('Waybill/lists',array('status'=>2))}"><u><strong>{$result.waybill_total}</strong></u></a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

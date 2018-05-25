@@ -1,0 +1,46 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li ><a href="{:U('Traffic/index')}">号码列表</a></li>
+			<li class="active"><a >号码添加</a></li>
+		</ul>
+		<form method="post" class="form-horizontal js-ajax-form" action="{:U('Traffic/excel_import')}" enctype="multipart/form-data">
+			<fieldset>
+				<div class="control-group">
+					<label class="control-label">Excle导入</label>
+					<div class="controls">
+					   <input type="file" name="file" value="">
+					</div>
+				</div>
+	
+			</fieldset>
+				<div class="form-actions">
+				<button type="submit" class="btn btn-primary js-ajax-submit">导入</button>
+				Excel格式：<img src="__PUBLIC__/images/123.png">
+			</div>		
+		</form>		
+		
+		
+		<form method="post" class="form-horizontal js-ajax-form" action="{:U('Traffic/add_post')}">
+			<fieldset>
+				<div class="control-group">
+					<label class="control-label">号码</label>
+					<div class="controls">
+						<input type="text" name="mobile" value="">
+						<span class="form-required">*</span>
+					</div>
+				</div>
+	
+			</fieldset>
+			<div class="form-actions">
+				<button type="submit" class="btn btn-primary js-ajax-submit">{:L('ADD')}</button>
+				<a class="btn" href="{:U('link/index')}">{:L('BACK')}</a>
+			</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/js/content_addtop.js"></script>
+</body>
+</html>

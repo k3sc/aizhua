@@ -1,0 +1,44 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a >IP限制列表</a></li>
+		</ul>
+	<form method="post"  action="index.php?g=Admin&m=Ip&a=p_add" >
+		<input type="text" name="ip">
+		<input type ="submit" name ="submit" value="添加"  />
+	</form>
+
+		
+			<table class="table table-hover table-bordered">
+				<thead>
+					<tr>
+					  
+						<th align="center">IP</th>
+
+
+						<th align="center">{:L('ACTIONS')}</th>
+					</tr>
+				</thead>
+				<tbody>
+				
+					<foreach name="data" item="vo">
+					<tr>
+					
+						<td align="center">{$vo}</td>
+						<td align="center">	
+							<a href="{:U('Ip/del',array('ip'=>$vo['uid']))}" >删除</a>
+
+						</td>
+					</tr>
+					</foreach>
+				</tbody>
+			</table>
+		
+
+	
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

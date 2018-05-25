@@ -1,0 +1,79 @@
+<admintpl file="header" />
+</head>
+<body>
+<div class="wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:U('Settingother/index')}">其他设置</a></li>
+        <li><a href="{:U('Settingother/bgmusic')}">背景音乐</a></li>
+        <li class="active"><a href="">游戏音效</a></li>
+    </ul>
+    <table class="table table-hover table-bordered">
+        <thead>
+        <tr>
+            <th>序号</th>
+            <th>标题</th>
+            <th>地址</th>
+            <th align="center">{:L('ACTIONS')}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <foreach name="row" item="vo" key="k">
+            <tr>
+                <td>{$k+1}</td>
+                <td>{$vo.title}</td>
+                <td>{$vo.addr}</td>
+                <td align="center">
+                    <a href="{:U('Settingother/del_game_audio',array('id'=>$vo['id']))}" class="js-ajax-dialog-btn" data-msg="您确定要删除吗？">删除</a>
+                </td>
+            </tr>
+        </foreach>
+        </tbody>
+    </table>
+
+    <form id="import_form" action="{:U('Settingother/upload_game_audio')}" method="post" enctype="multipart/form-data" class="well form-search">
+        标题：<input id="title" type="text" name="title" placeholder="请输入标题，标题不能为空">
+        类型：
+        <select name="type">
+            <option value="1">按钮音效</option>
+            <option value="2">成功音效</option>
+            <option value="3">倒计时音效</option>
+            <option value="4">开始音效</option>
+            <option value="5">失败音效</option>
+            <option value="6">下抓音效</option>
+        </select>
+        <a href="javascript:;" id="import" class="btn btn-success btn-sm" style="position: relative">上传游戏音效
+            <input type="file" name="importFile" style="position:absolute;width:140px;height:50px;top:0;left:0;margin:0;padding:0;opacity:0;">
+        </a>
+    </form>
+
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+</body>
+
+<script>
+    $(function(){
+        if( $("input[name='title']").val() == '' ){
+            $("form a").attr('disabled','disabled');
+            $("form a").children('input').attr('disabled','disabled');
+        }else{
+            $("form a").removeAttr('disabled');
+            $("form a").children('input').removeAttr('disabled');
+        }
+
+        $("input[name='title']").keyup(function(){
+            if( $.trim( $(this).val() ) != '' ){
+                $("form a").removeAttr('disabled');
+                $("form a").children('input').removeAttr('disabled');
+            }else{
+                $("form a").attr('disabled','disabled');
+                $("form a").children('input').attr('disabled','disabled');
+            }
+        });
+
+        $("#import").change(function(){
+            $("#import_form").submit();
+        });
+    });
+</script>
+
+</html>

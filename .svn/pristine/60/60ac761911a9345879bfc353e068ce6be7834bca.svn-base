@@ -1,0 +1,81 @@
+<admintpl file="header" />
+</head>
+<body>
+<div class="wrap">
+    <ul class="nav nav-tabs">
+        <li ><a href="{:U('Users/index')}">用户列表</a></li>
+        <li class="active"><a>游戏记录列表</a></li>
+    </ul>
+
+        <table class="table table-hover table-bordered">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>时间</th>
+                <th>产品名</th>
+                <th>产品图</th>
+                <th>花费娃娃币</th>
+                <th>视频</th>
+                <th>房间号</th>
+                <th>中奖状态</th>
+                <th>设备号</th>
+            </tr>
+            </thead>
+            <tbody>
+            <foreach name="row" item="vo">
+                <tr>
+                    <td>{$vo.id}</td>
+                    <td>{$vo.ctime|date="Y-m-d H:i:s",###}</td>
+                    <td>{$vo.name}</td>
+                    <td>
+                        <if condition="$vo.img neq null">
+                            <img width="80" src="{$vo.img}">
+                        <else/>
+                            无
+                        </if>
+                    </td>
+                    <td>{$vo.coin}</td>
+                    <td>
+                        <if condition="$vo.video neq null">
+                            <!--<video width="160" src="{$vo.video}" controls="controls"></video>-->
+                            <a href="{:U('Users/video',array('url'=>$vo['video']))}" target="_blank" class="btn btn-success">查看视频</a>
+                        <else/>
+                            无
+                        </if>
+                    </td>
+                    <td>{$vo.room_no}</td>
+                    <td>
+                        <span><eq name="vo.success" value="0">失败<else/>成功</eq></span>
+                        <input data_id='{$vo.id}' data_success="{$vo.success}" type="button" class="btn btn-primary setSuccessBtn" value='<eq name="vo.success" value="0">设置成功<else/>设置失败</eq>'>
+                    </td>
+                    <td>{$vo.fac_id}</td>
+                </tr>
+            </foreach>
+            </tbody>
+        </table>
+        <div class="pagination">{$page} 共&nbsp;&nbsp;{$count}&nbsp;&nbsp;条</div>
+</div>
+<script>
+    $(function(){
+      $('.setSuccessBtn').on('click', function(){
+        var obj = $(this);
+        var id = obj.attr('data_id');
+        var success = obj.attr('data_success');
+
+         $.post('{:U("Users/setSuccess")}', {'id': id, 'success': success}, function(res){
+           if( res.res ){
+               obj.prev('span').html('成功');
+               obj.val('设置失败');
+               obj.attr('data_success', res.res);
+           }else{
+               obj.prev('span').html('失败');
+               obj.val('设置成功');
+               obj.attr('data_success', res.res);
+           }
+         },'json');
+      });
+    });
+</script>
+<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

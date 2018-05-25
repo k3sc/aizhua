@@ -1,0 +1,32 @@
+<admintpl file="header" />
+</head>
+<body>
+<div class="wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a >甩爪技能配置</a></li>
+    </ul>
+    <form method="post" class="js-ajax-form" >
+        <table class="table table-hover table-bordered">
+            <thead>
+            <tr>
+                <th>购买所需娃娃币</th>
+                <th>夹N次娃娃送一次技能</th>
+                <th align="center">{:L('ACTIONS')}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>{$claw_config['claw_coin']}</td>
+                <td>{$claw_config['claw_count']}</td>
+                <td align="center">
+                    <a href="{:U('Claw/edit',array('id'=>$claw_config['id']))}" >编辑</a>
+                    <!--<a href="{:U('Device/device_del',array('id'=>$vo['id']))}" class="js-ajax-dialog-btn" data-msg="您确定要删除吗？">删除</a> |-->
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

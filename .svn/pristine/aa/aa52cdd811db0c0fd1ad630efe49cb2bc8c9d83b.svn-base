@@ -1,0 +1,65 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a >系统消息列表</a></li>
+			<li ><a href="{:U('Notice/add')}">发布消息</a></li>
+		</ul>
+
+		<table class="table table-hover table-bordered">
+			<thead>
+				<tr>
+					<!--<th align="center">ID</th>-->
+					<th>标题</th>
+					<th>描述</th>
+					<th>内容</th>
+					<th>发送人</th>
+					<th>发送时间</th>
+					<th align="center">{:L('ACTIONS')}</th>
+				</tr>
+			</thead>
+			<tbody>
+				<foreach name="row" item="vo">
+				<tr>
+					<!--<td align="center">{$vo.id}</td>-->
+					<td>{$vo.title}</td>
+					<td>{$vo.desc}</td>
+					<td><a href="{:U('Notice/content',array('id'=>$vo['id']))}" target="_blank">查看内容</a></td>
+					<td>系统</td>
+					<td>{$vo.ctime|date="Y-m-d H:i:s",###}</td>
+					<td align="center">
+						<a href="{:U('Notice/del',array('id'=>$vo['id']))}" class="js-ajax-dialog-btn" data-msg="您确定要删除吗？">删除</a>
+					</td>
+				</tr>
+				</foreach>
+			</tbody>
+		</table>
+		<button id="clear" class="btn btn-danger">清空</button>
+		<div class="pagination">{$page}</div>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+</body>
+
+<script>
+	$(function(){
+	    $("#clear").click(function(){
+            var flag = confirm('确定吗？');
+            if( flag ){
+                $.ajax({
+                    url : "{:U('Notice/clear')}",
+                    type : 'post',
+                    dataType : 'json',
+					success : function(e){
+                        window.location.reload();
+					},
+                    error : function(e){
+                        alert('系统内部错误');
+                    }
+                });
+			}
+		});
+	});
+</script>
+
+</html>

@@ -1,0 +1,1143 @@
+2018-02-01 08:52:26|DEBUG|succeed to upload file to qiniu|{"hash":"FrkAkWtc9pkl8lM_x0HaQ-_r7y3m","key":"20180201085226_433fcf334290a7d01c61fbae7451633e"}
+2018-02-01 11:01:52|ERROR|User.getBaseInfo|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:01:54|ERROR|User.getBaseInfo|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:01:54|ERROR|User.getBaseInfo|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:01:55|ERROR|User.getBaseInfo|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:01:56|ERROR|Home.getHot|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:01:56|ERROR|Home.getHot|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:01:57|ERROR|Home.getHot|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:01:58|ERROR|Home.getHot|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:01:58|ERROR|Home.getHot|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:01:59|ERROR|Home.getHot|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:02:30|ERROR|user.updateFields|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:02:36|ERROR|User.getBaseInfo|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:02:55|ERROR|Home.getHot|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:02:55|ERROR|Home.getHot|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:02:56|ERROR|Home.getHot|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:02:58|ERROR|Home.getHot|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:03:02|ERROR|Home.getHot|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:03:04|ERROR|Home.getHot|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:03:04|ERROR|User.getBaseInfo|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:03:05|ERROR|user.updateFields|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:03:19|ERROR|Home.getHot|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:03:19|ERROR|user.updateFields|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:03:20|ERROR|Home.getHot|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:03:20|ERROR|Home.getHot|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:03:20|ERROR|Home.getHot|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:03:21|ERROR|Home.getHot|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:03:22|ERROR|Home.getHot|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:03:33|ERROR|User.getBaseInfo|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:03:36|ERROR|user.updateFields|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:03:36|ERROR|Home.getHot|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:03:37|ERROR|Home.getHot|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:03:37|ERROR|Home.getHot|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:03:40|ERROR|user.updateFields|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:03:41|ERROR|User.getBaseInfo|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:03:41|ERROR|Home.getHot|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:03:41|ERROR|user.updateFields|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:03:46|ERROR|User.getBaseInfo|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:03:48|ERROR|User.getBaseInfo|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:04:02|ERROR|Home.getHot|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:04:02|ERROR|user.updateFields|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:04:02|ERROR|Home.getHot|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:04:04|ERROR|Home.getHot|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:07:53|ERROR|Home.getHot|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:07:54|ERROR|User.getBaseInfo|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:07:57|ERROR|User.getBaseInfo|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:07:57|ERROR|user.updateFields|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:07:57|ERROR|User.getBaseInfo|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:07:57|ERROR|Home.getHot|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:07:57|ERROR|user.updateFields|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:07:59|ERROR|Home.getHot|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:08:01|ERROR|user.updateFields|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:08:01|ERROR|User.getBaseInfo|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:08:01|ERROR|Home.getHot|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:08:02|ERROR|user.updateFields|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:08:08|ERROR|user.updateFields|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:08:10|ERROR|Home.getHot|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:08:11|ERROR|User.getBaseInfo|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:08:14|ERROR|user.updateFields|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:08:15|ERROR|user.updateFields|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:08:16|ERROR|user.updateFields|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:08:18|ERROR|user.updateFields|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:08:19|ERROR|Home.getHot|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:08:20|ERROR|user.updateFields|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:08:21|ERROR|Home.getHot|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:08:21|ERROR|user.updateFields|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:08:23|ERROR|Home.getHot|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:08:23|ERROR|user.updateFields|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:08:24|ERROR|Home.getHot|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:08:24|ERROR|user.updateFields|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:08:26|ERROR|Home.getHot|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:08:27|ERROR|user.updateFields|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:08:28|ERROR|user.updateFields|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:08:29|ERROR|user.updateFields|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:08:30|ERROR|user.updateFields|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:08:32|ERROR|user.updateFields|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:08:32|ERROR|user.updateFields|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:08:37|ERROR|user.updateFields|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:08:38|ERROR|Home.getHot|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:08:39|ERROR|Home.getHot|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:08:41|ERROR|User.getBaseInfo|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:08:41|ERROR|User.getBaseInfo|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:08:42|ERROR|Home.getHot|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:08:42|ERROR|User.getBaseInfo|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:08:46|ERROR|user.updateFields|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:08:46|ERROR|user.updateFields|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:09:02|ERROR|Home.getHot|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:09:02|ERROR|User.getBaseInfo|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:09:03|ERROR|user.updateFields|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:09:03|ERROR|User.getBaseInfo|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:09:03|ERROR|Home.getHot|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:09:04|ERROR|user.updateFields|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:09:06|ERROR|Home.getHot|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:09:08|ERROR|Home.getHot|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:09:23|ERROR|User.getBaseInfo|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:09:35|ERROR|Home.getHot|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:09:35|ERROR|user.updateFields|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:09:42|ERROR|User.getBaseInfo|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:09:58|ERROR|Login.userLoginByThird|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:10:01|ERROR|Login.userLoginByThird|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:10:04|ERROR|Login.userLoginByThird|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:10:07|ERROR|Home.getHot|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:10:07|ERROR|User.getBaseInfo|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:10:09|ERROR|Login.userLoginByThird|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:10:33|ERROR|Login.userLoginByThird|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:10:36|ERROR|Login.userLoginByThird|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:10:38|ERROR|User.getBaseInfo|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:10:39|ERROR|Login.userLoginByThird|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:10:39|ERROR|Login.userLoginByThird|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:10:41|ERROR|Home.getHot|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:10:41|ERROR|User.getBaseInfo|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:10:43|ERROR|Login.userLoginByThird|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:10:48|ERROR|User.getBaseInfo|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:10:53|ERROR|Home.getHot|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:10:54|ERROR|Login.userLoginByThird|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:11:03|ERROR|Home.getHot|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:11:04|ERROR|User.getBaseInfo|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:11:06|ERROR|Home.getHot|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:11:10|ERROR|User.getBaseInfo|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:11:10|ERROR|User.getBaseInfo|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:11:33|ERROR|Home.getHot|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:11:33|ERROR|User.getBaseInfo|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:11:39|ERROR|User.getBaseInfo|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:11:57|ERROR|User.getBaseInfo|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:11:57|ERROR|User.getBaseInfo|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:12:01|ERROR|Home.getHot|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:12:02|ERROR|Home.getHot|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:12:11|ERROR|User.getBaseInfo|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:12:39|ERROR|User.getBaseInfo|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:13:34|ERROR|Home.getHot|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:13:39|ERROR|Home.getHot|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:13:39|ERROR|User.getBaseInfo|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:13:42|ERROR|Home.getHot|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:13:42|ERROR|User.getBaseInfo|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:13:43|ERROR|User.getBaseInfo|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:13:48|ERROR|User.getBaseInfo|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:13:55|ERROR|Home.getHot|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:13:55|ERROR|User.getBaseInfo|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:14:10|ERROR|User.getBaseInfo|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:14:13|ERROR|user.updateFields|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:14:16|ERROR|User.getBaseInfo|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:14:18|ERROR|Home.getHot|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:14:20|ERROR|Home.getHot|exception 'RedisException' with message 'Redis server went away' in /home/wwwroot/default/api/Appapi/Api/Common.php:13
+Stack trace:
+#0 /home/wwwroot/default/api/Appapi/Api/Common.php(13): Redis->auth('Hh123123')
+#1 /home/wwwroot/default/api/Appapi/Api/Common.php(5): Api_Common->connectionRedis()
+#2 /home/wwwroot/default/api/PhalApi/PhalApi/ApiFactory.php(57): Api_Common->__construct()
+#3 /home/wwwroot/default/api/PhalApi/PhalApi.php(55): PhalApi_ApiFactory::generateService()
+#4 /home/wwwroot/default/api/public/index.php(26): PhalApi->response()
+#5 {main}
+2018-02-01 11:47:31|DEBUG|succeed to upload file to qiniu|{"hash":"FseCV6jKnJGG8Q4J3mFdpr0rm1c6","key":"20180201114731_22a16ce294ac94b927a44bedc073cd31"}
+2018-02-01 15:55:04|DEBUG|succeed to upload file to qiniu|{"hash":"FmnkjAnWN4EquzX4PYxY66vF0vQu","key":"20180201155504_2023b77d28b92f841c9d63ef31f3d912"}
+2018-02-01 17:50:14|DEBUG|succeed to upload file to qiniu|{"hash":"FqfvfStb07RHCce7WAA8MKPvA_nr","key":"20180201175014_9f23fca9471507a3356c7d8c63cb9707"}
+2018-02-01 17:50:48|DEBUG|succeed to upload file to qiniu|{"hash":"Fn8UioBnm16HTASe48uYKeqAN-YN","key":"20180201175048_62ad316e468f7bea873c0467f65a1692"}
+2018-02-01 22:56:27|DEBUG|succeed to upload file to qiniu|{"hash":"Fidwmi4NSU5EVR4SSoh58yT1xQjf","key":"20180201225627_b7df9891428adf656537f03e9c131217"}
+2018-02-01 23:32:01|DEBUG|succeed to upload file to qiniu|{"hash":"FifazlxKMzwu9gWKB1OdWbpG4r4u","key":"20180201233201_28403bba352809e22793a9d09988f02e"}

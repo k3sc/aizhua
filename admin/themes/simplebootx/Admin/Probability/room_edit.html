@@ -1,0 +1,27 @@
+<admintpl file="header" />
+</head>
+<body>
+<div class="wrap">
+    <ul class="nav nav-tabs">
+        <li ><a href="{:U('Probability/room')}">房间概率模式</a></li>
+        <li class="active"><a href="javascript:;">编辑</a></li>
+    </ul>
+    <form method="post" class="form-horizontal js-ajax-form" action="{:U('Probability/room_edit',array('id'=>$row['id']))}">
+        <fieldset>
+            <div class="control-group">
+                <label class="control-label">概率</label>
+                <div class="controls">
+                    <input type="text" value="{$row.claw_count}" name="claw_count">
+                    <span class="form-required">*</span>
+                </div>
+            </div>
+        </fieldset>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary js-ajax-submit">{:L('EDIT')}</button>
+            <a class="btn" href="{:U('Probability/room')}">{:L('BACK')}</a>
+        </div>
+    </form>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

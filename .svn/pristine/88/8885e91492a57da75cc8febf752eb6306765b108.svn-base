@@ -1,0 +1,5 @@
+LAEL 2017-12-13 18:24
+表 cmf_game_config
+
+  `qh_time` int(11) DEFAULT '0' COMMENT '天车前后时间',
+  `zy_time` int(11) DEFAULT '0' COMMENT '天车左右时间',

@@ -1,0 +1,80 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li><a href="{:U('Chargerules/index')}">充值规则列表</a></li>
+			<li class="active"><a >充值规则添加</a></li>
+		</ul>
+		<form method="post" class="form-horizontal js-ajax-form" action="{:U('Chargerules/do_add')}">
+			<fieldset>
+				<div class="control-group">
+					<label class="control-label">充值金额</label>
+					<div class="controls">
+						<input type="text" name="money" value="">
+						<span class="form-required">*</span>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">充值娃娃币</label>
+					<div class="controls">
+						<input type="text" name="coin" value="">
+						<span class="form-required">*</span>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">赠送娃娃币</label>
+					<div class="controls">
+						<input type="text" name="give_coin" value="">
+						<span class="form-required">*</span>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">赠送的礼品</label>
+					<div class="controls">
+						<volist name="gift" id="vo" key="k">
+							<input type="radio" class='gift' name="give" value="{$vo.id}">
+							<img src="{$vo.img}" style="width: 30px;height: 30px;">
+							{$vo.name}( <php>echo str_pad($vo['id'],4,"0",STR_PAD_LEFT);</php> )&nbsp;&nbsp;
+							<php>if( $k % 6 == 0 && $k != 0 )echo '<br/><br/>';</php>
+						</volist>
+					</div>
+				</div><div class="control-group">
+					<label class="control-label">赠送的礼品的数量</label>
+					<div class="controls">
+						<input type="text" name="number">
+						<span class="form-required">*</span>
+					</div>
+				</div>
+				<div class="control-group" id="claw">
+					<label class="control-label">赠送甩爪次数</label>
+					<div class="controls">
+						<input type="text" name="claw" value="">
+						<span class="form-required">*</span>
+					</div>
+				</div>
+                <!--<div class="control-group">-->
+					<!--<label class="control-label">首充送娃娃币</label>-->
+					<!--<div class="controls">-->
+						<!--<input type="text" name="firstgive" value="">-->
+						<!--<span class="form-required">*</span>-->
+					<!--</div>-->
+				<!--</div>-->
+			</fieldset>
+			<div class="form-actions">
+				<input type="submit" value="添加" class="btn btn-primary js-ajax-submit">
+				<!-- <button type="submit" class="btn btn-primary js-ajax-submit">{:L('ADD')}</button> -->
+				<a class="btn" href="{:U('Chargerules/index')}">{:L('BACK')}</a>
+			</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+</body>
+<script>
+	$('.gift').click(function() {
+		$("#claw").show()
+	});
+	$('#claw').hide();
+
+</script>
+</html>

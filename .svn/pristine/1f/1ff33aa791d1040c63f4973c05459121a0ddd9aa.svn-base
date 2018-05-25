@@ -1,0 +1,58 @@
+<html>
+<head></head>
+<body>
+<form method="post" class="js-ajax-form" action="{:U('Gift/listorders')}">
+		<form method="post" class="js-ajax-form" action="{:U('Gift/index')}">
+	 		娃娃编号:
+			<input type="text" name="id" value="{$id}" placeholder="" style="width: 55px;">&nbsp;&nbsp;
+			娃娃名称:
+			<input type="text" name="keyword" value="{$keyword}"  placeholder="" style="width: 80px;">&nbsp;&nbsp;
+			娃娃分类:
+			<select name="type" placeholder="娃娃分类" style="width: 120px;">&nbsp;&nbsp; 
+		        <option value="">娃娃分类</option>
+				{$type}
+		    </select>
+		    标签:  
+		    <input type="text" name="keyword" value="{$keyword}"  placeholder="" style="width: 80px;">&nbsp;&nbsp;
+			<input type="submit" class="btn btn-primary" value="搜索">
+       	
+       </form>
+		<table class="table table-hover table-bordered">
+			<thead>
+				<tr>
+					<th align="center">全部添加</th>
+					<th>娃娃编号</th>
+					<th>娃娃名称</th>
+					<th>娃娃主图</th>
+					<th>游戏价格(娃娃币)</th>
+					<th>成本(元)</th>
+					<th>标签</th>
+					<th>娃娃分类</th>
+					<th>抓到总次数</th>
+					<th>可兑换礼品</th>
+				</tr>
+			</thead>
+			<tbody>
+				<foreach name="list" item="vo">
+				<tr>
+					<td align="center">添加</td>
+					<td>{$vo.id}</td>
+					<td>{$vo.giftname}</td>
+					<td><if condition="$vo.gifticon neq ''">
+							<img src="{$vo.gifticon}" style="width: 60px;height: 60px;">
+						</if>	
+					</td>
+					<td>{$vo.spendcoin}</td>
+					<td>{$vo.cost}</td>
+					<td>{$vo.label_id}</td>
+					<td>{$vo.type_id}</td>
+					<td>{$vo.count_success}</td>
+					<td>{$vo.convert_lipin}</td>
+				</tr>
+				</foreach>
+			</tbody>
+		</table>
+		<div class="pagination">{$page}</div>
+	</form>
+</body>
+</html>

@@ -1,0 +1,113 @@
+<admintpl file="header" />
+<style>
+	.settime{
+		float:left;
+		width:60px;
+		heigth:45px;
+		text-align:center;
+		line-height:45px;
+		border: 1px solid #dce4ec;
+		cursor:pointer
+	}
+	.active1{
+		background:#1DCCAA;
+		color:#fff;
+		border: 1px solid #1DCCAA;
+	}
+</style>
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="">按时间统计</a></li>
+			<li ><a href="{:U('Statment/from_device')}">按设备统计</a></li>
+		</ul>
+
+		<form action="{:U('Statment/index')}" method="post" class="well form-search">
+			<div>
+				<div class="settime <if condition="$time_type eq 'day' or ''">active1</if>" ghref="{$arrTime['sday']},{$arrTime['eday']},day">今日</div>
+				<div class="settime <if condition="$time_type eq 'week'">active1</if>" ghref="{$arrTime['sweek']},{$arrTime['eweek']},week">本周</div>
+				<div class="settime <if condition="$time_type eq 'month'">active1</if>" ghref="{$arrTime['smonth']},{$arrTime['emonth']},month">本月</div>
+				<div class="settime <if condition="$time_type eq 'year'">active1</if>" ghref="{$arrTime['syear']},{$arrTime['eyear']},year">半年</div>
+				<input type="hidden" id="gettime" name="gettime" value="<php>echo $arrTime['s'.$time_type].','.$arrTime['e'.$time_type];</php>,{$time_type}">
+			</div>
+			&nbsp;&nbsp;&nbsp;
+			<input type="text" name="date1" class="js-date date" placeholder="选择日期" style="width: 100px;" value="{$Think.post.date1}" > 至 <input type="text" name="date2" class="js-date date" placeholder="选择日期" style="width: 100px;" value="{$Think.post.date2}" >
+			<br><br>
+			<button class="btn btn-primary">搜索</button>
+		</form>
+
+		<table class="table table-hover table-bordered">
+			<thead>
+				<tr>
+					<th>时间</th>
+					<th>总毛利</th>
+					<th>充值总额</th>
+					<th>微信支付</th>
+					<th>支付宝支付</th>
+					<th>苹果支付</th>
+					<th>paypal支付</th>
+					<th>消费总额</th>
+					<th>消费增币</th>
+					<th>夹娃娃次数</th>
+					<th>夹中次数</th>
+					<th>商品出货量</th>
+				</tr>
+			</thead>
+			<tbody>
+			<foreach name="result" item="v" key="k">
+				<tr>
+					<td align="center">{$k}</td>
+					<td align="center">{$v['maoli']}</td>
+					<td align="center">{$v['total_pay']|default=0}</td>
+					<td align="center">{$v['wx_pay']|default=0}</td>
+					<td align="center">{$v['zfb_pay']|default=0}</td>
+					<td align="center">{$v['apple_pay']|default=0}</td>
+					<td align="center">{$v['paypal_pay']|default=0}</td>
+					<td align="center">{$v['xfze']|default=0}</td>
+					<td align="center">{$v['xfzb']|default=0}</td>
+					<td align="center">{$v['game_totals']|default=0}</td>
+					<td align="center">{$v['game_gtotals']|default=0}</td>
+					<td align="center">{$v['fh_totals']|default=0}</td>
+				</tr>
+			</foreach>
+			</tbody>
+			<div class="pagination">{$page}</div>
+		</table>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+</body>
+
+<script>
+$(function(){
+	$('.table').tablesort().data('tablesort');
+	$('.table th').data('sortBy', function(th, td, sorter) {
+		return Math.abs(parseInt(td.text(), 10));
+	});
+
+	$('.settime').click(function(){
+		$('#gettime').val($(this).attr('ghref'));
+		$(this).addClass('active1');
+		$(this).siblings('div').removeClass('active1');
+	});
+
+	$("#clear").click(function(){
+		var flag = confirm('确定吗？');
+		if( flag ){
+			$.ajax({
+				url : "{:U('Notice/clear')}",
+				type : 'post',
+				data : null,
+				success : function(e){
+					window.location.href = "{:U('Notice/index')}";
+				},
+				error : function(e){
+						alert('系统内部错误');
+				}
+			});
+		}
+	});
+
+});
+</script>
+</html>
