@@ -509,6 +509,12 @@ class MywawaController extends BaseController
 
         // 获取活动进行送币
         $this->send_coin();
+	//写入此次登录信息
+        $data = array(
+            'last_login_time' => date("Y-m-d H:i:s"),
+        );
+        $users_model=D("Users");//实例化Common模块下的Users模型
+        $users_model->where(array('id'=>$this->user_id))->save($data);
 
         $this->_return(1, '获取房间列表成功', $list);
 
