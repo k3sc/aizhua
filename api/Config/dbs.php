@@ -9,10 +9,10 @@ return array(
      */
     'servers' => array(
         'db_appapi' => array(                         //服务器标记
-            'host'      => 'rm-wz99ouwa974707w85.mysql.rds.aliyuncs.com',             //数据库域名
-            'name'      => 'aizhuawawajidb',               //数据库名字
-            'user'      => 'aizhuawawajicn',                  //数据库用户名
-            'password'  => 'wawaji123!',	                    //数据库密码
+            'host'      => 'mysql',             //数据库域名
+            'DB_NAME' => 'az',
+            'DB_USER' => 'root',
+            'DB_PWD' => 'root',
             'port'      => '3306',                  //数据库端口
             'charset'   => 'UTF8',                  //数据库字符集
         ),
