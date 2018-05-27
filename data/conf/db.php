@@ -14,7 +14,7 @@ return array(
 						
 	/* redis */
 	'REDIS_HOST' => "localhost",
-	'REDIS_AUTH' => "rediswawaji123",
+	'REDIS_AUTH' => "",
 	'REDIS_PREFIX' => "zzwawaji_",
     //密钥
     "AUTHCODE" => 'rCt52pF2cnnKNB3Hkp',

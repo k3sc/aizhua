@@ -25,6 +25,6 @@ return array(
     'DB_PREFIX' => 'cmf_', // 数据库表前缀
 		
 	'REDIS_HOST'=>'localhost',
-	'REDIS_AUTH'=>'tieweishivps',		
+	'REDIS_AUTH'=>'',
 
 );

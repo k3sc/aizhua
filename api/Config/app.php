@@ -12,7 +12,7 @@ return array(
         //'sign' => array('name' => 'sign', 'require' => true),
     ),
 		'REDIS_HOST' => "localhost",
-		'REDIS_AUTH' => "Hh123123",
+		'REDIS_AUTH' => "",
 		
 		
 		/**
