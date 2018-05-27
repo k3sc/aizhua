@@ -397,7 +397,7 @@ class MywawaController extends BaseController
         $this->_return(1, '邮寄娃娃操作成功', $data['waybillno']);
     }
 
-    // 娃娃换取娃娃币
+    // 娃娃换取娃娃币 换取 当作充值
     public function set_coin()
     {
         $wawaList = I('w_list');
@@ -535,6 +535,7 @@ class MywawaController extends BaseController
                 $arrTemp = M('user_act')->field('id')->where('act_id=' . $v['id'] . ' and user_id=' . $this->user_id)->find();
                 if (!$arrTemp) { // 没有送过才送
                     M('users')->where('id=' . $this->user_id)->setInc('coin', $v['coin']);
+                    M('users')->where('id=' . $this->user_id)->setInc('free_coin', $v['coin']);
                     M('users')->where('id=' . $this->user_id)->setInc('active_coin', $v['coin']);
                     // 记录标识已送过币
                     $arr = array();
@@ -571,6 +572,7 @@ class MywawaController extends BaseController
                     $arrTemp = M('user_act')->field('id')->where('act_id=' . $v['id'] . ' and user_id=' . $this->user_id . ' and ctime >= ' . $sday . ' and ctime <= ' . $eday)->find();
                     if (!$arrTemp) { // 今天没有送过才送币
                         M('users')->where('id=' . $this->user_id)->setInc('coin', $v['coin']);
+                        M('users')->where('id=' . $this->user_id)->setInc('free_coin', $v['coin']);
                         M('users')->where('id=' . $this->user_id)->setInc('active_coin', $v['coin']);
                         // 记录标识今天已送过币
                         $arr = array();
@@ -610,6 +612,7 @@ class MywawaController extends BaseController
                         $eday = strtotime(date('Y-m-d 23:59:59'));
                         $arrTemp = M('user_act')->field('id')->where('act_id=' . $v['id'] . ' and user_id=' . $this->user_id . ' and ctime >= ' . $sday . ' and ctime <= ' . $eday)->find();
                         if (!$arrTemp) { // 今天没有送过才送币
+                            M('users')->where('id=' . $this->user_id)->setInc('free_coin', $v['coin']);
                             M('users')->where('id=' . $this->user_id)->setInc('coin', $v['coin']);
                             M('users')->where('id=' . $this->user_id)->setInc('active_coin', $v['coin']);
                             // 记录标识今天已送过币

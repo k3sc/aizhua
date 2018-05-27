@@ -455,12 +455,20 @@ class Model_User extends Model_Common {
 		if($userinfo['coin'] < $total){
 			/* 余额不足 */
 			return 1001;
-		}		
+		}
+        if($userinfo['free_coin'] >= $total)
+        {
+            $userinfo['free_coin'] = $userinfo['free_coin'] - $total;
+        }
+        else{
+            $userinfo['free_coin'] = 0;
+        }
 
 		/* 更新用户余额 消费 */
 		$isuid =DI()->notorm->users
 				->where('id = ?', $uid)
-				->update(array('coin' => new NotORM_Literal("coin - {$total}"),'consumption' => new NotORM_Literal("consumption + {$total}") ) );
+				->update(array('coin' => new NotORM_Literal("coin - {$total}"),'consumption' => new NotORM_Literal("consumption + {$total}")
+                ,'free_coin'=>$userinfo['free_coin']) );
 
 
 		$insert=array("type"=>$type,"action"=>$action,"uid"=>$uid,"touid"=>0,"giftid"=>0,"giftcount"=>$giftcount,"totalcoin"=>$total,"showid"=>0,"addtime"=>$addtime );

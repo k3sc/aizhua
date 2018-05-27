@@ -155,6 +155,7 @@ class ActiveconfigController extends AdminbaseController
         foreach ($arrList as $v) {
             // 送币
             M('users')->where('id=' . intval($v['id']))->setInc('coin', $arrAct['coin']);
+            M('users')->where('id=' . intval($v['id']))->setInc('free_coin', $arrAct['coin']);
             M('users')->where('id=' . intval($v['id']))->setInc('active_coin', $arrAct['coin']);
             // 发送消息提醒
             $arrNotice = array();

@@ -282,6 +282,11 @@ class ShareController extends Controller {
 			echo '{"errno":"1001","data":"","msg":"余额不足"}';
 			exit;	
 		}		
+		M("users")->where('id=' . $this->user_id)->save($update);
+		
+		$update = [];
+		$update['free_coin'] = array('free_coin', $this->user['free_coin']);
+		M("users")->where('id=' . $uid)->save($update);
 		/* 更新用户余额 消费 */
 		M()->execute("update __PREFIX__users set coin=coin-{$total},consumption=consumption+{$total} where id='{$uid}'");
 		/* 更新直播 映票 累计映票 */						 
