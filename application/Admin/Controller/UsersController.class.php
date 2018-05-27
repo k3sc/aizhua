@@ -238,7 +238,7 @@ public function setWawa()
         $page = $this->page($count, 20);
         //用户列表
         $list = $model
-            ->field('id,user_nicename,avatar,mobile,coin,create_time,user_status,claw,strong,coin_sys_give,openid,sys,sex,last_login_time')
+            ->field('id,user_nicename,avatar,mobile,coin,free_coin,create_time,user_status,claw,strong,coin_sys_give,openid,sys,sex,last_login_time')
             ->order('create_time desc')
             ->where($map)
             ->limit($page->firstRow . ',' . $page->listRows)

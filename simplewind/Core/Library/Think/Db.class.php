@@ -43,7 +43,7 @@ class Db {
             }
         }
         self::$_instance    =   self::$instance[$md5];
-        return self::$_instance;
+            return self::$_instance;
     }
 
     /**

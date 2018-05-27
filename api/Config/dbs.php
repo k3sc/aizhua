@@ -9,6 +9,7 @@ return array(
      */
     'servers' => array(
         'db_appapi' => array(                         //服务器标记
+
             'host'      => '127.0.0.1',             //数据库域名
             'name'      => 'aizhuawawajidb',               //数据库名字
             'user'      => 'root',                  //数据库用户名

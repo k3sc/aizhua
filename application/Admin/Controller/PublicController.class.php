@@ -57,8 +57,10 @@ class PublicController extends AdminbaseController {
     		//$this->error(L('CAPTCHA_REQUIRED'));
     	}
     	//验证码
-    	if(0&&!sp_check_verify_code()){
-    		//$this->error(L('CAPTCHA_NOT_RIGHT'));
+    	if(!sp_check_verify_code()){
+
+    		$this->error(L('CAPTCHA_NOT_RIGHT'));
+
     	}else{
     		$user = D("Common/Users");
     		if(strpos($name,"@")>0){//邮箱登陆
