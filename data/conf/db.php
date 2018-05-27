@@ -4,10 +4,10 @@
  */
 return array(
     'DB_TYPE' => 'mysqli',
-    'DB_HOST' => 'rm-wz99ouwa974707w85.mysql.rds.aliyuncs.com',
-    'DB_NAME' => 'aizhuawawajidb',
-    'DB_USER' => 'aizhuawawajicn',
-    'DB_PWD' => 'wawaji123!',
+    'host'      => '127.0.0.1',             //数据库域名
+    'name'      => 'aizhuawawajidb',               //数据库名字
+    'user'      => 'root',                  //数据库用户名
+    'password'  => 'aizhua123!@#Q',                //数据库密码
     'DB_PORT' => '3306',
     'DB_PREFIX' => 'cmf_',
 						
