@@ -7,7 +7,7 @@ return array(
     'host'      => '127.0.0.1',             //数据库域名
     'name'      => 'aizhuawawajidb',               //数据库名字
     'user'      => 'root',                  //数据库用户名
-    'password'  => 'aizhua123!@#Q',                //数据库密码
+    'password'  => 'aizhua123!@#Q',                         //数据库密码
     'DB_PORT' => '3306',
     'DB_PREFIX' => 'cmf_',
 						
