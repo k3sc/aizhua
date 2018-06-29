@@ -304,7 +304,7 @@ class MywawaController extends BaseController
             $strWhere = 'a.user_id=' . $this->user_id . ' and a.status=0 and a.is_del=0';
         //}
 
-        $list = M('user_wawas')->alias('a')->join('cmf_gift as b on a.wawa_id=b.id')->field('a.wawa_id,count(*) as total, b.giftname, b.gifticon, b.needcoin')->where($strWhere)->order('a.ctime desc')->group('a.wawa_id')->page($page, $size)->select();
+        $list = M('user_wawas')->alias('a')->join('cmf_gift as b on a.wawa_id=b.id')->field('a.wawa_id,count(*) as total, b.giftname, b.gifticon, b.needcoin')->where($strWhere)->group('a.wawa_id')->page($page, $size)->select();
 
         $this->_return(1, '获取我的娃娃数量成功', $list);
     }

@@ -20,7 +20,7 @@ class Model_User extends Model_Common {
 
 
         //统计娃娃币账单
-        $coin_bill_count = DI()->notorm->users_coinrecord->where("uid = $uid")->fetchAll();
+        $coin_bill_count = DI()->notorm->users_coinrecord->limit(2000)->where("uid = $uid")->fetchAll();
         //统计我的娃娃个数
         $wawa_count = DI()->notorm->user_wawas->where("user_id = $uid and is_del = 0")->fetchAll();
         //统计用户礼品数
