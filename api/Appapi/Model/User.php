@@ -17,10 +17,11 @@ class Model_User extends Model_Common {
 		$info['follows']=$this->getFollows($uid);
 		$info['fans']=$this->getFans($uid);
         $info['user_setting'] = json_decode($info['user_setting'],true);
+//if($_GET['uid']==273917) { print_r( DI()->notorm->users_coinrecord->where("uid = 273917")->fetchAll());dump( DI()->notorm->users_coinrecord->getLastSql());exit;}
 
 
         //统计娃娃币账单
-        $coin_bill_count = DI()->notorm->users_coinrecord->where("uid = $uid")->fetchAll();
+        $coin_bill_count = DI()->notorm->users_coinrecord->where("uid = $uid")->limit(2000)->fetchAll();
         //统计我的娃娃个数
         $wawa_count = DI()->notorm->user_wawas->where("user_id = $uid and is_del = 0")->fetchAll();
         //统计用户礼品数
