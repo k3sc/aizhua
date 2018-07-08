@@ -1,0 +1,98 @@
+<admintpl file="header" />
+
+<script src="__PUBLIC__/admin/jquery.js"></script>
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/admin/diyUpload/css/webuploader.css">
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/admin/diyUpload/css/diyUpload.css">
+<script type="text/javascript" src="__PUBLIC__/admin/diyUpload/js/webuploader.html5only.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/diyUpload/js/diyUpload.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/content_addtop.js"></script>
+
+</head>
+<body>
+<div class="wrap">
+    <ul class="nav nav-tabs">
+        <li ><a href="{:U('Probability/grade')}">等级列表</a></li>
+        <li class="active"><a >编辑</a></li>
+    </ul>
+    <form method="post" class="form-horizontal js-ajax-form" action="{:U('Probability/add_grade',array('id'=>$row['id']))}">
+        <fieldset>
+            <div class="control-group">
+                <label class="control-label">等级名称</label>
+                <div class="controls">
+                    <input type="text" name="title" value="{$row.title}" >
+
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">优先级</label>
+                <div class="controls">
+                    <input type="text" name="order_num" value="{$row.order_num}" > 数字越小越优先
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label"><input type="checkbox" value="1" name="payed" <?php if($row['payed']) echo 'checked=checked'; ?>>充值金额</label>
+                <div class="controls">
+                    <input type="text" name="min_payed" value="{$row.min_payed}" >至
+                    <input type="text" name="max_payed" value="{$row.max_payed}" >
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label"><input type="checkbox"  value="1" name="num" <?php if($row['num']) echo 'checked=checked'; ?>>抓中次数</label>
+                <div class="controls">
+                    <input type="text" name="min_num" value="{$row.min_num}" >至
+                    <input type="text" name="max_num" value="{$row.max_num}" >
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label"><input type="checkbox"  value="1" name="shouru" <?php if($row['shouru']) echo 'checked=checked'; ?>>用户总成本收入比</label>
+                <div class="controls">
+                    <input type="radio" name="shouruequal" value="1" <?php if($row['shouruequal'] == 1) echo 'checked=checked'; ?>>大于
+                    <input type="radio" name="shouruequal" value="0" <?php if($row['shouruequal'] == 0) echo 'checked=checked'; ?>>小于
+                    <input type="text" name="shourubi" value="{$row.shourubi}" >%
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label"><input type="checkbox"  value="1" name="online" <?php if($row['online']) echo 'checked=checked'; ?>>最后打开app天数</label>
+                <div class="controls">
+                    <input type="text" name="onlinedays" value="{$row.onlinedays}" >
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label">使用充值币</label>
+                <div class="controls">
+                    <input type="text" name="coin_strong_num" value="{$row.coin_strong_num}" >%（请直接输入正负数 正数在房间的基础上增加，实际概率减小）
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">使用免费币</label>
+                <div class="controls">
+                    <input type="text" name="free_coin_strong_num" value="{$row.free_coin_strong_num}" >%（请直接输入正负数）
+                </div>
+            </div>
+            <!--
+            <div class="control-group">
+					<label class="control-label">{:L('ROLE')}</label>
+					<div class="controls">
+						<foreach name="roles" item="vo">
+						<label class="checkbox inline">
+							<php>$role_id_checked=in_array($vo['id'],$role_ids)?"checked":"";</php>
+							<input value="{$vo.id}" type="checkbox" name="role_id[]" {$role_id_checked}>{$vo.name}
+						</label>
+						</foreach>
+					</div>
+				</div>
+			-->
+        </fieldset>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary js-ajax-submit">{:L('EDIT')}</button>
+            <a class="btn" href="{:U('Probability/grade')}">{:L('BACK')}</a>
+        </div>
+    </form>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+</body>
+
+
+
+</html>
