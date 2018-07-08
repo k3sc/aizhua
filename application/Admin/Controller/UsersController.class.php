@@ -3,6 +3,7 @@
 namespace Admin\Controller;
 
 use Common\Controller\AdminbaseController;
+use Think\Log;
 
 class UsersController extends AdminbaseController
 {
@@ -190,10 +191,46 @@ public function setWawa()
         $this->display();
     }
 
+    public static function getGrade($user)
+    {
+        static $list = null;
+        if ($list === null)
+        {
+            $list = M('user_grade')->order("order_num asc")->select();
+        }
+        foreach ($list as $item)
+        {
+
+            if ($item['payed'] && $user['total_payed'] >= $item['min_payed'] && $user['total_payed'] <= $item['max_payed'])
+            {
+                return $item;
+            }
+            if ($item['num'] &&$user['total_get_num'] >= $item['min_num'] && $user['total_get_num'] <= $item['max_num'])
+            {
+                return $item;
+            }
+            if ($item['shouru'] && $user['total_payed'] >0 && $user['total_get']/$user['total_payed'] > $item['shourubi'] && $item['shouruequal'] == 1 )
+            {
+                return $item;
+            }
+            if ($item['shouru'] && $user['total_payed']>0 && $user['total_get']/$user['total_payed'] < $item['shourubi'] && $item['shouruequal'] == 0 )
+            {
+                return $item;
+            }
+            if ($item['online'] &&  (time()-$user['last_active_time'])/(24*3600) > $item['onlinedays'])
+            { echo $user['last_active_time'];echo (time()-$user['last_active_time'])/(24*3600);
+                return $item;
+
+            }
+
+        }
+        return false;
+    }
+
 
     //用户列表
     public function index()
-    {
+    { //Log::record('sssssssfffffffffff',Log::ERR);
         $map = "user_type<>1";
         $name = I('name');
         $mobile = I('mobile');
@@ -238,7 +275,7 @@ public function setWawa()
         $page = $this->page($count, 20);
         //用户列表
         $list = $model
-            ->field('id,user_nicename,avatar,mobile,coin,free_coin,create_time,user_status,claw,strong,coin_sys_give,openid,sys,sex,last_login_time')
+            ->field('id,user_nicename,avatar,mobile,coin,free_coin,create_time,user_status,claw,strong,coin_sys_give,openid,sys,sex,last_login_time,total_payed ,total_get,last_active_time')
             ->order('create_time desc')
             ->where($map)
             ->limit($page->firstRow . ',' . $page->listRows)
@@ -252,6 +289,14 @@ public function setWawa()
             $list[$key]['bodyNums'] = M('game_history')->where("user_id='{$value['id']}'")->count();
             //抓中次数
             $list[$key]['grasp'] = M('game_history')->where("user_id='{$value['id']}' and success > 0")->count();
+            if ($grade = $this->getGrade($value))
+            {
+                $list[$key]['grade'] = $grade['title'];
+               //    print_r($grade);exit;
+            }
+            else{
+                $list[$key]['grade'] = '普通';
+            }
         }
         
         $this->assign("page", $page->show('Admin'));//分页
@@ -551,6 +596,10 @@ public function setWawa()
                 M('notice')->add($data);
                 /* 友盟推送 */
                 $row = M('users')->where(['id'=>$user_id])->field('androidtoken,iphonetoken')->find();
+
+                $update['total_get'] = array('exp', 'total_get+'.(M('gift')->where(['id'=>$wawa_id])->getField('cost')));
+                M('users')->where("id={$user_id}")->save($update);
+
                 $this->umengpush($row['androidtoken'],$row['iphonetoken'],$data['title'],$data['content']);
 
 //                $notice_data = $this->notice_add(1, $user_id, $data['title'],0,$data['desc'],$data['content']);
@@ -631,7 +680,9 @@ public function setWawa()
 
     		$role_ids=$post['role_id'];
     		unset($post['role_id']);
-
+//print_r($post);exit;
+            $post['free_coin_strong_num'] = intval($post['free_coin_strong_num'] );
+            $post['coin_strong_num'] = intval($post['coin_strong_num'] );
             M('users')->where(['id' => $id])->save($post);
 			
      		$role_user_model=M("RoleUser");

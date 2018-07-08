@@ -15,7 +15,7 @@ class ChargerulesController extends AdminbaseController {
     	$count=$rules->count();
     	$page = $this->page($count, 20);
     	$lists = $rules
-				->where()
+				//->where()
 				->order("id desc")
 				->limit($page->firstRow . ',' . $page->listRows)
 				->select();

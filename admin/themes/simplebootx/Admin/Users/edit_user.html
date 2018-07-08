@@ -128,6 +128,18 @@
                     <span class="text-error"><notempty name="invite_person">{$invite_person.user_nicename}  ( ID：{$invite_person.id} )  </notempty></span>
                 </div>
             </div>
+            <div class="control-group">
+                <label class="control-label">使用充值币</label>
+                <div class="controls">
+                    <input type="text" name="coin_strong_num" value="{$row.coin_strong_num}" >%（请直接输入正负数 正数在房间的基础上增加，实际概率减小 设为0表示不启用 下同）
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">使用免费币</label>
+                <div class="controls">
+                    <input type="text" name="free_coin_strong_num" value="{$row.free_coin_strong_num}" >%（请直接输入正负数）
+                </div>
+            </div>
             <!--
             <div class="control-group">
 					<label class="control-label">{:L('ROLE')}</label>

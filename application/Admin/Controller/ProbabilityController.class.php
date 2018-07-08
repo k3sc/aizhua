@@ -30,6 +30,58 @@ class ProbabilityController extends AdminbaseController
         $this->display();
     }
 
+    public function grade()
+    {
+        $count = M('user_grade')->count();
+        $page = $this->page($count,20);
+        $res = M('user_grade as a')
+
+            ->limit($page->firstRow.','.$page->listRows)
+            ->select();
+
+        $this->assign('page',$page->show('Admin'));
+        $this->assign('row',$res);
+        $this->display();
+
+    }
+
+    public function del_grade()
+    {
+        $id = I('id');
+        M('user_grade')->where(['id' => $id])->delete();
+        $this->redirect('admin/probability/grade');
+    }
+
+    public function add_grade()
+    {
+        $id = I('id');
+        $row = M('user_grade')->find($id);
+
+        if (IS_POST) {
+            $id = I('get.id');
+            $post = I('post.');
+            if($post['title']==''){
+                $this->error("标题不能为空！");
+            }
+
+            $post['free_coin_strong_num'] = intval($post['free_coin_strong_num'] );
+            $post['coin_strong_num'] = intval($post['coin_strong_num'] );
+            if ($id)
+            {
+                M('user_grade')->where(['id' => $id])->save($post);
+
+            }
+            else{
+                $result = M('user_grade')->add($post);
+            }
+
+
+            $this->success('编辑成功');
+        }
+        $this->assign('row', $row);
+        $this->display();
+    }
+
     /**
      * 用户贩卖模式
      */
