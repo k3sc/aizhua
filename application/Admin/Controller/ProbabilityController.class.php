@@ -77,6 +77,7 @@ class ProbabilityController extends AdminbaseController
 
 
             $this->success('编辑成功');
+            $this->redirect('admin/probability/grade');
         }
         $this->assign('row', $row);
         $this->display();
