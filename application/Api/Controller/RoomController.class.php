@@ -8,6 +8,8 @@
 
 namespace Api\Controller;
 
+use Admin\Controller\UsersController;
+
 class RoomController extends BaseController
 {
 
@@ -597,6 +599,25 @@ class RoomController extends BaseController
         return $doing ? $count + $doing : $count;//预约位置
     }
 
+    private function getGl($type)
+    {
+        ;
+        //0 free 1 normal
+        foreach (M('user_grade')->order("order_num asc")->find() as $item)
+        {
+
+            if ($grade = UsersController::getGrade($this->user))
+            {
+                if ($type == 1)
+                {
+                    return $grade['coin_strong_num'];
+                }
+                else{
+                    return $grade['free_coin_strong_num'];
+                }
+            }
+        }
+    }
     // 开始游戏
     private function start($room_id, $game_history_id)
     {
@@ -606,9 +627,9 @@ class RoomController extends BaseController
         $is_strongdec = 0;//用户要减强抓力
         $is_strong = 0;
         $sellmodel = M('sellmodel')->field('*')->order("money asc")->select();
-		
+		//最近的一次充值
 	$pay_record = M('pay_record')->where("status=1 and user_id=".$this->user_id)->order("id desc")->find();
-	$strongrand = 0;
+	$strongrand = 0;//送几次强抓
 	foreach($sellmodel as $v){
 		if($pay_record['money'] >= $v['money']){
 			$strongrand = max($strongrand, $v['count']);
@@ -616,10 +637,42 @@ class RoomController extends BaseController
 	}
 		
 	$is_roommodel = 0;
-        if ($arrFac['claw_count'] && $arrFac['is_roommodel']) {
-            $historys = M('game_history')->field('is_strong,success')->where('room_id=' . $room_id)->order('id desc')->limit($arrFac['claw_count'])->select();
+        if ($arrFac['claw_count'] && $arrFac['is_roommodel']) {//抓几次出一次强抓力
+            $nnum = $arrFac['claw_count'];
+            DI()->logger->debug('xxxxxxxxxx free gl base : ' . $nnum);
+            //如果用户单独设置了
+            if ($this->user['free_coin']>0)
+            {
+                if ($this->user['free_coin_strong_num'] != 0)
+                {
+                    $nnum = $nnum+intval($nnum*user['free_coin_strong_num']/100);
+                    DI()->logger->debug('xxxxxxxxxx free gl num : ' . user['free_coin_strong_num']);
+                }
+                else{
+
+                    $gl = $this->getGl(1);
+                    DI()->logger->debug('xxxxxxxxxx free gl : ' . $gl);
+                    $nnum = $nnum+intval($nnum*$gl/100);
+                }
+
+            }
+            else{
+                if ($this->user['coin_strong_num'] != 0)
+                {
+                    $nnum = $nnum+intval($nnum*user['coin_strong_num']/100);
+                    DI()->logger->debug('xxxxxxxxxx  gl num : ' . user['coin_strong_num']);
+                }
+                else{
+                    $gl = $this->getGl(0);
+                    $nnum = $nnum+intval($nnum*$gl/100);
+                    DI()->logger->debug('xxxxxxxxxx  gl  : ' . $nnum);
+                }
+
+            }
+            DI()->logger->debug('xxxxxxxxxx nnum: ' . $nnum);
+            $historys = M('game_history')->field('is_strong,success')->where('room_id=' . $room_id)->order('id desc')->limit($nnum)->select();
             $flag     = $historys ? 1 : 0;
-            $sucflag  = $historys ? 1 : 0;
+            $sucflag  = $historys ? 1 : 0;//1 出强力  0 不出
             foreach ($historys as $v) {
                 if ($v['is_strong']) {
                     $flag = 0;
@@ -628,7 +681,7 @@ class RoomController extends BaseController
                     $sucflag = 0;
                 }
             }
-            $is_strong    = $flag ? $flag : $sucflag;
+            $is_strong    = $flag ? $flag : $sucflag;//出现过strong 不再出  没有出现过  已经成功过不再出  否则出
             $is_strongdec = 0;
 	    $is_roommodel = $is_strong;
         }
