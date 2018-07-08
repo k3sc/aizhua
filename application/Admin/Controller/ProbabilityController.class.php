@@ -25,8 +25,8 @@ class ProbabilityController extends AdminbaseController
             $post = I('post.');
             $post = json_encode($post);
             M('config')->where(['id'=>1])->save(['proba_all'=>$post]);
-            //$this->success('编辑成功');
-            $this->redirect('admin/probability/grade');
+            $this->success('编辑成功','admin/probability/grade');
+
         }
         $this->display();
     }
@@ -50,7 +50,7 @@ class ProbabilityController extends AdminbaseController
     {
         $id = I('id');
         M('user_grade')->where(['id' => $id])->delete();
-        $this->redirect('admin/probability/grade');
+        $this->success('编辑成功','admin/probability/grade');
     }
 
     public function add_grade()
