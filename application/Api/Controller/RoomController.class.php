@@ -9,6 +9,7 @@
 namespace Api\Controller;
 
 use Admin\Controller\UsersController;
+use Think\Log;
 
 class RoomController extends BaseController
 {
@@ -603,11 +604,11 @@ class RoomController extends BaseController
     {
         ;
         //0 free 1 normal
-        foreach (M('user_grade')->order("order_num asc")->find() as $item)
-        {
+
 
             if ($grade = UsersController::getGrade($this->user))
             {
+                Log::record($this->user['user_id'].'xxxxxxxxxx grade : ' .  json_encode($grade),Log::INFO);
                 if ($type == 1)
                 {
                     return $grade['coin_strong_num'];
@@ -616,7 +617,7 @@ class RoomController extends BaseController
                     return $grade['free_coin_strong_num'];
                 }
             }
-        }
+
     }
     // 开始游戏
     private function start($room_id, $game_history_id)
@@ -639,19 +640,19 @@ class RoomController extends BaseController
 	$is_roommodel = 0;
         if ($arrFac['claw_count'] && $arrFac['is_roommodel']) {//抓几次出一次强抓力
             $nnum = $arrFac['claw_count'];
-            DI()->logger->debug('xxxxxxxxxx free gl base : ' . $nnum);
+            Log::record($this->user['user_id'].'xxxxxxxxxx free gl base : ' . $nnum,Log::INFO);
             //如果用户单独设置了
             if ($this->user['free_coin']>0)
             {
                 if ($this->user['free_coin_strong_num'] != 0)
                 {
                     $nnum = $nnum+intval($nnum*user['free_coin_strong_num']/100);
-                    DI()->logger->debug('xxxxxxxxxx free gl num : ' . user['free_coin_strong_num']);
+                   Log::record($this->user['user_id'].'xxxxxxxxxx free gl num : ' .  $this->user['free_coin_strong_num'],Log::INFO);
                 }
                 else{
 
                     $gl = $this->getGl(1);
-                    DI()->logger->debug('xxxxxxxxxx free gl : ' . $gl);
+                   Log::record($this->user['user_id'].'xxxxxxxxxx free gl : ' . $gl,Log::INFO);
                     $nnum = $nnum+intval($nnum*$gl/100);
                 }
 
@@ -660,16 +661,16 @@ class RoomController extends BaseController
                 if ($this->user['coin_strong_num'] != 0)
                 {
                     $nnum = $nnum+intval($nnum*user['coin_strong_num']/100);
-                    DI()->logger->debug('xxxxxxxxxx  gl num : ' . user['coin_strong_num']);
+                   Log::record($this->user['user_id'].'xxxxxxxxxx  gl num : ' . $this->user['coin_strong_num'],Log::INFO);
                 }
                 else{
                     $gl = $this->getGl(0);
                     $nnum = $nnum+intval($nnum*$gl/100);
-                    DI()->logger->debug('xxxxxxxxxx  gl  : ' . $nnum);
+                   Log::record($this->user['user_id'].'xxxxxxxxxx  gl  : ' . $nnum,Log::INFO);
                 }
 
             }
-            DI()->logger->debug('xxxxxxxxxx nnum: ' . $nnum);
+           Log::record($this->user['user_id'].'xxxxxxxxxx nnum: ' . $nnum,Log::INFO);
             $historys = M('game_history')->field('is_strong,success')->where('room_id=' . $room_id)->order('id desc')->limit($nnum)->select();
             $flag     = $historys ? 1 : 0;
             $sucflag  = $historys ? 1 : 0;//1 出强力  0 不出
@@ -978,6 +979,10 @@ class RoomController extends BaseController
             $content = '你抓到了1个' . $giftname;;
             $notice_data = $this->notice_add(1, $gameInfo['user_id'], $title,0,$desc,$content);
             $this->notice_gameover('0', json_encode(array("type" => 12, "new_notice" => $notice_data, "timestamp" => microtime())));//推送消息
+
+            $update['total_get'] = array('exp', 'total_get+'.(M('gift')->where(['id'=>$arr['wawa_id']])->getField('cost')));
+            M('users')->where("id={$gameInfo['user_id']}")->save($update);
+
 			//减库存
             M("game_room")->where(['id' => $gameInfo['room_id']])->setDec("wawa_num", $gift);
 			//M("gift")->where(['id' => $gameInfo['type_id']])->setDec("stock", $gift);

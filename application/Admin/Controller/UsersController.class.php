@@ -3,6 +3,7 @@
 namespace Admin\Controller;
 
 use Common\Controller\AdminbaseController;
+use Think\Log;
 
 class UsersController extends AdminbaseController
 {
@@ -229,7 +230,7 @@ public function setWawa()
 
     //用户列表
     public function index()
-    {
+    { //Log::record('sssssssfffffffffff',Log::ERR);
         $map = "user_type<>1";
         $name = I('name');
         $mobile = I('mobile');
@@ -595,6 +596,10 @@ public function setWawa()
                 M('notice')->add($data);
                 /* 友盟推送 */
                 $row = M('users')->where(['id'=>$user_id])->field('androidtoken,iphonetoken')->find();
+
+                $update['total_get'] = array('exp', 'total_get+'.(M('gift')->where(['id'=>$wawa_id])->getField('cost')));
+                M('users')->where("id={$user_id}")->save($update);
+
                 $this->umengpush($row['androidtoken'],$row['iphonetoken'],$data['title'],$data['content']);
 
 //                $notice_data = $this->notice_add(1, $user_id, $data['title'],0,$data['desc'],$data['content']);
