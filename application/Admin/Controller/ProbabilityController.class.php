@@ -50,7 +50,7 @@ class ProbabilityController extends AdminbaseController
     {
         $id = I('id');
         M('user_grade')->where(['id' => $id])->delete();
-        $this->success('编辑成功','admin/probability/grade');
+        $this->redirect('admin/probability/grade');
     }
 
     public function add_grade()
@@ -77,8 +77,8 @@ class ProbabilityController extends AdminbaseController
             }
 
 
-            //$this->success('编辑成功');
-            $this->redirect('admin/probability/grade');
+            $this->success('编辑成功','admin/probability/grade');
+            //$this->redirect('admin/probability/grade');
         }
         $this->assign('row', $row);
         $this->display();
