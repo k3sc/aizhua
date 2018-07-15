@@ -67,6 +67,10 @@ class ProbabilityController extends AdminbaseController
 
             $post['free_coin_strong_num'] = intval($post['free_coin_strong_num'] );
             $post['coin_strong_num'] = intval($post['coin_strong_num'] );
+            if (!isset($post['payed'])) $post['payed'] = 0;
+            if (!isset($post['num'])) $post['num'] = 0;
+            if (!isset($post['shouru'])) $post['shouru'] = 0;
+            if (!isset($post['online'])) $post['online'] = 0;
             if ($id)
             {
                 M('user_grade')->where(['id' => $id])->save($post);

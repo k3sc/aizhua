@@ -675,12 +675,12 @@ class RoomController extends BaseController
             {
                 if ($this->user['free_coin_strong_num'] != 0)
                 {
-                    $nnum = $nnum+intval($nnum*user['free_coin_strong_num']/100);
+                    $nnum = $nnum+intval($nnum*$this->user['free_coin_strong_num']/100);
                    Log::record($this->user['user_id'].'xxxxxxxxxx free gl num : ' .  $this->user['free_coin_strong_num'],Log::INFO);
                 }
                 else{
 
-                    $gl = $this->getGl(1);
+                    $gl = $this->getGl(0);
                    Log::record($this->user['user_id'].'xxxxxxxxxx free gl : ' . $gl,Log::INFO);
                     $nnum = $nnum+intval($nnum*$gl/100);
                 }
@@ -689,16 +689,18 @@ class RoomController extends BaseController
             else{
                 if ($this->user['coin_strong_num'] != 0)
                 {
-                    $nnum = $nnum+intval($nnum*user['coin_strong_num']/100);
+                    $nnum = $nnum+intval($nnum*$this->user['coin_strong_num']/100);
                    Log::record($this->user['user_id'].'xxxxxxxxxx  gl num : ' . $this->user['coin_strong_num'],Log::INFO);
                 }
                 else{
-                    $gl = $this->getGl(0);
+                    $gl = $this->getGl(1);
                     $nnum = $nnum+intval($nnum*$gl/100);
                    Log::record($this->user['user_id'].'xxxxxxxxxx  gl  : ' . $nnum,Log::INFO);
                 }
 
             }
+            if ($nnum<=1)
+                $nnum = 1;
            Log::record($this->user['user_id'].'xxxxxxxxxx nnum: ' . $nnum,Log::INFO);
             $historys = M('game_history')->field('is_strong,success')->where('room_id=' . $room_id)->order('id desc')->limit($nnum)->select();
             $flag     = $historys ? 1 : 0;
@@ -1010,6 +1012,7 @@ class RoomController extends BaseController
             $this->notice_gameover('0', json_encode(array("type" => 12, "new_notice" => $notice_data, "timestamp" => microtime())));//推送消息
 
             $update['total_get'] = array('exp', 'total_get+'.(M('gift')->where(['id'=>$arr['wawa_id']])->getField('cost')));
+            $update['total_get_num'] = array('exp', 'total_get_num+1');
             M('users')->where("id={$gameInfo['user_id']}")->save($update);
 
 			//减库存
@@ -1047,6 +1050,7 @@ class RoomController extends BaseController
         $arrSet['status'] = 2;
         $arrSet['totals'] = $gift;
         M('game_history')->where('id=' . $gameInfo['id'])->save($arrSet);
+
         M('game_room')->where('id=' . $gameInfo['room_id'])->save(array('status' => 0));
 		$this->notice_gameover('0', '{"type":15,"room_ids":"'.$gameInfo['room_id'].'","status":0}');
         //计算送甩抓

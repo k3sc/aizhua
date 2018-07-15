@@ -217,9 +217,14 @@ public function setWawa()
             {
                 return $item;
             }
-            if ($item['online'] &&  (time()-$user['last_active_time'])/(24*3600) > $item['onlinedays'])
-            { echo $user['last_active_time'];echo (time()-$user['last_active_time'])/(24*3600);
-                return $item;
+
+            if ($item['online'])
+            { //echo $user['last_active_time'];echo (time()-$user['last_active_time'])/(24*3600);
+                $h = M('game_history')->field('ctime')->where('success >= 0' )->order('id desc')->limit(1)->find();
+                if (empty($h)||(time()-$h['ctime'])/(24*3600) > $item['onlinedays'])
+                {
+                    return $item;
+                }
 
             }
 
@@ -275,7 +280,8 @@ public function setWawa()
         $page = $this->page($count, 20);
         //用户列表
         $list = $model
-            ->field('id,user_nicename,avatar,mobile,coin,free_coin,create_time,user_status,claw,strong,coin_sys_give,openid,sys,sex,last_login_time,total_payed ,total_get,last_active_time')
+            ->field('id,user_nicename,avatar,mobile,coin,free_coin,create_time,user_status,claw,strong,coin_sys_give,openid,sys,sex,last_login_time,
+            total_payed ,total_get,total_get_num,last_active_time')
             ->order('create_time desc')
             ->where($map)
             ->limit($page->firstRow . ',' . $page->listRows)
@@ -598,6 +604,7 @@ public function setWawa()
                 $row = M('users')->where(['id'=>$user_id])->field('androidtoken,iphonetoken')->find();
 
                 $update['total_get'] = array('exp', 'total_get+'.(M('gift')->where(['id'=>$wawa_id])->getField('cost')));
+                $update['total_get_num'] = array('exp', 'total_get_num+1');
                 M('users')->where("id={$user_id}")->save($update);
 
                 $this->umengpush($row['androidtoken'],$row['iphonetoken'],$data['title'],$data['content']);
