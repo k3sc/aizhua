@@ -44,7 +44,7 @@
                 </div>
             </div>
             <div class="control-group">
-                <label class="control-label"><input type="checkbox"  value="1" name="shouru" <?php if($row['shouru']) echo 'checked=checked'; ?>>用户总成本收入比</label>
+                <label class="control-label"><input type="checkbox"  value="1" name="shouru" <?php if($row['shouru']) echo 'checked=checked'; ?>>用户总收入成本比</label>
                 <div class="controls">
                     <input type="radio" name="shouruequal" value="1" <?php if($row['shouruequal'] == 1) echo 'checked=checked'; ?>>大于
                     <input type="radio" name="shouruequal" value="0" <?php if($row['shouruequal'] == 0) echo 'checked=checked'; ?>>小于
@@ -52,7 +52,7 @@
                 </div>
             </div>
             <div class="control-group">
-                <label class="control-label"><input type="checkbox"  value="1" name="online" <?php if($row['online']) echo 'checked=checked'; ?>>最后打开app天数</label>
+                <label class="control-label"><input type="checkbox"  value="1" name="online" <?php if($row['online']) echo 'checked=checked'; ?>>最后抓中天数</label>
                 <div class="controls">
                     <input type="text" name="onlinedays" value="{$row.onlinedays}" >
                 </div>

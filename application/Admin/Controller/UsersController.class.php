@@ -196,36 +196,69 @@ public function setWawa()
         static $list = null;
         if ($list === null)
         {
-            $list = M('user_grade')->order("order_num asc")->select();
+            $list = M('user_grade')->where('enable=1')->order("order_num asc")->select();
         }
         foreach ($list as $item)
         {
 
-            if ($item['payed'] && $user['total_payed'] >= $item['min_payed'] && $user['total_payed'] <= $item['max_payed'])
+            $result = false;
+            if ($item['payed'] )
             {
+                if ($user['total_payed'] >= $item['min_payed'] && $user['total_payed'] <= $item['max_payed'])
+                {
+                    $result = true;
+                }
+                else{
+                    continue;
+                }
+            }
+            if ($item['num'] )
+            {
+                if ($user['total_get_num'] >= $item['min_num'] && $user['total_get_num'] <= $item['max_num'])
+                {
+                    $result = true;
+                }
+                else{
+                    continue;
+                }
+            }
+            if ($item['shouru']  )
+            {
+                if ($user['total_payed'] >0 && $user['total_get']/$user['total_payed'] > $item['shourubi'] && $item['shouruequal'] == 1)
+                {
+                    $result = true;
+                }
+                else{
+                    continue;
+                }
                 return $item;
             }
-            if ($item['num'] &&$user['total_get_num'] >= $item['min_num'] && $user['total_get_num'] <= $item['max_num'])
+            if ($item['shouru'])
             {
-                return $item;
-            }
-            if ($item['shouru'] && $user['total_payed'] >0 && $user['total_get']/$user['total_payed'] > $item['shourubi'] && $item['shouruequal'] == 1 )
-            {
-                return $item;
-            }
-            if ($item['shouru'] && $user['total_payed']>0 && $user['total_get']/$user['total_payed'] < $item['shourubi'] && $item['shouruequal'] == 0 )
-            {
-                return $item;
+                if ( $user['total_payed']>0 && $user['total_get']/$user['total_payed'] < $item['shourubi'] && $item['shouruequal'] == 0 )
+                {
+
+                }
+                else{
+                    continue;
+                }
             }
 
             if ($item['online'])
             { //echo $user['last_active_time'];echo (time()-$user['last_active_time'])/(24*3600);
-                $h = M('game_history')->field('ctime')->where('success >= 0' )->order('id desc')->limit(1)->find();
+                $h = M('game_history')->field('ctime')->where('success > 0' )->order('id desc')->limit(1)->find();
                 if (empty($h)||(time()-$h['ctime'])/(24*3600) > $item['onlinedays'])
                 {
-                    return $item;
+                    $result = true;
+                }
+                else{
+                    continue;
                 }
 
+            }
+            if ($result)
+            {
+                return $item;
             }
 
         }

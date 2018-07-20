@@ -34,8 +34,8 @@
 					<td>优先级</td>
 					<td>充值金额</td>
 					<td>抓中次数</td>
-					<td>用户成本收入比</td>
-					<td>最后打开app天数</td>
+					<td>用户收入成本比</td>
+					<td>最后抓中天数</td>
 					<td>操作</td>
 				</tr>
 				<foreach name="row" item="vo">
@@ -53,8 +53,16 @@
 					<td><?php if($vo['online']) { echo $vo['onlinedays']; } else echo '/'; ?></td>
 					<td align="center" class="">
 						<!--<a href="{:U('Probability/room_edit',array('id'=>$vo['id']))}">编辑</a>-->
+						<if condition="$vo.enable eq 0">
+							<a href="{:U('Probability/start_grade',array('id'=>$vo['id'],'enable'=>1))}">启用</a>
+							<else/>
+							<a href="{:U('Probability/start_grade',array('id'=>$vo['id'],'enable'=>0))}">停用</a>
+						</if>
+
 
 						<a href="{:U('Probability/add_grade',array('id'=>$vo['id']))}">编辑</a>
+
+
 						<a href="{:U('Probability/del_grade',array('id'=>$vo['id']))}">删除</a>
 					</td>
 				</tr>

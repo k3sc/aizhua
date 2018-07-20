@@ -46,6 +46,14 @@ class ProbabilityController extends AdminbaseController
 
     }
 
+    public function start_grade()
+    {
+        $id = I('id');
+        $e = I('enable');
+        M('user_grade')->where(['id' => $id])->save(['enable'=>$e]);
+        $this->redirect('admin/probability/grade');
+    }
+
     public function del_grade()
     {
         $id = I('id');

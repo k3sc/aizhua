@@ -122,7 +122,7 @@ class IospayController extends Controller
                 $update['claw'] = array('exp', 'claw+'.$rule_list['claw']);
                 $update['coin'] = array('exp', 'coin+'.$olist['coin']);
                 $update['free_coin'] = array('exp', 'free_coin+'.$olist['coingive']);
-                 $update['total_payed'] = array('exp', 'total_payed+'.$olist['coin']);
+                 $update['total_payed'] = array('exp', 'total_payed+'.$olist['money']);
                 $update['coin_sys_give'] = array('exp', 'coin_sys_give+'.$olist['coingive']);
                 $re2 = M('users')->where("id={$olist['user_id']}")->save($update);
 
