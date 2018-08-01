@@ -679,10 +679,13 @@ class RoomController extends BaseController
                    Log::record($this->user['user_id'].'xxxxxxxxxx free gl num : ' .  $this->user['free_coin_strong_num'],Log::INFO);
                 }
                 else{
-
-                    $gl = $this->getGl(0);
-                   Log::record($this->user['user_id'].'xxxxxxxxxx free gl : ' . $gl,Log::INFO);
-                    $nnum = $nnum+intval($nnum*$gl/100);
+                    if ($arrFac['is_roomgrademodel'])
+                    {
+                        $gl = $this->getGl(0);
+                        Log::record($this->user['user_id'].'xxxxxxxxxx free gl : ' . $gl,Log::INFO);
+                        $nnum = $nnum+intval($nnum*$gl/100);
+                    }
+                    
                 }
 
             }
@@ -693,9 +696,13 @@ class RoomController extends BaseController
                    Log::record($this->user['user_id'].'xxxxxxxxxx  gl num : ' . $this->user['coin_strong_num'],Log::INFO);
                 }
                 else{
-                    $gl = $this->getGl(1);
-                    $nnum = $nnum+intval($nnum*$gl/100);
-                   Log::record($this->user['user_id'].'xxxxxxxxxx  gl  : ' . $nnum,Log::INFO);
+                    if ($arrFac['is_roomgrademodel'])
+                    {
+                        $gl = $this->getGl(1);
+                        $nnum = $nnum+intval($nnum*$gl/100);
+                        Log::record($this->user['user_id'].'xxxxxxxxxx  gl  : ' . $nnum,Log::INFO);
+                    }
+                    
                 }
 
             }
