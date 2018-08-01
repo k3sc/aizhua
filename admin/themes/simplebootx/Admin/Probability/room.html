@@ -44,6 +44,7 @@
 					<th>一周抓中次数</th>
 					<th>概率</th>
 					<th align="center">{:L('ACTIONS')}</th>
+					<th>等级概率</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -76,6 +77,11 @@
 
 						<a href="javascript:;" data="{$vo.id}" <eq name="vo.is_roommodel" value="0">class="btn btn-danger btn-small"<else/>class="btn btn-success btn-small"</eq> ><eq name="vo.is_roommodel" value="0">停用<else/>启用</eq></a>
 					</td>
+					<td align="center" class="isgradestart">
+						<!--<a href="{:U('Probability/room_edit',array('id'=>$vo['id']))}">编辑</a>-->
+
+						<a href="javascript:;" data="{$vo.id}" <eq name="vo.is_roomgrademodel" value="0">class="btn btn-danger btn-small"<else/>class="btn btn-success btn-small"</eq> ><eq name="vo.is_roomgrademodel" value="0">停用<else/>启用</eq></a>
+					</td>
 				</tr>
 				</foreach>
 			</tbody>
@@ -83,6 +89,8 @@
 		<div class="pagination">{$page}</div>
 
 		<button id="btn" class="btn btn-primary" data-toggle="modal" data-target="#modal">批量设置概率</button>
+
+		<button id="gradebtn" class="btn btn-primary" data-toggle="modal" data-target="#grademodal">批量切换等级概率</button>
 
 	</div>
 
@@ -177,6 +185,59 @@
             var id = $(this).attr('data');
             $.ajax({
                 url : "{:U('Probability/isstart_room')}",
+                type : 'post',
+                dataType : 'json',
+                data : 'id='+id,
+                success : function (res) {
+                    if( res.status == 1 ){
+                        location.reload();
+                    }
+                },
+                error : function () {
+                    alert('错误');
+                }
+            });
+        });
+
+        $("#gradebtn").click(function () {
+            var data = new Array();
+            $(".checkbox_id").each(function () {
+                if( $(this).is(':checked') ) {
+                    data.push($(this).val())
+                }
+            });
+
+            if( !data.length ){
+                alert('没有可操作的数据');
+                return false;
+            }
+            //$("input[name='ids']").val(data);
+            $.ajax({
+                url : "{:U('Probability/batch_setgraderoom')}",
+                type : 'post',
+                data : 'ids='+data,
+                dataType : 'json',
+                success : function (res) {
+                    // if( res.status == 1 ){
+                    //     $("#modal_content").text('操作成功');
+                    //     $("#modal_sbt").hide();
+                    // }else{
+                    //     $("#modal_content").text('操作失败');
+                    //     $("#modal_sbt").hide();
+                    // }
+                    location.reload();
+                },
+                error : function () {
+                    alert('错误');
+                }
+            });
+
+        });
+
+        $(".isgradestart a").click(function () {
+            var id = $(this).attr('data');
+            $.ajax({
+                url : "{:U('Probability/isgradestart_room')}",
                 type : 'post',
                 dataType : 'json',
                 data : 'id='+id,
