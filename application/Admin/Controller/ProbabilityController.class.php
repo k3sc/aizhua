@@ -384,9 +384,28 @@ public function isgradestart_room(){
         if( IS_AJAX ){
             $post = I('post.');
             $where['id'] = ['in',$post['ids']];
-            $res = M('game_room')->where($where)->save(['claw_count'=>$post['claw_count']]);
-            if( $res ) $this->ajaxReturn(['status'=>1]);
-            $this->ajaxReturn(['status'=>0]);
+            $arr = explode(",",$post['ids']);
+            if (is_array($arr))
+            {
+                foreach ($arr as $id)
+                {
+                    if( $id ){
+                        $res = M('game_room')->find($id);
+                        $data = [];
+                        if( $res['is_roomgrademodel'] == 1 ){
+                            $data['is_roomgrademodel'] = 0;
+                        }else{
+                            $data['is_roomgrademodel'] = 1;
+                        }
+                        M('game_room')->where(['id'=>$id])->save($data);
+                        //$this->ajaxReturn(['status'=>1]);
+                    }
+                }
+
+            }
+            //$res = M('game_room')->where($where)->save(['claw_count'=>$post['claw_count']]);
+            //if( $res ) $this->ajaxReturn(['status'=>1]);
+            $this->ajaxReturn(['status'=>1]);
         }
     }
 

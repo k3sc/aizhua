@@ -681,11 +681,15 @@ class RoomController extends BaseController
                 else{
                     if ($arrFac['is_roomgrademodel'])
                     {
-                        $gl = $this->getGl(0);
+
+                        $gl = $this->getGl(1);
                         Log::record($this->user['user_id'].'xxxxxxxxxx free gl : ' . $gl,Log::INFO);
                         $nnum = $nnum+intval($nnum*$gl/100);
+                    }else{
+                        Log::record($this->user['user_id'].'xxxxxxxxxx free  not gl : ' ,Log::INFO);
                     }
-                    
+
+
                 }
 
             }
@@ -698,11 +702,16 @@ class RoomController extends BaseController
                 else{
                     if ($arrFac['is_roomgrademodel'])
                     {
-                        $gl = $this->getGl(1);
+
+                        $gl = $this->getGl(0);
                         $nnum = $nnum+intval($nnum*$gl/100);
                         Log::record($this->user['user_id'].'xxxxxxxxxx  gl  : ' . $nnum,Log::INFO);
                     }
-                    
+                    else{
+                        Log::record($this->user['user_id'].'xxxxxxxxxx  not gl  : ' ,Log::INFO);
+                    }
+
+
                 }
 
             }

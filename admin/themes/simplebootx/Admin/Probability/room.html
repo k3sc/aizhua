@@ -1,127 +1,128 @@
 <admintpl file="header" />
 </head>
 <body>
-<div class="wrap">
-	<ul class="nav nav-tabs">
-		<!--<li ><a href="{:U('Probability/index')}">所有概率</a></li>-->
-		<li class="active"><a href="">房间概率模式</a></li>
-		<li ><a href="{:U('Probability/sell')}">用户贩卖模式</a></li>
-		<li ><a href="{:U('Probability/grade')}">等级调节模式</a></li>
-	</ul>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<!--<li ><a href="{:U('Probability/index')}">所有概率</a></li>-->
+			<li class="active"><a href="">房间概率模式</a></li>
+			<li ><a href="{:U('Probability/sell')}">用户贩卖模式</a></li>
+			<li ><a href="{:U('Probability/grade')}">等级调节模式</a></li>
+		</ul>
 
 
-	<form method="post" class="well form-search" action="{:U('Probability/room')}">
-		房间号：<input type="text" name="room_no" value="{$room_no}"  placeholder="请输入房间号">
-		设备号：<input type="text" name="device_no" value="{$device_no}"  placeholder="请输入设备号">
-		商品名称：<input type="text" name="goodsname" value="{$goodsname}"  placeholder="请输入商品名称">
-		房间状态：
-		<select name="status" style="width: 150px;">
-			<option value="-1">-- 选择房间状态 --</option>
-			<option value="0" <eq name="status" value="0">selected</eq> >在线</option>
-			<option value="1" <eq name="status" value="1">selected</eq> >补货</option>
-			<option value="2" <eq name="status" value="2">selected</eq> >维护</option>
-			<option value="3" <eq name="status" value="3">selected</eq> >游戏中</option>
-			<option value="4" <eq name="status" value="4">selected</eq> >离线</option>
-		</select>
-		<input type="submit" class="btn btn-primary" value="查询">
-	</form>
+		<form method="post" class="well form-search" action="{:U('Probability/room')}">
+			房间号：<input type="text" name="room_no" value="{$room_no}"  placeholder="请输入房间号">
+			设备号：<input type="text" name="device_no" value="{$device_no}"  placeholder="请输入设备号">
+			商品名称：<input type="text" name="goodsname" value="{$goodsname}"  placeholder="请输入商品名称">
+			房间状态：
+			<select name="status" style="width: 150px;">
+				<option value="-1">-- 选择房间状态 --</option>
+				<option value="0" <eq name="status" value="0">selected</eq> >在线</option>
+				<option value="1" <eq name="status" value="1">selected</eq> >补货</option>
+				<option value="2" <eq name="status" value="2">selected</eq> >维护</option>
+				<option value="3" <eq name="status" value="3">selected</eq> >游戏中</option>
+				<option value="4" <eq name="status" value="4">selected</eq> >离线</option>
+			</select>
+			<input type="submit" class="btn btn-primary" value="查询">
+		</form>
 
 
 
-	<table class="table table-hover table-bordered">
-		<thead>
-		<tr>
-			<th align="center">
-				<input type="checkbox" id="id">
-				ID
-			</th>
-			<th>房间名</th>
-			<th>设备号</th>
-			<th>商品名称</th>
-			<th>成本(元)</th>
-			<th>游戏价格(娃娃币)</th>
-			<th>房间状态</th>
-			<th>一周抓中次数</th>
-			<th>概率</th>
-			<th align="center">{:L('ACTIONS')}</th>
-			<th>等级概率</th>
-		</tr>
-		</thead>
-		<tbody>
-		<foreach name="row" item="vo">
-			<tr>
-				<td align="center">
-					<input type="checkbox" class="checkbox_id" value="{$vo.id}">
-					{$vo.id}
-				</td>
-				<td>{$vo.room_no}</td>
-				<td>{$vo.deveci_no}</td>
-				<td>{$vo.giftname}</td>
-				<td>{$vo.cost}</td>
-				<td>{$vo.spendcoin}</td>
-				<td
-				<eq name="vo.status" value="0">class="text-success"</eq>
-				<eq name="vo.status" value="1">class="text-warning"</eq>
-				<eq name="vo.status" value="2">class="text-error"</eq>
-				><strong>{$statusArr[$vo['status']]}</strong></td>
-				<td>
-					<empty name="vo.week_count">
-						0
-						<else/>
-						{$vo.week_count}
-					</empty>
-				</td>
-				<td>{$vo.claw_count}</td>
-				<td align="center" class="isstart">
-					<!--<a href="{:U('Probability/room_edit',array('id'=>$vo['id']))}">编辑</a>-->
+		<table class="table table-hover table-bordered">
+			<thead>
+				<tr>
+					<th align="center">
+						<input type="checkbox" id="id">
+						ID
+					</th>
+					<th>房间名</th>
+					<th>设备号</th>
+					<th>商品名称</th>
+					<th>成本(元)</th>
+					<th>游戏价格(娃娃币)</th>
+					<th>房间状态</th>
+					<th>一周抓中次数</th>
+					<th>概率</th>
+					<th align="center">{:L('ACTIONS')}</th>
+					<th>等级概率</th>
+				</tr>
+			</thead>
+			<tbody>
+				<foreach name="row" item="vo">
+				<tr>
+					<td align="center">
+						<input type="checkbox" class="checkbox_id" value="{$vo.id}">
+						{$vo.id}
+					</td>
+					<td>{$vo.room_no}</td>
+					<td>{$vo.deveci_no}</td>
+					<td>{$vo.giftname}</td>
+					<td>{$vo.cost}</td>
+					<td>{$vo.spendcoin}</td>
+					<td
+						<eq name="vo.status" value="0">class="text-success"</eq>
+						<eq name="vo.status" value="1">class="text-warning"</eq>
+						<eq name="vo.status" value="2">class="text-error"</eq>
+					><strong>{$statusArr[$vo['status']]}</strong></td>
+					<td>
+						<empty name="vo.week_count">
+							0
+							<else/>
+							{$vo.week_count}
+						</empty>
+					</td>
+					<td>{$vo.claw_count}</td>
+					<td align="center" class="isstart">
+						<!--<a href="{:U('Probability/room_edit',array('id'=>$vo['id']))}">编辑</a>-->
 
-					<a href="javascript:;" data="{$vo.id}" <eq name="vo.is_roommodel" value="0">class="btn btn-danger btn-small"<else/>class="btn btn-success btn-small"</eq> ><eq name="vo.is_roommodel" value="0">停用<else/>启用</eq></a>
-				</td>
-				<td align="center" class="isgradestart">
-					<!--<a href="{:U('Probability/room_edit',array('id'=>$vo['id']))}">编辑</a>-->
+						<a href="javascript:;" data="{$vo.id}" <eq name="vo.is_roommodel" value="0">class="btn btn-danger btn-small"<else/>class="btn btn-success btn-small"</eq> ><eq name="vo.is_roommodel" value="0">停用<else/>启用</eq></a>
+					</td>
+					<td align="center" class="isgradestart">
+						<!--<a href="{:U('Probability/room_edit',array('id'=>$vo['id']))}">编辑</a>-->
 
-					<a href="javascript:;" data="{$vo.id}" <eq name="vo.is_roomgrademodel" value="0">class="btn btn-danger btn-small"<else/>class="btn btn-success btn-small"</eq> ><eq name="vo.is_roomgrademodel" value="0">停用<else/>启用</eq></a>
-				</td>
-			</tr>
-		</foreach>
-		</tbody>
-	</table>
-	<div class="pagination">{$page}</div>
+						<a href="javascript:;" data="{$vo.id}" <eq name="vo.is_roomgrademodel" value="0">class="btn btn-danger btn-small"<else/>class="btn btn-success btn-small"</eq> ><eq name="vo.is_roomgrademodel" value="0">停用<else/>启用</eq></a>
+					</td>
+				</tr>
+				</foreach>
+			</tbody>
+		</table>
+		<div class="pagination">{$page}</div>
 
-	<button id="btn" class="btn btn-primary" data-toggle="modal" data-target="#modal">批量设置概率</button>
+		<button id="btn" class="btn btn-primary" data-toggle="modal" data-target="#modal">批量设置概率</button>
 
-	<button id="gradebtn" class="btn btn-primary" data-toggle="modal" data-target="#grademodal">批量切换等级概率</button>
+		<button id="gradebtn" class="btn btn-primary" data-toggle="modal" data-target="#grademodal">批量切换等级概率</button>
 
-</div>
+	</div>
 
 
-<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title" id="modal_title">概率设置</h4>
-			</div>
-			<div class="modal-body" id="modal_content">
+	<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="modal_title">概率设置</h4>
+				</div>
+				<div class="modal-body" id="modal_content">
 
-				<table>
-					<tr>
-						<td>抓</td>
-						<td><input type="text" name="claw_count" style="width: 50px;"></td>
-						<td>次出一次强抓力，直到中奖</td>
-					</tr>
-				</table>
+					<table>
+						<tr>
+							<td>抓</td>
+							<td><input type="text" name="claw_count" style="width: 50px;"></td>
+							<td>次出一次强抓力，直到中奖</td>
+						</tr>
+					</table>
 
-				<input type="hidden" name="ids" value="">
+					<input type="hidden" name="ids" value="">
 
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal" id="modal_close">关闭</button>
-				<button type="button" class="btn btn-primary" id="modal_sbt">提交更改</button>
-			</div>
-		</div><!-- /.modal-content -->
-	</div><!-- /.modal -->
-</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal" id="modal_close">关闭</button>
+					<button type="button" class="btn btn-primary" id="modal_sbt">提交更改</button>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal -->
+	</div>
+
 
 
 </body>
