@@ -179,6 +179,24 @@ class ProbabilityController extends AdminbaseController
         }
     }
 
+public function isgradestart_room(){
+    if( IS_AJAX ){
+        $id = I('post.id');
+        if( $id ){
+            $res = M('game_room')->find($id);
+            $data = [];
+            if( $res['is_roomgrademodel'] == 1 ){
+                $data['is_roomgrademodel'] = 0;
+            }else{
+                $data['is_roomgrademodel'] = 1;
+            }
+            M('game_room')->where(['id'=>$id])->save($data);
+            $this->ajaxReturn(['status'=>1]);
+        }
+        $this->ajaxReturn(['status'=>0]);
+    }
+}
+
     /**
      * 批量操作用户贩卖模式
      */
@@ -348,6 +366,34 @@ class ProbabilityController extends AdminbaseController
         $this->display();
     }
 
+    public function batch_setgraderoom(){
+        if( IS_AJAX ){
+            $post = I('post.');
+            $where['id'] = ['in',$post['ids']];
+            $arr = explode(",",$post['ids']);
+            if (is_array($arr))
+            {
+                foreach ($arr as $id)
+                {
+                    if( $id ){
+                        $res = M('game_room')->find($id);
+                        $data = [];
+                        if( $res['is_roomgrademodel'] == 1 ){
+                            $data['is_roomgrademodel'] = 0;
+                        }else{
+                            $data['is_roomgrademodel'] = 1;
+                        }
+                        M('game_room')->where(['id'=>$id])->save($data);
+                        //$this->ajaxReturn(['status'=>1]);
+                    }
+                }
+
+            }
+            //$res = M('game_room')->where($where)->save(['claw_count'=>$post['claw_count']]);
+            //if( $res ) $this->ajaxReturn(['status'=>1]);
+            $this->ajaxReturn(['status'=>1]);
+        }
+    }
 
     public function batch_setroom(){
         if( IS_AJAX ){
