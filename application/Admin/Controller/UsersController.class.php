@@ -234,16 +234,16 @@ public function setWawa()
                 }
                // return $item;
             }
-//            if ($item['shouru'])
-//            {
-//                if ( $money>0 && $user['total_get']/$money < $item['shourubi'] && $item['shouruequal'] == 0 )
-//                {
-//
-//                }
-//                else{
-//                    continue;
-//                }
-//            }
+            if ($item['shouru'])
+            {
+                if ( $money>0 && $user['total_get']/$money < $item['shourubi'] && $item['shouruequal'] == 0 )//total_payed
+                {
+                    $result = true;
+                }
+                else{
+                    continue;
+                }
+            }
 
             if ($item['online'])
             { //echo $user['last_active_time'];echo (time()-$user['last_active_time'])/(24*3600);
