@@ -201,11 +201,10 @@ public function setWawa()
         foreach ($list as $item)
         {
 
+            $money = M('pay_record')->where("user_id='{$user['id']}' and status=1")->sum('money');
             $result = false;
             if ($item['payed'] )
             {
-                $money = M('pay_record')->where("user_id='{$user['id']}' and status=1")->sum('money');
-                //if ($user['total_payed'] >= $item['min_payed'] && $user['total_payed'] <= $item['max_payed'])
                 if ($money >= $item['min_payed'] && $money <= $item['max_payed'])
                 {
                     $result = true;
@@ -226,25 +225,25 @@ public function setWawa()
             }
             if ($item['shouru']  )
             {
-                if ($user['total_payed'] >0 && $user['total_get']/$user['total_payed'] > $item['shourubi'] && $item['shouruequal'] == 1)
+                if ($money >0 && $user['total_get']/$money > $item['shourubi'] && $item['shouruequal'] == 1)
                 {
                     $result = true;
                 }
                 else{
                     continue;
                 }
-                return $item;
+               // return $item;
             }
-            if ($item['shouru'])
-            {
-                if ( $user['total_payed']>0 && $user['total_get']/$user['total_payed'] < $item['shourubi'] && $item['shouruequal'] == 0 )
-                {
-
-                }
-                else{
-                    continue;
-                }
-            }
+//            if ($item['shouru'])
+//            {
+//                if ( $money>0 && $user['total_get']/$money < $item['shourubi'] && $item['shouruequal'] == 0 )
+//                {
+//
+//                }
+//                else{
+//                    continue;
+//                }
+//            }
 
             if ($item['online'])
             { //echo $user['last_active_time'];echo (time()-$user['last_active_time'])/(24*3600);
