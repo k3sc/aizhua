@@ -225,26 +225,30 @@ public function setWawa()
             }
             if ($item['shouru']  )
             {
-                if ($money >0 && $user['total_get']/$money > $item['shourubi'] && $item['shouruequal'] == 1)
+                if ( $item['shouruequal'] == 1)
                 {
-                    $result = true;
+                    if ($money >0 && $user['total_get']/$money > $item['shourubi'] )
+                    {
+                        $result = true;
+                    }
+                    else{
+                        continue;
+                    }
                 }
                 else{
-                    continue;
+
+                    if ( $money>0 && $user['total_get']/$money < $item['shourubi']  )//total_payed
+                    {
+                        $result = true;
+                    }
+                    else{
+                        continue;
+                    }
+
                 }
                // return $item;
             }
-            if ($item['shouru'])
-            {
-                if ( $money>0 && $user['total_get']/$money < $item['shourubi'] && $item['shouruequal'] == 0 )//total_payed
-                {
-                    $result = true;
-                }
-                else{
-                    continue;
-                }
-            }
-
+            
             if ($item['online'])
             { //echo $user['last_active_time'];echo (time()-$user['last_active_time'])/(24*3600);
                 $h = M('game_history')->field('ctime')->where('success > 0' )->order('id desc')->limit(1)->find();
