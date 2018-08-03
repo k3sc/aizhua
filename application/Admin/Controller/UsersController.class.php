@@ -204,7 +204,9 @@ public function setWawa()
             $result = false;
             if ($item['payed'] )
             {
-                if ($user['total_payed'] >= $item['min_payed'] && $user['total_payed'] <= $item['max_payed'])
+                $money = M('pay_record')->where("user_id='{$user['id']}' and status=1")->sum('money');
+                //if ($user['total_payed'] >= $item['min_payed'] && $user['total_payed'] <= $item['max_payed'])
+                if ($money >= $item['min_payed'] && $money <= $item['max_payed'])
                 {
                     $result = true;
                 }
