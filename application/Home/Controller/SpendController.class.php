@@ -39,6 +39,17 @@ class SpendController extends HomebaseController {
 			echo '{"errno":"1001","data":"","msg":"余额不足"}';
 			exit;	
 		}	
+		if($userinfo['free_coin'] >= $total)
+		{
+		    $userinfo['free_coin'] = $userinfo['free_coin'] - $total;
+		}
+		else{
+		    $userinfo['free_coin'] = 0;
+		}
+		$update = [];
+		$update['free_coin'] = array('free_coin', $userinfo['free_coin']);
+		M("users")->where('id=' . $uid)->save($update);
+		
 		$users_live=M("users_live")->where("uid='{$touid}' and islive=1")->	find();
 		$showid=0;
 		if($users_live){
@@ -98,7 +109,17 @@ class SpendController extends HomebaseController {
 			echo  json_encode($rs);
 			exit;
 			/* 余额不足 */
-		}		
+		}	
+		if($userinfo['free_coin'] >= $total)
+		{
+		    $userinfo['free_coin'] = $userinfo['free_coin'] - $total;
+		}
+		else{
+		    $userinfo['free_coin'] = 0;
+		}
+		$update = [];
+		$update['free_coin'] = array('free_coin', $userinfo['free_coin']);
+		M("users")->where('id=' . $uid)->save($update);
 		/* 更新用户余额 消费 */
 		M()->execute("update __PREFIX__users set coin=coin-{$total},consumption=consumption+{$total} where id='{$uid}'");
 		/* 更新直播主播 映票 累计映票 */						 
@@ -482,6 +503,18 @@ class SpendController extends HomebaseController {
 		$giftcount=0;
 		$showid=$islive['starttime'];
 		$addtime=time();
+		
+		if($userinfo['free_coin'] >= $total)
+		{
+		    $userinfo['free_coin'] = $userinfo['free_coin'] - $total;
+		}
+		else{
+		    $userinfo['free_coin'] = 0;
+		}
+		$update = [];
+		$update['free_coin'] = array('free_coin', $userinfo['free_coin']);
+		M("users")->where('id=' . $uid)->save($update);
+		
 		/* 更新用户余额 消费 */
 		M()->execute("update __PREFIX__users set coin=coin-{$total},consumption=consumption+{$total} where id='{$uid}'");
 		/* 更新直播 映票 累计映票 */
@@ -546,7 +579,17 @@ class SpendController extends HomebaseController {
 			$data['msg']='余额不足';
 			echo json_encode($data);
 			exit;				
-		}		
+		}	
+		if($userinfo['free_coin'] >= $total)
+		{
+		    $userinfo['free_coin'] = $userinfo['free_coin'] - $total;
+		}
+		else{
+		    $userinfo['free_coin'] = 0;
+		}
+		$update = [];
+		$update['free_coin'] = array('free_coin', $userinfo['free_coin']);
+		M("users")->where('id=' . $uid)->save($update);
 		
 		/* 更新用户余额 消费 */
 		M()->execute("update __PREFIX__users set coin=coin-{$total},consumption=consumption+{$total},experience=experience+{$totalexperience} where id='{$uid}'");

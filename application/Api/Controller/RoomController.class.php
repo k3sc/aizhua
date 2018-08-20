@@ -253,11 +253,20 @@ class RoomController extends BaseController
 				$this->user['coin_sys_give'] -= $gift['spendcoin'];
 			}
 		}
+		if($this->user['free_coin'] > $gift['spendcoin'])
+		{
+		    $this->user['free_coin'] = $this->user['free_coin']-$gift['spendcoin'];
+		}
+		else
+		{
+		    $this->user['free_coin']=0;
+		}
         /* 更新用户余额 消费 */
 		$update = array();
 		$update['coin'] = array('exp', 'coin-'.$gift['spendcoin']);
 		$update['consumption'] = array('exp', 'consumption+'.$gift['spendcoin']);
 		$update['coin_sys_give'] = $this->user['coin_sys_give'];
+		$update['free_coin'] = $this->user['free_coin'];
         M("users")->where('id=' . $this->user_id)->save($update);
         //消费记录
         $insert = array("type" => 'expend', "action" => 'zhuawawa', 
@@ -334,6 +343,17 @@ class RoomController extends BaseController
                     $this->user['coin'] -= $config['claw_coin'];
                     /* 更新用户余额 消费 */
                     M("users")->where('id=' . $this->user_id)->setDec("coin", $config['claw_coin']);
+                    if ($this->user['free_coin'] >=$config['claw_coin'])
+                    {
+                        $this->user['free_coin'] =  $this->user['free_coin']-$config['claw_coin'];
+                    }
+                    else{
+                        $this->user['free_coin'] = 0;
+                    }
+                    $update = [];
+                    $update['free_coin'] = array('free_coin', $this->user['free_coin']);
+                    M("users")->where('id=' . $this->user_id)->save($update);
+                    
                     M("users")->where('id=' . $this->user_id)->setInc("consumption", $config['claw_coin']);
                     //消费记录
                     $insert = array("type" => 'expend', "action" => 'claw', "uid" => $this->user_id, "touid" => 0, "giftid" => 0, "giftcount" => 0, "totalcoin" => $config['claw_coin'], "showid" => $history['id'], "addtime" => time());
@@ -402,9 +422,18 @@ class RoomController extends BaseController
 					$this->user['coin_sys_give'] -= $coin;
 				}
 			}
+			if ($this->user['free_coin'] >=$coin)
+			{
+			    $this->user['free_coin'] =  $this->user['free_coin']-$coin;
+			}
+			else{
+			    $this->user['free_coin'] = 0;
+			}
+			
 			/* 更新用户余额 消费 */
 			$update = array();
 			$update['coin'] = array('exp', 'coin-'.$coin);
+			$update['free_coin'] = array('free_coin', $this->user['free_coin']);
 			$update['consumption'] = array('exp', 'consumption+'.$coin);
 			$update['coin_sys_give'] = $this->user['coin_sys_give'];
 			M("users")->where('id=' . $this->user_id)->save($update);

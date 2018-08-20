@@ -112,6 +112,7 @@ class AlipayController extends Controller
  			 	$update = array();
                 $update['claw'] = array('exp', 'claw+'.$rule_list['claw']);
                 $update['coin'] = array('exp', 'coin+'.$olist['coin']);
+                $update['free_coin'] = array('exp', 'free_coin+'.$olist['coingive']);
                 $update['coin_sys_give'] = array('exp', 'coin_sys_give+'.$olist['coingive']);
                 $re2 = M('users')->where("id={$olist['user_id']}")->save($update);
 

@@ -173,9 +173,19 @@ class Model_Live extends Model_Common {
 		$showid=$islive['starttime'];
 		$addtime=time();
 		/* 更新用户余额 消费 */
+		if($userinfo['free_coin'] >= $total)
+        {
+            $userinfo['free_coin'] = $userinfo['free_coin'] - $total;
+        }
+        else{
+            $userinfo['free_coin'] = 0;
+        }
 		DI()->notorm->users
 				->where('id = ?', $uid)
-				->update(array('coin' => new NotORM_Literal("coin - {$total}"),'consumption' => new NotORM_Literal("consumption + {$total}")) );
+				->update(array('coin' => new NotORM_Literal("coin - {$total}"),
+                    'consumption' => new NotORM_Literal("consumption + {$total}"),
+                    'free_coin'=>$userinfo['free_coin']
+                ) );
 
 		/* 更新直播 映票 累计映票 */
 		DI()->notorm->users
@@ -317,12 +327,22 @@ class Model_Live extends Model_Common {
 		if($userinfo['coin'] < $total){
 			/* 余额不足 */
 			return 1001;
-		}		
+		}
+		if($userinfo['free_coin'] >= $total)
+		{
+		    $userinfo['free_coin'] = $userinfo['free_coin'] - $total;
+		}
+		else{
+		    $userinfo['free_coin'] = 0;
+		}
 
 		/* 更新用户余额 消费 */
 		$isuid =DI()->notorm->users
 				->where('id = ?', $uid)
-				->update(array('coin' => new NotORM_Literal("coin - {$total}"),'consumption' => new NotORM_Literal("consumption + {$total}") ) );
+				->update(array('coin' => new NotORM_Literal("coin - {$total}"),
+				'consumption' => new NotORM_Literal("consumption + {$total}"),
+				'free_coin'=>$userinfo['free_coin']
+				) );
 
 		/* 更新直播 魅力值 累计魅力值 */
 		$istouid =DI()->notorm->users
@@ -392,12 +412,21 @@ class Model_Live extends Model_Common {
 		if($userinfo['coin'] < $total){
 			/* 余额不足 */
 			return 1001;
-		}		
+		}
+		if($userinfo['free_coin'] >= $total)
+		{
+		    $userinfo['free_coin'] = $userinfo['free_coin'] - $total;
+		}
+		else{
+		    $userinfo['free_coin'] = 0;
+		}
+		
 
 		/* 更新用户余额 消费 */
 		$isuid =DI()->notorm->users
 				->where('id = ?', $uid)
-				->update(array('coin' => new NotORM_Literal("coin - {$total}"),'consumption' => new NotORM_Literal("consumption + {$total}") ) );
+				->update(array('coin' => new NotORM_Literal("coin - {$total}"),'consumption' => new NotORM_Literal("consumption + {$total}")
+				,'free_coin'=>$userinfo['free_coin']) );
 
 		/* 更新直播 魅力值 累计魅力值 */
 		$istouid =DI()->notorm->users
@@ -467,12 +496,20 @@ class Model_Live extends Model_Common {
 		if($userinfo['coin'] < $total){
 			/* 余额不足 */
 			return 1001;
-		}		
+		}	
+		if($userinfo['free_coin'] >= $total)
+		{
+		    $userinfo['free_coin'] = $userinfo['free_coin'] - $total;
+		}
+		else{
+		    $userinfo['free_coin'] = 0;
+		}
 
 		/* 更新用户余额 消费 */
 		$isuid =DI()->notorm->users
 				->where('id = ?', $uid)
-				->update(array('coin' => new NotORM_Literal("coin - {$total}"),'consumption' => new NotORM_Literal("consumption + {$total}") ) );
+				->update(array('coin' => new NotORM_Literal("coin - {$total}"),'consumption' => new NotORM_Literal("consumption + {$total}"),
+					'free_coin'=>$userinfo['free_coin']) );
 
 		/* 更新直播 魅力值 累计魅力值 */
 		$istouid =DI()->notorm->users

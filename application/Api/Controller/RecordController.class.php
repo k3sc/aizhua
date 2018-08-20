@@ -84,6 +84,7 @@ class RecordController extends BaseController
         $data['money'] = $money['money'];                          //充值的金额
         $data['coin'] = $money['coin']+$money['give_coin'];        //充值获得娃娃币
         $data['coingive'] = $money['give_coin'];                    //充值赠送的娃娃币
+        $data['free_coin'] = $money['give_coin'];
         $data['ctime'] = time();                                   //充值订单生成时间
         $data['user_id'] = $this->user_id;                          //用户ID
         $data['pay_id'] = $coin_id;                                //充值娃娃币的类型
@@ -114,6 +115,7 @@ class RecordController extends BaseController
                 $count = M('pay_record')->where(['user_id'=>$this->user_id,'status'=>1,'money'=>['egt',$conf['first_pay']],'ctime'=>['between',$conf['sdate'].','.$conf['edate']]])->count();
                 if( !$count && $money['money'] >= $conf['first_pay'] ){
                     $data['coin'] += $conf['first_pay_coin'];
+                    $data['free_coin'] += $conf['first_pay_coin'];
                     $data['coingive'] += $conf['first_pay_coin'];
                 }
             }

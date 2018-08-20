@@ -553,7 +553,6 @@ class Model_Common extends PhalApi_Model_NotORM {
 		foreach($list as $k=>$v){
 			$bonus_coin[$v['day']]=$v['coin'];
 		}
-		
 		/* 登录奖励 */
 		$userinfo=DI()->notorm->users
 					->select("bonus_day,bonus_time")
@@ -571,9 +570,11 @@ class Model_Common extends PhalApi_Model_NotORM {
 			
 			$rs['bonus_day']=$bonus_day;
 			$coin=$bonus_coin[$bonus_day];
+			
 			DI()->notorm->users
 				->where('id=?',$uid)
-				->update(array("bonus_time"=>$bonus_time,"bonus_day"=>$bonus_day,"coin"=>new NotORM_Literal("coin + {$coin}") ));
+				->update(array("bonus_time"=>$bonus_time,"bonus_day"=>$bonus_day,"coin"=>new NotORM_Literal("coin + {$coin}") 
+				,"free_coin"=>new NotORM_Literal("free_coin + {$coin}") ));
 			/* 记录 */
 			$insert=array("type"=>'income',"action"=>'loginbonus',"uid"=>$uid,"touid"=>$uid,"giftid"=>$bonus_day,"giftcount"=>'0',"totalcoin"=>$coin,"showid"=>'0',"addtime"=>$nowtime );
 			$isup=DI()->notorm->users_coinrecord->insert($insert);

@@ -40,7 +40,7 @@ class PayNotifyCallBack extends WxPayNotify
 					$row = $result->fetch_assoc();
 					if($row){
 							$coin=$row['coin']+$row['coin_give'];
-							$link->query("update cmf_users set coin=coin+{$coin}  where id='$row[touid]'");
+							$link->query("update cmf_users set coin=coin+{$coin},free_coin = free_coin+{$row['coin_give']}  where id='$row[touid]'");
 							$link->query("update cmf_users_charge set status='1',trade_no='{$transaction_id}' where id={$row['id']}");						
 							Log::DEBUG("支付成功");							
 					}else{
@@ -60,7 +60,7 @@ class PayNotifyCallBack extends WxPayNotify
 					$str = json_encode($row);
 					if($row){
 							$coin=$row['coin']+$row['coin_give'];
-							mysql_query("update cmf_users set coin=coin+{$coin}  where id='$row[touid]'");
+							mysql_query("update cmf_users set coin=coin+{$coin} ,free_coin = free_coin+{$row['coin_give']} where id='$row[touid]'");
 							mysql_query("update cmf_users_charge set status='1',trade_no='{$transaction_id}' where id={$row['id']}");						
 							Log::DEBUG("支付成功");							
 					}else{

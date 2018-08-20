@@ -70,8 +70,13 @@ class PayController extends HomebaseController {
 					$ordercount=M('users_charge')->where('status=1 and type=1 and touid='.$orderinfo['touid'])->count();
 					/* 更新会员虚拟币 */
 					$coin=$orderinfo['coin']+$orderinfo['coin_give'];
-					if(!$ordercount)$coin += $orderinfo['coin_firstgive'];
+					$free = $orderinfo['coin_give'];
+					if(!$ordercount){
+					    $coin += $orderinfo['coin_firstgive'];
+					    $free += $orderinfo['coin_firstgive'];
+					}
 					M("users")->where("id='{$orderinfo['touid']}'")->setInc("coin",$coin);
+					M("users")->where("id='{$orderinfo['touid']}'")->setInc("free_coin",$free);
 					/* 更新 订单状态 */
 					M("users_charge")->where("id='{$orderinfo['id']}'")->save(array("status"=>1,"trade_no"=>$trade_no));
 
@@ -169,8 +174,10 @@ class PayController extends HomebaseController {
 			$ordercount=M('users_charge')->where('status=1 and type=2 and touid='.$orderinfo['touid'])->count();
 			/* 更新会员虚拟币 */
 			$coin=$orderinfo['coin']+$orderinfo['coin_give'];
-			if(!$ordercount)$coin += $orderinfo['coin_firstgive'];
+			$free = $orderinfo['coin_give'];
+			if(!$ordercount){$coin += $orderinfo['coin_firstgive'];$free +=$orderinfo['coin_firstgive'];}
 			M("users")->where("id='{$orderinfo['touid']}'")->setInc("coin",$coin);
+			M("users")->where("id='{$orderinfo['touid']}'")->setInc("free_coin",$free);
 			/* 更新 订单状态 */
 			M("users_charge")->where("id='{$orderinfo['id']}'")->save(array("status"=>1,"trade_no"=>$info['transaction_id']));
 		}else{
@@ -231,8 +238,11 @@ class PayController extends HomebaseController {
 			$ordercount=M('users_charge')->where('status=1 and type=3 and touid='.$orderinfo['touid'])->count();
 			/* 更新会员虚拟币 */
 			$coin=$orderinfo['coin']+$orderinfo['coin_give'];
-			if(!$ordercount)$coin += $orderinfo['coin_firstgive'];
+			$free = $orderinfo['coin_give'];
+			if(!$ordercount){$coin += $orderinfo['coin_firstgive'];$free +=$orderinfo['coin_firstgive'];}
 			M("users")->where("id='{$orderinfo['touid']}'")->setInc("coin",$coin);
+			M("users")->where("id='{$orderinfo['touid']}'")->setInc("free_coin",$free);
+			
 			/* 更新 订单状态 */
 			M("users_charge")->where("id='{$orderinfo['id']}'")->save(array("status"=>1,"trade_no"=>$info['transaction_id']));
 

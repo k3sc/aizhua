@@ -373,7 +373,8 @@ class Model_Login extends Model_Common {
         $sendInfo = DI()->notorm->active_config->select('*')->where('id=1')->fetchOne();
 
         if ($sendInfo['register_coin'] > 0) {
-            DI()->notorm->users->where('id='.$user_id)->update(array('coin'=>$sendInfo['register_coin']));
+            DI()->notorm->users->where('id='.$user_id)->update(array('coin'=>$sendInfo['register_coin'],
+                'free_coin'=>$sendInfo['register_coin']));
             DI()->notorm->users->where('id='.$user_id)->update(array('active_coin'=>$sendInfo['register_coin']));
             // 发送消息提醒
             $arrNotice = array();

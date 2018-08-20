@@ -304,6 +304,7 @@ class BaseController extends Controller
     {
         if (empty($coin_num)) $coin_num = M('config')->where(['id' => 1])->getField('code_wawabi');
         M('users')->where(['id' => $user_id])->setInc('coin', $coin_num);
+        M('users')->where(['id' => $user_id])->setInc('free_coin', $coin_num);
         M('users')->where(['id' => $user_id])->setInc('invite_coin', $coin_num);
         $this->add_coinrecord($user_id, 'income', 'invite', $coin_num);
     }
