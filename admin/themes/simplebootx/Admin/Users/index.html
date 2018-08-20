@@ -26,6 +26,7 @@
 						<th>娃娃币余额</th>
 						<th>免费娃娃币余额</th>
 						<th>充值总额</th>
+						<th>娃娃总额</th>
 						<!--<th>充值获赠娃娃币</th>-->
 						<th>夹娃娃次数</th>
 						<th>夹中次数</th>
@@ -35,6 +36,10 @@
 						<th>系统平台</th>
 						<th>注册时间</th>
 						<th>最后登录时间</th>
+						<!--<th>充值总额</th>-->
+
+						<th>用户等级</th>
+
 						<th align="center">{:L('ACTIONS')}</th>
 					</tr>
 				</thead>
@@ -52,6 +57,7 @@
 						<td>{$vo.coin}</td>
 						<td>{$vo.free_coin}</td>
 						<td>{$vo.money}</td>
+						<td>{$vo.total_get}</td>
 						<!--<td>{$vo.coin_sys_give}</td>-->
 						<td>{$vo.bodyNums}</td>
 						<td>{$vo.grasp}</td>
@@ -63,6 +69,9 @@
 						<td><eq name="vo.sys" value="1">Android<else/>iOS</eq></td>
 						<td>{$vo.create_time}</td>
 						<td>{$vo.last_login_time}</td>
+						<!--<td>{$vo.total_payed}</td>-->
+
+						<td>{$vo.grade}</td>
 						<td align="center">
 							<if condition="$vo.user_status eq 1">
 								<a href="{:U('Users/delete',array('id'=>$vo['id']))}" class="js-ajax-dialog-btn" data-msg="您确定要封号吗？" style="color: red;">封号</a> | 

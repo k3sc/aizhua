@@ -6,6 +6,7 @@
 			<!--<li ><a href="{:U('Probability/index')}">所有概率</a></li>-->
 			<li class="active"><a href="">房间概率模式</a></li>
 			<li ><a href="{:U('Probability/sell')}">用户贩卖模式</a></li>
+			<li ><a href="{:U('Probability/grade')}">等级调节模式</a></li>
 		</ul>
 
 
@@ -43,6 +44,7 @@
 					<th>一周抓中次数</th>
 					<th>概率</th>
 					<th align="center">{:L('ACTIONS')}</th>
+					<th>等级概率</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -75,6 +77,11 @@
 
 						<a href="javascript:;" data="{$vo.id}" <eq name="vo.is_roommodel" value="0">class="btn btn-danger btn-small"<else/>class="btn btn-success btn-small"</eq> ><eq name="vo.is_roommodel" value="0">停用<else/>启用</eq></a>
 					</td>
+					<td align="center" class="isgradestart">
+						<!--<a href="{:U('Probability/room_edit',array('id'=>$vo['id']))}">编辑</a>-->
+
+						<a href="javascript:;" data="{$vo.id}" <eq name="vo.is_roomgrademodel" value="0">class="btn btn-danger btn-small"<else/>class="btn btn-success btn-small"</eq> ><eq name="vo.is_roomgrademodel" value="0">停用<else/>启用</eq></a>
+					</td>
 				</tr>
 				</foreach>
 			</tbody>
@@ -82,6 +89,8 @@
 		<div class="pagination">{$page}</div>
 
 		<button id="btn" class="btn btn-primary" data-toggle="modal" data-target="#modal">批量设置概率</button>
+
+		<button id="gradebtn" class="btn btn-primary" data-toggle="modal" data-target="#grademodal">批量切换等级概率</button>
 
 	</div>
 
@@ -115,67 +124,121 @@
 	</div>
 
 
+
 </body>
 <script src="__PUBLIC__/js/common.js"></script>
 
 <script>
-	$(document).ready(function () {
-		$("#id").click(function () {
-			if( $(this).is(":checked") ){
+    $(document).ready(function () {
+        $("#id").click(function () {
+            if( $(this).is(":checked") ){
                 $('.checkbox_id').attr('checked','checked');
-			}else{
+            }else{
                 $('.checkbox_id').removeAttr('checked');
-			}
+            }
         });
 
-		$("#btn").click(function () {
-		    var data = new Array();
-		    $(".checkbox_id").each(function () {
+        $("#btn").click(function () {
+            var data = new Array();
+            $(".checkbox_id").each(function () {
                 if( $(this).is(':checked') ) {
                     data.push($(this).val())
                 }
             });
-		    
-		    if( !data.length ){
-		        alert('没有可操作的数据');
-		        return false;
-			}
-			$("input[name='ids']").val(data);
+
+            if( !data.length ){
+                alert('没有可操作的数据');
+                return false;
+            }
+            $("input[name='ids']").val(data);
 
         });
 
 
-		$("#modal_sbt").click(function () {
-		    var ids = $("input[name='ids']").val();
-		    var week_count = $("input[name='week_count']").val();
-		    var claw_count = $("input[name='claw_count']").val();
+        $("#modal_sbt").click(function () {
+            var ids = $("input[name='ids']").val();
+            var week_count = $("input[name='week_count']").val();
+            var claw_count = $("input[name='claw_count']").val();
 
             $.ajax({
-				url : "{:U('Probability/batch_setroom')}",
-				type : 'post',
-				data : 'ids='+ids+'&week_count='+week_count+'&claw_count='+claw_count,
-				dataType : 'json',
-				success : function (res) {
-					if( res.status == 1 ){
+                url : "{:U('Probability/batch_setroom')}",
+                type : 'post',
+                data : 'ids='+ids+'&week_count='+week_count+'&claw_count='+claw_count,
+                dataType : 'json',
+                success : function (res) {
+                    if( res.status == 1 ){
                         $("#modal_content").text('操作成功');
                         $("#modal_sbt").hide();
-					}else{
+                    }else{
                         $("#modal_content").text('操作失败');
                         $("#modal_sbt").hide();
-					}
+                    }
                 },
-				error : function () {
-					alert('错误');
+                error : function () {
+                    alert('错误');
                 }
-			});
+            });
         });
 
-		$("#modal_close").click(function () {location.reload();});
+        $("#modal_close").click(function () {location.reload();});
 
         $(".isstart a").click(function () {
             var id = $(this).attr('data');
             $.ajax({
                 url : "{:U('Probability/isstart_room')}",
+                type : 'post',
+                dataType : 'json',
+                data : 'id='+id,
+                success : function (res) {
+                    if( res.status == 1 ){
+                        location.reload();
+                    }
+                },
+                error : function () {
+                    alert('错误');
+                }
+            });
+        });
+
+        $("#gradebtn").click(function () {
+            var data = new Array();
+            $(".checkbox_id").each(function () {
+                if( $(this).is(':checked') ) {
+                    data.push($(this).val())
+                }
+            });
+
+            if( !data.length ){
+                alert('没有可操作的数据');
+                return false;
+            }
+            //$("input[name='ids']").val(data);
+            $.ajax({
+                url : "{:U('Probability/batch_setgraderoom')}",
+                type : 'post',
+                data : 'ids='+data,
+                dataType : 'json',
+                success : function (res) {
+                    // if( res.status == 1 ){
+                    //     $("#modal_content").text('操作成功');
+                    //     $("#modal_sbt").hide();
+                    // }else{
+                    //     $("#modal_content").text('操作失败');
+                    //     $("#modal_sbt").hide();
+                    // }
+                    location.reload();
+                },
+                error : function () {
+                    alert('错误');
+                }
+            });
+
+        });
+
+        $(".isgradestart a").click(function () {
+            var id = $(this).attr('data');
+            $.ajax({
+                url : "{:U('Probability/isgradestart_room')}",
                 type : 'post',
                 dataType : 'json',
                 data : 'id='+id,
