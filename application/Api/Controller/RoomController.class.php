@@ -8,6 +8,9 @@
 
 namespace Api\Controller;
 
+use Admin\Controller\UsersController;
+use Think\Log;
+
 class RoomController extends BaseController
 {
 
@@ -626,18 +629,38 @@ class RoomController extends BaseController
         return $doing ? $count + $doing : $count;//预约位置
     }
 
+    private function getGl($type)
+    {
+        ;
+        //0 free 1 normal
+
+
+            if ($grade = UsersController::getGrade($this->user))
+            {
+                Log::record($this->user['user_id'].'xxxxxxxxxx grade : ' .  json_encode($grade),Log::INFO);
+                if ($type == 1)
+                {
+                    return $grade['free_coin_strong_num'];
+                }
+                else{
+                    return $grade['coin_strong_num'];
+                }
+            }
+
+    }
     // 开始游戏
     private function start($room_id, $game_history_id)
     {
+        Log::record($this->user['user_id'].'xxxxxxxxxx room : ' . $room_id,Log::INFO);
         // 根据房间号查询设备号
-        $arrFac = M('game_room')->field('fac_id,is_sellmodel,is_roommodel,claw_count')->where('id=' . $room_id)->find();
+        $arrFac = M('game_room')->field('fac_id,is_sellmodel,is_roommodel,is_roomgrademodel,claw_count')->where('id=' . $room_id)->find();
         //计算强抓力
         $is_strongdec = 0;//用户要减强抓力
         $is_strong = 0;
         $sellmodel = M('sellmodel')->field('*')->order("money asc")->select();
-		
+		//最近的一次充值
 	$pay_record = M('pay_record')->where("status=1 and user_id=".$this->user_id)->order("id desc")->find();
-	$strongrand = 0;
+	$strongrand = 0;//送几次强抓
 	foreach($sellmodel as $v){
 		if($pay_record['money'] >= $v['money']){
 			$strongrand = max($strongrand, $v['count']);
@@ -645,10 +668,60 @@ class RoomController extends BaseController
 	}
 		
 	$is_roommodel = 0;
-        if ($arrFac['claw_count'] && $arrFac['is_roommodel']) {
-            $historys = M('game_history')->field('is_strong,success')->where('room_id=' . $room_id)->order('id desc')->limit($arrFac['claw_count'])->select();
+        if ($arrFac['claw_count'] && $arrFac['is_roommodel']) {//抓几次出一次强抓力
+            $nnum = $arrFac['claw_count'];
+            Log::record($this->user['user_id'].'xxxxxxxxxx free gl base : ' . $nnum,Log::INFO);
+            //如果用户单独设置了
+            if ($this->user['free_coin']>0)
+            {
+                if ($this->user['free_coin_strong_num'] != 0)
+                {
+                    $nnum = $nnum+intval($nnum*$this->user['free_coin_strong_num']/100);
+                   Log::record($this->user['user_id'].'xxxxxxxxxx free gl num : ' .  $this->user['free_coin_strong_num'],Log::INFO);
+                }
+                else{
+                    if ($arrFac['is_roomgrademodel'])
+                    {
+
+                        $gl = $this->getGl(1);
+                        Log::record($this->user['user_id'].'xxxxxxxxxx free gl : ' . $gl,Log::INFO);
+                        $nnum = $nnum+intval($nnum*$gl/100);
+                    }else{
+                        Log::record($this->user['user_id'].'xxxxxxxxxx free  not gl : ' ,Log::INFO);
+                    }
+
+
+                }
+
+            }
+            else{
+                if ($this->user['coin_strong_num'] != 0)
+                {
+                    $nnum = $nnum+intval($nnum*$this->user['coin_strong_num']/100);
+                   Log::record($this->user['user_id'].'xxxxxxxxxx  gl num : ' . $this->user['coin_strong_num'],Log::INFO);
+                }
+                else{
+                    if ($arrFac['is_roomgrademodel'])
+                    {
+
+                        $gl = $this->getGl(0);
+                        $nnum = $nnum+intval($nnum*$gl/100);
+                        Log::record($this->user['user_id'].'xxxxxxxxxx  gl  : ' . $nnum,Log::INFO);
+                    }
+                    else{
+                        Log::record($this->user['user_id'].'xxxxxxxxxx  not gl  : ' ,Log::INFO);
+                    }
+
+
+                }
+
+            }
+            if ($nnum<=1)
+                $nnum = 1;
+           Log::record($this->user['user_id'].'xxxxxxxxxx nnum: ' . $nnum,Log::INFO);
+            $historys = M('game_history')->field('is_strong,success')->where('room_id=' . $room_id)->order('id desc')->limit($nnum)->select();
             $flag     = $historys ? 1 : 0;
-            $sucflag  = $historys ? 1 : 0;
+            $sucflag  = $historys ? 1 : 0;//1 出强力  0 不出
             foreach ($historys as $v) {
                 if ($v['is_strong']) {
                     $flag = 0;
@@ -657,7 +730,7 @@ class RoomController extends BaseController
                     $sucflag = 0;
                 }
             }
-            $is_strong    = $flag ? $flag : $sucflag;
+            $is_strong    = $flag ? $flag : $sucflag;//出现过strong 不再出  没有出现过  已经成功过不再出  否则出
             $is_strongdec = 0;
 	    $is_roommodel = $is_strong;
         }
@@ -954,6 +1027,11 @@ class RoomController extends BaseController
             $content = '你抓到了1个' . $giftname;;
             $notice_data = $this->notice_add(1, $gameInfo['user_id'], $title,0,$desc,$content);
             $this->notice_gameover('0', json_encode(array("type" => 12, "new_notice" => $notice_data, "timestamp" => microtime())));//推送消息
+
+            $update['total_get'] = array('exp', 'total_get+'.(M('gift')->where(['id'=>$arr['wawa_id']])->getField('cost')));
+            $update['total_get_num'] = array('exp', 'total_get_num+1');
+            M('users')->where("id={$gameInfo['user_id']}")->save($update);
+
 			//减库存
             M("game_room")->where(['id' => $gameInfo['room_id']])->setDec("wawa_num", $gift);
 			//M("gift")->where(['id' => $gameInfo['type_id']])->setDec("stock", $gift);
@@ -989,6 +1067,7 @@ class RoomController extends BaseController
         $arrSet['status'] = 2;
         $arrSet['totals'] = $gift;
         M('game_history')->where('id=' . $gameInfo['id'])->save($arrSet);
+
         M('game_room')->where('id=' . $gameInfo['room_id'])->save(array('status' => 0));
 		$this->notice_gameover('0', '{"type":15,"room_ids":"'.$gameInfo['room_id'].'","status":0}');
         //计算送甩抓

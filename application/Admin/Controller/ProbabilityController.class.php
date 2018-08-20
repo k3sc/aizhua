@@ -25,8 +25,74 @@ class ProbabilityController extends AdminbaseController
             $post = I('post.');
             $post = json_encode($post);
             M('config')->where(['id'=>1])->save(['proba_all'=>$post]);
-            $this->success('编辑成功');exit;
+            $this->success('编辑成功','admin/probability/grade');
+
         }
+        $this->display();
+    }
+
+    public function grade()
+    {
+        $count = M('user_grade')->count();
+        $page = $this->page($count,20);
+        $res = M('user_grade as a')
+
+            ->limit($page->firstRow.','.$page->listRows)
+            ->select();
+
+        $this->assign('page',$page->show('Admin'));
+        $this->assign('row',$res);
+        $this->display();
+
+    }
+
+    public function start_grade()
+    {
+        $id = I('id');
+        $e = I('enable');
+        M('user_grade')->where(['id' => $id])->save(['enable'=>$e]);
+        $this->redirect('admin/probability/grade');
+    }
+
+    public function del_grade()
+    {
+        $id = I('id');
+        M('user_grade')->where(['id' => $id])->delete();
+        $this->redirect('admin/probability/grade');
+    }
+
+    public function add_grade()
+    {
+        $id = I('id');
+        $row = M('user_grade')->find($id);
+
+        if (IS_POST) {
+            $id = I('get.id');
+            $post = I('post.');
+            if($post['title']==''){
+                $this->error("标题不能为空！");
+            }
+
+            $post['free_coin_strong_num'] = intval($post['free_coin_strong_num'] );
+            $post['coin_strong_num'] = intval($post['coin_strong_num'] );
+            if (!isset($post['payed'])) $post['payed'] = 0;
+            if (!isset($post['num'])) $post['num'] = 0;
+            if (!isset($post['shouru'])) $post['shouru'] = 0;
+            if (!isset($post['online'])) $post['online'] = 0;
+            if ($id)
+            {
+                M('user_grade')->where(['id' => $id])->save($post);
+
+            }
+            else{
+                $result = M('user_grade')->add($post);
+            }
+
+
+            $this->success('编辑成功','admin/probability/grade');
+            //$this->redirect('admin/probability/grade');
+        }
+        $this->assign('row', $row);
         $this->display();
     }
 
@@ -126,6 +192,24 @@ class ProbabilityController extends AdminbaseController
             $this->ajaxReturn(['status'=>0]);
         }
     }
+
+public function isgradestart_room(){
+    if( IS_AJAX ){
+        $id = I('post.id');
+        if( $id ){
+            $res = M('game_room')->find($id);
+            $data = [];
+            if( $res['is_roomgrademodel'] == 1 ){
+                $data['is_roomgrademodel'] = 0;
+            }else{
+                $data['is_roomgrademodel'] = 1;
+            }
+            M('game_room')->where(['id'=>$id])->save($data);
+            $this->ajaxReturn(['status'=>1]);
+        }
+        $this->ajaxReturn(['status'=>0]);
+    }
+}
 
     /**
      * 批量操作用户贩卖模式
@@ -296,6 +380,34 @@ class ProbabilityController extends AdminbaseController
         $this->display();
     }
 
+    public function batch_setgraderoom(){
+        if( IS_AJAX ){
+            $post = I('post.');
+            $where['id'] = ['in',$post['ids']];
+            $arr = explode(",",$post['ids']);
+            if (is_array($arr))
+            {
+                foreach ($arr as $id)
+                {
+                    if( $id ){
+                        $res = M('game_room')->find($id);
+                        $data = [];
+                        if( $res['is_roomgrademodel'] == 1 ){
+                            $data['is_roomgrademodel'] = 0;
+                        }else{
+                            $data['is_roomgrademodel'] = 1;
+                        }
+                        M('game_room')->where(['id'=>$id])->save($data);
+                        //$this->ajaxReturn(['status'=>1]);
+                    }
+                }
+
+            }
+            //$res = M('game_room')->where($where)->save(['claw_count'=>$post['claw_count']]);
+            //if( $res ) $this->ajaxReturn(['status'=>1]);
+            $this->ajaxReturn(['status'=>1]);
+        }
+    }
 
     public function batch_setroom(){
         if( IS_AJAX ){

@@ -176,6 +176,7 @@ class WxpayController extends Controller
                     $update['coin'] = array('exp', 'coin+'.$olist['coin']);
                     $update['coin_sys_give'] = array('exp', 'coin_sys_give+'.$olist['coingive']);
                     $update['free_coin']= array('exp', 'free_coin+'.$olist['coingive']);
+                    $update['total_payed'] = array('exp', 'total_payed+'.$olist['money']);
                     $re2 = M('users')->where("id={$olist['user_id']}")->save($update);
 
 

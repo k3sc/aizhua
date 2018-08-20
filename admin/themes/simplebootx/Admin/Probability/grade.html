@@ -1,0 +1,160 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<!--<li ><a href="{:U('Probability/index')}">所有概率</a></li>-->
+			<li ><a href="{:U('Probability/room')}">房间概率模式</a></li>
+			<li ><a href="{:U('Probability/sell')}">用户贩卖模式</a></li>
+			<li class="active"><a href="">等级调节模式</a></li>
+		</ul>
+
+
+
+		<a href="{:U('Probability/add_grade')}">新增规则</a>
+
+
+		<table class="table table-hover table-bordered">
+			<thead>
+				<tr>
+					<th align="center">
+
+
+					</th>
+					<th colspan="2">概率调整</th>
+					<th> </th>
+					<th colspan="5">符合以下条件纳入内部等级</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>等级名称</td>
+					<td>使用充值币</td>
+					<td>使用免费币</td>
+					<td>优先级</td>
+					<td>充值金额</td>
+					<td>抓中次数</td>
+					<td>用户收入成本比</td>
+					<td>最后抓中天数</td>
+					<td>操作</td>
+				</tr>
+				<foreach name="row" item="vo">
+				<tr>
+					<td align="center">
+
+						{$vo.title}
+					</td>
+					<td>{$vo.coin_strong_num}%</td>
+					<td>{$vo.free_coin_strong_num}%</td>
+					<td>{$vo.order_num}</td>
+					<td><?php  if($vo['payed']) { echo $vo['min_payed'].'-'.$vo['max_payed']; } else echo '/'; ?></td>
+					<td><?php if($vo['num']) { echo $vo['min_num'].'-'.$vo['max_num']; } else echo '/'; ?></td>
+					<td><?php if($vo['shouru']) { echo $vo['shouruequal']?'>':'<'; echo $vo['shourubi'].'%'; } else echo '/'; ?></td>
+					<td><?php if($vo['online']) { echo $vo['onlinedays']; } else echo '/'; ?></td>
+					<td align="center" class="">
+						<!--<a href="{:U('Probability/room_edit',array('id'=>$vo['id']))}">编辑</a>-->
+						<if condition="$vo.enable eq 1">
+							<a href="{:U('Probability/start_grade',array('id'=>$vo['id'],'enable'=>0))}">启用</a>
+							<else/>
+							<a href="{:U('Probability/start_grade',array('id'=>$vo['id'],'enable'=>1))}">停用</a>
+						</if>
+
+
+						<a href="{:U('Probability/add_grade',array('id'=>$vo['id']))}">编辑</a>
+
+
+						<a href="{:U('Probability/del_grade',array('id'=>$vo['id']))}">删除</a>
+					</td>
+				</tr>
+				</foreach>
+			</tbody>
+		</table>
+		<div class="pagination">{$page}</div>
+
+
+	</div>
+
+
+
+
+</body>
+<script src="__PUBLIC__/js/common.js"></script>
+
+<script>
+	$(document).ready(function () {
+		$("#id").click(function () {
+			if( $(this).is(":checked") ){
+                $('.checkbox_id').attr('checked','checked');
+			}else{
+                $('.checkbox_id').removeAttr('checked');
+			}
+        });
+
+		$("#btn").click(function () {
+		    var data = new Array();
+		    $(".checkbox_id").each(function () {
+                if( $(this).is(':checked') ) {
+                    data.push($(this).val())
+                }
+            });
+		    
+		    if( !data.length ){
+		        alert('没有可操作的数据');
+		        return false;
+			}
+			$("input[name='ids']").val(data);
+
+        });
+
+
+		$("#modal_sbt").click(function () {
+		    var ids = $("input[name='ids']").val();
+		    var week_count = $("input[name='week_count']").val();
+		    var claw_count = $("input[name='claw_count']").val();
+
+            $.ajax({
+				url : "{:U('Probability/batch_setroom')}",
+				type : 'post',
+				data : 'ids='+ids+'&week_count='+week_count+'&claw_count='+claw_count,
+				dataType : 'json',
+				success : function (res) {
+					if( res.status == 1 ){
+                        $("#modal_content").text('操作成功');
+                        $("#modal_sbt").hide();
+					}else{
+                        $("#modal_content").text('操作失败');
+                        $("#modal_sbt").hide();
+					}
+                },
+				error : function () {
+					alert('错误');
+                }
+			});
+        });
+
+		$("#modal_close").click(function () {location.reload();});
+
+        $(".isstart a").click(function () {
+            var id = $(this).attr('data');
+            $.ajax({
+                url : "{:U('Probability/isstart_room')}",
+                type : 'post',
+                dataType : 'json',
+                data : 'id='+id,
+                success : function (res) {
+                    if( res.status == 1 ){
+                        location.reload();
+                    }
+                },
+                error : function () {
+                    alert('错误');
+                }
+            });
+        });
+
+    });
+
+</script>
+
+
+</html>

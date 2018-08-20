@@ -409,6 +409,9 @@ class StatmentController extends AdminbaseController
 	$arrTime['syear'] = strtotime("-12 month",strtotime(date("Y-m").'-01'));
         $arrTime['eyear'] = time();
 
+        $arrTime['syear'] = strtotime("-12 month",strtotime(date("Y-m").'-01'));
+        $arrTime['eyear'] = time();
+
         ksort($result);
 
         $this->assign('time_type', $get_time[2]);
