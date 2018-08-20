@@ -640,10 +640,10 @@ class RoomController extends BaseController
                 Log::record($this->user['user_id'].'xxxxxxxxxx grade : ' .  json_encode($grade),Log::INFO);
                 if ($type == 1)
                 {
-                    return $grade['coin_strong_num'];
+                    return $grade['free_coin_strong_num'];
                 }
                 else{
-                    return $grade['free_coin_strong_num'];
+                    return $grade['coin_strong_num'];
                 }
             }
 
@@ -651,8 +651,9 @@ class RoomController extends BaseController
     // 开始游戏
     private function start($room_id, $game_history_id)
     {
+        Log::record($this->user['user_id'].'xxxxxxxxxx room : ' . $room_id,Log::INFO);
         // 根据房间号查询设备号
-        $arrFac = M('game_room')->field('fac_id,is_sellmodel,is_roommodel,claw_count')->where('id=' . $room_id)->find();
+        $arrFac = M('game_room')->field('fac_id,is_sellmodel,is_roommodel,is_roomgrademodel,claw_count')->where('id=' . $room_id)->find();
         //计算强抓力
         $is_strongdec = 0;//用户要减强抓力
         $is_strong = 0;

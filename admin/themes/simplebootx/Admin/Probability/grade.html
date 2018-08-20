@@ -53,10 +53,10 @@
 					<td><?php if($vo['online']) { echo $vo['onlinedays']; } else echo '/'; ?></td>
 					<td align="center" class="">
 						<!--<a href="{:U('Probability/room_edit',array('id'=>$vo['id']))}">编辑</a>-->
-						<if condition="$vo.enable eq 0">
-							<a href="{:U('Probability/start_grade',array('id'=>$vo['id'],'enable'=>1))}">启用</a>
+						<if condition="$vo.enable eq 1">
+							<a href="{:U('Probability/start_grade',array('id'=>$vo['id'],'enable'=>0))}">启用</a>
 							<else/>
-							<a href="{:U('Probability/start_grade',array('id'=>$vo['id'],'enable'=>0))}">停用</a>
+							<a href="{:U('Probability/start_grade',array('id'=>$vo['id'],'enable'=>1))}">停用</a>
 						</if>
 
 
