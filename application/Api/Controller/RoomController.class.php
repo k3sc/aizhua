@@ -240,7 +240,7 @@ class RoomController extends BaseController
         }
         $gtime = M('device')->where('device_unique_code=' . $gift['fac_id'])->getField('game_time');
         $data = array('room_id' => $room_id, 'user_id' => $this->user_id, 'name' => $gift['giftname'], 'img' => $gift['gifticon'], 'gametime' => $gtime ? $gtime : 30, 'ctime' => $time,'coin' => $gift['spendcoin']);
-        if($bool < 3)$data['is_strong'] = $bool;//强抓力
+        if($bool < 4)$data['is_strong'] = $bool;//强抓力
 		$id = M('game_history')->add($data);
         M('game_room')->where('id=' . $room_id)->save(array('status' => 3));
 		$this->notice_gameover('0', '{"type":15,"room_ids":"'.$room_id.'","status":3}');
@@ -666,7 +666,7 @@ class RoomController extends BaseController
 			$strongrand = max($strongrand, $v['count']);
 		}
 	}
-		
+		$is_gread = 0;
 	$is_roommodel = 0;
         if ($arrFac['claw_count'] && $arrFac['is_roommodel']) {//抓几次出一次强抓力
             $nnum = $arrFac['claw_count'];
@@ -675,7 +675,7 @@ class RoomController extends BaseController
             if ($this->user['free_coin']>0)
             {
                 if ($this->user['free_coin_strong_num'] != 0)
-                {
+                {$is_gread = 1;
                     $nnum = $nnum+intval($nnum*$this->user['free_coin_strong_num']/100);
                    Log::record($this->user['user_id'].'xxxxxxxxxx free gl num : ' .  $this->user['free_coin_strong_num'],Log::INFO);
                 }
@@ -684,6 +684,7 @@ class RoomController extends BaseController
                     {
 
                         $gl = $this->getGl(1);
+			if ($gl)$is_gread = 1;
                         Log::record($this->user['user_id'].'xxxxxxxxxx free gl : ' . $gl,Log::INFO);
                         $nnum = $nnum+intval($nnum*$gl/100);
                     }else{
@@ -697,6 +698,7 @@ class RoomController extends BaseController
             else{
                 if ($this->user['coin_strong_num'] != 0)
                 {
+			$is_gread = 1;
                     $nnum = $nnum+intval($nnum*$this->user['coin_strong_num']/100);
                    Log::record($this->user['user_id'].'xxxxxxxxxx  gl num : ' . $this->user['coin_strong_num'],Log::INFO);
                 }
@@ -705,6 +707,7 @@ class RoomController extends BaseController
                     {
 
                         $gl = $this->getGl(0);
+			 if ($gl)$is_gread = 1;
                         $nnum = $nnum+intval($nnum*$gl/100);
                         Log::record($this->user['user_id'].'xxxxxxxxxx  gl  : ' . $nnum,Log::INFO);
                     }
@@ -733,6 +736,7 @@ class RoomController extends BaseController
             $is_strong    = $flag ? $flag : $sucflag;//出现过strong 不再出  没有出现过  已经成功过不再出  否则出
             $is_strongdec = 0;
 	    $is_roommodel = $is_strong;
+		if (!$is_strong) $is_gread =0;
         }
 	$is_sellmodel = 0;
         if (!$is_strong && $this->user['strong'] && $strongrand && $arrFac['is_sellmodel']) {
@@ -803,8 +807,8 @@ class RoomController extends BaseController
             //if ($is_strongdec) M("users")->where(['id' => $this->user_id])->setDec("strong", 1);
 			//激光
 			$ret=$this->_set_light($arrFac['fac_id'],2,330,0,1);
-			
-            return $is_strong ? ($is_roommodel ? 1 : 2) : 3;
+		 if ($is_gread&&$is_strong) return 3;
+            return $is_strong ? ($is_roommodel ? 1 : 2) : 4;
         } else {
             return 0;
         }

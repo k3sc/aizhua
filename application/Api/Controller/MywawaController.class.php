@@ -413,11 +413,13 @@ class MywawaController extends BaseController
         $coins = 0;
 	foreach ($getArr as $k => $v) {
             if (intval($v[1]) <= 0) break;
-            $list = M('user_wawas')->alias('a')->field('a.id,b.needcoin')->join('cmf_gift as b on a.wawa_id=b.id')->where('a.wawa_id=' . $v[0] . ' and a.status=0 and a.is_del=0 and a.user_id=' . $this->user_id. ' and find_in_set(2,b.`convert`)')->limit($v[1])->select();
+            $list = M('user_wawas')->alias('a')->field('a.id,a.wawa_id,b.needcoin')->join('cmf_gift as b on a.wawa_id=b.id')->where('a.wawa_id=' . $v[0] . ' and a.status=0 and a.is_del=0 and a.user_id=' . $this->user_id. ' and find_in_set(2,b.`convert`)')->limit($v[1])->select();
 
             foreach ($list as $val) {
 	    	$coins += $val['needcoin'];
                 M('users')->where('id=' . $this->user_id)->setInc('coin', $val['needcoin']);
+		$cost = M('gift')->where(['id'=>$val['wawa_id']])->getField('cost');
+                M('users')->where('id=' . $this->user_id)->setDec('total_get', $cost);
                 $data['is_del'] = 1;
                 M('user_wawas')->where('id=' . $val['id'])->save($data);
             }

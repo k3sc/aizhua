@@ -165,6 +165,8 @@ class WaybillController extends AdminbaseController
                     }
                 }
             }
+	$money = M('pay_record')->where("user_id='{$v['user_id']}' and status=1")->sum('money');
+            $arr[$v['waybillno']]['total_payed'] = $money?:0;
         }
         $arr = array_values($arr);
 
@@ -439,6 +441,8 @@ class WaybillController extends AdminbaseController
                     }
                 }
             }
+	    $money = M('pay_record')->where("user_id='{$v['user_id']}' and status=1")->sum('money');
+            $arr[$v['waybillno']]['total_payed'] = $money;
         }
         $arr = array_values($arr);
 
@@ -459,6 +463,7 @@ class WaybillController extends AdminbaseController
             }
             $data[$k]['goods'] = $goods;
             $data[$k]['uname'] = $v['uname'];
+	$data[$k]['total_payed'] = $v['total_payed']?:0;
             $data[$k]['addr'] = $v['addr'].$v['addr_info'];
             $data[$k]['phone'] = $v['phone'];
             $data[$k]['remark'] = $v['remark'];
@@ -467,7 +472,7 @@ class WaybillController extends AdminbaseController
             $data[$k]['sys_remark'] = $v['sys_remark'];
         }
 
-        $header = ['运单号','寄件人(昵称，ID)','物品明细','收货人','地址','手机号','邮寄备注','快递公司','快递单号','系统备注'];
+        $header = ['运单号','寄件人(昵称，ID)','物品明细','收货人','充值金额','地址','手机号','邮寄备注','快递公司','快递单号','系统备注'];
         $this->export($data,$header);
     }
 

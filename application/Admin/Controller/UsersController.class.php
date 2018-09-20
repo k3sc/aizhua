@@ -202,6 +202,7 @@ public function setWawa()
         {
 
             $money = M('pay_record')->where("user_id='{$user['id']}' and status=1")->sum('money');
+	    $money = intval($money);
             $result = false;
             if ($item['payed'] )
             {

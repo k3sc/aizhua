@@ -47,6 +47,7 @@
             <th>寄件人(昵称，ID)</th>
             <th>物品明细</th>
             <th>收货人</th>
+		<th>充值金额</th>
             <th>地址</th>
             <th>手机号</th>
             <th>物品名称</th>
@@ -75,6 +76,7 @@
                     </foreach>
                 </td>
                 <td><empty name="vo.uname">-<else />{$vo['uname']}</empty></td>
+	<td><empty name="vo.uname">-<else />{$vo['total_payed']}</empty></td>
                 <td>
                     <empty name="vo.addr">
                         -
