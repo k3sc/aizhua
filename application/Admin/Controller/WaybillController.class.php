@@ -50,8 +50,10 @@ class WaybillController extends AdminbaseController
             ->join('left join cmf_users_gift as c on a.user_gift_id = c.id')
             ->where($where)
             ->count('waybillno');
+
         $page = $this->page($count,20);
         $this->assign('page',$page->show('Admin'));
+
         //获取用户的所有运单
         $userWaybillAll = M('waybill as a')
             ->join('left join cmf_users as e on a.user_id = e.id')
@@ -182,6 +184,150 @@ class WaybillController extends AdminbaseController
 
         $this->display();
 
+    }
+
+    /* *
+     * 逾期寄存的娃娃信息
+     * @author by OCY
+     */
+    public function overdue(){
+        $day = I('day')?I('day'):30;
+        if(!is_numeric($day)){
+            return false;
+        }
+        $daytime = time() - ($day * 86400);
+        $where = ' 1=1 and b.ctime < '.$daytime.' and b.is_del=0 and b.status=0 ';
+        $count = M('user_wawas as b')
+            ->join('left join cmf_users as e on b.user_id = e.id')
+//            ->join('left join cmf_waybill as bill on bill.user_wawas_id = b.id')
+            ->where($where)
+            ->count();
+
+//        $count = 1;
+        $page = $this->page($count,20);
+        $this->assign('page',$page->show('Admin'));
+        $page = $this->page($count,20);
+        //获取用户的所有运单
+        $userWaybillAll = M('user_wawas as b')
+            ->join('left join cmf_users as e on b.user_id = e.id')
+            ->join('left join cmf_waybill as bill on bill.user_wawas_id = b.id')
+            ->field('bill.*,b.*,b.status as wawastatus,b.ctime as getwawatime,e.user_nicename')
+            ->where($where)
+            ->limit($page->firstRow.','.$page->listRows)
+            ->order('getwawatime desc')
+            ->select();
+        echo "<pre>";
+        print_r(M('user_wawas')->getLastSql());
+        exit;
+        echo "<pre>";
+        print_r($userWaybillAll);
+        exit;
+        foreach ($userWaybillAll as $k => $v) {
+            if( $v['wawa_id'] ){
+                $wawaname = M('gift')->where(['id'=>$v['wawa_id']])->getField('giftname');
+                $userWaybillAll[$k]['wawaname'] = $wawaname;
+                $userWaybillAll[$k]['wawa_id'] = $v['wawa_id'];
+            }else{
+                $userWaybillAll[$k]['wawaname'] = '';
+            }
+            if( $v['gift_id'] ){
+                $giftname = M('give_gift')->where(['id'=>$v['gift_id']])->getField('name');
+                $userWaybillAll[$k]['giftname'] = $giftname;
+                $userWaybillAll[$k]['gift_id'] = $v['gift_id'];
+            }else{
+                $userWaybillAll[$k]['giftname'] = '';
+            }
+        }
+
+        /*$arr = [];
+        foreach($userWaybillAll as $k=>$v){
+            if(!isset($arr[$v['waybillno']])){
+                $arr[$v['waybillno']]=array(
+                    'user_id'       => $v['user_id'],
+                    'user_nicename' => $v['user_nicename'],
+                    'waybill_id'    => $v['waybill_id'],
+                    'waybillno'     => $v['waybillno'],
+                    'status'        => $v['status'],
+                    'remark'        => $v['remark'],
+                    'ctime'         => $v['ctime'],//运单生成时间
+                    'fhtime'        => $v['fhtime'],//发货时间
+                    'shtime'        => $v['shtime'],//收货时间
+                    'uname'         => $v['uname'],
+                    'phone'         => $v['phone'],
+                    'addr'          => $v['addr'],
+                    'addr_info'     => $v['addr_info'],
+                    'kdname'        => $v['kdname'],
+                    'kdno'          => $v['kdno'],
+                    'goodsname'     => $v['goodsname'],
+                    'sys_remark'    => $v['sys_remark'],
+                );
+
+                if(!empty($v['wawa_id'])) {
+                    $flag=1;
+                    foreach($arr[$v['waybillno']]['goods'] as $kk => $vv){
+                        if($vv['name']==$v['wawaname']){
+                            $flag=0;
+//                            $vv['num']+=1;
+                            $arr[$v['waybillno']]['goods'][$kk]['num']+=1;
+                        }
+                    }
+                    if ($flag) {
+                        $arr[$v['waybillno']]['goods'][] = array('name'=>$v['wawaname'],'num' => 1,'wawa_id'=>$v['wawa_id']);
+                    }
+                }else{
+                    $mark = 1;
+                    foreach($arr[$v['waybillno']]['goods'] as $kkk => $vvv){
+                        if($vvv['name']==$v['giftname']){
+                            $mark=0;
+//                            $vvv['num']+=1;
+                            $arr[$v['waybillno']]['goods'][$kkk]['num']+=1;
+                        }
+                    }
+                    if ($mark) {
+                        $arr[$v['waybillno']]['goods'][] = array('name'=>$v['giftname'],'num' => 1,'gift_id'=>$v['gift_id']);
+                    }
+                }
+            }else{
+                if(!empty($v['wawa_id'])) {
+                    $flag=0;
+                    foreach($arr[$v['waybillno']]['goods'] as $kk=>$vv){
+                        if($vv['name']==$v['wawaname']){
+                            $flag=1;
+                            $arr[$v['waybillno']]['goods'][$kk]['num']+=1;
+                        }
+                    }
+                    if (!$flag) {
+                        $arr[$v['waybillno']]['goods'][] = array('name'=>$v['wawaname'],'num' => 1,'wawa_id'=>$v['wawa_id']);
+                    }
+                }else{
+                    $mark = 1;
+                    foreach($arr[$v['waybillno']]['goods'] as $kkk => $vvv){
+                        if($vvv['name']==$v['giftname']){
+                            $mark=0;
+//                            $vvv['num']+=1;
+                            $arr[$v['waybillno']]['goods'][$kkk]['num']+=1;
+                        }
+                    }
+                    if ($mark) {
+                        $arr[$v['waybillno']]['goods'][] = array('name'=>$v['giftname'],'num' => 1,'gift_id'=>$v['gift_id']);
+                    }
+                }
+            }
+            $money = M('pay_record')->where("user_id='{$v['user_id']}' and status=1")->sum('money');
+            $arr[$v['waybillno']]['total_payed'] = $money?:0;
+        }
+        $arr = array_values($arr);
+
+
+        foreach ($arr as $k => $v){
+            foreach ($v['goods'] as $vv) {
+                $arr[$k]['num'] += $vv['num'];
+            }
+        }*/
+
+        $this->assign('status_name',$this->statusArr);
+        $this->assign('data',$userWaybillAll);
+        $this->display();
     }
 
 

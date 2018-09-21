@@ -19,25 +19,34 @@ class ProductController extends AdminbaseController
     //娃娃列表
     function index()
     {
-
         $gift_sort = M("gift_sort")->getField("id,sortname");
         $gift_sort[0] = "默认分类";
         $this->assign('gift_sort', $gift_sort);
         $map = " 1=1 ";
         $type = I('type');
         $keyword = I('keyword') ? I('keyword') : '';
+        //假如是在线状态切换到在线娃娃
+        $s_type = I('s_type');
+        if($s_type){
+            $gameroomModel= M('game_room');
+            $gameroomInfo = $gameroomModel
+                ->field('type_id')
+                ->where('is_show = 1')
+                ->select();
+            $wawaids = array_column($gameroomInfo,'type_id');
+            $wawaids = implode(',',$wawaids);
+            $map .= ' and a.id in ('.$wawaids.') ';
+        }
         if ($type) {
             $map .= ' and a.type_id='.$type;
             $this->assign('type',$type);
         }
-
         if ($keyword !== '') {
             $map .= " and a.id='{$keyword}' or a.giftname like '%{$keyword}%'";
             // $map['id'] = array('eq', "$keyword");
             // $map['giftname'] = array('like', "%$keyword%");
             $this->assign('keyword', $keyword);
         }
-
         $gift_model = M("gift as a");
         $count = $gift_model->where($map)->count();
         $page = $this->page($count, 20);
@@ -69,9 +78,7 @@ class ProductController extends AdminbaseController
             $lists[$k]['convertcoin'] = M('user_wawas')->where(['wawa_id'=>$v['id'],'is_del'=>1])->count();
             $lists[$k]['convertgift'] = M('user_wawas')->where(['wawa_id'=>$v['id'],'is_del'=>2])->count();
         }
-
-        
-
+        $this->assign('s_type', $s_type);
         $this->assign('lists', $lists);
         $this->assign("page", $page->show('Admin'));
         $this->assign('wawa_type',M('gift_type')->select());
