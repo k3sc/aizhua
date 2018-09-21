@@ -29,7 +29,7 @@
             <th>手机号</th>
             <th>物品名称</th>
             <th>邮寄备注</th>
-            <th>运单状态</th>
+            <th>娃娃状态</th>
             <th>系统备注</th>
             <th>获得时间</th>
             <th align="center">{:L('ACTIONS')}</th>
@@ -41,7 +41,7 @@
                 <td>{$vo['wawaname']}</td>
                 <td>{$vo['user_nicename']}&nbsp;&nbsp;({$vo['user_id']})</td>
                 <td><empty name="vo.uname">-<else />{$vo['uname']}</empty></td>
-	<td><empty name="vo.uname">-<else />{$vo['total_payed']}</empty></td>
+	            <td><empty name="vo.total_payed">-<else />{$vo['total_payed']}</empty></td>
                 <td>
                     <empty name="vo.addr">
                         -
@@ -63,8 +63,13 @@
                     </empty>
                 </td>
 
-                <td <eq name="vo.status" value="1">class="text-error"</eq><eq name="vo.status" value="2">class="text-warning"</eq><eq name="vo.status" value="3">class="text-success"</eq> >
-                    <strong>{$status_name[$vo['status']]}</strong>
+                <td
+                <eq name="vo.wawa_status" value="1">class="text-error"</eq>
+                <eq name="vo.wawa_status" value="0">class="text-success"</eq> >
+                <strong>
+                    <eq name="vo.wawa_status" value="0">寄存</eq>
+                    <eq name="vo.wawa_status" value="1">待邮寄</eq>
+                </strong>
                 </td>
 
                 <td>

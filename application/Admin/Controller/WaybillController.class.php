@@ -170,6 +170,7 @@ class WaybillController extends AdminbaseController
 	$money = M('pay_record')->where("user_id='{$v['user_id']}' and status=1")->sum('money');
             $arr[$v['waybillno']]['total_payed'] = $money?:0;
         }
+
         $arr = array_values($arr);
 
 
@@ -196,32 +197,29 @@ class WaybillController extends AdminbaseController
             return false;
         }
         $daytime = time() - ($day * 86400);
-        $where = ' 1=1 and b.ctime < '.$daytime.' and b.is_del=0 and b.status=0 ';
+        /* *
+         * is_receive = 0 是否获赠
+         * @author by OCY
+         */
+        $where = ' 1=1 and b.ctime < '.$daytime.' and b.is_del=0 and b.status in (0,1) and b.is_receive=0';
         $count = M('user_wawas as b')
             ->join('left join cmf_users as e on b.user_id = e.id')
-//            ->join('left join cmf_waybill as bill on bill.user_wawas_id = b.id')
             ->where($where)
             ->count();
 
-//        $count = 1;
-        $page = $this->page($count,20);
+        $page = $this->page($count,15);
         $this->assign('page',$page->show('Admin'));
-        $page = $this->page($count,20);
+
         //获取用户的所有运单
         $userWaybillAll = M('user_wawas as b')
-            ->join('left join cmf_users as e on b.user_id = e.id')
             ->join('left join cmf_waybill as bill on bill.user_wawas_id = b.id')
-            ->field('bill.*,b.*,b.status as wawastatus,b.ctime as getwawatime,e.user_nicename')
+            ->join('left join cmf_users as e on b.user_id = e.id')
+            ->field('bill.*,b.*,b.status as wawa_status,b.ctime as getwawatime,e.user_nicename')
             ->where($where)
             ->limit($page->firstRow.','.$page->listRows)
             ->order('getwawatime desc')
             ->select();
-        echo "<pre>";
-        print_r(M('user_wawas')->getLastSql());
-        exit;
-        echo "<pre>";
-        print_r($userWaybillAll);
-        exit;
+
         foreach ($userWaybillAll as $k => $v) {
             if( $v['wawa_id'] ){
                 $wawaname = M('gift')->where(['id'=>$v['wawa_id']])->getField('giftname');
@@ -237,7 +235,10 @@ class WaybillController extends AdminbaseController
             }else{
                 $userWaybillAll[$k]['giftname'] = '';
             }
+            $money = M('pay_record')->where("user_id='{$v['user_id']}' and status=1")->sum('money');
+            $userWaybillAll[$k]['total_payed'] = $money;
         }
+
 
         /*$arr = [];
         foreach($userWaybillAll as $k=>$v){
@@ -325,7 +326,6 @@ class WaybillController extends AdminbaseController
             }
         }*/
 
-        $this->assign('status_name',$this->statusArr);
         $this->assign('data',$userWaybillAll);
         $this->display();
     }
