@@ -26,7 +26,7 @@ class ProductController extends AdminbaseController
         $type = I('type');
         $keyword = I('keyword') ? I('keyword') : '';
         //假如是在线状态切换到在线娃娃
-        $s_type = I('s_type');
+        $s_type = I('get.s_type');
         if($s_type){
             $gameroomModel= M('game_room');
             $gameroomInfo = $gameroomModel
@@ -36,6 +36,14 @@ class ProductController extends AdminbaseController
             $wawaids = array_column($gameroomInfo,'type_id');
             $wawaids = implode(',',$wawaids);
             $map .= ' and a.id in ('.$wawaids.') ';
+
+            //查询出逾期超过寄存的娃娃
+            $day = I('get.day')?I('get.day'):30;
+            if(!is_numeric($day)){
+                return false;
+            }
+            $daytime = time() - ($day * 86400);
+            //$map .= ' mywawa.ctime < '.$daytime;
         }
         if ($type) {
             $map .= ' and a.type_id='.$type;
@@ -50,9 +58,12 @@ class ProductController extends AdminbaseController
         $gift_model = M("gift as a");
         $count = $gift_model->where($map)->count();
         $page = $this->page($count, 20);
+        $page->parameter;
         $lists = $gift_model
             ->join('cmf_gift_type as b on a.type_id=b.id')
+            //->join('cmf_user_wawas as mywawa on mywawa.wawa_id=a.id')
             ->field('a.*,b.name')
+            //->field('a.*,b.name,mywawa.wawa_id,mywawa.ctime as getwawatime')
             ->where($map)
             ->order("a.addtime DESC")
             ->limit($page->firstRow . ',' . $page->listRows)
@@ -77,8 +88,13 @@ class ProductController extends AdminbaseController
             $lists[$k]['giveoutcount'] = M('user_wawas')->where(['wawa_id'=>$v['id'],'status'=>3])->count();
             $lists[$k]['convertcoin'] = M('user_wawas')->where(['wawa_id'=>$v['id'],'is_del'=>1])->count();
             $lists[$k]['convertgift'] = M('user_wawas')->where(['wawa_id'=>$v['id'],'is_del'=>2])->count();
+            //统计逾期寄存的数据
+            if($s_type)
+                $lists[$k]['overdue_day'] = M('user_wawas')->where('wawa_id='.$v['id'].' and status=0 and is_del=0 and ctime < '.$daytime)->count();
+
         }
         $this->assign('s_type', $s_type);
+        $this->assign('day', $day);
         $this->assign('lists', $lists);
         $this->assign("page", $page->show('Admin'));
         $this->assign('wawa_type',M('gift_type')->select());

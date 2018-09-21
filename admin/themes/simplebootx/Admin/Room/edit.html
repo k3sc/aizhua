@@ -23,9 +23,15 @@
 				<div class="control-group">
 					<label class="control-label">产品名称</label>
 					<div class="controls">
+						<select id="type" >
+							<foreach name="typeData" item="type">
+								<option <eq name="type.id" value="$row.typeid">selected</eq> value="{$type.id}">{$type.name}( <php>echo str_pad($type['id'],4,"0",STR_PAD_LEFT);</php> )</option>
+							</foreach>
+						</select>
+
 						<select id="gift" name="type_id">
-							<foreach name="giftarr" item="vo">
-								<option <eq name="vo.id" value="$row.type_id">selected</eq> value="{$vo.id}">{$vo.giftname}( <php>echo str_pad($vo['id'],4,"0",STR_PAD_LEFT);</php> )</option>
+							<foreach name="giftData[$typeid]" item="gift">
+								<option <if condition="$gift.id eq $row.type_id ">selected</if> value="{$gift.id}" > {$gift.giftname}( <php>echo str_pad($gift['id'],4,"0",STR_PAD_LEFT);</php> )</option>
 							</foreach>
 						</select>
 					</div>
@@ -256,7 +262,54 @@
 </body>
 <script>
 	$(function(){
-	    $("#gift").change(function(){
+
+        var giftdata = eval('['+'{$giftDataJson}'+']');
+        var typedata = eval('['+'{$typeDataJson}'+']');
+        var wawaid = '{$row.type_id}';
+
+//        setGift($('#type').val());
+        setGiftImg($('#gift').val())
+
+        $("#type").change(function(){
+            var typeid = $(this).val();
+            setGift(typeid);
+        });
+        function setGift(typeid) {
+            var str = '';
+            $.each(giftdata[0][typeid],function(k,v){
+                var select = '';
+                if(wawaid == v.id){
+                    select = 'selsected';
+                }
+                str += '<option value="'+v.id+'"'+select+'>'+v.giftname+'&nbsp;&nbsp;('+v.id+')</option>';
+            });
+            $('#gift').html(str);
+            setGiftImg($('#gift').val())
+        }
+
+        $("#gift").change(function(){
+            setGiftImg($(this).val())
+        });
+
+        function setGiftImg(giftid) {
+            $.ajax({
+                url : "{:U('Room/handle_ajax')}",
+                type : 'post',
+                data : 'id='+giftid,
+                dataType : 'json',
+                success : function(res){
+                    if( res.status == 1 ){
+                        $("#wawa_no").val(res.wawa_no);
+                        $("#goodsimg").attr('src',res.gifticon);
+                    }
+                },
+                error : function(){
+                    alert('系统内部错误');
+                }
+            });
+        }
+
+	    /*$("#gift").change(function(){
 	        var giftid = $(this).val();
 	        $.ajax({
 				url : "{:U('Room/handle_ajax')}",
@@ -274,7 +327,8 @@
 				    alert('系统内部错误');
 				}
 			});
-		});
+		});*/
+
 
 	});
 </script>

@@ -7,10 +7,18 @@
             <li <if condition="$s_type eq 'online'"> class="active" </if> ><a href="{:U('Product/index','s_type=online')}">在线列表</a></li>
 			<li><a href="{:U('Capturewawa/add')}">娃娃添加</a></li>
 		</ul>
-        <if condition="!$s_type">
-		<form method="post" class="well form-search" action="{:U('Product/index','s_type='.$s_type)}">
-			<input type="text" name="keyword" value="{$keyword}"  placeholder="请输入娃娃姓名或ID">
 
+
+
+		<form method="get" class="well form-search" action="{:U('Product/index','s_type='.$s_type)}">
+            <input type="hidden" name="g" value="Admin">
+            <input type="hidden" name="m" value="Product">
+            <input type="hidden" name="a" value="index">
+            <input type="hidden" name="s_type" value="{$s_type}">
+
+            <if condition="!$s_type">
+
+			<input type="text" name="keyword" value="{$keyword}"  placeholder="请输入娃娃姓名或ID">
 			<select name="type">
 		        <option value="">-- 选择娃娃类别 --</option>
 				<foreach name="wawa_type" item="vo">
@@ -18,9 +26,14 @@
 				</foreach>
 	       	</select>
 
+            <else/>
+                逾期天数：<input type="number" min="1" max="30" name="day" <if condition="$day!=30">value="{$day}"</if> placeholder="默认为30天">
+            </if>
+
 			<input type="submit" class="btn btn-primary" value="搜索">
 		</form>
-        </if>
+
+
 		<form method="post" class="js-ajax-form" action="{:U('Product/listorders')}">
 			<!--<div class="table-actions">-->
 				<!--<button class="btn btn-primary btn-small js-ajax-submit" type="submit">{:L('SORT')}</button>-->
@@ -38,6 +51,7 @@
 						<th>游戏价格</th>
 						<th>库存</th>
 						<th>寄存</th>
+                        <if condition="$s_type=='online'"><th>逾期寄存</th></if>
 						<th>待发货</th>
 						<th>已发货</th>
 						<th>已转赠</th>
@@ -64,8 +78,9 @@
 						<td><img width="25" height="25" src="{$vo['gifticon']}" /></td>
 						<td>{$vo.cost}</td>
 						<td>{$vo.spendcoin}</td>
-						<td>{$vo.stock}</td>
+                        <td><b>{$vo.stock}</b></td>
 						<td>{$vo.totalcount}</td>
+                        <if condition="$s_type=='online'"><td><b>{$vo.overdue_day}</b></td></if>
 						<td>{$vo.applysendcount}</td>
 						<td>{$vo.hassendcount}</td>
 						<td>{$vo.giveoutcount}</td>

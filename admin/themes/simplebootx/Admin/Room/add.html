@@ -21,12 +21,14 @@
 					</div>
 				</div>
 				<div class="control-group">
-					<label class="control-label">产品名称</label>
+					<label class="control-label">选择产品</label>
 					<div class="controls">
+						<select id="type">
+							<foreach name="typeData" item="type">
+                                <option value="{$type.id}">{$type.name}</option>
+                            </foreach>
+						</select>
 						<select id="gift" name="type_id">
-							<foreach name="giftarr" item="vo">
-								<option value="{$vo.id}">{$vo.giftname}&nbsp;&nbsp;( <php>echo str_pad($vo['id'],4,"0",STR_PAD_LEFT);</php> )</option>
-							</foreach>
 						</select>
 					</div>
 				</div>
@@ -197,24 +199,46 @@
 </body>
 <script>
 	$(function(){
+	    var giftdata = eval('['+'{$giftDataJson}'+']');
+	    var typedata = eval('['+'{$typeDataJson}'+']');
+
+        setGift($('#type').val());
+        setGiftImg($('#gift').val())
+
+	    $("#type").change(function(){
+            var typeid = $(this).val();
+            setGift(typeid);
+        });
+        function setGift(typeid) {
+            var str = '';
+            $.each(giftdata[0][typeid],function(k,v){
+                str += '<option value="'+v.id+'">'+v.giftname+'&nbsp;&nbsp;('+v.id+')</option>';
+            });
+            $('#gift').html(str);
+            setGiftImg($('#gift').val())
+        }
+
 	    $("#gift").change(function(){
-	        var giftid = $(this).val();
-	        $.ajax({
-				url : "{:U('Room/handle_ajax')}",
-				type : 'post',
-				data : 'id='+giftid,
-				dataType : 'json',
-				success : function(res){
+            setGiftImg($(this).val())
+		});
+
+        function setGiftImg(giftid) {
+            $.ajax({
+                url : "{:U('Room/handle_ajax')}",
+                type : 'post',
+                data : 'id='+giftid,
+                dataType : 'json',
+                success : function(res){
                     if( res.status == 1 ){
                         $("#wawa_no").val(res.wawa_no);
                         $("#goodsimg").attr('src',res.gifticon);
                     }
-				},
-				error : function(){
-				    alert('系统内部错误');
-				}
-			});
-		});
+                },
+                error : function(){
+                    alert('系统内部错误');
+                }
+            });
+        }
 
 //        $("#choseDevice").change(function(){
 //            var device_id = $(this).val();

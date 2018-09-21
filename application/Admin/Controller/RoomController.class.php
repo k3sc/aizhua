@@ -80,9 +80,26 @@ class RoomController extends AdminbaseController
                 ->field('a.*,b.giftname,b.wawa_no,b.stock,b.gifticon')
                 ->find();
             $row['proba_model'] = explode(',',$row['proba_model']);
+
+            $wawaid = $row['type_id'];
+            $types = M('gift')
+                ->field('type_id')
+                ->where('id ='.$wawaid)
+                ->find();
+            $row['typeid'] = $types['type_id'];
             $this->assign('row',$row);
-            $giftarr = M('gift')->select();
-            $this->assign('giftarr',$giftarr);
+
+            $giftData = $this->__getAllGift();
+            $this->assign('typeData',$giftData['type']);
+            $this->assign('typeDataJson',json_encode($giftData['type']));
+            $this->assign('giftData',$giftData['gift']);
+            $this->assign('typeid',$row['typeid']);
+
+            /*echo "<pre>";
+            print_r($giftData['gift'][$row['typeid']]);
+            exit;*/
+            $this->assign('giftDataJson',json_encode($giftData['gift']));
+
             $sql = "SELECT * FROM cmf_device WHERE device_unique_code NOT IN ((SELECT fac_id FROM cmf_game_room where id <> $id))";
             $device = M('device')->query($sql);
             $this->assign('device',$device);
@@ -178,8 +195,11 @@ class RoomController extends AdminbaseController
 
     public function add()
     {
-        $giftarr = M('gift')->select();
-        $this->assign('giftarr',$giftarr);
+        $giftData = $this->__getAllGift();
+        $this->assign('typeData',$giftData['type']);
+        $this->assign('typeDataJson',json_encode($giftData['type']));
+        $this->assign('giftData',$giftData['gift']);
+        $this->assign('giftDataJson',json_encode($giftData['gift']));
         $sql = "SELECT * FROM cmf_device WHERE device_unique_code NOT IN ((SELECT fac_id FROM cmf_game_room))";
         $device = M('device')->query($sql);
         $this->assign('device',$device);
@@ -198,6 +218,24 @@ class RoomController extends AdminbaseController
         /* 下抓音效 */
         $this->assign('xiazhua',M('game_audio')->where(['type'=>6])->select());
         $this->display();
+    }
+    public function __getAllGift(){
+        $type = M('gift_type')
+            ->select();
+        $gift = M('gift')
+            ->select();
+        foreach ($type as $key=>$val){
+            foreach ($gift as $k=>$v){
+                if($val['id'] == $v['type_id']){
+                    $giftAll[$val['id']][] = $v;
+                }
+            }
+        }
+        $giftAllData = [
+            'type'=>$type,
+            'gift'=>$giftAll
+        ];
+        return $giftAllData;
     }
 
     public function add_post()
