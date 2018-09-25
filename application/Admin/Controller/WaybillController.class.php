@@ -744,9 +744,8 @@ class WaybillController extends AdminbaseController
                 ->field('a.*,b.wawa_id,c.gift_id')
                 ->where(['waybillno'=>$data[$row]['waybillno']])
                 ->select();
-				
+
 			$waybillRow = current($waybillInfo);
-			
             if( empty($data[$row]['kdname']) || empty($data[$row]['kdno']) ) $this->error('发货失败，必须填写快递公司和快递单号','admin/waybill/lists');
             $data[$row]['fhtime']   = $waybillRow['fhtime'] ? $waybillRow['fhtime'] : time();
             $data[$row]['status']   = $waybillRow['status'] == 1 ? 2 : $waybillRow['status'];
@@ -899,6 +898,69 @@ class WaybillController extends AdminbaseController
         }
         $this->display();
 
+    }
+
+    /*单独对某运单进行发货*/
+    public function delivery(){
+        $waybillno = I('waybillno');
+        $kdname = I('kdname');
+        $kdno = I('kdno');
+        if(!$waybillno)
+            return $this->error('缺少运单号参数');
+        if(!$kdname)
+            return $this->error('快递公司必填');
+        if(!$kdno)
+            return $this->error('快递单号必填');
+        $data = [
+            'kdname'=>$kdname,
+            'kdno'=>$kdno,
+            'status'=>2
+        ];
+        M('waybill')->startTrans();
+        $result = M('waybill')->where(['waybillno'=>$waybillno])->save($data);
+
+        if(!$result){
+            $this->error('订单号为：'.$waybillno.'发货状态更新失败');
+            M('waybill')->rollback();
+        }
+        $data['waybillno'] = $waybillno;
+        $this->__delivery_up_field($data);
+        M('waybill')->commit();
+        $this->success('发货成功');
+
+    }
+    public function __delivery_up_field($params){
+        $waybillData = M('waybill')->field('user_wawas_id,user_gift_id')->where(['waybillno'=>$params['waybillno']])->select();
+        $userWawaIds = array_column($waybillData,'user_wawas_id');
+        $userWawaData = M('user_wawas')->field('wawa_id')->where(['id'=>['in',$userWawaIds]])->select();
+        //$wawaids = array_column($userWawaData,'wawa_id');
+
+        /* 更新cmf_gift表和cmf_give_gift表的出货量字段,库存字段 */
+        foreach ($userWawaData as $k=>$v){
+            $result = M('gift')->where(['id'=>$v['wawa_id']])->setInc('chuhuo');
+            if(!$result){
+                $this->error('娃娃id为：'.$v['wawa_id'].'出货量修改失败');
+                M('waybill')->rollback();
+            }
+            $result = M('gift')->where(['id'=>$v['wawa_id']])->setDec('stock');
+            if(!$result){
+                $this->error('娃娃id为：'.$v['wawa_id'].'库存扣除失败');
+                M('waybill')->rollback();
+            }
+            //如果是礼品的操作
+            /*M('give_gift')->where(['id'=>$v['gift_id']])->setInc('shipment_num');
+            M('give_gift')->where(['id'=>$v['gift_id']])->setDec('quantity');*/
+        }
+
+        /* 通过运单号获取我的娃娃表id，更新我的娃娃表状态和礼品表状态 */
+        foreach ($waybillData as $k => $v) {
+            if( $v['user_wawas_id'] ){
+                 M('user_wawas')->where(['id'=>$v['user_wawas_id']])->save(['status'=>2]);
+            }
+            if( $v['user_gift_id'] ){
+                M('users_gift')->where(['id'=>$v['user_gift_id']])->save(['type'=>3]);
+            }
+        }
     }
 
 

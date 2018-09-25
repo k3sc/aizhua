@@ -35,7 +35,8 @@
                 </td>
             </tr>
             <tr>
-                <td colspan="3">用户留言备注：<b>{$data[0].remark}</b></td>
+                <!-- <td colspan="3">用户留言备注：<b>{$data[0].remark}</b></td> -->
+                <td colspan="3">用户留言备注：<textarea style="width: 725px; height: 70px;" name="remark" >{$data[0].remark}</textarea></td>
             </tr>
             <br><br>
             <tr>
@@ -44,8 +45,17 @@
                 <td>下单时间：{$data[0].ctime|date="Y-m-d H:i:s",###}</td>
             </tr>
             <tr>
-                <td>快递公司: <input type="text" name="kdname" value="{$data[0].kdname}" <neq name="data[0].status" value="1">readonly</neq> ></td>
-                <td colspan="2">快递单号: <input type="text" name="kdno" value="{$data[0].kdno}" <neq name="data[0].status" value="1">readonly</neq> ></td>
+                <if condition="$data[0]['status'] eq 1">
+                    <td colspan="3">
+                    快递公司: <input type="text" name="kdname" value="{$data[0].kdname}" <neq name="data[0].status" value="1">readonly</neq> >
+                    <!-- </td><td colspan="2"> --> &nbsp;&nbsp;&nbsp;
+                    快递单号: <input type="text" name="kdno" value="{$data[0].kdno}" <neq name="data[0].status" value="1">readonly</neq> >
+                    &nbsp;&nbsp;&nbsp;
+                    <input class="btn btn-success" type="button" value="发货" onclick="delivery(this)"></td>
+                <else/>
+                    <td>快递公司: <input type="text" name="kdname" value="{$data[0].kdname}" <neq name="data[0].status" value="1">readonly</neq> ></td>
+                    <td colspan="2">快递单号: <input type="text" name="kdno" value="{$data[0].kdno}" <neq name="data[0].status" value="1">readonly</neq> ></td>
+                </if>
             </tr>
             <tr>
                 <td colspan="3">系统备注： <textarea style="width: 725px; height: 50px;" name="sys_remark" <eq name="data[0].status" value="3">readonly</eq> >{$data[0].sys_remark}</textarea></td>
@@ -59,6 +69,35 @@
 <!--<script src="__PUBLIC__/js/jqprint/jquery-1.4.4.min.js"></script>-->
 <script src="__PUBLIC__/js/common.js"></script>
 <script src="__PUBLIC__/js/jqprint/jquery.jqprint.js"></script>
+<script src="__PUBLIC__/home/layer.js"></script>
 
 </body>
 </html>
+<script>
+    //点击发货
+    function delivery(el){
+        var self = this
+        $.ajax({
+          url:"{:U('Waybill/delivery')}",
+          type:"post",
+          data:{
+              waybillno:"{$data[0]['waybillno']}",
+              kdname:$("input[name=kdname]").val(),
+              kdno:$("input[name=kdno]").val(),
+          },
+          success:function(res){
+              if(res.status==1){
+                  $("input[name=kdname]").attr('readonly','readonly')
+                  $("input[name=kdno]").attr('readonly','readonly')
+                  $(el).remove()
+                  alert(res.info)
+              }else{
+                  alert('发货失败，'+res.info);
+              }
+          },
+          error:function(){
+              alert('网络出现问题，发货失败');
+          }
+        });
+    }
+</script>
