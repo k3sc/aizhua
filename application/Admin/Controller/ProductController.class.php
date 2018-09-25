@@ -25,6 +25,7 @@ class ProductController extends AdminbaseController
         $map = " 1=1 ";
         $type = I('type');
         $keyword = I('keyword') ? I('keyword') : '';
+
         //假如是在线状态切换到在线娃娃
         $s_type = I('get.s_type');
         if($s_type){
@@ -36,15 +37,17 @@ class ProductController extends AdminbaseController
             $wawaids = array_column($gameroomInfo,'type_id');
             $wawaids = implode(',',$wawaids);
             $map .= ' and a.id in ('.$wawaids.') ';
-
-            //查询出逾期超过寄存的娃娃
-            $day = I('get.day')?I('get.day'):30;
-            if(!is_numeric($day)){
-                return false;
-            }
-            $daytime = time() - ($day * 86400);
             //$map .= ' mywawa.ctime < '.$daytime;
         }
+
+        //查询出逾期超过寄存的娃娃
+        $day = I('get.day')?I('get.day'):30;
+        if(!is_numeric($day)){
+            return false;
+        }
+        $daytime = time() - ($day * 86400);
+
+
         if ($type) {
             $map .= ' and a.type_id='.$type;
             $this->assign('type',$type);
@@ -89,8 +92,7 @@ class ProductController extends AdminbaseController
             $lists[$k]['convertcoin'] = M('user_wawas')->where(['wawa_id'=>$v['id'],'is_del'=>1])->count();
             $lists[$k]['convertgift'] = M('user_wawas')->where(['wawa_id'=>$v['id'],'is_del'=>2])->count();
             //统计逾期寄存的数据
-            if($s_type)
-                $lists[$k]['overdue_day'] = M('user_wawas')->where('wawa_id='.$v['id'].' and status=0 and is_del=0 and ctime < '.$daytime)->count();
+            $lists[$k]['overdue_day'] = M('user_wawas')->where('wawa_id='.$v['id'].' and status=0 and is_del=0 and ctime < '.$daytime)->count();
 
         }
         $this->assign('s_type', $s_type);

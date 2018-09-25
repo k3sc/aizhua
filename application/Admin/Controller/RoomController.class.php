@@ -95,9 +95,6 @@ class RoomController extends AdminbaseController
             $this->assign('giftData',$giftData['gift']);
             $this->assign('typeid',$row['typeid']);
 
-            /*echo "<pre>";
-            print_r($giftData['gift'][$row['typeid']]);
-            exit;*/
             $this->assign('giftDataJson',json_encode($giftData['gift']));
 
             $sql = "SELECT * FROM cmf_device WHERE device_unique_code NOT IN ((SELECT fac_id FROM cmf_game_room where id <> $id))";

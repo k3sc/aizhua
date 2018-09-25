@@ -9,6 +9,7 @@
 <div class="wrap">
     <ul class="nav nav-tabs">
         <li ><a href="{:U('Product/index')}">娃娃列表</a></li>
+        <li ><a href="{:U('Product/index','s_type=online')}">在线列表</a></li>
         <li class="active"><a >添加</a></li>
     </ul>
     <form method="post" class="form-horizontal js-ajax-form" action="{:U('Capturewawa/add_post',array('id'=>$get_id))}">
