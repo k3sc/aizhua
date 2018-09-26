@@ -66,7 +66,6 @@ class WaybillController extends AdminbaseController
             ->order('ctime desc')
             ->select();
 
-
         //超出14天未确认收货，则自动确认收货
         foreach ($userWaybillAll as $k => $v) {
             if( $v['status'] == 2 ){
@@ -914,7 +913,8 @@ class WaybillController extends AdminbaseController
         $data = [
             'kdname'=>$kdname,
             'kdno'=>$kdno,
-            'status'=>2
+            'status'=>2,
+            'fhtime'=>time()
         ];
         M('waybill')->startTrans();
         $result = M('waybill')->where(['waybillno'=>$waybillno])->save($data);
