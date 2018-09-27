@@ -57,15 +57,17 @@ class WaybillController extends AdminbaseController
             $filter['startmoney'] = $startmoney;
             $filter['endmoney'] = $endmoney;
         }
-        //筛选条件 --> 快递娃娃数量区间
+        //筛选条件 --> 快递娃娃总数量区间
         $startwawanum = I('startwawanum');
         $endwawanum = I('endwawanum');
         if($startwawanum || $endwawanum){
             $startwawanum = empty($startwawanum)?0:$startwawanum;
             $endwawanum = empty($endwawanum)?0:$endwawanum;
-            $group_by_where = " HAVING wawa_num>={$startwawanum} and wawa_num<={$endwawanum} ";
+            $where .= " and uwawasums.uwawasum>={$startwawanum} and uwawasums.uwawasum<={$endwawanum} ";
+            //$group_by_where = " HAVING wawa_num>={$startwawanum} and wawa_num<={$endwawanum} ";
             $filter['startwawanum'] = $startwawanum;
             $filter['endwawanum'] = $endwawanum;
+            $order_by=' order by a.user_id desc ';
         }
         //排序
         $orderby = I('orderby');
@@ -202,30 +204,41 @@ class WaybillController extends AdminbaseController
     public function getWaybill($params){
         $field = ' GROUP_CONCAT(a.user_wawas_id) as user_wawa_id_s,
                     GROUP_CONCAT(a.user_gift_id) as user_gift_id_s,
-                    a.*, b.wawa_id, c.gift_id, e.user_nicename, ppaayy.summoney, ppaayy.pay_user_id, count(a.wawa_nums) as wawa_num ';
+                    a.*, b.wawa_id, c.gift_id, e.user_nicename, ppaayy.summoney, ppaayy.pay_user_id, count(a.wawa_nums) as wawa_num ,uwawasums.uwawasum';
         $sql = "SELECT {$field} FROM cmf_waybill AS a 
                         LEFT JOIN cmf_users AS e ON a.user_id = e.id
                         LEFT JOIN cmf_user_wawas AS b ON a.user_wawas_id = b.id
                         LEFT JOIN cmf_users_gift AS c ON a.user_gift_id = c.id
                         LEFT JOIN (
-                    SELECT
-                        pay.user_id AS pay_user_id,
-                        pay.money AS pay_money,
-                        sum( pay.money ) AS summoney 
-                    FROM
-                        cmf_pay_record AS pay 
-                    WHERE
-                        pay.`status` = 1 
-                    GROUP BY
-                        pay.user_id 
+                                SELECT
+                                    pay.user_id AS pay_user_id,
+                                    pay.money AS pay_money,
+                                    sum( pay.money ) AS summoney 
+                                FROM
+                                    cmf_pay_record AS pay 
+                                WHERE
+                                    pay.`status` = 1 
+                                GROUP BY
+                                    pay.user_id 
                         ) AS ppaayy ON ppaayy.pay_user_id = a.user_id 
+                        LEFT JOIN (
+                                SELECT
+                                    u.id as uid,
+                                    sum( bill.wawa_nums ) as uwawasum
+                                FROM
+                                    cmf_users AS u
+                                    LEFT JOIN cmf_waybill AS bill ON u.id = bill.user_id 
+                                GROUP BY
+                                    user_id 
+                        ) as uwawasums on uwawasums.uid=a.user_id
+
                     WHERE
                         ({$params['where']}) {$params['group_by']} {$params['group_by_where']} {$params['order_by']} {$params['limit']}";
         $result = M()->query($sql);
         return $result;
     }
     public function __getCountWaybill($params){
-        $field = ' a.*, b.wawa_id, c.gift_id, e.user_nicename, ppaayy.summoney, ppaayy.pay_user_id, count(a.wawa_nums) as wawa_num ';
+        $field = ' a.*, b.wawa_id, c.gift_id, e.user_nicename, ppaayy.summoney, ppaayy.pay_user_id, count(a.wawa_nums) as wawa_num,uwawasums.uwawasum';
         $sql = "select count(*) as `count` from
                     (SELECT
                       {$field}
@@ -235,17 +248,27 @@ class WaybillController extends AdminbaseController
                         LEFT JOIN cmf_user_wawas AS b ON a.user_wawas_id = b.id
                         LEFT JOIN cmf_users_gift AS c ON a.user_gift_id = c.id
                         LEFT JOIN (
-                    SELECT
-                        pay.user_id AS pay_user_id,
-                        pay.money AS pay_money,
-                        sum( pay.money ) AS summoney 
-                    FROM
-                        cmf_pay_record AS pay 
-                    WHERE
-                        pay.`status` = 1 
-                    GROUP BY
-                        pay.user_id 
+                                SELECT
+                                    pay.user_id AS pay_user_id,
+                                    pay.money AS pay_money,
+                                    sum( pay.money ) AS summoney 
+                                FROM
+                                    cmf_pay_record AS pay 
+                                WHERE
+                                    pay.`status` = 1 
+                                GROUP BY
+                                    pay.user_id 
                         ) AS ppaayy ON ppaayy.pay_user_id = a.user_id 
+                        LEFT JOIN (
+                                SELECT
+                                    u.id as uid,
+                                    sum( bill.wawa_nums ) as uwawasum
+                                FROM
+                                    cmf_users AS u
+                                    LEFT JOIN cmf_waybill AS bill ON u.id = bill.user_id 
+                                GROUP BY
+                                    user_id 
+                        ) as uwawasums on uwawasums.uid=a.user_id
                     WHERE ({$params['where']}) {$params['group_by']} {$params['group_by_where']} {$params['order_by']} 
                         ) cu;";
         $result = M()->query($sql);
@@ -423,9 +446,7 @@ class WaybillController extends AdminbaseController
                 $arr[$k]['num'] += $vv['num'];
             }
         }
-        echo "<pre>";
-        print_r($arr);
-        exit;
+
         $this->assign('status_name',$this->statusArr);
         $this->assign('data',$arr);
 
