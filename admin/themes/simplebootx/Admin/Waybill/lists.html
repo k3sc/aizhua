@@ -23,7 +23,7 @@
         </a>
     </form>
 
-    <form method="get" class="well form-search" action="{:U('Waybill/lists')}">
+    <form method="get" class="well form-search" id="filter" action="{:U('Waybill/lists')}">
         <input type="hidden" name="g" value="Admin">
         <input type="hidden" name="m" value="Waybill">
         <input type="hidden" name="a" value="lists">
@@ -67,7 +67,7 @@
 
                 </td>
                 <td>
-                    物品数量：
+                    物品总数量：
                     <input type="number" style="width: 50px;" min="0" name="startwawanum" value="{$filter.startwawanum}">
                     -
                     <input type="number" style="width: 50px;" name="endwawanum" value="{$filter.endwawanum}">
@@ -85,14 +85,33 @@
         <thead>
         <tr>
             <th align="center">运单号</th>
-            <th>寄件人(昵称，ID)</th>
+            <th style="cursor:pointer;" onclick="orderby(this)" data-ordername=uname data-ordertype=
+                <if condition="$filter[orderby]=='uname' && $filter[ordertype]=='desc'">desc
+                <elseif condition="$filter[orderby]=='uname' && $filter[ordertype]=='asc'"/>asc
+                <else/>0</if>
+            >
+                寄件人(昵称，ID)
+                <span class="action-wawanum-orderby">
+                    <if condition="$filter[orderby]=='uname' && $filter[ordertype]=='desc'">▽
+                    <elseif condition="$filter[orderby]=='uname' && $filter[ordertype]=='asc'"/>△</if>
+                </span>
+            </th>
             <th>物品明细</th>
             <th>收货人</th>
 		    <th>充值金额</th>
             <th>地址</th>
             <th>手机号</th>
             <th>物品名称</th>
-            <th>物品数量</th>
+            <th style="cursor:pointer;" onclick="orderby(this)" data-ordername=wawa_num data-ordertype=
+                <if condition="$filter[orderby]=='wawa_num' && $filter[ordertype]=='desc'">desc
+                <elseif condition="$filter[orderby]=='wawa_num' && $filter[ordertype]=='asc'"/>asc
+                <else/>0</if>
+            >
+                物品数量 <span class="action-wawanum-orderby">
+                    <if condition="$filter[orderby]=='wawa_num' && $filter[ordertype]=='desc'">▽
+                    <elseif condition="$filter[orderby]=='wawa_num' && $filter[ordertype]=='asc'"/>△</if>
+                </span>
+            </th>
             <th>邮寄备注</th>
             <th>快递公司</th>
             <th>快递单号</th>
@@ -226,9 +245,9 @@
             } else {
                 var startTime = $.trim($('input[name="startTime"]').val());
                 var endTime = $.trim($('input[name="endTime"]').val());
-                if (startTime != '' && endTime != '') {
+                if ((startTime != '' && endTime != '') || startTime == '' && endTime == '') {
                     $("#export_form").submit();
-                }
+                 }
             }
         });
     });
@@ -242,6 +261,15 @@
 </script>
 
 <script>
+    function orderby(el){
+        var form = $('#filter');
+        var ordertype = $(el).attr('data-ordertype')!='desc'?'desc':'asc';
+        var ordername = $(el).attr('data-ordername');
+        var orderby = ordername+','+ordertype
+        var order_input = "<input type='hidden' name='orderby' value="+orderby+" >";
+        form.append(order_input);
+        form.submit();
+    }
     $(function(){
         $("#import").change(function(){
             $("#import_form").submit();

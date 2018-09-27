@@ -15,6 +15,7 @@ class WaybillController extends AdminbaseController
     private $statusArr = [1=>'待邮寄',2=>'已发货',3=>'已确认'];
 
     public function lists(){
+        $order_by = ' order by ctime desc ';
         $where = '1=1';
         $keyword = I('keyword','');
         if( $keyword ){
@@ -42,6 +43,10 @@ class WaybillController extends AdminbaseController
             $this->assign('uid',$uid);
         }
 
+        /* *
+         * 订单新加条件
+         * @author by OCY
+         */
         //筛选条件 --> 充值金额区间范围
         $startmoney = I('startmoney');
         $endmoney = I('endmoney');
@@ -62,8 +67,18 @@ class WaybillController extends AdminbaseController
             $filter['startwawanum'] = $startwawanum;
             $filter['endwawanum'] = $endwawanum;
         }
+        //排序
+        $orderby = I('orderby');
+        if($orderby && !empty($orderby)){
+            $orderby = explode(',',$orderby);
+            $ordername = $orderby[0];
+            if($orderby[0]=='uname')
+                $ordername = 'a.'.'user_id';
+            $order_by = " order by {$ordername} {$orderby[1]} ";
+            $filter['orderby'] = $orderby[0];
+            $filter['ordertype'] = $orderby[1];
+        }
 
-        $order_by = ' order by ctime desc ';
         $params = [
             'where'=>$where,
             'group_by'=>' group by a.waybillno ',
@@ -77,7 +92,19 @@ class WaybillController extends AdminbaseController
         $params['limit'] = " limit {$page->firstRow},{$page->listRows}";
         //获取用户的所有运单
         $userWaybillAll = $this->getWaybill($params);
+        //缓存需要导出的数据条件
+        S('getWaybillParams',$params);
 
+        $arr = $this->__FormatWaybill($userWaybillAll);
+
+        $this->assign('status_name',$this->statusArr);
+        $this->assign('data',$arr);
+        $this->assign('filter',$filter);
+
+        $this->display();
+
+    }
+    public function __FormatWaybill($userWaybillAll){
         foreach ($userWaybillAll as $key=>$val){
 
             //罗列娃娃用户订单所包含的娃娃列表
@@ -170,24 +197,13 @@ class WaybillController extends AdminbaseController
         }
 
         $arr = array_values($arr);
-
-
-        $this->assign('status_name',$this->statusArr);
-        $this->assign('data',$arr);
-        $this->assign('filter',$filter);
-
-        $this->display();
-
+        return $arr;
     }
-
     public function getWaybill($params){
         $field = ' GROUP_CONCAT(a.user_wawas_id) as user_wawa_id_s,
                     GROUP_CONCAT(a.user_gift_id) as user_gift_id_s,
                     a.*, b.wawa_id, c.gift_id, e.user_nicename, ppaayy.summoney, ppaayy.pay_user_id, count(a.wawa_nums) as wawa_num ';
-        $sql = "SELECT
-                        {$field}
-                    FROM
-                        cmf_waybill AS a
+        $sql = "SELECT {$field} FROM cmf_waybill AS a 
                         LEFT JOIN cmf_users AS e ON a.user_id = e.id
                         LEFT JOIN cmf_user_wawas AS b ON a.user_wawas_id = b.id
                         LEFT JOIN cmf_users_gift AS c ON a.user_gift_id = c.id
@@ -710,119 +726,27 @@ class WaybillController extends AdminbaseController
 
 
     public function doExport(){
+        //获取订单首页的列表数据条件
+        $params = S('getWaybillParams');
+        if(!$params || empty($params))
+            return false;
 
-        $s = strtotime(I('startTime'));
-        $e = strtotime(I('endTime')." 23:59:59");
-        $where = "a.ctime >= " . $s;
-        $where .= " and a.ctime < " . $e;
-        $where .= " and a.status = 1";
-
-        //获取用户的所有运单
-        $userWaybillAll = M('waybill as a')
-            ->join('left join cmf_users as e on a.user_id = e.id')
-            ->join('left join cmf_user_wawas as b on a.user_wawas_id = b.id')
-            ->join('left join cmf_users_gift as c on a.user_gift_id = c.id')
-            ->field('a.*,b.wawa_id,c.gift_id,e.user_nicename')
-            ->where($where)
-            ->order('a.ctime desc')
-            ->select();
-
-        if( empty($userWaybillAll) ) $this->error('所选时间没有可发货的订单','admin/waybill/lists');
-
-        foreach ($userWaybillAll as $k => $v) {
-            if( $v['wawa_id'] ){
-                $wawaname = M('gift')->where(['id'=>$v['wawa_id']])->getField('giftname');
-                $userWaybillAll[$k]['wawaname'] = $wawaname;
-            }else{
-                $userWaybillAll[$k]['wawaname'] = '';
-            }
-            if( $v['gift_id'] ){
-                $giftname = M('give_gift')->where(['id'=>$v['gift_id']])->getField('name');
-                $userWaybillAll[$k]['giftname'] = $giftname;
-            }else{
-                $userWaybillAll[$k]['giftname'] = '';
-            }
+        //根据需求是否增加时间条件
+        $startTime = I('startTime');
+        $endTime = I('endTime');
+        if($startTime && $endTime){
+            $s = strtotime($startTime);
+            $e = strtotime($endTime." 23:59:59");
+            $where = " and a.ctime >= " . $s;
+            $where .= " and a.ctime < " . $e;
+            $params['where'] .= $where;
         }
 
-        $arr = [];
-        foreach($userWaybillAll as $k=>$v){
-            if(!isset($arr[$v['waybillno']])){
-                $arr[$v['waybillno']]=array(
-                    'user_id'       => $v['user_id'],
-                    'user_nicename' => $v['user_nicename'],
-                    'waybill_id'    => $v['waybill_id'],
-                    'waybillno'     => $v['waybillno'],
-                    'status'        => $v['status'],
-                    'remark'        => $v['remark'],
-                    'ctime'         => $v['ctime'],//运单生成时间
-                    'fhtime'        => $v['fhtime'],//发货时间
-                    'shtime'        => $v['shtime'],//收货时间
-                    'uname'         => $v['uname'],
-                    'phone'         => $v['phone'],
-                    'addr'          => $v['addr'],
-                    'addr_info'     => $v['addr_info'],
-                    'kdname'        => $v['kdname'],
-                    'kdno'          => $v['kdno'],
-                    'sys_remark'    => $v['sys_remark'],
-                );
+        $waybillData = $this->getWaybill($params);
 
-                if(!empty($v['wawa_id'])) {
-                    $flag=1;
-                    foreach($arr[$v['waybillno']]['goods'] as $kk => $vv){
-                        if($vv['name']==$v['wawaname']){
-                            $flag=0;
-//                            $vv['num']+=1;
-                            $arr[$v['waybillno']]['goods'][$kk]['num']+=1;
-                        }
-                    }
-                    if ($flag) {
-                        $arr[$v['waybillno']]['goods'][] = array('name'=>$v['wawaname'],'num' => 1);
-                    }
-                }else{
-                    $mark = 1;
-                    foreach($arr[$v['waybillno']]['goods'] as $kkk => $vvv){
-                        if($vvv['name']==$v['giftname']){
-                            $mark=0;
-//                            $vvv['num']+=1;
-                            $arr[$v['waybillno']]['goods'][$kkk]['num']+=1;
-                        }
-                    }
-                    if ($mark) {
-                        $arr[$v['waybillno']]['goods'][] = array('name'=>$v['giftname'],'num' => 1);
-                    }
-                }
-            }else{
-                if(!empty($v['wawa_id'])) {
-                    $flag=0;
-                    foreach($arr[$v['waybillno']]['goods'] as $kk=>$vv){
-                        if($vv['name']==$v['wawaname']){
-                            $flag=1;
-                            $arr[$v['waybillno']]['goods'][$kk]['num']+=1;
-                        }
-                    }
-                    if (!$flag) {
-                        $arr[$v['waybillno']]['goods'][] = array('name'=>$v['wawaname'],'num' => 1);
-                    }
-                }else{
-                    $mark = 1;
-                    foreach($arr[$v['waybillno']]['goods'] as $kkk => $vvv){
-                        if($vvv['name']==$v['giftname']){
-                            $mark=0;
-//                            $vvv['num']+=1;
-                            $arr[$v['waybillno']]['goods'][$kkk]['num']+=1;
-                        }
-                    }
-                    if ($mark) {
-                        $arr[$v['waybillno']]['goods'][] = array('name'=>$v['giftname'],'num' => 1);
-                    }
-                }
-            }
-	    $money = M('pay_record')->where("user_id='{$v['user_id']}' and status=1")->sum('money');
-            $arr[$v['waybillno']]['total_payed'] = $money;
-        }
-        $arr = array_values($arr);
+        $waybillData = $this->__FormatWaybill($waybillData);
 
-        foreach ($arr as $k =>$v) {
+        foreach ($waybillData as $k =>$v) {
             $goods = '';
             foreach ($v['goods'] as $vo) {
                 $goods .= $vo['name'] . ' X ' . $vo['num'] . "\r\n";
@@ -830,7 +754,7 @@ class WaybillController extends AdminbaseController
         }
 
         $data = [];
-        foreach ($arr as $k => $v) {
+        foreach ($waybillData as $k => $v) {
             $data[$k]['waybillno'] = $v['waybillno'];
             $data[$k]['user'] = $v['user_nicename'].$v['user_id'];
             $goods = '';
@@ -847,7 +771,6 @@ class WaybillController extends AdminbaseController
             $data[$k]['kdno'] = $v['kdno'];
             $data[$k]['sys_remark'] = $v['sys_remark'];
         }
-
         $header = ['运单号','寄件人(昵称，ID)','物品明细','收货人','充值金额','地址','手机号','邮寄备注','快递公司','快递单号','系统备注'];
         $this->export($data,$header);
     }
