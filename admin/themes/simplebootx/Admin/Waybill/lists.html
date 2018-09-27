@@ -27,18 +27,57 @@
         <input type="hidden" name="g" value="Admin">
         <input type="hidden" name="m" value="Waybill">
         <input type="hidden" name="a" value="lists">
-        按单号查询：<input type="text" name="keyword" value="{$keyword}"  placeholder="请输入运单号或快递单号">
-        按运单状态查询：
-        <select name="status">
-            <option value="0">选择运单状态</option>
-            <foreach name="status_name" item="vo" key="k">
-                <option value="{$k}" <eq name="Think.get.status" value="$k">selected</eq> >{$vo}</option>
-            </foreach>
-        </select>
-        收件人姓名：<input type="text" name="username" value="{$username}">
-        收件人手机号：<input type="text" name="mobile" value="{$mobile}">
-        用户ID：<input type="text" name="uid" value="{$uid}">
-        <input type="submit" class="btn btn-primary" value="搜索">
+        <table>
+            <tbody>
+            <tr  style="width: 100%;">
+                <th width="25%"></th>
+                <th width="28%"></th>
+                <th width="25%"></th>
+                <th></th>
+            </tr>
+            <tr>
+                <td>
+                    按单号查询：<input type="text" name="keyword" value="{$keyword}"  placeholder="请输入运单号或快递单号">
+                </td>
+                <td>
+                    按运单状态查询：
+                    <select name="status">
+                        <option value="0">选择运单状态</option>
+                        <foreach name="status_name" item="vo" key="k">
+                            <option value="{$k}" <eq name="Think.get.status" value="$k">selected</eq> >{$vo}</option>
+                        </foreach>
+                    </select>
+                </td>
+                <td>
+                    收件人姓名：<input type="text" name="username" value="{$username}">
+                </td>
+                <td>
+                    收件人手机号：<input type="text" name="mobile" value="{$mobile}">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    用户ID：<input type="text" name="uid" value="{$uid}">
+                </td>
+                <td>
+                    充值金额：
+                    <input type="number" style="width: 50px;" min="0" name="startmoney" value="{$filter.startmoney}">
+                    -
+                    <input type="number" style="width: 50px;" name="endmoney" value="{$filter.endmoney}">
+
+                </td>
+                <td>
+                    物品数量：
+                    <input type="number" style="width: 50px;" min="0" name="startwawanum" value="{$filter.startwawanum}">
+                    -
+                    <input type="number" style="width: 50px;" name="endwawanum" value="{$filter.endwawanum}">
+
+                    <input type="submit" class="btn btn-primary" value="搜索">
+                    <input type="button" class="btn btn-primary" onclick=location.href="{:U('Waybill/lists')}" value="清除">
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </form>
 
     <table class="table table-hover table-bordered">
@@ -48,7 +87,7 @@
             <th>寄件人(昵称，ID)</th>
             <th>物品明细</th>
             <th>收货人</th>
-		<th>充值金额</th>
+		    <th>充值金额</th>
             <th>地址</th>
             <th>手机号</th>
             <th>物品名称</th>

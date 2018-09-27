@@ -14,8 +14,7 @@ class WaybillController extends AdminbaseController
 
     private $statusArr = [1=>'待邮寄',2=>'已发货',3=>'已确认'];
 
-    public function lists()
-    {
+    public function lists(){
         $where = '1=1';
         $keyword = I('keyword','');
         if( $keyword ){
@@ -43,28 +42,78 @@ class WaybillController extends AdminbaseController
             $this->assign('uid',$uid);
         }
 
+        //筛选条件 --> 充值金额区间范围
+        $startmoney = I('startmoney');
+        $endmoney = I('endmoney');
+        if($startmoney || $endmoney){
+            $startmoney = empty($startmoney)?0:$startmoney;
+            $endmoney = empty($endmoney)?0:$endmoney;
+            $where .= " and ppaayy.summoney >= {$startmoney} and ppaayy.summoney <= {$endmoney} ";
+            $filter['startmoney'] = $startmoney;
+            $filter['endmoney'] = $endmoney;
+        }
+        //筛选条件 --> 快递娃娃数量区间
+        $startwawanum = I('startwawanum');
+        $endwawanum = I('endwawanum');
+        if($startwawanum || $endwawanum){
+            $startwawanum = empty($startwawanum)?0:$startwawanum;
+            $endwawanum = empty($endwawanum)?0:$endwawanum;
+            $group_by_where = " HAVING wawa_num>={$startwawanum} and wawa_num<={$endwawanum} ";
+            $filter['startwawanum'] = $startwawanum;
+            $filter['endwawanum'] = $endwawanum;
+        }
 
-        $count = M('waybill as a')
-            ->join('left join cmf_users as e on a.user_id = e.id')
-            ->join('left join cmf_user_wawas as b on a.user_wawas_id = b.id')
-            ->join('left join cmf_users_gift as c on a.user_gift_id = c.id')
-            ->where($where)
-            ->count('waybillno');
-
+        $order_by = ' order by ctime desc ';
+        $params = [
+            'where'=>$where,
+            'group_by'=>' group by a.waybillno ',
+            'group_by_where'=>isset($group_by_where)?$group_by_where:' ',
+            'order_by'=>$order_by,
+        ];
+        $count = $this->__getCountWaybill($params);
         $page = $this->page($count,20);
         $this->assign('page',$page->show('Admin'));
 
+        $params['limit'] = " limit {$page->firstRow},{$page->listRows}";
         //获取用户的所有运单
-        $userWaybillAll = M('waybill as a')
-            ->join('left join cmf_users as e on a.user_id = e.id')
-            ->join('left join cmf_user_wawas as b on a.user_wawas_id = b.id')
-            ->join('left join cmf_users_gift as c on a.user_gift_id = c.id')
-//            ->join('left join cmf_user_addr as d on a.addr_id = d.addr_id')
-            ->field('a.*,b.wawa_id,c.gift_id,e.user_nicename')
-            ->where($where)
-            ->limit($page->firstRow.','.$page->listRows)
-            ->order('ctime desc')
-            ->select();
+        $userWaybillAll = $this->getWaybill($params);
+
+        foreach ($userWaybillAll as $key=>$val){
+
+            //罗列娃娃用户订单所包含的娃娃列表
+            $user_wawaids = explode(',',$val['user_wawa_id_s']);
+            $user_wawaids = array_filter($user_wawaids);
+            if(!empty($user_wawaids)){
+                $userWawaData = M('user_wawas')->field('wawa_id')->where(['id'=>['in',$user_wawaids]])->select();
+                $wawa_ids = array_column($userWawaData,'wawa_id');
+                $wawa_ids_count = array_count_values($wawa_ids);
+                $WawaData = M('gift')->field('id,giftname as name')->where(['id'=>['in',$wawa_ids]])->select();
+                foreach ($WawaData as $k=>$v){
+                    $WawaData[$k]['num'] = $wawa_ids_count[$v['id']];
+                    $WawaData[$k]['wawa_id'] = $v['id'];
+                }
+                $userWaybillAll[$key]['goods'] = $WawaData;
+            }
+            //罗列娃娃用户订单所包含的礼品列表
+            $user_giftids = explode(',',$val['user_gift_id_s']);
+            $user_giftids = array_filter($user_giftids);
+            if(!empty($user_giftids)){
+                $userGiftData = M('users_gift')->field('gift_id')->where(['id'=>['in',$user_giftids]])->select();
+                $gift_ids = array_column($userGiftData,'gift_id');
+                $gift_ids_count = array_count_values($gift_ids);
+                $giftData = M('give_gift')->field('id,name')->where(['id'=>['in',$gift_ids]])->select();
+                foreach ($giftData as $k=>$v){
+                    $giftData[$k]['num'] = $gift_ids_count[$v['id']];
+                    $giftData[$k]['gift_id'] = $v['id'];
+                    $giftData[$k]['name'] = '<span style="color: red;font-weight: 500">(礼品)</span>  |  '.$v['name'];
+                }
+                $userWaybillAll[$key]['goods'] = $giftData;
+            }
+
+
+            $userWaybillAll[$key]['num'] = $val['wawa_num'];
+        }
+
 
         //超出14天未确认收货，则自动确认收货
         foreach ($userWaybillAll as $k => $v) {
@@ -92,6 +141,186 @@ class WaybillController extends AdminbaseController
             }
         }
 
+        $arr = [];
+        foreach($userWaybillAll as $k=>$v){
+            if(!isset($arr[$v['waybillno']])){
+                $arr[$v['waybillno']]=array(
+                    'user_id'       => $v['user_id'],
+                    'user_nicename' => $v['user_nicename'],
+                    'waybill_id'    => $v['waybill_id'],
+                    'waybillno'     => $v['waybillno'],
+                    'status'        => $v['status'],
+                    'remark'        => $v['remark'],
+                    'ctime'         => $v['ctime'],//运单生成时间
+                    'fhtime'        => $v['fhtime'],//发货时间
+                    'shtime'        => $v['shtime'],//收货时间
+                    'uname'         => $v['uname'],
+                    'phone'         => $v['phone'],
+                    'addr'          => $v['addr'],
+                    'addr_info'     => $v['addr_info'],
+                    'kdname'        => $v['kdname'],
+                    'kdno'          => $v['kdno'],
+                    'goodsname'     => $v['goodsname'],
+                    'sys_remark'    => $v['sys_remark'],
+                    'num'    => $v['num'],
+                    'goods'    => $v['goods'],
+                    'total_payed'    => empty($v['summoney'])?0:$v['summoney'],
+                );
+            }
+        }
+
+        $arr = array_values($arr);
+
+
+        $this->assign('status_name',$this->statusArr);
+        $this->assign('data',$arr);
+        $this->assign('filter',$filter);
+
+        $this->display();
+
+    }
+
+    public function getWaybill($params){
+        $field = ' GROUP_CONCAT(a.user_wawas_id) as user_wawa_id_s,
+                    GROUP_CONCAT(a.user_gift_id) as user_gift_id_s,
+                    a.*, b.wawa_id, c.gift_id, e.user_nicename, ppaayy.summoney, ppaayy.pay_user_id, count(a.wawa_nums) as wawa_num ';
+        $sql = "SELECT
+                        {$field}
+                    FROM
+                        cmf_waybill AS a
+                        LEFT JOIN cmf_users AS e ON a.user_id = e.id
+                        LEFT JOIN cmf_user_wawas AS b ON a.user_wawas_id = b.id
+                        LEFT JOIN cmf_users_gift AS c ON a.user_gift_id = c.id
+                        LEFT JOIN (
+                    SELECT
+                        pay.user_id AS pay_user_id,
+                        pay.money AS pay_money,
+                        sum( pay.money ) AS summoney 
+                    FROM
+                        cmf_pay_record AS pay 
+                    WHERE
+                        pay.`status` = 1 
+                    GROUP BY
+                        pay.user_id 
+                        ) AS ppaayy ON ppaayy.pay_user_id = a.user_id 
+                    WHERE
+                        ({$params['where']}) {$params['group_by']} {$params['group_by_where']} {$params['order_by']} {$params['limit']}";
+        $result = M()->query($sql);
+        return $result;
+    }
+    public function __getCountWaybill($params){
+        $field = ' a.*, b.wawa_id, c.gift_id, e.user_nicename, ppaayy.summoney, ppaayy.pay_user_id, count(a.wawa_nums) as wawa_num ';
+        $sql = "select count(*) as `count` from
+                    (SELECT
+                      {$field}
+                    FROM
+                        cmf_waybill AS a
+                        LEFT JOIN cmf_users AS e ON a.user_id = e.id
+                        LEFT JOIN cmf_user_wawas AS b ON a.user_wawas_id = b.id
+                        LEFT JOIN cmf_users_gift AS c ON a.user_gift_id = c.id
+                        LEFT JOIN (
+                    SELECT
+                        pay.user_id AS pay_user_id,
+                        pay.money AS pay_money,
+                        sum( pay.money ) AS summoney 
+                    FROM
+                        cmf_pay_record AS pay 
+                    WHERE
+                        pay.`status` = 1 
+                    GROUP BY
+                        pay.user_id 
+                        ) AS ppaayy ON ppaayy.pay_user_id = a.user_id 
+                    WHERE ({$params['where']}) {$params['group_by']} {$params['group_by_where']} {$params['order_by']} 
+                        ) cu;";
+        $result = M()->query($sql);
+        return $result[0]['count'];
+    }
+
+    public function lists2()
+    {
+        $where = '1=1';
+        $keyword = I('keyword','');
+        if( $keyword ){
+            $where .= " and waybillno like '%".$keyword."%' or kdno like '%".$keyword."%'";
+            $this->assign('keyword',$keyword);
+        }
+        $status = I('status','');
+        if( $status ){
+            $where .= " and a.status = $status";
+            $this->assign('status',$status);
+        }
+        $username = I('username');
+        if( $username ){
+            $where .= " and a.uname like '%".$username."%'";
+            $this->assign('username',$username);
+        }
+        $mobile = I('mobile');
+        if( $mobile ){
+            $where .= " and a.phone like '%".$mobile."%'";
+            $this->assign('mobile',$mobile);
+        }
+        $uid = I('uid');
+        if( $uid ){
+            $where .= " and a.user_id = '".$uid."'";
+            $this->assign('uid',$uid);
+        }
+        $startmoney = I('startmoney');
+        $endmoney = I('endmoney');
+        if($startmoney || $endmoney){
+            $startmoney = empty($startmoney)?0:$startmoney;
+
+        }
+
+        $count = M('waybill as a')
+            ->join('left join cmf_users as e on a.user_id = e.id')
+            ->join('left join cmf_user_wawas as b on a.user_wawas_id = b.id')
+            ->join('left join cmf_users_gift as c on a.user_gift_id = c.id')
+            ->where($where)
+            ->count('waybillno');
+
+        $page = $this->page($count,20);
+        $this->assign('page',$page->show('Admin'));
+
+        //获取用户的所有运单
+        $userWaybillAll = M('waybill as a')
+            ->join('left join cmf_users as e on a.user_id = e.id')
+            ->join('left join cmf_user_wawas as b on a.user_wawas_id = b.id')
+            ->join('left join cmf_users_gift as c on a.user_gift_id = c.id')
+            //->join('left join cmf_user_addr as d on a.addr_id = d.addr_id')
+            ->field('a.*,b.wawa_id,c.gift_id,e.user_nicename')
+            ->where($where)
+            ->limit($page->firstRow.','.$page->listRows)
+            ->order('ctime desc')
+            ->select();
+
+
+
+
+        //超出14天未确认收货，则自动确认收货
+        foreach ($userWaybillAll as $k => $v) {
+            if( $v['status'] == 2 ){
+                if( time() - $v['fhtime'] > 14*24*60*60 )
+                    M('waybill')->where(['waybillno'=>$v['waybillno']])->save(['status'=>3,'shtime'=>time()]);
+            }
+        }
+
+
+        foreach ($userWaybillAll as $k => $v) {
+            if( $v['wawa_id'] ){
+                $wawaname = M('gift')->where(['id'=>$v['wawa_id']])->getField('giftname');
+                $userWaybillAll[$k]['wawaname'] = $wawaname;
+                $userWaybillAll[$k]['wawa_id'] = $v['wawa_id'];
+            }else{
+                $userWaybillAll[$k]['wawaname'] = '';
+            }
+            if( $v['gift_id'] ){
+                $giftname = M('give_gift')->where(['id'=>$v['gift_id']])->getField('name');
+                $userWaybillAll[$k]['giftname'] = $giftname;
+                $userWaybillAll[$k]['gift_id'] = $v['gift_id'];
+            }else{
+                $userWaybillAll[$k]['giftname'] = '';
+            }
+        }
         $arr = [];
         foreach($userWaybillAll as $k=>$v){
             if(!isset($arr[$v['waybillno']])){
@@ -166,19 +395,21 @@ class WaybillController extends AdminbaseController
                     }
                 }
             }
-	$money = M('pay_record')->where("user_id='{$v['user_id']}' and status=1")->sum('money');
+	        $money = M('pay_record')->where("user_id='{$v['user_id']}' and status=1")->sum('money');
+
             $arr[$v['waybillno']]['total_payed'] = $money?:0;
         }
 
         $arr = array_values($arr);
-
 
         foreach ($arr as $k => $v){
             foreach ($v['goods'] as $vv) {
                 $arr[$k]['num'] += $vv['num'];
             }
         }
-
+        echo "<pre>";
+        print_r($arr);
+        exit;
         $this->assign('status_name',$this->statusArr);
         $this->assign('data',$arr);
 

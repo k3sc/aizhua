@@ -2,3 +2,5 @@ data/runtime
 api/Runtime
 yun
 18_09_20-error.log
+data/conf/config.php
+data/conf/db.php
