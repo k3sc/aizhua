@@ -764,7 +764,7 @@ class WaybillController extends AdminbaseController
             $data[$k]['goods'] = $goods;
             $data[$k]['uname'] = $v['uname'];
 	$data[$k]['total_payed'] = $v['total_payed']?:0;
-            $data[$k]['addr'] = $v['addr'].$v['addr_info'];
+            $data[$k]['addr'] = big5_gb2312($v['addr'].$v['addr_info']);
             $data[$k]['phone'] = $v['phone'];
             $data[$k]['remark'] = $v['remark'];
             $data[$k]['kdname'] = $v['kdname'];
@@ -783,7 +783,6 @@ class WaybillController extends AdminbaseController
      * @param  string $sheetname  sheet名称
      */
     public function export(array $data,array $fileheader, $savefile=null, $sheetname='MySheet'){
-
         /** Include PHPExcel */
         require_once APP_PATH.'../PHPExcel/PHPExcel.php';
         $excel = new \PHPExcel();
