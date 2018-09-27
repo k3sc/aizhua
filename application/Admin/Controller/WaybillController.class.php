@@ -762,7 +762,7 @@ class WaybillController extends AdminbaseController
                 $goods .= $vo['name'] . ' X ' . $vo['num'] . "\r\n";
             }
             $data[$k]['goods'] = $goods;
-            $data[$k]['uname'] = $v['uname'];
+            $data[$k]['uname'] = big5_gb2312($v['uname']);
 	$data[$k]['total_payed'] = $v['total_payed']?:0;
             $data[$k]['addr'] = big5_gb2312($v['addr'].$v['addr_info']);
             $data[$k]['phone'] = $v['phone'];
