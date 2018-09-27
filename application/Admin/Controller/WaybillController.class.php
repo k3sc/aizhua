@@ -447,9 +447,9 @@ class WaybillController extends AdminbaseController
          * is_receive = 0 是否获赠
          * @author by OCY
          */
-        $where = ' 1=1 and b.ctime < '.$daytime.' and b.is_del=0 and b.status in (0,1) and b.is_receive=0';
-        $count = M('user_wawas as b')
-            ->join('left join cmf_users as e on b.user_id = e.id')
+        $where = ' 1=1 and uwawa.ctime < '.$daytime.' and uwawa.is_del=0 and uwawa.status in (0) and uwawa.is_receive=0';
+        $count = M('user_wawas as uwawa')
+            ->join('left join cmf_users as e on uwawa.user_id = e.id')
             ->where($where)
             ->count();
 
@@ -457,14 +457,16 @@ class WaybillController extends AdminbaseController
         $this->assign('page',$page->show('Admin'));
 
         //获取用户的所有运单
-        $userWaybillAll = M('user_wawas as b')
-            ->join('left join cmf_waybill as bill on bill.user_wawas_id = b.id')
-            ->join('left join cmf_users as e on b.user_id = e.id')
-            ->field('bill.*,b.*,b.status as wawa_status,b.ctime as getwawatime,e.user_nicename')
+        $userWaybillAll = M('user_wawas as uwawa')
+            //->join('left join cmf_waybill as bill on bill.user_wawas_id = uwawa.id')
+            ->join('left join cmf_users as e on uwawa.user_id = e.id')
+            ->field('uwawa.*,uwawa.status as wawa_status,uwawa.ctime as getwawatime,e.user_nicename')
             ->where($where)
             ->limit($page->firstRow.','.$page->listRows)
             ->order('getwawatime desc')
             ->select();
+
+
 
         foreach ($userWaybillAll as $k => $v) {
             if( $v['wawa_id'] ){
@@ -763,7 +765,7 @@ class WaybillController extends AdminbaseController
             }
             $data[$k]['goods'] = $goods;
             $data[$k]['uname'] = big5_gb2312($v['uname']);
-	$data[$k]['total_payed'] = $v['total_payed']?:0;
+	        $data[$k]['total_payed'] = $v['total_payed']?:0;
             $data[$k]['addr'] = big5_gb2312($v['addr'].$v['addr_info']);
             $data[$k]['phone'] = $v['phone'];
             $data[$k]['remark'] = $v['remark'];
