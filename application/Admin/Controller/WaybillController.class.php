@@ -764,7 +764,7 @@ class WaybillController extends AdminbaseController
             $where .= " and a.ctime < " . $e;
             $params['where'] .= $where;
         }
-
+        unset($params['limit']);
         $waybillData = $this->getWaybill($params);
 
         $waybillData = $this->__FormatWaybill($waybillData);
