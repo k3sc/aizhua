@@ -17,7 +17,8 @@
 		              <option value="2" <eq name="status" value="2">selected</eq>>已发货</option>
 		              <option value="5" <eq name="status" value="5">selected</eq>>已确认</option>
 
-	       	</select>  
+	       	</select>
+            寄存天数：<input style="width: 120px;" type="number" name="depositday" value="{$filter.depositday}" min="1" placeholder="大于等于输入的天数">
 			<input type="submit" class="btn btn-primary" value="搜索">
 		</form>	 
 		<form method="post" class="js-ajax-form" action="{:U('Users/body')}">

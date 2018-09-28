@@ -422,6 +422,7 @@ public function setWawa()
     //用户娃娃列表
     public function body()
     {
+        $filter = [];
         $statusArr = [0=>'寄存中',1=>'待邮寄',2=>'已发货',5=>'已确认'];
         $this->assign('statusArr',$statusArr);
         $id = I('id');
@@ -433,19 +434,28 @@ public function setWawa()
 
         $name = I('name') ? I('name') : '';
         $status = I('status');
-	$_GET['status'] = $status;
+	    $_GET['status'] = $status;
         $_GET['id'] = $id;
         $_GET['name'] = $name;
         if ($name !== '') {
             $map .= " and b.giftname='{$name}'";
             $this->assign('name', $name);
         }
-        if ($status >= 0) {
+
+        //处理寄存天数
+        $depositday = I('depositday');
+        if(!empty($depositday)){
+            $daytime = time() - $depositday*86400;
+            $map .= " and a.status=0 and a.is_del = 0 and a.ctime<={$daytime} ";
+            $filter['depositday'] = $depositday;
+            $this->assign('status', 0);
+        }else if ($status >= 0) {
             $map .= " and a.status='{$status}' and a.is_del = 0";
             $this->assign('status', $status);
         }else{
             $map .= " and a.is_del = 0";
         }
+
         $model = M('user_wawas');
         $count = $model->alias('a')
             ->join('cmf_gift as b on b.id=a.wawa_id', left)
@@ -460,7 +470,7 @@ public function setWawa()
             ->field('a.id,b.giftname as name,b.gifticon as img,c.name as class_name,a.status,a.is_del,a.is_receive,a.wawa_id,a.ctime,d.user_nicename')
             ->order('a.id desc')->where($map)
             ->limit($page->firstRow . ',' . $page->listRows)->select();
-
+        $this->assign('filter', $filter);
         $this->assign('count', $count);
         $this->assign('page', $page->show('Admin'));
         $this->assign('list', $list);
