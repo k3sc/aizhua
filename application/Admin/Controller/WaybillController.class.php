@@ -108,20 +108,24 @@ class WaybillController extends AdminbaseController
     }
     public function __FormatWaybill($userWaybillAll){
         foreach ($userWaybillAll as $key=>$val){
-
             //罗列娃娃用户订单所包含的娃娃列表
             $user_wawaids = explode(',',$val['user_wawa_id_s']);
             $user_wawaids = array_filter($user_wawaids);
             if(!empty($user_wawaids)){
                 $userWawaData = M('user_wawas')->field('wawa_id')->where(['id'=>['in',$user_wawaids]])->select();
-                $wawa_ids = array_column($userWawaData,'wawa_id');
-                $wawa_ids_count = array_count_values($wawa_ids);
-                $WawaData = M('gift')->field('id,giftname as name')->where(['id'=>['in',$wawa_ids]])->select();
-                foreach ($WawaData as $k=>$v){
-                    $WawaData[$k]['num'] = $wawa_ids_count[$v['id']];
-                    $WawaData[$k]['wawa_id'] = $v['id'];
+                //当出现错误数据时 诡异(明明用户有申请娃娃发货，但是我的抓中列表里面缺少这条数据)
+                if(!empty($userWawaData)){
+                    $wawa_ids = array_column($userWawaData,'wawa_id');
+                    $wawa_ids_count = array_count_values($wawa_ids);
+                    $WawaData = M('gift')->field('id,giftname as name')->where(['id'=>['in',$wawa_ids]])->select();
+                    foreach ($WawaData as $k=>$v){
+                        $WawaData[$k]['num'] = $wawa_ids_count[$v['id']];
+                        $WawaData[$k]['wawa_id'] = $v['id'];
+                    }
+                    $userWaybillAll[$key]['goods'] = $WawaData;
+                }else{
+                    $userWaybillAll[$key]['goods'] = [];
                 }
-                $userWaybillAll[$key]['goods'] = $WawaData;
             }
             //罗列娃娃用户订单所包含的礼品列表
             $user_giftids = explode(',',$val['user_gift_id_s']);
