@@ -2,6 +2,8 @@
 <html>
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no">
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
     <title>爱抓排行版</title>
     <style type="text/css">
         * {
@@ -9,50 +11,55 @@
             padding: 0;
             border: 0;
         }
+        .none{
+            display: none;
+        }
     </style>
+    <script src="__PUBLIC__/home/js/jquery.js"></script>
 </head>
-
 <body>
+<input type="hidden" class="phban" value="all">
+<input type="hidden" class="phban-type" value="master">
 <div style="width: 100%;height: auto;">
     <div style="width: 100%;display:table;">
-        <img style="width: 50%;float: left" src="__PUBLIC__/images/rankinglist/chaojiban_checked.jpg" />
-        <img style="width: 50%;float: left" src="__PUBLIC__/images/rankinglist/weekban.jpg" />
+        <img class="click-all" style="width: 50%;float: left" onclick="qh_ban('all')" src="__PUBLIC__/images/rankinglist/chaojiban_checked.jpg" />
+        <img class="click-week" style="width: 50%;float: left" onclick="qh_ban('week')" src="__PUBLIC__/images/rankinglist/weekban.jpg" />
     </div>
     <div style="width: 100%;margin-top: 2px;display: table;">
-        <img style="width: 50%;float: left;" src="__PUBLIC__/images/rankinglist/masterban.jpg" />
-        <img style="width: 50%;float: left;" src="__PUBLIC__/images/rankinglist/depositban.jpg" />
+        <img class="click-master" style="width: 50%;float: left;" onclick="qh_ban(0,'master')" src="__PUBLIC__/images/rankinglist/masterban_checked.jpg" />
+        <img class="click-deposit" style="width: 50%;float: left;" onclick="qh_ban(0,'deposit')" src="__PUBLIC__/images/rankinglist/depositban.jpg" />
     </div>
 
-    <div id="chaojiban" class="chaojiban-body">
-        <div id="masterban" class="chaojiban-masterban-body">
+    <div id="chaojiban" class="chaojiban-body none">
+        <div id="masterban" class="chaojiban-masterban-body none">
             <img style="width: 100%;" src="__PUBLIC__/images/rankinglist/chaojiban_masterban.jpg">
             <div class="no1">
                 <img class="no1-crown" src="__PUBLIC__/images/rankinglist/no1_crown.png">
-                <img class="no1-avatar" src="{$alldata[0].avatar}">
+                <img class="no1-avatar" src="{$alldata[master][0].avatar}">
                 <img class="no1-ico" src="__PUBLIC__/images/rankinglist/no1.png">
-                <span class="no1-name">{$alldata[0].user_nicename}</span>
-                <span class="no1-count">{$alldata[0].uwawacount} 次</span>
+                <span class="no1-name">{$alldata[master][0].user_nicename}</span>
+                <span class="no1-count">{$alldata[master][0].uwawacount} 次</span>
             </div>
             <div class="no2">
                 <img class="no2-crown" src="__PUBLIC__/images/rankinglist/no2_crown.png">
-                <img class="no2-avatar" src="{$alldata[1].avatar}">
+                <img class="no2-avatar" src="{$alldata[master][1].avatar}">
                 <img class="no2-ico" src="__PUBLIC__/images/rankinglist/no2.png">
-                <span class="no2-name">{$alldata[1].user_nicename}</span>
-                <span class="no2-count">{$alldata[1].uwawacount} 次</span>
+                <span class="no2-name">{$alldata[master][1].user_nicename}</span>
+                <span class="no2-count">{$alldata[master][1].uwawacount} 次</span>
             </div>
             <div class="no3">
                 <img class="no3-crown" src="__PUBLIC__/images/rankinglist/no3_crown.png">
-                <img class="no3-avatar" src="{$alldata[2].avatar}">
+                <img class="no3-avatar" src="{$alldata[master][2].avatar}">
                 <img class="no3-ico" src="__PUBLIC__/images/rankinglist/no3.png">
-                <span class="no3-name">{$alldata[2].user_nicename}</span>
-                <span class="no3-count">{$alldata[2].uwawacount} 次</span>
+                <span class="no3-name">{$alldata[master][2].user_nicename}</span>
+                <span class="no3-count">{$alldata[master][2].uwawacount} 次</span>
             </div>
             <div class="no4-next">
-                <foreach name="data" item="item" key="key">
+                <foreach name="alldata[master]" item="item" key="key">
                     <gt name="key" value="2">
                     <div class="no4-next-body" style="height: 55px;border-bottom: solid #F2F2F2 0.5px;">
                         <div style="height: 50px;font-family: BiauKai;">
-                            <div style="position: absolute;left: 5%;font-size: 16px;height: 16px;margin-top: 17px;font-family: BiauKai;font-style: oblique;">{$key}</div>
+                            <div style="position: absolute;left: 5%;font-size: 16px;height: 16px;margin-top: 17px;font-family: BiauKai;font-style: oblique;">{$key+1}</div>
                             <div style="color:#65c9f1;position: absolute;left: 33%;font-size: 16px;height: 16px;margin-top: 17px;font-style: oblique;">{$item.user_nicename}</div>
                             <div style="position:absolute;left:10%;width: 50px;height:46px;margin-top: 3px;">
                                 <img style="width: 100%;height: 100%;border-radius: 50%;position: absolute;left: 25%;margin-top: 2px;" src="{$item.avatar}">
@@ -64,14 +71,140 @@
                 </foreach>
             </div>
         </div>
+        <div id="depositban" class="chaojiban-depositban-body none">
+            <img style="width: 100%;" src="__PUBLIC__/images/rankinglist/chaojiban_depositban.jpg">
+            <div class="no1">
+                <img class="no1-crown" src="__PUBLIC__/images/rankinglist/no1_crown.png">
+                <img class="no1-avatar" src="{$alldata[deposit][0].avatar}">
+                <img class="no1-ico" src="__PUBLIC__/images/rankinglist/no1.png">
+                <span class="no1-name">{$alldata[deposit][0].user_nicename}</span>
+                <span class="no1-count">{$alldata[deposit][0].summoney}</span>
+            </div>
+            <div class="no2">
+                <img class="no2-crown" src="__PUBLIC__/images/rankinglist/no2_crown.png">
+                <img class="no2-avatar" src="{$alldata[deposit][1].avatar}">
+                <img class="no2-ico" src="__PUBLIC__/images/rankinglist/no2.png">
+                <span class="no2-name">{$alldata[deposit][1].user_nicename}</span>
+                <span class="no2-count">{$alldata[deposit][1].summoney}</span>
+            </div>
+            <div class="no3">
+                <img class="no3-crown" src="__PUBLIC__/images/rankinglist/no3_crown.png">
+                <img class="no3-avatar" src="{$alldata[deposit][2].avatar}">
+                <img class="no3-ico" src="__PUBLIC__/images/rankinglist/no3.png">
+                <span class="no3-name">{$alldata[deposit][2].user_nicename}</span>
+                <span class="no3-count">{$alldata[deposit][2].summoney}</span>
+            </div>
+            <div class="no4-next">
+                <foreach name="alldata[deposit]" item="item" key="key">
+                    <gt name="key" value="2">
+                        <div class="no4-next-body" style="height: 55px;border-bottom: solid #F2F2F2 0.5px;">
+                            <div style="height: 50px;font-family: BiauKai;">
+                                <div style="position: absolute;left: 5%;font-size: 16px;height: 16px;margin-top: 17px;font-family: BiauKai;font-style: oblique;">{$key+1}</div>
+                                <div style="color:#65c9f1;position: absolute;left: 33%;font-size: 16px;height: 16px;margin-top: 17px;font-style: oblique;">{$item.user_nicename}</div>
+                                <div style="position:absolute;left:10%;width: 50px;height:46px;margin-top: 3px;">
+                                    <img style="width: 100%;height: 100%;border-radius: 50%;position: absolute;left: 25%;margin-top: 2px;" src="{$item.avatar}">
+                                </div>
+                                <div  style="height:16px;position: absolute;right: 3%;color: #B1B1B1;font-size: 16px;margin-top: 17px;letter-spacing:2px">{$item.summoney}</div>
+                            </div>
+                        </div>
+                    </gt>
+                </foreach>
+            </div>
+        </div>
+    </div>
+    <!--------------------        这是周榜          ----------------------------->
 
-        <div id="depositban" class="chaojiban-depositban-body">
+    <div id="weekban" class="chaojiban-body none">
+        <div id="masterban" class="chaojiban-masterban-body none">
+            <img style="width: 100%;" src="__PUBLIC__/images/rankinglist/weekban_masterban.jpg">
+            <div style="position: absolute;left:33.1%;top:6.9%;font-weight: bold;color: #FFF;font-size: 14px;">
+                <span >{$date[startWeek]}</span>-<span >{$date[endWeek]}</span>
+            </div>
+
+            <div class="no1">
+                <img class="no1-crown" src="__PUBLIC__/images/rankinglist/no1_crown.png">
+                <img class="no1-avatar" src="{$alldata[master][0].avatar}">
+                <img class="no1-ico" src="__PUBLIC__/images/rankinglist/no1.png">
+                <span class="no1-name">{$weekdata[master][0].user_nicename}</span>
+                <span class="no1-count">{$weekdata[master][0].uwawacount} 次</span>
+            </div>
+            <div class="no2">
+                <img class="no2-crown" src="__PUBLIC__/images/rankinglist/no2_crown.png">
+                <img class="no2-avatar" src="{$weekdata[master][1].avatar}">
+                <img class="no2-ico" src="__PUBLIC__/images/rankinglist/no2.png">
+                <span class="no2-name">{$weekdata[master][1].user_nicename}</span>
+                <span class="no2-count">{$weekdata[master][1].uwawacount} 次</span>
+            </div>
+            <div class="no3">
+                <img class="no3-crown" src="__PUBLIC__/images/rankinglist/no3_crown.png">
+                <img class="no3-avatar" src="{$weekdata[master][2].avatar}">
+                <img class="no3-ico" src="__PUBLIC__/images/rankinglist/no3.png">
+                <span class="no3-name">{$weekdata[master][2].user_nicename}</span>
+                <span class="no3-count">{$weekdata[master][2].uwawacount} 次</span>
+            </div>
+            <div class="no4-next">
+                <foreach name="weekdata[master]" item="item" key="key">
+                    <gt name="key" value="2">
+                    <div class="no4-next-body" style="height: 55px;border-bottom: solid #F2F2F2 0.5px;">
+                        <div style="height: 50px;font-family: BiauKai;">
+                            <div style="position: absolute;left: 5%;font-size: 16px;height: 16px;margin-top: 17px;font-family: BiauKai;font-style: oblique;">{$key+1}</div>
+                            <div style="color:#65c9f1;position: absolute;left: 33%;font-size: 16px;height: 16px;margin-top: 17px;font-style: oblique;">{$item.user_nicename}</div>
+                            <div style="position:absolute;left:10%;width: 50px;height:46px;margin-top: 3px;">
+                                <img style="width: 100%;height: 100%;border-radius: 50%;position: absolute;left: 25%;margin-top: 2px;" src="{$item.avatar}">
+                            </div>
+                            <div  style="height:16px;position: absolute;right: 3%;color: #B1B1B1;font-size: 16px;margin-top: 17px;letter-spacing:2px">抓中{$item.uwawacount}次</div>
+                        </div>
+                    </div>
+                    </gt>
+                </foreach>
+            </div>
+        </div>
+        <div id="depositban" class="chaojiban-depositban-body none">
+            <img style="width: 100%;" src="__PUBLIC__/images/rankinglist/weekban_depositban.jpg">
+            <div style="position: absolute;left:33.1%;top:6.9%;font-weight: bold;color: #FFF;font-size: 14px;">
+                <span >{$date[startWeek]}</span>-<span >{$date[endWeek]}</span>
+            </div>
+            <div class="no1">
+                <img class="no1-crown" src="__PUBLIC__/images/rankinglist/no1_crown.png">
+                <img class="no1-avatar" src="{$weekdata[deposit][0].avatar}">
+                <img class="no1-ico" src="__PUBLIC__/images/rankinglist/no1.png">
+                <span class="no1-name">{$weekdata[deposit][0].user_nicename}</span>
+                <span class="no1-count">{$weekdata[deposit][0].summoney}</span>
+            </div>
+            <div class="no2">
+                <img class="no2-crown" src="__PUBLIC__/images/rankinglist/no2_crown.png">
+                <img class="no2-avatar" src="{$weekdata[deposit][1].avatar}">
+                <img class="no2-ico" src="__PUBLIC__/images/rankinglist/no2.png">
+                <span class="no2-name">{$weekdata[deposit][1].user_nicename}</span>
+                <span class="no2-count">{$weekdata[deposit][1].summoney}</span>
+            </div>
+            <div class="no3">
+                <img class="no3-crown" src="__PUBLIC__/images/rankinglist/no3_crown.png">
+                <img class="no3-avatar" src="{$weekdata[deposit][2].avatar}">
+                <img class="no3-ico" src="__PUBLIC__/images/rankinglist/no3.png">
+                <span class="no3-name">{$weekdata[deposit][2].user_nicename}</span>
+                <span class="no3-count">{$weekdata[deposit][2].summoney}</span>
+            </div>
+            <div class="no4-next">
+                <foreach name="weekdata[deposit]" item="item" key="key">
+                    <gt name="key" value="2">
+                        <div class="no4-next-body" style="height: 55px;border-bottom: solid #F2F2F2 0.5px;">
+                            <div style="height: 50px;font-family: BiauKai;">
+                                <div style="position: absolute;left: 5%;font-size: 16px;height: 16px;margin-top: 17px;font-family: BiauKai;font-style: oblique;">{$key+1}</div>
+                                <div style="color:#65c9f1;position: absolute;left: 33%;font-size: 16px;height: 16px;margin-top: 17px;font-style: oblique;">{$item.user_nicename}</div>
+                                <div style="position:absolute;left:10%;width: 50px;height:46px;margin-top: 3px;">
+                                    <img style="width: 100%;height: 100%;border-radius: 50%;position: absolute;left: 25%;margin-top: 2px;" src="{$item.avatar}">
+                                </div>
+                                <div  style="height:16px;position: absolute;right: 3%;color: #B1B1B1;font-size: 16px;margin-top: 17px;letter-spacing:2px">{$item.summoney}</div>
+                            </div>
+                        </div>
+                    </gt>
+                </foreach>
+            </div>
         </div>
     </div>
 
-    <div id="weekban" style="width: 100%;margin-top: 2px;display: none;">
-        <img style="width: 100%;" src="__PUBLIC__/images/rankinglist/chaojiban_masterban.jpg">
-    </div>
+
 </div>
 </body>
 </html>
@@ -91,7 +224,7 @@
     }
 
     .chaojiban-depositban-body {
-        display: none;
+        position: relative;
         background-image: url(__PUBLIC__/images/rankinglist/chaojiban_depositban.jpg);
         background-repeat: no-repeat;
         height: 100%;
@@ -99,73 +232,242 @@
         -moz-background-size: 100% 100%;
     }
 
-        .no4-next{
+    @media only screen and (min-width: 300px) and (max-width: 640px) {
+        #chaojiban .no4-next{
             width:94%;
             height: auto;
             position: absolute;
             top:44%;
             left: 3%;
         }
-        .no1 {
+        #chaojiban .no1 {
             position: absolute;left: 29%;top: 19.5%;height: 100px;width: 70%;
         }
-        .no1 .no1-crown {
+        #chaojiban .no1 .no1-crown {
             width: 90px;height: 70px;position: absolute;left: 15px;top: -20px;
         }
-        .no1 .no1-avatar {
+        #chaojiban .no1 .no1-avatar {
             width: 84px;height: 84px;border-radius: 50%;border: 3px solid #fff;
         }
-        .no1 .no1-ico {
+        #chaojiban .no1 .no1-ico {
             width: 60px;position: absolute;left: -20px;bottom: -10px;
         }
-        .no1 .no1-name{
+        #chaojiban .no1 .no1-name{
             font-weight: bold;font-size: 23px;height: 30px;position: absolute;top:30px;color: #f74798;margin-left: 5px;
         }
-        .no1 .no1-count{
+        #chaojiban .no1 .no1-count{
             position:absolute;top:62px;font-size:18px;height: 30px;color: #65c9f1;margin-left: 5px;
         }
         /*   -----排行2-----   */
-        .no2 {
+        #chaojiban .no2 {
             position: absolute;left: 5%;top: 30%;width: 70%;height: 90px;
         }
-        .no2 .no2-crown {
+        #chaojiban .no2 .no2-crown {
             width: 65px;height: 40px;position: absolute;left: 15px;top: -16px;
         }
-        .no2 .no2-avatar {
+        #chaojiban .no2 .no2-avatar {
             width: 74px;height: 74px;border-radius: 50%;border: 3px solid #fff;
         }
-        .no2 .no2-ico {
+        #chaojiban .no2 .no2-ico {
             width: 58px;position: absolute;left: -20px;bottom: -10px;
         }
-        .no2 .no2-name{
+        #chaojiban .no2 .no2-name{
             font-weight: bold;font-size: 18px;height: 30px;position: absolute;top:30px;color: #f74798;margin-left: 5px;
         }
-        .no2 .no2-count{
+        #chaojiban .no2 .no2-count{
             position:absolute;top:55px;font-size:15px;height: 30px;color: #65c9f1;margin-left: 5px;
         }
         /*   -----排行3-----   */
-        .no3 {
+        #chaojiban .no3 {
             position: absolute;left: 52%;top: 32%;width: 45%;height: 90px;
         }
-        .no3 .no3-crown {
+        #chaojiban .no3 .no3-crown {
             width: 65px;height: 40px;position: absolute;left: 15px;top: -16px;
         }
-        .no3 .no3-avatar {
+        #chaojiban .no3 .no3-avatar {
             width: 74px;height: 74px;border-radius: 50%;border: 3px solid #fff;
         }
-        .no3 .no3-ico {
+        #chaojiban .no3 .no3-ico {
             width: 48px;position: absolute;left: -20px;bottom: 0px;
         }
-        .no3 .no3-name{
+        #chaojiban .no3 .no3-name{
             font-weight: bold;font-size: 18px;height: 30px;position: absolute;top:30px;color: #f74798;margin-left: 5px;
         }
-        .no3 .no3-count{
+        #chaojiban .no3 .no3-count{
             position:absolute;top:55px;font-size:15px;height: 30px;color: #65c9f1;margin-left: 5px;
         }
 
+        /*
+        *   这是周榜样式---------------------------------------------------------------------------->
+        */
+
+        #weekban .no4-next{
+            width:94%;
+            height: auto;
+            position: absolute;
+            top:28%;
+            left: 3%;
+        }
+        #weekban .no1 {
+            position: absolute;left: 29%;top: 12.5%;height: 100px;width: 70%;
+        }
+        #weekban .no1 .no1-crown {
+            width: 90px;height: 70px;position: absolute;left: 15px;top: -20px;
+        }
+        #weekban .no1 .no1-avatar {
+            width: 84px;height: 84px;border-radius: 50%;border: 3px solid #fff;
+        }
+        #weekban .no1 .no1-ico {
+            width: 60px;position: absolute;left: -20px;bottom: -10px;
+        }
+        #weekban .no1 .no1-name{
+            font-weight: bold;font-size: 23px;height: 30px;position: absolute;top:30px;color: #f74798;margin-left: 5px;
+        }
+        #weekban .no1 .no1-count{
+            position:absolute;top:62px;font-size:18px;height: 30px;color: #65c9f1;margin-left: 5px;
+        }
+        /*   -----排行2-----   */
+        #weekban .no2 {
+            position: absolute;left: 5%;top: 20%;width: 70%;height: 90px;
+        }
+        #weekban .no2 .no2-crown {
+            width: 65px;height: 40px;position: absolute;left: 15px;top: -16px;
+        }
+        #weekban .no2 .no2-avatar {
+            width: 74px;height: 74px;border-radius: 50%;border: 3px solid #fff;
+        }
+        #weekban .no2 .no2-ico {
+            width: 58px;position: absolute;left: -20px;bottom: -10px;
+        }
+        #weekban .no2 .no2-name{
+            font-weight: bold;font-size: 18px;height: 30px;position: absolute;top:30px;color: #f74798;margin-left: 5px;
+        }
+        #weekban .no2 .no2-count{
+            position:absolute;top:55px;font-size:15px;height: 30px;color: #65c9f1;margin-left: 5px;
+        }
+        /*   -----排行3-----   */
+        #weekban .no3 {
+            position: absolute;left: 52%;top: 21%;width: 45%;height: 90px;
+        }
+        #weekban .no3 .no3-crown {
+            width: 65px;height: 40px;position: absolute;left: 15px;top: -16px;
+        }
+        #weekban .no3 .no3-avatar {
+            width: 74px;height: 74px;border-radius: 50%;border: 3px solid #fff;
+        }
+        #weekban .no3 .no3-ico {
+            width: 48px;position: absolute;left: -20px;bottom: 0px;
+        }
+        #weekban .no3 .no3-name{
+            font-weight: bold;font-size: 18px;height: 30px;position: absolute;top:30px;color: #f74798;margin-left: 5px;
+        }
+        #weekban .no3 .no3-count{
+            position:absolute;top:55px;font-size:15px;height: 30px;color: #65c9f1;margin-left: 5px;
+        }
+    }
 
     @media only screen and (min-width: 641px) and (max-width: 789px) {
 
     }
 
 </style>
+<script>
+    var all = {
+        master: function () {
+            none()
+            $('#chaojiban').addClass('display-none')
+            $('#chaojiban').removeClass('none')
+            $('#chaojiban #masterban').addClass('display-none')
+            $('#chaojiban #masterban').removeClass('none')
+            this.setphban()
+            $('.click-deposit').attr('src','__PUBLIC__/images/rankinglist/depositban.jpg')
+            $('.click-master').attr('src','__PUBLIC__/images/rankinglist/masterban_checked.jpg')
+        },
+        deposit: function () {
+            none()
+            $('#chaojiban').addClass('display-none')
+            $('#chaojiban').removeClass('none')
+            $('#chaojiban #depositban').addClass('display-none')
+            $('#chaojiban #depositban').removeClass('none')
+            this.setphban()
+            $('.click-master').attr('src','__PUBLIC__/images/rankinglist/masterban.jpg')
+            $('.click-deposit').attr('src','__PUBLIC__/images/rankinglist/depositban_checked.jpg')
+        },
+        setphban: function(){
+            $('.click-week').attr('src','__PUBLIC__/images/rankinglist/weekban.jpg')
+            $('.click-all').attr('src','__PUBLIC__/images/rankinglist/chaojiban_checked.jpg')
+            $('.phban').val('all')
+        }
+    }
+    var week = {
+        master: function () {
+            none()
+            $('#weekban').addClass('display-none')
+            $('#weekban').removeClass('none')
+            $('#weekban #masterban').addClass('display-none')
+            $('#weekban #masterban').removeClass('none')
+            this.setphban()
+            $('.click-deposit').attr('src','__PUBLIC__/images/rankinglist/depositban.jpg')
+            $('.click-master').attr('src','__PUBLIC__/images/rankinglist/masterban_checked.jpg')
+        },
+        deposit: function () {
+            none()
+            $('#weekban').addClass('display-none')
+            $('#weekban').removeClass('none')
+            $('#weekban #depositban').addClass('display-none')
+            $('#weekban #depositban').removeClass('none')
+            this.setphban()
+            $('.click-master').attr('src','__PUBLIC__/images/rankinglist/masterban.jpg')
+            $('.click-deposit').attr('src','__PUBLIC__/images/rankinglist/depositban_checked.jpg')
+        },
+        setphban: function(){
+            $('.click-all').attr('src','__PUBLIC__/images/rankinglist/chaojiban.jpg')
+            $('.click-week').attr('src','__PUBLIC__/images/rankinglist/weekban_checked.jpg')
+            $('.phban').val('week')
+        }
+    }
+    $(function () {
+        /*$('#weekban').removeClass('none')
+        $('#weekban').addClass('display-none')
+        $('#weekban #masterban').removeClass('none')
+        $('#weekban #masterban').addClass('display-none')*/
+
+        $('#chaojiban').removeClass('none')
+        $('#chaojiban').addClass('display-none')
+        $('#chaojiban #masterban').removeClass('none')
+        $('#chaojiban #masterban').addClass('display-none')
+    })
+    function qh_ban(c_ban,c_type){
+        var ban = $('.phban').val();
+        var type = $('.phban-type').val();
+        if(c_ban!=0){
+            if(c_ban == 'all'){
+                all.master()
+                $('.phban').val('all')
+            }
+            if(c_ban == 'week'){
+                week.master()
+                $('.phban').val('week')
+            }
+        }else{
+            if(c_type == 'deposit'){
+                if($('.phban').val()=='week'){
+                    week.deposit()
+                }else{
+                    all.deposit()
+                }
+            }else{
+                if($('.phban').val()=='week'){
+                    week.master()
+                }else{
+                    all.master()
+                }
+            }
+        }
+    }
+    function none(){
+        $('.display-none').addClass('none')
+        $('.none').removeClass('display-none')
+    }
+
+</script>

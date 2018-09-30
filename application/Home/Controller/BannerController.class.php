@@ -11,27 +11,37 @@ use Common\Controller\HomebaseController;
 class BannerController extends HomebaseController
 {
     public function rankingList(){
+        $date = I('date')?I('date'):0;
         $arr = [
             'all'=>['master','deposit'],
             'week'=>['master','deposit'],
         ];
         foreach ($arr as $key=>$val){
             foreach ($val as $k=>$v){
-                $result[$key][$v] = $this->getBanData($key,$v);
+                $data = $this->getBanData($key,$v,$date);
+                if($key == 'week'){
+                    $this->assign('date',$data['date']);
+                }
+                $result[$key][$v] = $data['data'];
             }
         }
-        $this->assign('alldata',$result['all']['master']);
+
+        $this->assign('alldata',$result['all']);
         $this->assign('weekdata',$result['week']);
         $this->display();
     }
-    public function getBanData($ban,$type){
+    public function getBanData($ban,$type,$date){
         $where = " 1=1 and user_type=2 ";
         $order = 'uwawacount desc';
-        $startWeek = strtotime('this week',strtotime(date('Y-m-d',time())));
-        $endWeek = strtotime('this week+7day',strtotime(date('Y-m-d',time()))) -1;
         $ban = $ban?:'all';
         $type = $type?:'master';
         if($ban == 'week'){
+            $c_date = $date == 0?date('Y-m-d',time()):$date;
+
+            $startWeek = strtotime('this week',strtotime($c_date));
+
+            $endWeek = strtotime('this week+7day',strtotime($c_date)) -1;
+
             $where .= " and uwawa.ctime >= {$startWeek} and uwawa.ctime<={$endWeek} ";
             $limit = "0,20";
         }else{
@@ -53,7 +63,20 @@ class BannerController extends HomebaseController
             ->order($order)
             ->limit($limit)
             ->select();
+        if($ban == 'week'){
+            $c_date = $date == 0?date('Y-m-d',time()):$date;
 
-        return $data;
+            $startWeek = strtotime('this week',strtotime($c_date));
+            $endWeek = strtotime('this week+7day',strtotime($c_date)) -1;
+            $datas['date']['startWeek'] = date('m月d日',$startWeek);
+            $datas['date']['endWeek'] = date('m月d日',$endWeek);
+        }
+        if($type == 'deposit'){
+            foreach ($data as $ker=>&$val){
+                $val['summoney'] = ceil($val['summoney']);
+            }
+        }
+        $datas['data'] =$data;
+        return $datas;
     }
 }
