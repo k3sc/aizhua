@@ -121,9 +121,10 @@
                 <span >{$date[startWeek]}</span>-<span >{$date[endWeek]}</span>
             </div>
 
+            <if condition="!empty($weekdata[master])">
             <div class="no1">
                 <img class="no1-crown" src="__PUBLIC__/images/rankinglist/no1_crown.png">
-                <img class="no1-avatar" src="{$alldata[master][0].avatar}">
+                <img class="no1-avatar" src="{$weekdata[master][0].avatar}">
                 <img class="no1-ico" src="__PUBLIC__/images/rankinglist/no1.png">
                 <span class="no1-name">{$weekdata[master][0].user_nicename}</span>
                 <span class="no1-count">{$weekdata[master][0].uwawacount} 次</span>
@@ -158,12 +159,15 @@
                     </gt>
                 </foreach>
             </div>
+            </if>
         </div>
         <div id="depositban" class="chaojiban-depositban-body none">
             <img style="width: 100%;" src="__PUBLIC__/images/rankinglist/weekban_depositban.jpg">
             <div style="position: absolute;left:33.1%;top:6.9%;font-weight: bold;color: #FFF;font-size: 14px;">
                 <span >{$date[startWeek]}</span>-<span >{$date[endWeek]}</span>
             </div>
+
+            <if condition="!empty($weekdata[deposit])">
             <div class="no1">
                 <img class="no1-crown" src="__PUBLIC__/images/rankinglist/no1_crown.png">
                 <img class="no1-avatar" src="{$weekdata[deposit][0].avatar}">
@@ -201,6 +205,9 @@
                     </gt>
                 </foreach>
             </div>
+            </if>
+
+            
         </div>
     </div>
 
