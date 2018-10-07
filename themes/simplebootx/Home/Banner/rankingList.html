@@ -147,6 +147,7 @@
                 </div>
 
                 <if condition="!empty($weekdata[master])">
+                <if condition="!empty($weekdata[master][0])">
                 <div class="no1">
                     <img class="no1-crown" src="__PUBLIC__/images/rankinglist/no1_crown.png">
                     <img class="no1-avatar" src="{$weekdata[master][0].avatar}">
@@ -154,6 +155,8 @@
                     <span class="no1-name">{$weekdata[master][0].user_nicename}</span>
                     <span class="no1-count">{$weekdata[master][0].uwawacount} 次</span>
                 </div>
+                </if>
+                <if condition="!empty($weekdata[master][1])">
                 <div class="no2">
                     <img class="no2-crown" src="__PUBLIC__/images/rankinglist/no2_crown.png">
                     <img class="no2-avatar" src="{$weekdata[master][1].avatar}">
@@ -161,6 +164,8 @@
                     <span class="no2-name">{$weekdata[master][1].user_nicename}</span>
                     <span class="no2-count">{$weekdata[master][1].uwawacount} 次</span>
                 </div>
+                </if>
+                <if condition="!empty($weekdata[master][2])">
                 <div class="no3">
                     <img class="no3-crown" src="__PUBLIC__/images/rankinglist/no3_crown.png">
                     <img class="no3-avatar" src="{$weekdata[master][2].avatar}">
@@ -168,6 +173,7 @@
                     <span class="no3-name">{$weekdata[master][2].user_nicename}</span>
                     <span class="no3-count">{$weekdata[master][2].uwawacount} 次</span>
                 </div>
+                </if>
             </div>
             <!-- 内容 -->
             <div style="position: relative">
@@ -200,6 +206,7 @@
                 </div>
 
                 <if condition="!empty($weekdata[deposit])">
+                <if condition="!empty($weekdata[deposit][0])">
                 <div class="no1">
                     <img class="no1-crown" src="__PUBLIC__/images/rankinglist/no1_crown.png">
                     <img class="no1-avatar" src="{$weekdata[deposit][0].avatar}">
@@ -207,6 +214,8 @@
                     <span class="no1-name">{$weekdata[deposit][0].user_nicename}</span>
                     <span class="no1-count">{$weekdata[deposit][0].summoney}</span>
                 </div>
+                </if>
+                <if condition="!empty($weekdata[deposit][1])">
                 <div class="no2">
                     <img class="no2-crown" src="__PUBLIC__/images/rankinglist/no2_crown.png">
                     <img class="no2-avatar" src="{$weekdata[deposit][1].avatar}">
@@ -214,6 +223,8 @@
                     <span class="no2-name">{$weekdata[deposit][1].user_nicename}</span>
                     <span class="no2-count">{$weekdata[deposit][1].summoney}</span>
                 </div>
+                </if>
+                <if condition="!empty($weekdata[deposit][2])">
                 <div class="no3">
                     <img class="no3-crown" src="__PUBLIC__/images/rankinglist/no3_crown.png">
                     <img class="no3-avatar" src="{$weekdata[deposit][2].avatar}">
@@ -221,6 +232,7 @@
                     <span class="no3-name">{$weekdata[deposit][2].user_nicename}</span>
                     <span class="no3-count">{$weekdata[deposit][2].summoney}</span>
                 </div>
+                </if>
             </div>
 
             <!-- 内容 -->
