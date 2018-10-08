@@ -40,7 +40,9 @@ class BannerController extends HomebaseController
 
             $startWeek = strtotime('this week-7day',strtotime($c_date));
             $endWeek = strtotime('this week',strtotime($c_date)) -1;
-
+            echo "<pre>";
+            print_r($c_date);
+            exit;
             echo "<pre>";
             print_r(date('Y-m-d',strtotime('this week-7day',strtotime($c_date))));
             print_r("<br>");
