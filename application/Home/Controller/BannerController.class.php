@@ -39,8 +39,13 @@ class BannerController extends HomebaseController
             $c_date = $date == 0?date('Y-m-d',time()):$date;
 
             $startWeek = strtotime('this week-7day',strtotime($c_date));
-
             $endWeek = strtotime('this week',strtotime($c_date)) -1;
+
+            echo "<pre>";
+            print_r(date('Y-m-d',strtotime('this week-7day',strtotime($c_date))));
+            print_r("<br>");
+            print_r(date('Y-m-d',$endWeek));
+            exit;
 
             $where .= " and uwawa.ctime >= {$startWeek} and uwawa.ctime<={$endWeek} ";
             $limit = "0,20";
