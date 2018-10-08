@@ -32,6 +32,7 @@ class BannerController extends HomebaseController
     }
     public function getBanData($ban,$type,$date){
         $where = " 1=1 and user_type=2 ";
+        $pay_where = ' ';
         $order = 'uwawacount desc';
         $ban = $ban?:'all';
         $type = $type?:'master';
@@ -40,9 +41,11 @@ class BannerController extends HomebaseController
 
             $startWeek = strtotime('-1 sunday -6day',strtotime($c_date));
             $endWeek = strtotime('-1 sunday',strtotime($c_date)) ;
-
-
-            $where .= " and uwawa.ctime >= {$startWeek} and uwawa.ctime<={$endWeek} ";
+            if($type =='deposit'){
+                $pay_where = " and pay.paytime >= {$startWeek} and pay.paytime<={$endWeek} ";
+            }else{
+                $where .= " and uwawa.ctime >= {$startWeek} and uwawa.ctime<={$endWeek} ";
+            }
             $limit = "0,20";
         }else{
             $limit = "0,10";
@@ -56,13 +59,23 @@ class BannerController extends HomebaseController
         $where .= " and uwawa.is_del=0 and uwawa.is_receive=0 ";
         $data = M('users as u')->field('u.id,u.user_nicename,u.avatar,count(uwawa.id) as uwawacount,ppaayy.summoney')
             ->join('left join cmf_user_wawas as uwawa on u.id = uwawa.user_id')
-            ->join('LEFT JOIN ( SELECT pay.user_id, pay.money AS pay_money, sum( pay.money ) AS summoney  FROM cmf_pay_record AS pay
-	                WHERE pay.`status`=1 GROUP BY pay.user_id ) as ppaayy on ppaayy.user_id = u.id')
+            ->join("LEFT JOIN ( SELECT pay.user_id, pay.money AS pay_money, sum( pay.money ) AS summoney  FROM cmf_pay_record AS pay
+	                WHERE pay.`status`=1 {$pay_where} GROUP BY pay.user_id ) as ppaayy on ppaayy.user_id = u.id")
             ->where($where)
             ->group('u.id')
             ->order($order)
             ->limit($limit)
             ->select();
+        /* 测试专用 */
+        /*if($ban=='week' && $type=='deposit'){
+            echo "<pre>";
+            print_r($data);
+            exit;
+            echo "<pre>";
+            print_r(M()->getLastSql());
+            exit;
+        }*/
+
         if($ban == 'week'){
             $c_date = $date == 0?date('Y-m-d',time()):$date;
             $startWeek = strtotime('-1 sunday -6day',strtotime($c_date));
@@ -75,8 +88,12 @@ class BannerController extends HomebaseController
             $datas['date']['endWeek'] = date('m月d日',$endWeek);
         }
         if($type == 'deposit'){
-            foreach ($data as $ker=>&$val){
-                $val['summoney'] = ceil($val['summoney']);
+            foreach ($data as $key=>&$val){
+                if( $val['summoney']<=0 ){
+                    unset($data[$key]);
+                }else{
+                    $val['summoney'] = ceil($val['summoney']);
+                }
             }
         }
         $datas['data'] =$data;
