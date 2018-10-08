@@ -106,7 +106,7 @@ class WaybillController extends AdminbaseController
         $this->display();
 
     }
-    public function __FormatWaybill($userWaybillAll){
+    public function __FormatWaybill($userWaybillAll,$eximp=false){
         foreach ($userWaybillAll as $key=>$val){
             //罗列娃娃用户订单所包含的娃娃列表
             $user_wawaids = explode(',',$val['user_wawa_id_s']);
@@ -138,7 +138,11 @@ class WaybillController extends AdminbaseController
                 foreach ($giftData as $k=>$v){
                     $giftData[$k]['num'] = $gift_ids_count[$v['id']];
                     $giftData[$k]['gift_id'] = $v['id'];
-                    $giftData[$k]['name'] = '<span style="color: red;font-weight: 500">(礼品)</span>  |  '.$v['name'];
+                    if($eximp){
+                        $giftData[$k]['name'] = $v['name'];
+                    }else{
+                        $giftData[$k]['name'] = '<span style="color: red;font-weight: 500">(礼品)</span>  |  '.$v['name'];
+                    }
                 }
                 $userWaybillAll[$key]['goods'] = $giftData;
             }
