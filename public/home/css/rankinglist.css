@@ -210,7 +210,7 @@
     position: absolute;left: 29%;top: 20%;width: 55%;
 }
 #weekban .no3 .no3-name{
-    font-weight: bold;font-size: 5vw;height: 30px;color: #f74798;width:60%;
+    font-weight: bold;font-size: 5vw;color: #f74798;width:60%;
     margin-left: 45%;text-shadow:0 0 2px #fff,1px 1px 10px #aaa;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;
 }
 #weekban .no3 .no3-count{
