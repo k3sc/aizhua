@@ -212,11 +212,11 @@ right: initial !important;}
 
 					<li class="light-blue">
 						<a data-toggle="dropdown" href="#" class="dropdown-toggle">
-    						<if condition="$admin['avatar']">
+    						<!-- <if condition="$admin['avatar']">
 								<img class="nav-user-photo" width="30" height="30" src="{:sp_get_user_avatar_url($admin['avatar'])}" alt="{$admin.user_login}">
 							<else />
 								<img class="nav-user-photo" width="30" height="30" src="__TMPL__Public/assets/images/logo-18.png" alt="{$admin.user_login}">
-							</if>
+							</if> -->
 							<span class="user-info">
 								{:L('WELCOME_USER',array('username'=>empty($admin['user_nicename'])?$admin['user_login']:$admin['user_nicename']))}
 							</span>
