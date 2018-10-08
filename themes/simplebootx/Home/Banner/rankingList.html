@@ -160,7 +160,7 @@
             <!-- 头部 -->
             <div style="position: relative;">
                 <img style="width: 100%;" src="__PUBLIC__/images/rankinglist/weekban_masterban_top.jpg">
-                <div style="position: absolute;left:33.1%;top:24.9%;font-weight: bold;color: #FFF;font-size: 0.8em;">
+                <div class="week-date">
                     <span >{$date[startWeek]}</span>-<span >{$date[endWeek]}</span>
                 </div>
 
@@ -228,7 +228,7 @@
         <div id="depositban" class="chaojiban-depositban-body none">
             <div style="position: relative;">
                 <img style="width: 100%;" src="__PUBLIC__/images/rankinglist/weekban_masterban_top.jpg">
-                <div style="position: absolute;left:33.1%;top:24.9%;font-weight: bold;color: #FFF;font-size: 0.8em;">
+                <div class="week-date">
                     <span >{$date[startWeek]}</span>-<span >{$date[endWeek]}</span>
                 </div>
 
@@ -418,7 +418,9 @@
         /*
         *   这是周榜样式---------------------------------------------------------------------------->
         */
-
+        .week-date{
+            position: absolute;left:33.1%;top:24.9%;font-weight: bold;color: #FFF;font-size: 0.8em;
+        }
         #weekban .no4-next{
             width:94%;
             height: auto;
@@ -500,6 +502,11 @@
 
     @media only screen and (min-width: 641px) and (max-width: 789px) {
 
+    }
+    @media only screen and (min-width: 700px) and (max-width: 2000px) {
+        .week-date{
+            font-size:1.8em;
+        }
     }
 
 </style>
