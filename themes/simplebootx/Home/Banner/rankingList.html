@@ -59,7 +59,7 @@
                 </div>
             </div>
 
-            <div class="chaojiban-masterban-center" style="position: relative;">
+            <div class="chaojiban-masterban-center" style="position: relative;margin: -5px 0;">
                 <img style="width: 100%;height: 400px;" src="__PUBLIC__/images/rankinglist/chaojiban_center.jpg">
                 <div class="no4-next">
                     <foreach name="alldata[master]" item="item" key="key">
@@ -67,9 +67,11 @@
                         <div class="no4-next-body" style="height: 55px;border-bottom: solid #F2F2F2 0.5px;">
                             <div style="height: 50px;font-family: BiauKai;">
                                 <div style="position: absolute;left: 5%;font-size: 16px;height: 16px;margin-top: 17px;font-family: BiauKai;font-style: oblique;">{$key+1}</div>
-                                <div style="color:#65c9f1;position: absolute;left: 33%;font-size: 16px;height: 16px;margin-top: 17px;font-style: oblique;">{$item.user_nicename}</div>
-                                <div style="position:absolute;left:10%;width: 50px;height:46px;margin-top: 3px;">
-                                    <img style="width: 100%;height: 100%;border-radius: 50%;position: absolute;left: 25%;margin-top: 2px;box-shadow: 0px 0px 5px 2px #aaa;" src="{$item.avatar}">
+                                <div <if condition="$key%2==1">class="font-lan"<else/>class="font-red"</if> style="position: absolute;left: 33%;font-size: 16px;height: 16px;margin-top: 17px;">
+                                    {$item.user_nicename}
+                                </div>
+                                <div style="position:absolute;left:10%;width: 50px;height:50px;margin-top: 3px;left: 15%;">
+                                    <img style="width: 100%;height: 100%;border-radius: 50%;position: absolute;" src="{$item.avatar}">
                                 </div>
                                 <div  style="height:16px;position: absolute;right: 3%;color: #B1B1B1;font-size: 16px;margin-top: 17px;letter-spacing:2px">抓中{$item.uwawacount}次</div>
                             </div>
@@ -109,7 +111,7 @@
                 </div>
             </div>
 
-            <div class="chaojiban-masterban-center" style="position: relative;">
+            <div class="chaojiban-masterban-center" style="position: relative;margin: -5px 0;">
                 <img style="width: 100%;height: 400px;" src="__PUBLIC__/images/rankinglist/chaojiban_center.jpg">
                 <div class="no4-next">
                     <foreach name="alldata[deposit]" item="item" key="key">
@@ -117,9 +119,11 @@
                             <div class="no4-next-body" style="height: 55px;border-bottom: solid #F2F2F2 0.5px;">
                                 <div style="height: 50px;font-family: BiauKai;">
                                     <div style="position: absolute;left: 5%;font-size: 16px;height: 16px;margin-top: 17px;font-family: BiauKai;font-style: oblique;">{$key+1}</div>
-                                    <div style="color:#65c9f1;position: absolute;left: 33%;font-size: 16px;height: 16px;margin-top: 17px;font-style: oblique;">{$item.user_nicename}</div>
-                                    <div style="position:absolute;left:10%;width: 50px;height:46px;margin-top: 3px;">
-                                        <img style="width: 100%;height: 100%;border-radius: 50%;position: absolute;left: 25%;margin-top: 2px;box-shadow: 0px 0px 5px 3px #aaa;" src="{$item.avatar}">
+                                    <div <if condition="$key%2==1">class="font-lan"<else/>class="font-red"</if> style="position: absolute;left: 33%;font-size: 16px;height: 16px;margin-top: 17px;">
+                                        {$item.user_nicename}
+                                    </div>
+                                    <div style="position:absolute;left:10%;width: 50px;height:50px;margin-top: 3px;left: 15%;">
+                                        <img style="width: 100%;height: 100%;border-radius: 50%;position: absolute;" src="{$item.avatar}">
                                     </div>
                                     <div  style="height:16px;position: absolute;right: 3%;color: #B1B1B1;font-size: 16px;margin-top: 17px;letter-spacing:2px">{$item.summoney}</div>
                                 </div>
@@ -176,18 +180,19 @@
             </div>
 
             <!-- 内容 -->
-            <div style="position: relative">
+            <div style="position: relative;margin: -5px 0;">
                 <if condition="!empty($weekdata[master])">
-                <img style="width: 100%;height: 950px;" src="__PUBLIC__/images/rankinglist/weekban_center.jpg">
+                    <img style="width: 100%;height: 950px;" src="__PUBLIC__/images/rankinglist/weekban_center.jpg">
                     <div class="no4-next">
                         <foreach name="weekdata[master]" item="item" key="key">
                             <gt name="key" value="2">
                             <div class="no4-next-body" style="height: 55px;border-bottom: solid #F2F2F2 0.5px;">
                                 <div style="height: 50px;font-family: BiauKai;">
                                     <div style="position: absolute;left: 5%;font-size: 16px;height: 16px;margin-top: 17px;font-family: BiauKai;font-style: oblique;">{$key+1}</div>
-                                    <div style="color:#65c9f1;position: absolute;left: 33%;font-size: 16px;height: 16px;margin-top: 17px;font-style: oblique;">{$item.user_nicename}</div>
-                                    <div style="position:absolute;left:10%;width: 50px;height:46px;margin-top: 3px;">
-                                        <img style="width: 100%;height: 100%;border-radius: 50%;position: absolute;left: 25%;margin-top: 2px;box-shadow: 0px 0px 5px 3px #aaa;" src="{$item.avatar}">
+                                    <div <if condition="$key%2==1">class="font-lan"<else/>class="font-red"</if> style="position: absolute;left: 33%;font-size: 16px;height: 16px;margin-top: 17px;">
+                                        {$item.user_nicename}</div>
+                                    <div style="position:absolute;left:10%;width: 50px;height:50px;margin-top: 3px;left: 15%;">
+                                        <img style="width: 100%;height: 100%;border-radius: 50%;position: absolute;" src="{$item.avatar}">
                                     </div>
                                     <div  style="height:16px;position: absolute;right: 3%;color: #B1B1B1;font-size: 16px;margin-top: 17px;letter-spacing:2px">抓中{$item.uwawacount}次</div>
                                 </div>
@@ -236,7 +241,7 @@
             </div>
 
             <!-- 内容 -->
-            <div style="position: relative">
+            <div style="position: relative;margin: -5px 0;">
                 <if condition="!empty($weekdata[deposit])">
                 <img style="width: 100%;height: 950px;" src="__PUBLIC__/images/rankinglist/weekban_center.jpg">
                 <div class="no4-next">
@@ -245,9 +250,10 @@
                             <div class="no4-next-body" style="height: 55px;border-bottom: solid #F2F2F2 0.5px;">
                                 <div style="height: 50px;font-family: BiauKai;">
                                     <div style="position: absolute;left: 5%;font-size: 16px;height: 16px;margin-top: 17px;font-family: BiauKai;font-style: oblique;">{$key+1}</div>
-                                    <div style="color:#65c9f1;position: absolute;left: 33%;font-size: 16px;height: 16px;margin-top: 17px;font-style: oblique;">{$item.user_nicename}</div>
-                                    <div style="position:absolute;left:10%;width: 50px;height:46px;margin-top: 3px;">
-                                        <img style="width: 100%;height: 100%;border-radius: 50%;position: absolute;left: 25%;margin-top: 2px;box-shadow: 0px 0px 5px 3px #aaa;" src="{$item.avatar}">
+                                    <div <if condition="$key%2==1">class="font-lan"<else/>class="font-red"</if> style="position: absolute;left: 33%;font-size: 16px;height: 16px;margin-top: 17px;">
+                                        {$item.user_nicename}</div>
+                                    <div style="position:absolute;left:10%;width: 50px;height:50px;margin-top: 3px;left: 15%;">
+                                        <img style="width: 100%;height: 100%;border-radius: 50%;position: absolute;" src="{$item.avatar}">
                                     </div>
                                     <div  style="height:16px;position: absolute;right: 3%;color: #B1B1B1;font-size: 16px;margin-top: 17px;letter-spacing:2px">{$item.summoney}</div>
                                 </div>
@@ -255,6 +261,7 @@
                         </gt>
                     </foreach>
                 </div>
+                <else/>
                 </if>
             </div>
         </div>
@@ -294,6 +301,12 @@
         background-size: 100% 100%;
         -moz-background-size: 100% 100%;
     }
+    .font-red{
+        color: #fe6cac;
+    }
+    .font-lan{
+        color:#65c9f1;
+    }
 
     @media only screen and (min-width: 300px) and (max-width: 640px) {
         #chaojiban .no4-next{
@@ -304,13 +317,13 @@
             left: 3%;
         }
         #chaojiban .no1 {
-            position: absolute;left: 29%;top: 43.5%;height: 100px;width: 70%;
+            position: absolute;left: 30%;top: 46%;height: 100px;width: 70%;
         }
         #chaojiban .no1 .no1-crown {
             width: 90px;height: 70px;position: absolute;left: 15px;top: -20px;
         }
         #chaojiban .no1 .no1-avatar {
-            width: 84px;height: 84px;border-radius: 50%;border: 3px solid #fff;box-shadow: 0px 0px 10px 3px #aaa;
+            width: 84px;height: 84px;border-radius: 50%;border: 3px solid #fff;box-shadow: 0px 0px 10px 1px #aaa;
         }
         #chaojiban .no1 .no1-ico {
             width: 60px;position: absolute;left: -20px;bottom: -10px;
@@ -329,7 +342,7 @@
             width: 65px;height: 40px;position: absolute;left: 15px;top: -16px;
         }
         #chaojiban .no2 .no2-avatar {
-            width: 74px;height: 74px;border-radius: 50%;border: 3px solid #fff;box-shadow: 0px 0px 10px 3px #aaa;
+            width: 71px;height: 71px;border-radius: 50%;border: 3px solid #fff;box-shadow: 0px 0px 10px 1px #aaa;
         }
         #chaojiban .no2 .no2-ico {
             width: 58px;position: absolute;left: -20px;bottom: -10px;
@@ -342,13 +355,13 @@
         }
         /*   -----排行3-----   */
         #chaojiban .no3 {
-            position: absolute;left: 56%;top: 73%;width: 45%;height: 90px;
+            position: absolute;left: 56%;top: 75%;width: 45%;height: 90px;
         }
         #chaojiban .no3 .no3-crown {
-            width: 65px;height: 40px;position: absolute;left: 15px;top: -16px;
+            width: 55px;height: 35px;position: absolute;left: 21px;top: -12px;
         }
         #chaojiban .no3 .no3-avatar {
-            width: 74px;height: 74px;border-radius: 50%;border: 3px solid #fff;box-shadow: 0px 0px 10px 3px #aaa;
+            width: 65px;height: 65px;border-radius: 50%;border: 3px solid #fff;box-shadow: 0px 0px 10px 1px #aaa;
         }
         #chaojiban .no3 .no3-ico {
             width: 48px;position: absolute;left: -20px;bottom: 0px;
@@ -372,13 +385,13 @@
             left: 3%;
         }
         #weekban .no1 {
-            position: absolute;left: 35%;top: 44.5%;height: 100px;width: 70%;
+            position: absolute;left: 35%;top: 46%;height: 100px;width: 70%;
         }
         #weekban .no1 .no1-crown {
             width: 90px;height: 70px;position: absolute;left: 15px;top: -20px;
         }
         #weekban .no1 .no1-avatar {
-            width: 84px;height: 84px;border-radius: 50%;border: 3px solid #fff;box-shadow: 0px 0px 10px 3px #aaa;
+            width: 84px;height: 84px;border-radius: 50%;border: 3px solid #fff;box-shadow: 0px 0px 10px 1px #aaa;
         }
         #weekban .no1 .no1-ico {
             width: 60px;position: absolute;left: -20px;bottom: -10px;
@@ -397,7 +410,7 @@
             width: 65px;height: 40px;position: absolute;left: 15px;top: -16px;
         }
         #weekban .no2 .no2-avatar {
-            width: 74px;height: 74px;border-radius: 50%;border: 3px solid #fff;box-shadow: 0px 0px 10px 3px #aaa;
+            width: 71px;height: 71px;border-radius: 50%;border: 3px solid #fff;box-shadow: 0px 0px 10px 1px #aaa;
         }
         #weekban .no2 .no2-ico {
             width: 58px;position: absolute;left: -20px;bottom: -10px;
@@ -410,13 +423,13 @@
         }
         /*   -----排行3-----   */
         #weekban .no3 {
-            position: absolute;left: 55%;top: 72%;width: 45%;height: 90px;
+            position: absolute;left: 55%;top: 77%;width: 45%;height: 90px;
         }
         #weekban .no3 .no3-crown {
-            width: 65px;height: 40px;position: absolute;left: 15px;top: -16px;
+            width: 55px;height: 35px;position: absolute;left: 21px;top: -12px;
         }
         #weekban .no3 .no3-avatar {
-            width: 74px;height: 74px;border-radius: 50%;border: 3px solid #fff;box-shadow: 0px 0px 10px 3px #aaa;
+            width: 65px;height: 65px;border-radius: 50%;border: 3px solid #fff;box-shadow: 0px 0px 10px 1px #aaa;
         }
         #weekban .no3 .no3-ico {
             width: 48px;position: absolute;left: -20px;bottom: 0px;

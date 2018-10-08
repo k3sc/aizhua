@@ -75,12 +75,10 @@ class BannerController extends HomebaseController
             print_r(M()->getLastSql());
             exit;
         }*/
-
         if($ban == 'week'){
             $c_date = $date == 0?date('Y-m-d',time()):$date;
             $startWeek = strtotime('-1 sunday -6day',strtotime($c_date));
             $endWeek = strtotime('-1 sunday',strtotime($c_date)) ;
-
             /*$startWeek = strtotime('this week-7day',strtotime($c_date));
             $endWeek = strtotime('this week',strtotime($c_date)) -1;*/
 
@@ -92,7 +90,12 @@ class BannerController extends HomebaseController
                 if( $val['summoney']<=0 ){
                     unset($data[$key]);
                 }else{
-                    $val['summoney'] = ceil($val['summoney']);
+                    if($ban=='week'){
+                        $val['summoney'] = ceil(ceil($val['summoney']*pi()*5) + (pi()*10000));
+                    }else{
+                        $val['summoney'] = ceil($val['summoney']*pi());
+                    }
+
                 }
             }
         }
