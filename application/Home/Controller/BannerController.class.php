@@ -38,14 +38,9 @@ class BannerController extends HomebaseController
         if($ban == 'week'){
             $c_date = $date == 0?date('Y-m-d',time()):$date;
 
-            $startWeek = strtotime('this week-7day',strtotime($c_date));
-            $endWeek = strtotime('this week',strtotime($c_date)) -1;
+            $startWeek = strtotime('-1 sunday -6day',strtotime($c_date));
+            $endWeek = strtotime('-1 sunday',strtotime($c_date)) ;
 
-            echo "<pre>";
-            print_r(date('Y-m-d',strtotime('-1 monday',strtotime($c_date))));
-            print_r("<br>");
-            print_r(date('Y-m-d',strtotime('-1 sunday',strtotime($c_date)) ));
-            exit;
 
             $where .= " and uwawa.ctime >= {$startWeek} and uwawa.ctime<={$endWeek} ";
             $limit = "0,20";
@@ -70,10 +65,11 @@ class BannerController extends HomebaseController
             ->select();
         if($ban == 'week'){
             $c_date = $date == 0?date('Y-m-d',time()):$date;
+            $startWeek = strtotime('-1 sunday -6day',strtotime($c_date));
+            $endWeek = strtotime('-1 sunday',strtotime($c_date)) ;
 
-            $startWeek = strtotime('this week-7day',strtotime($c_date));
-
-            $endWeek = strtotime('this week',strtotime($c_date)) -1;
+            /*$startWeek = strtotime('this week-7day',strtotime($c_date));
+            $endWeek = strtotime('this week',strtotime($c_date)) -1;*/
 
             $datas['date']['startWeek'] = date('m月d日',$startWeek);
             $datas['date']['endWeek'] = date('m月d日',$endWeek);
