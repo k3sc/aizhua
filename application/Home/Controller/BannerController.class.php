@@ -56,7 +56,7 @@ class BannerController extends HomebaseController
             $order = 'uwawacount desc';
         }
 
-        $where .= " and uwawa.is_del=0 and uwawa.is_receive=0 ";
+        //$where .= " and uwawa.is_del=0 and uwawa.is_receive=0 ";
         $data = M('users as u')->field('u.id,u.user_nicename,u.avatar,count(uwawa.id) as uwawacount,ppaayy.summoney')
             ->join('left join cmf_user_wawas as uwawa on u.id = uwawa.user_id')
             ->join("LEFT JOIN ( SELECT pay.user_id, pay.money AS pay_money, sum( pay.money ) AS summoney  FROM cmf_pay_record AS pay
@@ -66,6 +66,7 @@ class BannerController extends HomebaseController
             ->order($order)
             ->limit($limit)
             ->select();
+
         /* 测试专用 */
         /*if($ban=='week' && $type=='deposit'){
             echo "<pre>";
