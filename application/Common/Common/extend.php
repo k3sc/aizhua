@@ -671,3 +671,16 @@ function big5_gb2312($str)
     }
     return $str_t;
 }
+if ( ! function_exists('dd'))
+{
+    /**
+     * Dump the passed variables and end the script.
+     *
+     * @param  dynamic  mixed
+     * @return void
+     */
+    function dd()
+    {
+        array_map(function($x) { print_r('<pre>');print_r($x); }, func_get_args()); die;
+    }
+}

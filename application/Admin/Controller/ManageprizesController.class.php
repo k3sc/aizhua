@@ -16,31 +16,20 @@ class ManageprizesController extends AdminbaseController
 
     public function index()
     {
-        $where = ' 1=1 ';
-        if( IS_POST ){
-            $status = I('status');
-            if( $status >= 0 ){
-                $where .= ' and a.status = '.$status;
-                $this->assign('status',$status);
-            }
-            $room_no = I('room_no');
-            if( $room_no ){
-                $where .= ' and a.room_no like "%'.$room_no.'%"';
-                $this->assign('room_no',$room_no);
-            }
-            $room_name = I('room_name');
-            if( $room_name ){
-                $where .= ' and a.room_name like "%'.$room_name.'%"';
-                $this->assign('room_name',$room_name);
-            }
-            $is_show = I('is_show');
-            if( $is_show >= 0 ){
-                $where .= ' and a.is_show = '.$is_show;
-                $this->assign('is_show',$is_show);
+        $count = M('game_history')->count();
+        $page  = $this->page($count,500);
+        $prizedata = M('game_history as h')->field('h.*,u.user_nicename')->join('left join cmf_users as u on u.id=h.user_id')->limit($page->firstRow.','.$page->listRows)->select();
+        $startid = 0;
+        foreach ($prizedata as $key=>&$val){
+            $val['cdate'] = date('Y-m-d H:i:s',$val['ctime']);
+            foreach ($prizedata as $k=>$v){
+                if($v['room_id']==$val['room_id']){
+                    $roomData[$val['room_id']][$v['id']] = $v;
+                }
             }
         }
-        $count = M('game_room as a')->where($where)->count();
-        $page  = $this->page($count,20);
+        
+
         $res   = M('game_room as a')
             ->join('left join cmf_gift as b on a.type_id = b.id')
             ->join('left join cmf_device as c on a.fac_id = c.device_unique_code')
