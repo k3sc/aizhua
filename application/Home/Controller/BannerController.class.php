@@ -40,7 +40,7 @@ class BannerController extends HomebaseController
             $c_date = $date == 0?date('Y-m-d',time()):$date;
 
             $startWeek = strtotime('-1 sunday -6day',strtotime($c_date));
-            $endWeek = strtotime('-1 sunday +1day',strtotime($c_date))-1 ;
+            $endWeek = strtotime('-1 sunday +1day',strtotime($c_date))-1;
             if($type =='deposit'){
                 $pay_where = " and pay.paytime >= {$startWeek} and pay.paytime<={$endWeek} ";
             }else{
@@ -76,7 +76,7 @@ class BannerController extends HomebaseController
         if($ban == 'week'){
             $c_date = $date == 0?date('Y-m-d',time()):$date;
             $startWeek = strtotime('-1 sunday -6day',strtotime($c_date));
-            $endWeek = strtotime('-1 sunday',strtotime($c_date)) ;
+            $endWeek = strtotime('-1 sunday +1day',strtotime($c_date)) -1;
             /*$startWeek = strtotime('this week-7day',strtotime($c_date));
             $endWeek = strtotime('this week',strtotime($c_date)) -1;*/
 
@@ -89,8 +89,10 @@ class BannerController extends HomebaseController
                     unset($data[$key]);
                 }else{
                     if($ban=='week'){
+                        $val['nosummoney'] = $val['summoney'];
                         $val['summoney'] = ceil(ceil($val['summoney']*pi()*5) + (pi()*10000));
                     }else{
+                        $val['nosummoney'] = $val['summoney'];
                         $val['summoney'] = ceil($val['summoney']*pi());
                     }
 
