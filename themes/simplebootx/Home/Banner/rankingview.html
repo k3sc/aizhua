@@ -1,0 +1,97 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no">
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <title>爱抓排行版</title>
+</head>
+<body>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+    <table border="1" style="float: left;margin-left: 2%;">
+        <tr>
+            <td colspan='4' align="center">大神周榜（{$date.startWeek}-{$date.endWeek}）</td>
+        </tr>
+        <tr>
+            <th>ID</th>
+            <th>用户昵称</th>
+            <th>头像</th>
+            <th>抓中次数</th>
+        </tr>
+        <foreach name="data.week.master" item="item">
+        <tr>
+            <th>（{$item.id}）</th>
+            <th>{$item.user_nicename}</th>
+            <th><img src="{$item.avatar}" width="40" height="40" /></th>
+            <th>{$item.uwawacount}</th>
+        </tr>
+        </foreach>
+    </table>
+
+    <table border="1" style="float: left;margin-left: 5%">
+        <tr>
+            <td  colspan='4' align="center">土豪周榜（{$date.startWeek}-{$date.endWeek}）</td>
+        </tr>
+        <tr>
+            <th>ID</th>
+            <th>用户昵称</th>
+            <th>头像</th>
+            <th>充值金额</th>
+        </tr>
+        <foreach name="data.week.deposit" item="item">
+        <tr>
+            <th>（{$item.id}）</th>
+            <th>{$item.user_nicename}</th>
+            <th><img src="{$item.avatar}" width="40" height="40" /></th>
+            <th>{$item.nosummoney}</th>
+        </tr>
+        </foreach>
+    </table>
+
+    <table border="1" style="float: left;margin-left: 5%">
+        <tr>
+            <td  colspan='4' align="center">大神总榜</td>
+        </tr>
+        <tr>
+            <th>ID</th>
+            <th>用户昵称</th>
+            <th>头像</th>
+            <th>抓中次数</th>
+        </tr>
+        <foreach name="data.all.master" item="item">
+        <tr>
+            <th>（{$item.id}）</th>
+            <th>{$item.user_nicename}</th>
+            <th><img src="{$item.avatar}" width="40" height="40" /></th>
+            <th>{$item.uwawacount}</th>
+        </tr>
+        </foreach>
+    </table>
+    <table border="1" style="float: left;margin-top: 2%;margin-left: 5%;">
+        <tr>
+            <td  colspan='4' align="center">土豪总榜</td>
+        </tr>
+        <tr>
+            <th>ID</th>
+            <th>用户昵称</th>
+            <th>头像</th>
+            <th>充值金额</th>
+        </tr>
+        <foreach name="data.all.deposit" item="item">
+        <tr>
+            <th>（{$item.id}）</th>
+            <th>{$item.user_nicename}</th>
+            <th><img src="{$item.avatar}" width="40" height="40" /></th>
+            <th>{$item.nosummoney}</th>
+        </tr>
+        </foreach>
+    </table>
+
+</body>
+</html>
+
