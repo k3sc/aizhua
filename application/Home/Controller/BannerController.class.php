@@ -40,7 +40,7 @@ class BannerController extends HomebaseController
             $c_date = $date == 0?date('Y-m-d',time()):$date;
 
             $startWeek = strtotime('-1 sunday -6day',strtotime($c_date));
-            $endWeek = strtotime('-1 sunday',strtotime($c_date)) ;
+            $endWeek = strtotime('-1 sunday +1day',strtotime($c_date))-1 ;
             if($type =='deposit'){
                 $pay_where = " and pay.paytime >= {$startWeek} and pay.paytime<={$endWeek} ";
             }else{
@@ -68,10 +68,7 @@ class BannerController extends HomebaseController
             ->select();
 
         /* 测试专用 */
-        /*if($ban=='week' && $type=='deposit'){
-            echo "<pre>";
-            print_r($data);
-            exit;
+        /*if($ban=='week' && $type=='master'){
             echo "<pre>";
             print_r(M()->getLastSql());
             exit;
@@ -102,5 +99,23 @@ class BannerController extends HomebaseController
         }
         $datas['data'] =$data;
         return $datas;
+    }
+    public function rankingview(){
+        $date = I('date')?I('date'):0;
+        $arr = [
+            'all'=>['master','deposit'],
+            'week'=>['master','deposit'],
+        ];
+        foreach ($arr as $key=>$val){
+            foreach ($val as $k=>$v){
+                $data = $this->getBanData($key,$v,$date);
+                if($key == 'week'){
+                    $this->assign('date',$data['date']);
+                }
+                $result[$key][$v] = $data['data'];
+            }
+        }
+        $this->assign('data',$result);
+        $this->display();
     }
 }
