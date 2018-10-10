@@ -179,7 +179,6 @@ class HomebaseController extends AppframeController {
 		
 		$theme_suffix="";
 		if(C('MOBILE_TPL_ENABLED') && sp_is_mobile()){//开启手机模板支持
-		    echo 1;exit;
 		    if (C('LANG_SWITCH_ON',null,false)){
 		        if(file_exists($tmpl_path."/".$theme."_mobile_".LANG_SET)){//优先级最高
 		            $theme_suffix  =  "_mobile_".LANG_SET;
@@ -237,11 +236,8 @@ class HomebaseController extends AppframeController {
 		}
 
 		$file = sp_add_template_file_suffix($current_tmpl_path.$module.$template);
-
 		$file= str_replace("//",'/',$file);
-
 		if(!file_exists_case($file)) E(L('_TEMPLATE_NOT_EXIST_').':'.$file);
-
 		return $file;
 	}
 	
