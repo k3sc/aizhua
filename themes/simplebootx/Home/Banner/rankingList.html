@@ -13,8 +13,8 @@
 <input type="hidden" class="phban-type" value="master">
 <div style="width: 100%;height: auto;">
     <div style="width: 100%;display:table;">
-        <img class="click-all" style="width: 50%;float: left" onclick="qh_ban('all')" src="__PUBLIC__/images/rankinglist/chaojiban_checked.jpg" />
-        <img class="click-week" style="width: 50%;float: left" onclick="qh_ban('week')" src="__PUBLIC__/images/rankinglist/weekban.jpg" />
+        <img class="click-all" style="width: 50%;float: left" onclick="qh_ban('all')" src="__PUBLIC__/images/rankinglist/chaojiban.jpg" />
+        <img class="click-week" style="width: 50%;float: left" onclick="qh_ban('week')" src="__PUBLIC__/images/rankinglist/weekban_checked.jpg" />
     </div>
     <div style="width: 100%;margin-top: 2px;display: table;">
         <img class="click-master" style="width: 50%;float: left;" onclick="qh_ban(0,'master')" src="__PUBLIC__/images/rankinglist/masterban_checked.jpg" />
@@ -378,15 +378,15 @@
         }
     }
     $(function () {
-        /*$('#weekban').removeClass('none')
+        $('#weekban').removeClass('none')
         $('#weekban').addClass('display-none')
         $('#weekban #masterban').removeClass('none')
-        $('#weekban #masterban').addClass('display-none')*/
+        $('#weekban #masterban').addClass('display-none')
 
-        $('#chaojiban').removeClass('none')
+        /*$('#chaojiban').removeClass('none')
         $('#chaojiban').addClass('display-none')
         $('#chaojiban #masterban').removeClass('none')
-        $('#chaojiban #masterban').addClass('display-none')
+        $('#chaojiban #masterban').addClass('display-none')*/
     })
     function qh_ban(c_ban,c_type){
         var ban = $('.phban').val();
