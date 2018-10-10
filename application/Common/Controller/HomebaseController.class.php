@@ -194,7 +194,6 @@ class HomebaseController extends AppframeController {
     		    }
 		    }
 		}else{
-		    echo 2;exit;
 		    $lang_suffix="_".LANG_SET;
 		    if (C('LANG_SWITCH_ON',null,false) && file_exists($tmpl_path."/".$theme.$lang_suffix)){
 		        $theme_suffix = $lang_suffix;
@@ -219,7 +218,7 @@ class HomebaseController extends AppframeController {
 		if(is_file($template)) {
 			return $template;
 		}
-		echo 3;exit;
+		echo 3;
 		$depr       =   C('TMPL_FILE_DEPR');
 		$template   =   str_replace(':', $depr, $template);
 		
@@ -232,6 +231,7 @@ class HomebaseController extends AppframeController {
 		
 		// 分析模板文件规则
 		if('' == $template) {
+		    echo 4;exit;
 			// 如果模板文件名为空 按照默认规则定位
 			$template = "/".CONTROLLER_NAME . $depr . ACTION_NAME;
 		}elseif(false === strpos($template, '/')){
