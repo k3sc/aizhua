@@ -30,34 +30,34 @@
                 <div class="no1">
                     <img class="no1-crown" src="__PUBLIC__/images/rankinglist/no1_crown.png">
                     <div class="no1-avatar" >
-                        <img class="no1-avatar-img"  src="{$alldata[master][0].avatar}">
+                        <img class="no1-avatar-img"  src="{$alldata['master'][0].avatar}">
                     </div>
                     <img class="no1-ico" src="__PUBLIC__/images/rankinglist/no1.png">
                     <div class="no1-right">
-                        <span class="no1-name">{$alldata[master][0].user_nicename}</span>
-                        <span class="no1-count">{$alldata[master][0].uwawacount} 次</span>
+                        <span class="no1-name">{$alldata['master'][0].user_nicename}</span>
+                        <span class="no1-count">{$alldata['master'][0].uwawacount} 次</span>
                     </div>
                 </div>
                 <div class="no2">
                     <img class="no2-crown" src="__PUBLIC__/images/rankinglist/no2_crown.png">
                     <div class="no2-avatar" >
-                        <img class="no2-avatar-img" src="{$alldata[master][1].avatar}">
+                        <img class="no2-avatar-img" src="{$alldata['master'][1].avatar}">
                     </div>
                     <img class="no2-ico" src="__PUBLIC__/images/rankinglist/no2.png">
                     <div class="no2-right">
-                        <span class="no2-name">{$alldata[master][1].user_nicename}</span>
-                        <span class="no2-count">{$alldata[master][1].uwawacount} 次</span>
+                        <span class="no2-name">{$alldata['master'][1].user_nicename}</span>
+                        <span class="no2-count">{$alldata['master'][1].uwawacount} 次</span>
                     </div>
                 </div>
                 <div class="no3">
                     <img class="no3-crown" src="__PUBLIC__/images/rankinglist/no3_crown.png">
                     <div class="no3-avatar" >
-                        <img class="no3-avatar-img" src="{$alldata[master][2].avatar}">
+                        <img class="no3-avatar-img" src="{$alldata['master'][2].avatar}">
                     </div>
                     <img class="no3-ico" src="__PUBLIC__/images/rankinglist/no3.png">
                     <div class="no3-right">
-                        <div class="no3-name">{$alldata[master][2].user_nicename}</div>
-                        <span class="no3-count">{$alldata[master][2].uwawacount} 次</span>
+                        <div class="no3-name">{$alldata['master'][2].user_nicename}</div>
+                        <span class="no3-count">{$alldata['master'][2].uwawacount} 次</span>
                     </div>
                 </div>
             </div>
@@ -65,7 +65,7 @@
             <div class="chaojiban-masterban-center" style="position: relative;margin: -5px 0;">
                 <img style="width: 100%;height: 400px;" src="__PUBLIC__/images/rankinglist/chaojiban_center.jpg">
                 <div class="no4-next">
-                    <foreach name="alldata[master]" item="item" key="key">
+                    <foreach name="alldata['master']" item="item" key="key">
                         <gt name="key" value="2">
                         <div class="no4-next-body" style="height: 55px;border-bottom: solid #F2F2F2 0.5px;">
                             <div style="height: 50px;font-family: BiauKai;">
@@ -95,34 +95,34 @@
                 <div class="no1">
                     <img class="no1-crown" src="__PUBLIC__/images/rankinglist/no1_crown.png">
                     <div class="no1-avatar" >
-                        <img class="no1-avatar-img" src="{$alldata[deposit][0].avatar}">
+                        <img class="no1-avatar-img" src="{$alldata['deposit'][0].avatar}">
                     </div>
                     <img class="no1-ico" src="__PUBLIC__/images/rankinglist/no1.png">
                     <div class="no1-right">
-                        <span class="no1-name">{$alldata[deposit][0].user_nicename}</span>
-                        <span class="no1-count">{$alldata[deposit][0].summoney}</span>
+                        <span class="no1-name">{$alldata['deposit'][0].user_nicename}</span>
+                        <span class="no1-count">{$alldata['deposit'][0].summoney}</span>
                     </div>
                 </div>
                 <div class="no2">
                     <img class="no2-crown" src="__PUBLIC__/images/rankinglist/no2_crown.png">
                     <div class="no2-avatar" >
-                        <img class="no2-avatar-img" src="{$alldata[deposit][1].avatar}">
+                        <img class="no2-avatar-img" src="{$alldata['deposit'][1].avatar}">
                     </div>
                     <img class="no2-ico" src="__PUBLIC__/images/rankinglist/no2.png">
                     <div class="no2-right">
-                        <span class="no2-name">{$alldata[deposit][1].user_nicename}</span>
-                        <span class="no2-count">{$alldata[deposit][1].summoney}</span>
+                        <span class="no2-name">{$alldata['deposit'][1].user_nicename}</span>
+                        <span class="no2-count">{$alldata['deposit'][1].summoney}</span>
                     </div>
                 </div>
                 <div class="no3">
                     <img class="no3-crown" src="__PUBLIC__/images/rankinglist/no3_crown.png">
                     <div class="no3-avatar" >
-                        <img class="no3-avatar-img" src="{$alldata[deposit][2].avatar}">
+                        <img class="no3-avatar-img" src="{$alldata['deposit'][2].avatar}">
                     </div>
                     <img class="no3-ico" src="__PUBLIC__/images/rankinglist/no3.png">
                     <div class="no3-right">
-                        <div class="no3-name">{$alldata[deposit][2].user_nicename}</div>
-                        <span class="no3-count">{$alldata[deposit][2].summoney}</span>
+                        <div class="no3-name">{$alldata['deposit'][2].user_nicename}</div>
+                        <span class="no3-count">{$alldata['deposit'][2].summoney}</span>
                     </div>
                 </div>
             </div>
@@ -130,7 +130,7 @@
             <div class="chaojiban-masterban-center" style="position: relative;margin: -5px 0;">
                 <img style="width: 100%;height: 400px;" src="__PUBLIC__/images/rankinglist/chaojiban_center.jpg">
                 <div class="no4-next">
-                    <foreach name="alldata[deposit]" item="item" key="key">
+                    <foreach name="alldata['deposit']" item="item" key="key">
                         <gt name="key" value="2">
                             <div class="no4-next-body" style="height: 55px;border-bottom: solid #F2F2F2 0.5px;">
                                 <div style="height: 50px;font-family: BiauKai;">
@@ -164,45 +164,45 @@
             <div style="position: relative;">
                 <img style="width: 100%;" src="__PUBLIC__/images/rankinglist/weekban_masterban_top.jpg">
                 <div class="week-date">
-                    <span >{$date[startWeek]}</span>-<span >{$date[endWeek]}</span>
+                    <span >{$date['startWeek']}</span>-<span >{$date['endWeek']}</span>
                 </div>
 
-                <if condition="!empty($weekdata[master][0])">
+                <if condition="!empty($weekdata['master'][0])">
                     <div class="no1">
                         <img class="no1-crown" src="__PUBLIC__/images/rankinglist/no1_crown.png">
                         <div class="no1-avatar" >
-                            <img class="no1-avatar-img" src="{$weekdata[master][0].avatar}">
+                            <img class="no1-avatar-img" src="{$weekdata['master'][0].avatar}">
                         </div>
                         <img class="no1-ico" src="__PUBLIC__/images/rankinglist/no1.png">
                         <div class="no1-right">
-                            <span class="no1-name">{$weekdata[master][0].user_nicename}</span>
-                            <span class="no1-count">{$weekdata[master][0].uwawacount} 次</span>
+                            <span class="no1-name">{$weekdata['master'][0].user_nicename}</span>
+                            <span class="no1-count">{$weekdata['master'][0].uwawacount} 次</span>
                         </div>
                     </div>
                     </if>
-                    <if condition="!empty($weekdata[master][1])">
+                    <if condition="!empty($weekdata['master'][1])">
                     <div class="no2">
                         <img class="no2-crown" src="__PUBLIC__/images/rankinglist/no2_crown.png">
                         <div class="no2-avatar" >
-                            <img class="no2-avatar-img" src="{$weekdata[master][1].avatar}">
+                            <img class="no2-avatar-img" src="{$weekdata['master'][1].avatar}">
                         </div>
                         <img class="no2-ico" src="__PUBLIC__/images/rankinglist/no2.png">
                         <div class="no2-right">
-                            <span class="no2-name">{$weekdata[master][1].user_nicename}</span>
-                            <span class="no2-count">{$weekdata[master][1].uwawacount} 次</span>
+                            <span class="no2-name">{$weekdata['master'][1].user_nicename}</span>
+                            <span class="no2-count">{$weekdata['master'][1].uwawacount} 次</span>
                         </div>
                     </div>
                     </if>
-                    <if condition="!empty($weekdata[master][2])">
+                    <if condition="!empty($weekdata['master'][2])">
                     <div class="no3">
                         <img class="no3-crown" src="__PUBLIC__/images/rankinglist/no3_crown.png">
                         <div class="no3-avatar" >
-                            <img class="no3-avatar-img" src="{$weekdata[master][2].avatar}">
+                            <img class="no3-avatar-img" src="{$weekdata['master'][2].avatar}">
                         </div>
                         <img class="no3-ico" src="__PUBLIC__/images/rankinglist/no3.png">
                         <div class="no3-right">
-                            <div class="no3-name">{$weekdata[master][2].user_nicename}</div>
-                            <span class="no3-count">{$weekdata[master][2].uwawacount} 次</span>
+                            <div class="no3-name">{$weekdata['master'][2].user_nicename}</div>
+                            <span class="no3-count">{$weekdata['master'][2].uwawacount} 次</span>
                         </div>
                     </div>
                 </if>
@@ -210,10 +210,10 @@
 
             <!-- 内容 -->
             <div style="position: relative;margin: -5px 0;">
-                <if condition="!empty($weekdata[master])">
+                <if condition="!empty($weekdata['master'])">
                     <img style="width: 100%;height: 950px;" src="__PUBLIC__/images/rankinglist/weekban_center.jpg">
                     <div class="no4-next">
-                        <foreach name="weekdata[master]" item="item" key="key">
+                        <foreach name="weekdata['master']" item="item" key="key">
                             <gt name="key" value="2">
                             <div class="no4-next-body" style="height: 55px;border-bottom: solid #F2F2F2 0.5px;">
                                 <div style="height: 50px;font-family: BiauKai;">
@@ -238,45 +238,45 @@
             <div style="position: relative;">
                 <img style="width: 100%;" src="__PUBLIC__/images/rankinglist/weekban_masterban_top.jpg">
                 <div class="week-date">
-                    <span >{$date[startWeek]}</span>-<span >{$date[endWeek]}</span>
+                    <span >{$date['startWeek']}</span>-<span >{$date['endWeek']}</span>
                 </div>
 
-                <if condition="!empty($weekdata[deposit][0])">
+                <if condition="!empty($weekdata['deposit'][0])">
                 <div class="no1">
                     <img class="no1-crown" src="__PUBLIC__/images/rankinglist/no1_crown.png">
                     <div class="no1-avatar" >
-                        <img class="no1-avatar-img" src="{$weekdata[deposit][0].avatar}">
+                        <img class="no1-avatar-img" src="{$weekdata['deposit'][0].avatar}">
                     </div>
                     <img class="no1-ico" src="__PUBLIC__/images/rankinglist/no1.png">
                     <div class="no1-right">
-                        <span class="no1-name">{$weekdata[deposit][0].user_nicename}</span>
-                        <span class="no1-count">{$weekdata[deposit][0].summoney}</span>
+                        <span class="no1-name">{$weekdata['deposit'][0].user_nicename}</span>
+                        <span class="no1-count">{$weekdata['deposit'][0].summoney}</span>
                     </div>
                 </div>
                 </if>
-                <if condition="!empty($weekdata[deposit][1])">
+                <if condition="!empty($weekdata['deposit'][1])">
                 <div class="no2">
                     <img class="no2-crown" src="__PUBLIC__/images/rankinglist/no2_crown.png">
                     <div class="no2-avatar" >
-                        <img class="no2-avatar-img" src="{$weekdata[deposit][1].avatar}">
+                        <img class="no2-avatar-img" src="{$weekdata['deposit'][1].avatar}">
                     </div>
                     <img class="no2-ico" src="__PUBLIC__/images/rankinglist/no2.png">
                     <div class="no2-right">
-                        <span class="no2-name">{$weekdata[deposit][1].user_nicename}</span>
-                        <span class="no2-count">{$weekdata[deposit][1].summoney}</span>
+                        <span class="no2-name">{$weekdata['deposit'][1].user_nicename}</span>
+                        <span class="no2-count">{$weekdata['deposit'][1].summoney}</span>
                     </div>
                 </div>
                 </if>
-                <if condition="!empty($weekdata[deposit][2])">
+                <if condition="!empty($weekdata['deposit'][2])">
                 <div class="no3">
                     <img class="no3-crown" src="__PUBLIC__/images/rankinglist/no3_crown.png">
                     <div class="no3-avatar" >
-                        <img class="no3-avatar-img" src="{$weekdata[deposit][2].avatar}">
+                        <img class="no3-avatar-img" src="{$weekdata['deposit'][2].avatar}">
                     </div>
                     <img class="no3-ico" src="__PUBLIC__/images/rankinglist/no3.png">
                     <div class="no3-right">
-                        <div class="no3-name">{$weekdata[deposit][2].user_nicename}</div>
-                        <span class="no3-count">{$weekdata[deposit][2].summoney}</span>
+                        <div class="no3-name">{$weekdata['deposit'][2].user_nicename}</div>
+                        <span class="no3-count">{$weekdata['deposit'][2].summoney}</span>
                     </div>
                 </div>
                 </if>
@@ -284,10 +284,10 @@
 
             <!-- 内容 -->
             <div style="position: relative;margin: -5px 0;">
-                <if condition="!empty($weekdata[deposit])">
+                <if condition="!empty($weekdata['deposit'])">
                 <img style="width: 100%;height: 950px;" src="__PUBLIC__/images/rankinglist/weekban_center.jpg">
                 <div class="no4-next">
-                    <foreach name="weekdata[deposit]" item="item" key="key">
+                    <foreach name="weekdata['deposit']" item="item" key="key">
                         <gt name="key" value="2">
                             <div class="no4-next-body" style="height: 55px;border-bottom: solid #F2F2F2 0.5px;">
                                 <div style="height: 50px;font-family: BiauKai;">
