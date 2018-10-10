@@ -158,9 +158,7 @@ class HomebaseController extends AppframeController {
 	 * @return string
 	 */
 	public function parseTemplate($template='') {
-        echo "<pre>";
-        print_r(ERROR_MESSAGE);
-        exit;
+
 		$tmpl_path=C("SP_TMPL_PATH");
 		define("SP_TMPL_PATH", $tmpl_path);
 		// 获取当前主题名称
@@ -180,7 +178,7 @@ class HomebaseController extends AppframeController {
 		}
 		
 		$theme_suffix="";
-		
+		exit;
 		if(C('MOBILE_TPL_ENABLED') && sp_is_mobile()){//开启手机模板支持
 		    
 		    if (C('LANG_SWITCH_ON',null,false)){
