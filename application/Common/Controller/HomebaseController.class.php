@@ -235,11 +235,13 @@ class HomebaseController extends AppframeController {
 		}elseif(false === strpos($template, '/')){
 			$template = "/".CONTROLLER_NAME . $depr . $template;
 		}
-		echo 1;
+
 		$file = sp_add_template_file_suffix($current_tmpl_path.$module.$template);
-		echo 2;
+
 		$file= str_replace("//",'/',$file);
-		echo 3;exit;
+        echo "<pre>";
+        print_r(E(L('_TEMPLATE_NOT_EXIST_').':'.$file));
+        exit;
 		if(!file_exists_case($file)) E(L('_TEMPLATE_NOT_EXIST_').':'.$file);
 
 		return $file;
