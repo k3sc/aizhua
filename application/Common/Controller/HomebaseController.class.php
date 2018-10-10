@@ -178,9 +178,8 @@ class HomebaseController extends AppframeController {
 		}
 		
 		$theme_suffix="";
-		exit;
 		if(C('MOBILE_TPL_ENABLED') && sp_is_mobile()){//开启手机模板支持
-		    
+		    echo 1;exit;
 		    if (C('LANG_SWITCH_ON',null,false)){
 		        if(file_exists($tmpl_path."/".$theme."_mobile_".LANG_SET)){//优先级最高
 		            $theme_suffix  =  "_mobile_".LANG_SET;
@@ -195,6 +194,7 @@ class HomebaseController extends AppframeController {
     		    }
 		    }
 		}else{
+		    echo 2;exit;
 		    $lang_suffix="_".LANG_SET;
 		    if (C('LANG_SWITCH_ON',null,false) && file_exists($tmpl_path."/".$theme.$lang_suffix)){
 		        $theme_suffix = $lang_suffix;
@@ -219,6 +219,7 @@ class HomebaseController extends AppframeController {
 		if(is_file($template)) {
 			return $template;
 		}
+		echo 3;exit;
 		$depr       =   C('TMPL_FILE_DEPR');
 		$template   =   str_replace(':', $depr, $template);
 		
