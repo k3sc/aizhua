@@ -325,24 +325,24 @@
 <script>
     var all = {
         master: function () {
+            $('.click-deposit').attr('src','__PUBLIC__/images/rankinglist/depositban.jpg')
+            $('.click-master').attr('src','__PUBLIC__/images/rankinglist/masterban_checked.jpg')
             none()
             $('#chaojiban').addClass('display-none')
             $('#chaojiban').removeClass('none')
             $('#chaojiban #masterban').addClass('display-none')
             $('#chaojiban #masterban').removeClass('none')
             this.setphban()
-            $('.click-deposit').attr('src','__PUBLIC__/images/rankinglist/depositban.jpg')
-            $('.click-master').attr('src','__PUBLIC__/images/rankinglist/masterban_checked.jpg')
         },
         deposit: function () {
+            $('.click-master').attr('src','__PUBLIC__/images/rankinglist/masterban.jpg')
+            $('.click-deposit').attr('src','__PUBLIC__/images/rankinglist/depositban_checked.jpg')
             none()
             $('#chaojiban').addClass('display-none')
             $('#chaojiban').removeClass('none')
             $('#chaojiban #depositban').addClass('display-none')
             $('#chaojiban #depositban').removeClass('none')
             this.setphban()
-            $('.click-master').attr('src','__PUBLIC__/images/rankinglist/masterban.jpg')
-            $('.click-deposit').attr('src','__PUBLIC__/images/rankinglist/depositban_checked.jpg')
         },
         setphban: function(){
             $('.click-week').attr('src','__PUBLIC__/images/rankinglist/weekban.jpg')
@@ -352,24 +352,24 @@
     }
     var week = {
         master: function () {
+            $('.click-deposit').attr('src','__PUBLIC__/images/rankinglist/depositban.jpg')
+            $('.click-master').attr('src','__PUBLIC__/images/rankinglist/masterban_checked.jpg')
             none()
             $('#weekban').addClass('display-none')
             $('#weekban').removeClass('none')
             $('#weekban #masterban').addClass('display-none')
             $('#weekban #masterban').removeClass('none')
             this.setphban()
-            $('.click-deposit').attr('src','__PUBLIC__/images/rankinglist/depositban.jpg')
-            $('.click-master').attr('src','__PUBLIC__/images/rankinglist/masterban_checked.jpg')
         },
         deposit: function () {
+            $('.click-master').attr('src','__PUBLIC__/images/rankinglist/masterban.jpg')
+            $('.click-deposit').attr('src','__PUBLIC__/images/rankinglist/depositban_checked.jpg')
             none()
             $('#weekban').addClass('display-none')
             $('#weekban').removeClass('none')
             $('#weekban #depositban').addClass('display-none')
             $('#weekban #depositban').removeClass('none')
             this.setphban()
-            $('.click-master').attr('src','__PUBLIC__/images/rankinglist/masterban.jpg')
-            $('.click-deposit').attr('src','__PUBLIC__/images/rankinglist/depositban_checked.jpg')
         },
         setphban: function(){
             $('.click-all').attr('src','__PUBLIC__/images/rankinglist/chaojiban.jpg')
