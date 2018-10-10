@@ -25,7 +25,7 @@ class BannerController extends HomebaseController
                 $result[$key][$v] = $data['data'];
             }
         }
-
+dump($result);exit;
         $this->assign('alldata',$result['all']);
         $this->assign('weekdata',$result['week']);
         $this->display();
