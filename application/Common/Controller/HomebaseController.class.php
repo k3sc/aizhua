@@ -132,9 +132,7 @@ class HomebaseController extends AppframeController {
 	 */
 	public function display($templateFile = '', $charset = '', $contentType = '', $content = '', $prefix = '') {
 		//echo $this->parseTemplate($templateFile);
-        echo "<pre>";
-        print_r(111);
-        exit;
+
 		parent::display($this->parseTemplate($templateFile), $charset, $contentType);
 	}
 	
@@ -176,6 +174,9 @@ class HomebaseController extends AppframeController {
 				$theme  =   C('SP_DEFAULT_THEME');
 			}
 			cookie('think_template',$theme,864000);
+            echo "<pre>";
+            print_r(111);
+            exit;
 		}
 		
 		$theme_suffix="";
