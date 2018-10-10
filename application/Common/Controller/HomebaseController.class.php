@@ -239,9 +239,7 @@ class HomebaseController extends AppframeController {
 		$file = sp_add_template_file_suffix($current_tmpl_path.$module.$template);
 
 		$file= str_replace("//",'/',$file);
-        echo "<pre>";
-        print_r($file);
-        exit;
+        
 		if(!file_exists_case($file)) E(L('_TEMPLATE_NOT_EXIST_').':'.$file);
 
 		return $file;
