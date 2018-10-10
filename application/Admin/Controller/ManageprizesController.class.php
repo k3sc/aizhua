@@ -11,41 +11,157 @@ use Common\Controller\AdminbaseController;
 
 class ManageprizesController extends AdminbaseController
 {
-    private $statusarr = ['在线','补货中','维修中','游戏中','离线'];
-    private $isshowarr = ['下架','上架'];
-
     public function index()
     {
-        $count = M('game_history')->count();
+        $where = ' 1=1 ';
+
+        /*收集过滤条件*/
+        $user_id = I('user_id');
+        if($user_id){
+            $where .= " and u.id={$user_id} ";
+            $filter['user_id'] = $user_id;
+        }
+        $user_nicename = I('user_nicename');
+        if($user_nicename){
+            $where .= " and u.user_nicename='{$user_nicename}' ";
+            $filter['user_nicename'] = $user_nicename;
+        }
+
+        $count = $this->getGameCount($where);
         $page  = $this->page($count,500);
-        $prizedata = M('game_history as h')->field('h.*,u.user_nicename')->join('left join cmf_users as u on u.id=h.user_id')->limit($page->firstRow.','.$page->listRows)->select();
-        $startid = 0;
+        $prizedata = $this->getGameData($where,$page);
+
+
+        /*
+         *  连续抓取需要满足三个条件
+         *  1、还是当前用户
+         *  2、还在当前房间
+         *  3、抓中娃娃之前
+         */
+        $start_userid = $prizedata[0]['user_id'];
+        $start_roomid = $prizedata[0]['room_id'];
+        $i = 0;
+        /* 得到了分组之后的数据  一个连续抓取的过程为一个数组 */
         foreach ($prizedata as $key=>&$val){
+
             $val['cdate'] = date('Y-m-d H:i:s',$val['ctime']);
-            foreach ($prizedata as $k=>$v){
+            /*foreach ($prizedata as $k=>$v){
                 if($v['room_id']==$val['room_id']){
                     $roomData[$val['room_id']][$v['id']] = $v;
                 }
+            }*/
+
+            if($val['success'] > 0){
+                if($val['user_id']!=$start_userid || $val['room_id']!=$start_roomid){
+                    $i++;
+                    $start_userid = $prizedata[$key]['user_id'];
+                    $start_roomid = $prizedata[$key]['room_id'];
+                    $zhuaData[$i][] = $val;
+                    $i++;
+                    continue;
+                }else{
+                    $zhuaData[$i][] = $val;
+                    $i++;
+                    $start_userid = $prizedata[$key+1]['user_id'];
+                    $start_roomid = $prizedata[$key+1]['room_id'];
+                    continue;
+                }
+            }
+
+            if($val['user_id']!=$start_userid || $val['room_id']!=$start_roomid){
+                $i++;
+                $start_userid = $prizedata[$key]['user_id'];
+                $start_roomid = $prizedata[$key]['room_id'];
+            }
+            $zhuaData[$i][] = $val;
+
+        }
+
+
+
+
+        foreach ($zhuaData as $key=>$val){
+            $success_arr = array_column($val,'success');
+            $success_arr = array_unique($success_arr);
+            if(array_sum($success_arr) <= 0 ){
+                unset($zhuaData[$key]);
+            }else{
+                $resData[$key]['data'] = $val;
+                //获取用户的等级
+                $user = M('users')->field('id,user_nicename,avatar,mobile,coin,free_coin,create_time,user_status,claw,strong,coin_sys_give,openid,sys,sex,last_login_time,
+                total_payed ,total_get,total_get_num,last_active_time')->where(['id'=>$val[0]['user_id']])->find();
+                $res = A('Users')->getGrade($user);
+                $resData[$key]['ext']['level'] = $res['title'];
+                $resData[$key]['ext']['count'] = count($val);
             }
         }
-        
 
-        $res   = M('game_room as a')
-            ->join('left join cmf_gift as b on a.type_id = b.id')
-            ->join('left join cmf_device as c on a.fac_id = c.device_unique_code')
-            ->join('left join cmf_device_addr as d on c.device_addr_id=d.id')
-            ->join('left join cmf_game_config as e on c.game_config_id=e.id')
-            ->field('a.*,b.giftname,b.id as wawa_id,b.gifticon,b.wawa_no,b.spendcoin,c.deveci_no,c.device_addr,c.device_stock,d.addr,e.id as config_id,e.name as config_name')
-            ->where($where)
-            ->order('a.listorder')
-            ->limit($page->firstRow.','.$page->listRows)
-            ->select();
 
-        $this->assign('row',$res);
+        $this->assign('filter',$filter);
+        $this->assign('row',array_values($resData));
+//        $this->assign('row',$resData);
+        $this->assign('rowJson',json_encode($resData));
         $this->assign('page',$page->show('Admin'));
-        $this->assign('status_name',$this->statusarr);
-        $this->assign('isshow_name',$this->isshowarr);
         $this->display();
+    }
+
+    public function getGameData($where,$page){
+        $sql = "SELECT
+                    h.id,h.room_id,h.user_id,h.success,h.ctime,h.is_strong,
+                    u.user_nicename,u.avatar,
+                    roomwawa.*
+                FROM
+                    cmf_game_history AS h
+                    LEFT JOIN cmf_users AS u ON u.id = h.user_id
+                    LEFT JOIN (
+                SELECT
+                    r.room_no,
+                    r.room_name,
+                    r.id AS room_id,
+                    r.`status`,
+                    r.type_id AS wawaid,
+                    g.giftname,
+                    g.id AS wawa_id,
+                    g.gifticon,
+                    g.spendcoin,
+                    g.cost,
+                    g.stock
+                FROM
+                    cmf_game_room AS r
+                    LEFT JOIN cmf_gift AS g ON g.id = r.type_id 
+                    ) as roomwawa on h.room_id=roomwawa.room_id
+                WHERE {$where}    
+                    LIMIT {$page->firstRow},{$page->listRows}";
+        $result = M()->query($sql);
+        return $result;
+    }
+
+    public function getGameCount($where){
+        $sql = "SELECT
+                    count(h.id) as count
+                FROM
+                    cmf_game_history AS h
+                    LEFT JOIN cmf_users AS u ON u.id = h.user_id
+                    LEFT JOIN (
+                SELECT
+                    r.room_no,
+                    r.room_name,
+                    r.id AS room_id,
+                    r.`status`,
+                    r.type_id AS wawaid,
+                    g.giftname,
+                    g.id AS wawa_id,
+                    g.gifticon,
+                    g.spendcoin,
+                    g.cost,
+                    g.stock
+                FROM
+                    cmf_game_room AS r
+                    LEFT JOIN cmf_gift AS g ON g.id = r.type_id 
+                    ) as roomwawa on h.room_id=roomwawa.room_id
+                WHERE {$where}";
+        $result = M()->query($sql);
+        return $result[0]['count'];
     }
 
 

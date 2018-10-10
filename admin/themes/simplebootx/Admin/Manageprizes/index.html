@@ -1,24 +1,29 @@
 <admintpl file="header" />
 </head>
 <body>
-<div class="wrap">
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+<div class="wrap" id="bbooddyy">
     <ul class="nav nav-tabs">
-        <li class="active"><a href="">房间列表</a></li>
-        <li><a href="{:U('Room/add')}">添加房间</a></li>
+        <li class="active"><a href="">中奖管理列表</a></li>
+        <!-- <li><a href="{:U('Room/add')}">添加房间</a></li> -->
     </ul>
 
-    <form method="post" class="well form-search" action="{:U('Manageprizes/index')}">
-        用户名：<input type="text" name="user_nicename" value="{$user_nicename}"  placeholder="请输入用户名">
-        用户ID：<input type="text" name="user_id" value="{$user_id}"  placeholder="请输入用户ID">
+    <!-- <form method="get" class="well form-search" action="{:U('Manageprizes/index')}">
+        <input type="hidden" name="g" value="Admin">
+        <input type="hidden" name="m" value="Manageprizes">
+        <input type="hidden" name="a" value="index">
+        用户名：<input type="text" name="user_nicename"  placeholder="请输入用户名" value="{$filter.user_nicename}">
+        用户ID：<input type="text" name="user_id"  placeholder="请输入用户ID" value="{$filter.user_id}">
         <input type="submit" class="btn btn-primary" value="搜索">
-    </form>
+    </form> -->
+
 
 
     <form class="js-ajax-form" method="post">
         <table class="table table-hover table-bordered">
             <thead>
             <tr>
-                <th>ID</th>
+                <!-- <th>序号</th> -->
                 <th>昵称</th>
                 <th>头像</th>
                 <th>用户等级</th>
@@ -30,37 +35,55 @@
                 <th>是否强抓力</th>
                 <th>抓中次数</th>
                 <th>退还币数</th>
-                <th align="center">{:L('ACTIONS')}</th>
+                <!-- <th align="center">{:L('ACTIONS')}</th> -->
             </tr>
             </thead>
             <tbody>
             <foreach name="row" item="vo">
                 <tr>
-                    <td><input name='listorders[{$vo.id}]' class="input input-order mr5" type='text' size='3' value='{$vo.listorder}'></td>
-                    <td>{$vo.room_no}</td>
-                    <td>{$vo.room_name}</td>
-                    <!--<td><a href="">{$vo.config_name}</a></td>-->
+                    <!-- <td>{$key}</td> -->
+                    <!-- <td><input name='listorders[{$vo.id}]' class="input input-order mr5" type='text' size='3' value='{$vo.listorder}'></td> -->
+                    <td>{$vo[data][0].user_nicename}（{$vo[data][0].user_id}）</td>
+                    <td><img align="right" src="{$vo[data][0].avatar}" width="40px" height="40px"></td>
+                    <!--<td><a href="">{$vo.config_name}</a></td>
                     <td>
                         <button class="btn btn-primary btn-small config_name" data-toggle="modal" data-target="#myModal" data="{$vo.fac_id}">
                             {$vo.config_name}
                         </button>
+                    </td>-->
+                    <td>
+                        {$vo.ext.level}
                     </td>
                     <td>
-                        {$vo.giftname}&nbsp;&nbsp;( <php>echo str_pad($vo['wawa_id'],4,"0",STR_PAD_LEFT);</php> )&nbsp;&nbsp;<img align="right" src="{$vo.gifticon}" width="30px" height="30px">
+                        {$vo[data][0].giftname}&nbsp;&nbsp;(
+                        <php>echo str_pad($vo['data'][0]['wawa_id'],4,"0",STR_PAD_LEFT);</php>
+                        )&nbsp;&nbsp;<img align="right" src="{$vo.gifticon}" width="30px" height="30px">
                     </td>
-                    <td>{$vo.spendcoin}</td>
-                    <td>{$vo.deveci_no}</td>
-                    <td>{$vo.addr}</td>
-                    <td>{$vo.wawa_num}</td>
-                    <td>{$vo.yj_kc}</td>
-                    <td <eq name="vo.status" value="2">class="text-error"</eq> <eq name="vo.status" value="1">class="text-warning"</eq> <eq name="vo.status" value="0">class="text-success"</eq> >
-                    <strong>{$status_name[$vo['status']]}</strong>
+                    <td><img src="{$vo[data][0].gifticon}" width="40" height="40"></td>
+                    <td>{$vo[data][0].spendcoin}</td>
+                    <td>{$vo[data][0].cost}</td>
+                    <td>{$vo[data][0].stock}</td>
+                    <td>
+                        <if condition="$vo['data'][0]['is_strong'] != 0">是
+                            <else />
+                            否
+                        </if>
                     </td>
-                    <td <eq name="vo.is_show" value="1">class="text-success"<else/>class="text-error"</eq> ><strong>{$isshow_name[$vo['is_show']]}</strong></td>
-                    <td align="center">
+                    <td>
+                        &nbsp;&nbsp;&nbsp;
+                        <b>{$vo[ext][count]}</b>
+                        &nbsp;&nbsp;&nbsp;
+                        <button class="btn btn-primary btn-small config_name" data-toggle="modal"
+                                data-target="#Gamehistory" data-index="{$key}" @click="setIndex($event)">
+                            查看
+                        </button>
+                        </div>
+                    </td>
+                    <td> -</td>
+                    <!-- <td align="center">
                         <a href="{:U('Room/edit',array('id'=>$vo['id']))}" >详细配置</a> |
                         <a href="{:U('Room/del',array('id'=>$vo['id']))}" class="js-ajax-dialog-btn" data-msg="您确定要删除吗？">删除</a>
-                    </td>
+                    </td> -->
                 </tr>
             </foreach>
             </tbody>
@@ -70,7 +93,8 @@
 
 
     <!-- 模态框（Modal） -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal fade" id="Gamehistory" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -78,103 +102,56 @@
                         &times;
                     </button>
                     <h4 class="modal-title" id="myModalLabel">
-                        游戏参数配置信息
+                        游戏过程-{{index}}
                     </h4>
                 </div>
-                <div class="modal-body">
-                    xxxxx
+                <div class="modal-body" v-if="index!='false'">
+                    <p v-for="data in prizedata[index]['data']">
+                        <b>{{data.user_nicename}}</b>&nbsp;&nbsp;{{data.ctime|formatDate}}&nbsp;&nbsp;抓取&nbsp;&nbsp;<b>{{data.giftname}}<b>
+                        &nbsp;&nbsp;
+                        <b class="text-error" v-if="data.success == 0">失败</b><b class="text-success" v-else>成功</b>
+                    </p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭
-                    </button>
-                    <!--<button type="button" class="btn btn-primary">-->
-                        <!--提交更改-->
-                    <!--</button>-->
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                 </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal -->
+            </div>
+        </div>
     </div>
 
 
     <div class="pagination">{$page}</div>
 </div>
-<script src="__PUBLIC__/js/common.js"></script>
+<!-- <script src="__PUBLIC__/js/common.js"></script> -->
 </body>
 </html>
 
 <script>
-    $(function () {
-        $(".config_name").click(function () {
-            var fac_id = $(this).attr('data');
-            $.ajax({
-                url : "{:U('Room/get_game_config')}",
-                type : 'post',
-                data : 'fac_id='+fac_id,
-                dataType : 'json',
-                success :function (res) {
-                    if( res.status == 1 ){
-                        $(".modal h4").eq(0).text(res.row.name);
+    new Vue({
+//        el: '#Gamehistory',
+        el: '#bbooddyy',
+        data: {
+            index: 'false',
+            prizedata: JSON.parse('{$rowJson}')
+        },
+        methods: {
+            setIndex: function (el) {
+                var indexid = el.target.getAttribute('data-index')
+                this.index = indexid
+            }
+        },
 
-                        var str = '<table class="table table-hover table-bordered">' +
-                                '<tr>' +
-                                   '<td>游戏时间</td>'+
-                                   '<td>'+res.row.game_time+'</td>'+
-                                '</tr>'+
-                                '<tr>' +
-                                    '<td>天车前后速度</td>'+
-                                    '<td>'+res.row.qh_speed+'</td>'+
-                                '</tr>'+
-                                '<tr>' +
-                                    '<td>天车左右速度</td>'+
-                                    '<td>'+res.row.zy_speed+'</td>'+
-                                '</tr>'+
-                                '<tr>' +
-                                    '<td>天车上下速度</td>'+
-                                    '<td>'+res.row.sx_speed+'</td>'+
-                                '</tr>'+
-                                '<tr>' +
-                                    '<td>中奖抓力第一段</td>'+
-                                    '<td>'+res.row.zj_first_zhuali+'</td>'+
-                                '</tr>'+
-                                '<tr>' +
-                                    '<td>中奖抓力第二段</td>'+
-                                    '<td>'+res.row.zj_second_zhuali+'</td>'+
-                                '</tr>'+
-                                '<tr>' +
-                                    '<td>爪子上升到指定高度转二段抓力(中奖)</td>'+
-                                    '<td>'+res.row.zj_top+'</td>'+
-                                '</tr>'+
-                                '<tr>' +
-                                    '<td>爪子上到顶继续保持抓力时间(中奖)</td>'+
-                                    '<td>'+res.row.zj_top_time+'</td>'+
-                                '</tr>'+
-                                '<tr>' +
-                                    '<td>不中奖抓力第一段</td>'+
-                                    '<td>'+res.row.bzj_first_zhuali+'</td>'+
-                                '</tr>'+
-                                '<tr>' +
-                                    '<td>不中奖抓力第二段</td>'+
-                                    '<td>'+res.row.bzj_second_zhuali+'</td>'+
-                                '</tr>'+
-                                '<tr>' +
-                                    '<td>爪子上升到指定高度转二段抓力(不中奖)</td>'+
-                                    '<td>'+res.row.bzj_top+'</td>'+
-                                '</tr>'+
-                                '<tr>' +
-                                    '<td>爪子上到顶继续保持抓力时间(不中奖)</td>'+
-                                    '<td>'+res.row.bzj_top_time+'</td>'+
-                                '</tr>'+
-                            '</table>';
-
-
-
-                        $(".modal .modal-body").html(str);
-                    }
-                },
-                error : function () {
-                    return false;
-                }
-            });
-        });
-    });
+        filters: {
+            formatDate: function (time) {
+                var now = new Date(time*1000);
+                var   year=now.getFullYear();
+                var   month=now.getMonth()+1;
+                var   date=now.getDate();
+                var   hour=now.getHours();
+                var   minute=now.getMinutes();
+                var   second=now.getSeconds();
+                return   year+"-"+month+"-"+date+"   "+hour+":"+minute+":"+second;
+            }
+        }
+    })
 </script>
