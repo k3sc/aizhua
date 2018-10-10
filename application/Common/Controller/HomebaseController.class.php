@@ -218,7 +218,6 @@ class HomebaseController extends AppframeController {
 		if(is_file($template)) {
 			return $template;
 		}
-		echo 3;
 		$depr       =   C('TMPL_FILE_DEPR');
 		$template   =   str_replace(':', $depr, $template);
 		
@@ -231,16 +230,18 @@ class HomebaseController extends AppframeController {
 		
 		// 分析模板文件规则
 		if('' == $template) {
-		    echo 4;exit;
 			// 如果模板文件名为空 按照默认规则定位
 			$template = "/".CONTROLLER_NAME . $depr . ACTION_NAME;
 		}elseif(false === strpos($template, '/')){
 			$template = "/".CONTROLLER_NAME . $depr . $template;
 		}
-		
+		echo 1;
 		$file = sp_add_template_file_suffix($current_tmpl_path.$module.$template);
+		echo 2;
 		$file= str_replace("//",'/',$file);
+		echo 3;exit;
 		if(!file_exists_case($file)) E(L('_TEMPLATE_NOT_EXIST_').':'.$file);
+
 		return $file;
 	}
 	
