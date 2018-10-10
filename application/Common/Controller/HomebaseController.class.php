@@ -240,7 +240,7 @@ class HomebaseController extends AppframeController {
 
 		$file= str_replace("//",'/',$file);
         echo "<pre>";
-        print_r(L('_TEMPLATE_NOT_EXIST_'));
+        print_r($file);
         exit;
 		if(!file_exists_case($file)) E(L('_TEMPLATE_NOT_EXIST_').':'.$file);
 
