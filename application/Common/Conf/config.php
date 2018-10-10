@@ -19,8 +19,8 @@ if (file_exists("data/conf/route.php")) {
 $configs= array(
         "LOAD_EXT_FILE"=>"extend",
         'UPLOADPATH' => 'data/upload/',
-        //'SHOW_ERROR_MSG'        =>  true,    // 显示错误信息
-        'SHOW_PAGE_TRACE'		=> false,
+        'SHOW_ERROR_MSG'        =>  true,    // 显示错误信息
+        'SHOW_PAGE_TRACE'		=> true,
         'TMPL_STRIP_SPACE'		=> true,// 是否去除模板文件里面的html空格与换行
         'THIRD_UDER_ACCESS'		=> false, //第三方用户是否有全部权限，没有则需绑定本地账号
         /* 标签库 */
