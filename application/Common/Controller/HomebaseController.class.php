@@ -132,6 +132,9 @@ class HomebaseController extends AppframeController {
 	 */
 	public function display($templateFile = '', $charset = '', $contentType = '', $content = '', $prefix = '') {
 		//echo $this->parseTemplate($templateFile);
+        echo "<pre>";
+        print_r(111);
+        exit;
 		parent::display($this->parseTemplate($templateFile), $charset, $contentType);
 	}
 	

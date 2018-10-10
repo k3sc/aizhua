@@ -30,8 +30,6 @@ class BannerController extends HomebaseController
         $this->assign('weekdata',$result['week']);
 
         $this->display();
-        dump($result);
-        exit;
     }
     public function getBanData($ban,$type,$date){
         $where = " 1=1 and user_type=2 ";
