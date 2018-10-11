@@ -325,7 +325,7 @@ public function setWawa()
             ->where($map)
             ->limit($page->firstRow . ',' . $page->listRows)
             ->select();
-            
+
         foreach ($list as $key => $value) {
             //充值总金额
             $money = M('pay_record')->where("user_id='{$value['id']}' and status=1")->sum('money');
@@ -334,6 +334,7 @@ public function setWawa()
             $list[$key]['bodyNums'] = M('game_history')->where("user_id='{$value['id']}'")->count();
             //抓中次数
             $list[$key]['grasp'] = M('game_history')->where("user_id='{$value['id']}' and success > 0")->count();
+
             if ($grade = $this->getGrade($value))
             {
                 $list[$key]['grade'] = $grade['title'];
@@ -343,7 +344,7 @@ public function setWawa()
                 $list[$key]['grade'] = '普通';
             }
         }
-        
+
         $this->assign("page", $page->show('Admin'));//分页
         $this->assign('list', $list);               //用户列表
         $this->assign('count', $count);               //总条数

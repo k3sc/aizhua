@@ -8,14 +8,15 @@
         <!-- <li><a href="{:U('Room/add')}">添加房间</a></li> -->
     </ul>
 
-    <!-- <form method="get" class="well form-search" action="{:U('Manageprizes/index')}">
+    <form method="get" class="well form-search" action="{:U('Manageprizes/index')}">
         <input type="hidden" name="g" value="Admin">
         <input type="hidden" name="m" value="Manageprizes">
         <input type="hidden" name="a" value="index">
         用户名：<input type="text" name="user_nicename"  placeholder="请输入用户名" value="{$filter.user_nicename}">
         用户ID：<input type="text" name="user_id"  placeholder="请输入用户ID" value="{$filter.user_id}">
         <input type="submit" class="btn btn-primary" value="搜索">
-    </form> -->
+    </form>
+    <button class="btn btn-small" style="margin-bottom: 1px;margin-top: -10px;" onclick="update_gamehistory()">更新数据</button>
 
 
 
@@ -154,4 +155,16 @@
             }
         }
     })
+    function update_gamehistory(){
+        $.ajax({
+            type:'get',
+            url:'{:U('Manageprizes/updateGamehistory')}',
+            success:function(){
+
+            },
+            error:function(){
+
+            }
+        });
+    }
 </script>
