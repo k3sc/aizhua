@@ -23,6 +23,118 @@ class ManageprizesController extends AdminbaseController
         }
         $user_nicename = I('user_nicename');
         if($user_nicename){
+            $where .= " and u.user_nicename like '%{$user_nicename}%' ";
+            $filter['user_nicename'] = $user_nicename;
+        }
+
+        $count = $this->getGameCount($where);
+        $page  = $this->page($count,20);
+        $prizedata = $this->getGameData($where,$page);
+
+        foreach ($prizedata as $key=>$val){
+            /* 获取用户的记录信息 */
+            $hData = M('game_history as h')->where("id in ({$val['h_id_s']})")->select();
+            /*->field('h.*,u.user_nicename')->join('left join cmf_users as u on u.id=h.user_id')*/
+
+            //获取用户的等级
+            $user = M('users')->field('id,user_nicename,avatar,mobile,coin,free_coin,create_time,user_status,claw,strong,coin_sys_give,openid,sys,sex,last_login_time,
+            total_payed ,total_get,total_get_num,last_active_time')->where(['id'=>$val['user_id']])->find();
+            $usersData = A('Users')->getGrade($user);
+            $prizedata[$key]['level'] = $usersData['title'];
+            $prizedata[$key]['history'] = $hData;
+            /*获取是否强抓力*/
+            $prizedata[$key]['is_strong'] = end(explode(',',$val['h_is_strong_s']));
+
+        }
+
+        $this->assign('filter',$filter);
+        $this->assign('row',array_values($prizedata));
+        $this->assign('rowJson',json_encode($prizedata));
+        $this->assign('page',$page->show('Admin'));
+        $this->display();
+    }
+    public function getGameCount($where){
+        $sql = "
+            SELECT 
+                count(ss.id) as count
+            FROM (
+            SELECT
+                h.id,
+                sum(h.success) as csuccess
+            FROM
+                cmf_game_history as h
+            LEFT JOIN cmf_users as u on u.id=h.user_id
+            LEFT JOIN (
+                SELECT
+                    g.id as wawa_id,
+	                g.giftname,
+	                g.gifticon,
+	                g.spendcoin,
+                    g.cost,
+                    g.stock,
+	                r.id AS room_id 
+                FROM
+	                cmf_game_room AS r
+	            LEFT JOIN cmf_gift AS g ON r.type_id = g.id 
+	        ) as wawa on wawa.room_id=h.room_id
+            WHERE {$where}
+            GROUP BY
+                h.continuity
+                HAVING csuccess > 0
+              ) as ss
+              ";
+        $result = M()->query($sql);
+
+        return $result[0]['count'];
+    }
+    public function getGameData($where,$page){
+        $sql = "
+            SELECT
+                GROUP_CONCAT(h.id) as h_id_s,
+                GROUP_CONCAT(h.is_strong) as h_is_strong_s,
+                h.room_id,h.user_id,h.success,h.ctime,h.is_strong,
+                u.user_nicename,u.avatar,
+                count(h.id) as zhuacount,
+                sum(h.success) as csuccess,
+                wawa.*
+            FROM
+                cmf_game_history as h
+            LEFT JOIN cmf_users as u on u.id=h.user_id
+            LEFT JOIN (
+                SELECT
+                    g.id as wawa_id,
+	                g.giftname,
+	                g.gifticon,
+	                g.spendcoin,
+                    g.cost,
+                    g.stock,
+	                r.id AS room_id 
+                FROM
+	                cmf_game_room AS r
+	            LEFT JOIN cmf_gift AS g ON r.type_id = g.id 
+	        ) as wawa on wawa.room_id=h.room_id
+            WHERE {$where}
+            GROUP BY
+                h.continuity
+                HAVING csuccess > 0
+              LIMIT {$page->firstRow},{$page->listRows}
+        ";
+        $result = M()->query($sql);
+        return $result;
+    }
+
+    public function inde2()
+    {
+        $where = ' 1=1 ';
+
+        /*收集过滤条件*/
+        $user_id = I('user_id');
+        if($user_id){
+            $where .= " and u.id={$user_id} ";
+            $filter['user_id'] = $user_id;
+        }
+        $user_nicename = I('user_nicename');
+        if($user_nicename){
             $where .= " and u.user_nicename='{$user_nicename}' ";
             $filter['user_nicename'] = $user_nicename;
         }
@@ -77,9 +189,6 @@ class ManageprizesController extends AdminbaseController
 
         }
 
-
-
-
         foreach ($zhuaData as $key=>$val){
             $success_arr = array_column($val,'success');
             $success_arr = array_unique($success_arr);
@@ -104,8 +213,7 @@ class ManageprizesController extends AdminbaseController
         $this->assign('page',$page->show('Admin'));
         $this->display();
     }
-
-    public function getGameData($where,$page){
+    public function getGameData2($where,$page){
         $sql = "SELECT
                     h.id,h.room_id,h.user_id,h.success,h.ctime,h.is_strong,
                     u.user_nicename,u.avatar,
@@ -136,7 +244,7 @@ class ManageprizesController extends AdminbaseController
         return $result;
     }
 
-    public function getGameCount($where){
+    public function getGameCount2($where){
         $sql = "SELECT
                     count(h.id) as count
                 FROM

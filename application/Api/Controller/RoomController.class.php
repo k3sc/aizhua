@@ -241,7 +241,21 @@ class RoomController extends BaseController
         $gtime = M('device')->where('device_unique_code=' . $gift['fac_id'])->getField('game_time');
         $data = array('room_id' => $room_id, 'user_id' => $this->user_id, 'name' => $gift['giftname'], 'img' => $gift['gifticon'], 'gametime' => $gtime ? $gtime : 30, 'ctime' => $time,'coin' => $gift['spendcoin']);
         if($bool < 4)$data['is_strong'] = $bool;//强抓力
+
+
+
 		$id = M('game_history')->add($data);
+        /*
+                 *  这里开始判断当前的数据是否和上一条相同
+                 *   -- 相同则放进上一条数组的分组里
+                 *      -- 不同则添加分组
+                 */
+        //判断，和上条是否相同
+        $continuity = $this->get_front_with($id);
+        $data['continuity'] = $continuity;
+
+        M('game_history')->where("id={$id}")->save(['continuity'=>$continuity]);
+
         M('game_room')->where('id=' . $room_id)->save(array('status' => 3));
 		$this->notice_gameover('0', '{"type":15,"room_ids":"'.$room_id.'","status":3}');
         //扣除金币
@@ -308,6 +322,52 @@ class RoomController extends BaseController
         S($room_id.'locker',null);
 
         $this->_return(1, '开始抓娃娃成功', $history);
+    }
+
+    /* 当前数据 data */
+    public function get_front_with($did){
+        /*取出上一条数据*/
+        $sData = M('game_history')->where(" id < {$did} ")->limit('0,1')->order('id desc')->find();
+        //为了防止错误，上一条数据分组不能为0||1
+        //如果上一条数据为0||1  则取数据库里面id最大，且值不等于0||1
+        if($sData['continuity'] == 1 || $sData['continuity']==0){
+            $sData = M('game_history')->where("continuity !=0 and continuity !=1 and id < {$did}")->order('id desc')->limit(0,1)->find();
+        }
+
+        /*取出当前组数据*/
+        $dData = M('game_history')->where(" id={$did} ")->find();
+
+        /*优先判断上一组是否中奖*/
+        if($sData['success']>0){
+            /*若上一组是中奖状态  则返回新组  并且跳出当前*/
+            return $sData['continuity'] +1;
+        }
+
+        /*上一组没有中奖，当前组抓中奖的情况下 */
+        if($dData['success'] > 0){
+            /*抓中奖的情况下还是原来用户*/
+            if($dData['room_id']==$sData['room_id'] && $dData['user_id']==$sData['user_id']){
+                /*与上一列为同一组 则返回上一列的分组值*/
+                return $sData['continuity'];
+            }
+            else{
+                /*抓中奖的情况下不是原来的用户  连续组+1 */
+               return $sData['continuity']+1;
+            }
+        }
+        /*没有抓中奖的情况下*/
+        else{
+            /*没有抓中奖的情况下还是原来用户*/
+            if($dData['room_id']==$sData['room_id'] && $dData['user_id']==$sData['user_id']){
+                /*与上一组相同*/
+                return $sData['continuity'];
+            }
+            /*抓中奖的情况下不再是原来的用户  连续组+1 */
+            else{
+                return $sData['continuity'] +1;
+            }
+
+        }
     }
 
     //抓娃娃命令
