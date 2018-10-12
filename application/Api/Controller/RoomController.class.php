@@ -254,7 +254,7 @@ class RoomController extends BaseController
         $continuity = $this->get_front_with($id);
         $data['continuity'] = $continuity;
 
-        M('game_history')->where("id={$id}")->save(['continuity'=>$continuity]);
+        M('game_history')->where("id={$id}")->save(['continuity'=>111]);
 
         M('game_room')->where('id=' . $room_id)->save(array('status' => 3));
 		$this->notice_gameover('0', '{"type":15,"room_ids":"'.$room_id.'","status":3}');
