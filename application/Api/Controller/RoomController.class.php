@@ -258,7 +258,7 @@ class RoomController extends BaseController
         M()->query($sql);*/
         //error_log($sql.'\r\n', 3, './data/errors.log');
 
-        M('game_history')->where("id={$id}")->field('continuity')->save($continuity);
+        M('game_history')->where("id={$id}")->save(array('continuity'=>$continuity));
 
         M('game_room')->where('id=' . $room_id)->save(array('status' => 3));
 		$this->notice_gameover('0', '{"type":15,"room_ids":"'.$room_id.'","status":3}');
