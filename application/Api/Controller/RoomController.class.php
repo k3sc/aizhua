@@ -342,8 +342,10 @@ class RoomController extends BaseController
 
         /* 查询自己的上一条数据  如果不是在当前房间  代表当前为切换房间 */
         $sUserData = M('game_history')->where("user_id={$dData['user_id']}")->order('id desc')->limit('0,1')->find();
+        error_log('自己的上一条房间id'.$sUserData['room_id']."\r\n", 3, '/home/wwwroot/default/data/runtime/game_history.log');
+        error_log('自己的当前房间id'.$dData['room_id']."\r\n", 3, '/home/wwwroot/default/data/runtime/game_history.log');
         /* 上一条自己的数据不在当前房间 切换房间 或者没有自己的上一条数据 新的分组 */
-        if($sUserData['room_id']!=$dData['room_id'] || empty($sUserData)){
+        if($sUserData['room_id'] != $dData['room_id'] || empty($sUserData)){
             $res = M('game_history')->order('continuity desc')->limit('0,1')->find();
             return $res['continuity'] +1;
         }
