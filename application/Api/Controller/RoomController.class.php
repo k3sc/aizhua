@@ -335,48 +335,43 @@ class RoomController extends BaseController
 
     /* 当前数据 data */
     public function get_front_with($did){
-        /*取出上一条数据*/
-        $sData = M('game_history')->where(" id < {$did} ")->limit('0,1')->order('id desc')->find();
-        //为了防止错误，上一条数据分组不能为0||1
-        //如果上一条数据为0||1  则取数据库里面id最大，且值不等于0||1
-        if($sData['continuity'] == 1 || $sData['continuity']==0){
-            $sData = M('game_history')->where("continuity !=0 and continuity !=1 and id < {$did}")->order('id desc')->limit(0,1)->find();
-        }
-
+        /* 整表为空的时候 没有数据的时候 */
+        if(empty(M('game_history')->find())) return 1;
         /*取出当前组数据*/
         $dData = M('game_history')->where(" id={$did} ")->find();
 
-        /*优先判断上一组是否中奖*/
+        /* 查询自己的上一条数据  如果不是在当前房间  代表当前为切换房间 */
+        $sUserData = M('game_history')->where("user_id={$dData['user_id']}")->order('id desc')->limit('0,1')->find();
+        /* 上一条自己的数据不在当前房间 切换房间 或者没有自己的上一条数据 新的分组 */
+        if($sUserData['room_id']!=$dData['room_id'] || empty($sUserData)){
+            $res = M('game_history')->order('continuity desc')->limit('0,1')->find();
+            return $res['continuity'] +1;
+        }
+
+        /*取出上一条数据  上一条必须是同一房间防止并发数据干扰  当前房间的上一条数据   */
+        $sData = M('game_history')->where(" id < {$did} and room_id={$dData['room_id']} ")->order('id desc')->limit('0,1')->find();
+        /* 加入当前房间的上一条数据不是我 则是被打断 */
+        if($sData['user_id'] != $dData['user_id'] || empty($sData)){
+            /* 上一条当前房间的抓取不是该用户 */
+            $res = M('game_history')->order('continuity desc')->limit('0,1')->find();
+            return $res['continuity'] +1;
+        }
+
+        /*优先判断上一条是否中奖*/
         if($sData['success']>0){
-            /*若上一组是中奖状态  则返回新组  并且跳出当前*/
-            return $sData['continuity'] +1;
+            /* 若上一组是中奖状态  则返回新组  并且跳出当前 */
+            $res = M('game_history')->order('continuity desc')->limit('0,1')->find();
+            return $res['continuity'] +1;
         }
 
-        /*上一组没有中奖，当前组抓中奖的情况下 */
-        if($dData['success'] > 0){
-            /*抓中奖的情况下还是原来用户*/
-            if($dData['room_id']==$sData['room_id'] && $dData['user_id']==$sData['user_id']){
-                /*与上一列为同一组 则返回上一列的分组值*/
-                return $sData['continuity'];
-            }
-            else{
-                /*抓中奖的情况下不是原来的用户  连续组+1 */
-               return $sData['continuity']+1;
-            }
-        }
-        /*没有抓中奖的情况下*/
-        else{
-            /*没有抓中奖的情况下还是原来用户*/
-            if($dData['room_id']==$sData['room_id'] && $dData['user_id']==$sData['user_id']){
-                /*与上一组相同*/
-                return $sData['continuity'];
-            }
-            /*抓中奖的情况下不再是原来的用户  连续组+1 */
-            else{
-                return $sData['continuity'] +1;
-            }
+        /* 先判断当前房间有没有被别人打断 查询出当前数据与上一条数据当前数据 本房间 中间的数据*/
+        //$centerData = M('game_history')->where("id > {$sData['id']} and id < {$dData['id']}")->select();
+        /* 中间没有数据，当前两者是连起来的 直接返回上条分组id */
+        //if(empty($centerData)){
+        //    return $sData['continuity'];
+        //}
+        return $sData['continuity'];
 
-        }
     }
 
     //抓娃娃命令
