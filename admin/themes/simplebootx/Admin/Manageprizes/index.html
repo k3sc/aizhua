@@ -24,7 +24,7 @@
         <table class="table table-hover table-bordered">
             <thead>
             <tr>
-                <!-- <th>序号</th> -->
+                <th>序号</th>
                 <th>昵称</th>
                 <th>头像</th>
                 <th>用户等级</th>
@@ -42,10 +42,10 @@
             <tbody>
             <foreach name="row" item="vo">
                 <tr>
-                    <!-- <td>{$key}</td> -->
+                    <td>{$key+1}</td>
                     <!-- <td><input name='listorders[{$vo.id}]' class="input input-order mr5" type='text' size='3' value='{$vo.listorder}'></td> -->
-                    <td>{$vo[data][0].user_nicename}（{$vo[data][0].user_id}）</td>
-                    <td><img align="right" src="{$vo[data][0].avatar}" width="40px" height="40px"></td>
+                    <td>{$vo.user_nicename}（{$vo.user_id}）</td>
+                    <td><img align="right" src="{$vo.avatar}" width="40px" height="40px"></td>
                     <!--<td><a href="">{$vo.config_name}</a></td>
                     <td>
                         <button class="btn btn-primary btn-small config_name" data-toggle="modal" data-target="#myModal" data="{$vo.fac_id}">
@@ -53,26 +53,25 @@
                         </button>
                     </td>-->
                     <td>
-                        {$vo.ext.level}
+                        {$vo.level}
                     </td>
                     <td>
-                        {$vo[data][0].giftname}&nbsp;&nbsp;(
-                        <php>echo str_pad($vo['data'][0]['wawa_id'],4,"0",STR_PAD_LEFT);</php>
-                        )&nbsp;&nbsp;<img align="right" src="{$vo.gifticon}" width="30px" height="30px">
+                        {$vo.giftname}&nbsp;&nbsp;
+                        ( <php>echo str_pad($vo['wawa_id'],4,"0",STR_PAD_LEFT);</php> )
                     </td>
-                    <td><img src="{$vo[data][0].gifticon}" width="40" height="40"></td>
-                    <td>{$vo[data][0].spendcoin}</td>
-                    <td>{$vo[data][0].cost}</td>
-                    <td>{$vo[data][0].stock}</td>
+                    <td><img src="{$vo.gifticon}" width="40" height="40"></td>
+                    <td>{$vo.spendcoin}</td>
+                    <td>{$vo.cost}</td>
+                    <td>{$vo.stock}</td>
                     <td>
-                        <if condition="$vo['data'][0]['is_strong'] != 0">是
+                        <if condition="$vo['is_strong'] != 0">是
                             <else />
                             否
                         </if>
                     </td>
                     <td>
                         &nbsp;&nbsp;&nbsp;
-                        <b>{$vo[ext][count]}</b>
+                        <b>{$vo.zhuacount}</b>
                         &nbsp;&nbsp;&nbsp;
                         <button class="btn btn-primary btn-small config_name" data-toggle="modal"
                                 data-target="#Gamehistory" data-index="{$key}" @click="setIndex($event)">
@@ -107,8 +106,8 @@
                     </h4>
                 </div>
                 <div class="modal-body" v-if="index!='false'">
-                    <p v-for="data in prizedata[index]['data']">
-                        <b>{{data.user_nicename}}</b>&nbsp;&nbsp;{{data.ctime|formatDate}}&nbsp;&nbsp;抓取&nbsp;&nbsp;<b>{{data.giftname}}<b>
+                    <p v-for="data in prizedata[index]['history']">
+                        <b>{{prizedata[index]['user_nicename']}}</b>&nbsp;&nbsp;{{data.ctime|formatDate}}&nbsp;&nbsp;抓取&nbsp;&nbsp;<b>{{prizedata[index]['giftname']}}<b>
                         &nbsp;&nbsp;
                         <b class="text-error" v-if="data.success == 0">失败</b><b class="text-success" v-else>成功</b>
                     </p>
@@ -141,7 +140,6 @@
                 this.index = indexid
             }
         },
-
         filters: {
             formatDate: function (time) {
                 var now = new Date(time*1000);
@@ -156,15 +154,17 @@
         }
     })
     function update_gamehistory(){
-        $.ajax({
-            type:'get',
-            url:'{:U('Manageprizes/updateGamehistory')}',
-            success:function(){
+        if(confirm('确定要更新数据吗？更新数据会造成服务器短暂卡顿，如果已经更新请勿操作')){
+            $.ajax({
+                type:'get',
+                url:'{:U('Manageprizes/updateGamehistory')}',
+                success:function(){
 
-            },
-            error:function(){
+                },
+                error:function(){
 
-            }
-        });
+                }
+            });
+        }
     }
 </script>
