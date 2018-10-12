@@ -254,18 +254,13 @@ class RoomController extends BaseController
         $continuity = $this->get_front_with($id);
         //$data['continuity'] = $continuity;
 
-        $sql = "update cmf_game_history set continuity={$continuity} where id={$id}";
+        //$sql = "update cmf_game_history set continuity={$continuity} where id={$id}";
         //$ress = M()->query($sql);
-        //error_log($ress."\r\n", 3, '/home/wwwroot/default/data/runtime/game_history.log');
-
-        error_log($sql."\r\n", 3, '/home/wwwroot/default/data/runtime/game_history.log');
+        //error_log($sql."\r\n", 3, '/home/wwwroot/default/data/runtime/game_history.log');
 
         $res = M('game_history')->where("id={$id}")->save(array('continuity'=>$continuity));
-
-        error_log($res."\r\n", 3, '/home/wwwroot/default/data/runtime/game_history.log');
-
-        error_log(M('game_history')->getLastSql() ."\r\n" , 3, '/home/wwwroot/default/data/runtime/game_history.log');
-
+        error_log($id."=>", 3, '/home/wwwroot/default/data/runtime/game_history.log');
+        error_log($continuity."更新成功  \r\n", 3, '/home/wwwroot/default/data/runtime/game_history.log');
         error_log("----------------------------------------" ."\r\n" , 3, '/home/wwwroot/default/data/runtime/game_history.log');
 
         //M('game_history')->where("id={$id}")->setField('continuity',$continuity);
