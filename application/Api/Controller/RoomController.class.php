@@ -256,7 +256,7 @@ class RoomController extends BaseController
 
         $sql = "update cmf_game_history set continuity={$continuity} where id={$id}";
         M()->query($sql);
-        error_log($sql.'\r\n', 3, './data/errors.log');
+        //error_log($sql.'\r\n', 3, './data/errors.log');
 
         //M('game_history')->where("id={$id}")->save(array('continuity'=>$continuity));
 
