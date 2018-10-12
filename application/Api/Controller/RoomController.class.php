@@ -255,8 +255,8 @@ class RoomController extends BaseController
         //$data['continuity'] = $continuity;
 
         $sql = "update cmf_game_history set continuity={$continuity} where id={$id}";
-        $ress = M()->query($sql);
-        error_log($ress."\r\n", 3, '/home/wwwroot/default/data/runtime/game_history.log');
+        //$ress = M()->query($sql);
+        //error_log($ress."\r\n", 3, '/home/wwwroot/default/data/runtime/game_history.log');
 
         error_log($sql."\r\n", 3, '/home/wwwroot/default/data/runtime/game_history.log');
 
