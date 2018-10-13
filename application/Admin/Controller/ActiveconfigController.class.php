@@ -323,6 +323,11 @@ class ActiveconfigController extends AdminbaseController
         $this->display();
     }
 
+    /* 保夹设置 */
+    public function clamp(){
+        $this->display();
+    }
+
 
 
 }
