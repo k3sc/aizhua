@@ -1,0 +1,111 @@
+<admintpl file="header" />
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+</head>
+<body>
+<div class="wrap" id="config" >
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">保夹设置</a></li>
+    </ul>
+
+    <fieldset>
+        <div class="form-horizontal">
+
+            <div style="width:100%;margin-bottom:15px;margin-top:15px;" class="config-body"
+                 v-for="(item,index) in data">
+                <input type="hidden" name="index" :value="index">
+                <div class="control-group">
+                    <label class="control-label title">阶梯{{index+1}}</label>
+                    <div class="controls">
+                        <input class="" type="number" style="width:120px;" name="start" value="" v-model="item.start">
+                        大于等于 <b>娃娃币区间</b> 小于
+                        <input class="" style="width:120px;" type="number" name="end" value="" v-model="item.end">
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input class="" style="width:50px;" type="number" name="count" value="" v-model="item.count">
+                        <b>局</b>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <b class="text-success addconfig" style="cursor:pointer;" v-on:click="clone_col()">添加</b>
+                        &nbsp;&nbsp;&nbsp;
+                        <b class="text-success delconfig" style="cursor:pointer;" v-on:click="del_col($event)">删除</b>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- <div  v-else>
+        <div style="width:100%;margin-bottom:15px;margin-top:15px;" class="config-body" >
+          <input type="hidden" name="index" value="1">
+        <div class="control-group">
+            <label class="control-label title">阶梯1{{index}}</label>
+            <div class="controls">
+                <input class="" type="number" style="width:120px;" name="start" value="" >
+                大于等于  <b>娃娃币区间</b>  小于
+                <input class="" style="width:120px;" type="number" name="end" value="">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input class="" style="width:50px;" type="number" name="count" value="">
+                <b>局</b>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <b class="text-success addconfig" style="cursor:pointer;" v-on:click="clone_col()">添加</b>
+                &nbsp;&nbsp;&nbsp;
+                <b class="text-success delconfig" style="cursor:pointer;" v-on:click="del_col($event)">删除</b>
+            </div>
+        </div>
+      </div>
+
+    </div> -->
+
+
+    </fieldset>
+
+        <div class="form-actions" >
+            <button style="margin-left: 6%" type="button" class="btn btn-primary" v-on:click="commit()">提交</button>
+        </div>
+    <form method="post" class="form-horizontal js-ajax-form" action="{:U('Activeconfig/clamp')}">
+    </form>
+
+</div>
+
+
+<script>
+    new Vue({
+        el: '#config',
+        data: {
+            index: 'false',
+            data: JSON.parse('{$data}'),
+        },
+        methods: {
+            clone_col: function () {
+                var s_index = this.data[this.data.length - 1].index + 1
+                var s_end = this.data[this.data.length - 1].end
+                var next_arr = {index:s_index,start:s_end}
+                  this.data.push(next_arr)
+            },
+            del_col: function (e) {
+                var el = e.target
+                var index = $(el).parents('.config-body').find('input[name=index]').val()
+                this.data.splice(index, 1)
+            },
+            commit: function(){
+                $.ajax({
+                    url:"{:U('Activeconfig/clamp')}",
+                    type: 'post',
+                    data: {data:this.data},
+                    success: function(res){
+                        res = JSON.parse(res)
+                        alert(res.info)
+                        if(status==1){
+                            location.reload();
+                        }
+                    },
+                    error: function(){
+                        alert('操作失败')
+                    }
+                })
+            }
+        }
+    })
+</script>
+
+<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

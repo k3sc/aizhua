@@ -325,6 +325,34 @@ class ActiveconfigController extends AdminbaseController
 
     /* 保夹设置 */
     public function clamp(){
+        if (IS_POST) {
+            $post = I('post.');
+
+            if(!empty($ress = M("clamp_config")->field('id')->select())){
+                M("clamp_config")->where(['id'=>['in',array_column($ress,'id')]])->delete();
+            }
+
+            M("clamp_config")->startTrans();
+            foreach ($post['data'] as $key=>$val){
+                $res = M('clamp_config')->add($val);
+                if(!$res){
+                    M()->rollback();
+                    echo json_encode(['info'=>'操作失败！','satus'=>0,'state'=>'error']);
+                    exit;
+                }
+            }
+            M()->commit();
+            echo json_encode(['info'=>'操作成功！','satus'=>1,'state'=>'success']);
+            exit;
+            //$this->success("操作成功！");
+        }
+        $arrAct = M('clamp_config')->field('index,start,end,count')->select();
+        if(empty($arrAct)){
+            $arrAct[0] = [
+                'index'=>0,
+            ];
+        }
+        $this->assign("data", json_encode($arrAct));
         $this->display();
     }
 

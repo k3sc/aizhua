@@ -1138,6 +1138,11 @@ class RoomController extends BaseController
         $arrSet['totals'] = $gift;
         M('game_history')->where('id=' . $gameInfo['id'])->save($arrSet);
 
+        //加入返回的状态是抓取成功  则开始查找连续的游戏数  进行退币操作
+        if($arrSet['success'] > 0){
+            $this->retreat($gameInfo['id']);
+        }
+
         M('game_room')->where('id=' . $gameInfo['room_id'])->save(array('status' => 0));
 		$this->notice_gameover('0', '{"type":15,"room_ids":"'.$gameInfo['room_id'].'","status":0}');
         //计算送甩抓
@@ -1176,6 +1181,37 @@ class RoomController extends BaseController
         $this->redis->delete('gameuser_' . $roomInfo['room_id']);
 		
 		exit('4');
+    }
+    public function retreat($id ){
+        $room_history = M('game_history')->field('continuity,user_id,room_id')->where("id={$id}")->find();
+        //拿到娃娃的价格
+        $roomData = M("game_room")->field('type_id')->where("id={$room_history['room_id']}")->find();
+        $giftData = M("gift")->field('spendcoin')->where("id={$roomData['type_id']}")->find();
+
+        //获取设置数据  必须在活动内哦
+        $clampData = M('clamp_config')->where("start<={$giftData['spendcoin']} and end > {$giftData['spendcoin']}")->find();
+        if(empty($clampData)){
+            return;
+        }
+        $groupData = M('game_history')->where("continuity={$room_history['continuity']} and user_id={$room_history['user_id']}")->order('id asc')->select();
+        if(count($groupData) <= $clampData['count']){  //抓的次数小于或者等于保夹 则不退币
+            return;
+        }
+        //进行退币，并且记录退币的历史局
+        foreach ($groupData as $key=>$val){
+            if($key+1 > $clampData['count']){
+                //把币退给用户
+                $coinData = ['user_id'=>$room_history['user_id'],'log'=>'保夹退币','coin'=>$giftData['spendcoin'],'type'=>2,'ctime'=>time()];
+                M('coin_bill')->add($coinData);
+                M('users')->where("id={$room_history['user_id']}")->setInc('coin',$giftData['spendcoin']);
+                M('users')->where("id={$room_history['user_id']}")->setInc('free_coin',$giftData['spendcoin']);
+                //记录退币的历史
+                M('game_history')->where("id={$val['id']}")->save(['is_retreat'=>1]);
+                //进行友盟推送app状态栏
+                
+            }
+        }
+
     }
 
     private function notice_gameover($room_id, $msg)
