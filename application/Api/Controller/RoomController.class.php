@@ -1193,6 +1193,10 @@ class RoomController extends BaseController
         if(empty($clampData)){
             return;
         }
+        if($room_history['continuity'] == 0){ //计算错误 禁止退币
+            return;
+        }
+
         $groupData = M('game_history')->where("continuity={$room_history['continuity']} and user_id={$room_history['user_id']}")->order('id asc')->select();
         if(count($groupData) <= $clampData['count']){  //抓的次数小于或者等于保夹 则不退币
             return;
@@ -1208,7 +1212,7 @@ class RoomController extends BaseController
                 //记录退币的历史
                 M('game_history')->where("id={$val['id']}")->save(['is_retreat'=>1]);
                 //进行友盟推送app状态栏
-                
+
             }
         }
 
