@@ -13,7 +13,7 @@ class ManageprizesController extends AdminbaseController
 {
     public function index()
     {
-        $where = ' 1=1 ';
+        $where = ' 1=1 and continuity!=0 ';
 
         /*收集过滤条件*/
         $user_id = I('user_id');
