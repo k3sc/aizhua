@@ -45,7 +45,7 @@
                     </td>
                     <td>{$vo.room_no}</td>
                     <td>
-                        <span><eq name="vo.success" value="0">失败<else/>成功</eq></span>
+                        <span <eq name="vo.success" value="0">class="text-error"<else/>class="text-success"</eq> ><eq name="vo.success" value="0">失败<else/><b>成功</b></eq></span>
                         <input data_id='{$vo.id}' data_success="{$vo.success}" type="button" class="btn btn-primary setSuccessBtn" value='<eq name="vo.success" value="0">设置成功<else/>设置失败</eq>'>
                     </td>
                     <td>{$vo.fac_id}</td>

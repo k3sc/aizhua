@@ -21,3 +21,5 @@
 19、cmf_kd   快递公司表
 20、cmf_fault    故障表
 21、cmf_appeal_text 申诉文案表
+22、cmf_game_history 新增字段 continuity 连续抓取分组id
+23、cmf_clamp_config  保夹 设置 表
