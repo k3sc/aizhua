@@ -1182,7 +1182,7 @@ class RoomController extends BaseController
 		
 		exit('4');
     }
-    public function retreat($id ){
+    public function retreat($id){ //$id=730671 测试用
         $room_history = M('game_history')->field('continuity,user_id,room_id')->where("id={$id}")->find();
         //拿到娃娃的价格
         $roomData = M("game_room")->field('type_id')->where("id={$room_history['room_id']}")->find();
@@ -1202,6 +1202,7 @@ class RoomController extends BaseController
             return;
         }
         //进行退币，并且记录退币的历史局
+        $t_icon = 0;
         foreach ($groupData as $key=>$val){
             if($key+1 > $clampData['count']){
                 //把币退给用户
@@ -1211,10 +1212,21 @@ class RoomController extends BaseController
                 M('users')->where("id={$room_history['user_id']}")->setInc('free_coin',$giftData['spendcoin']);
                 //记录退币的历史
                 M('game_history')->where("id={$val['id']}")->save(['is_retreat'=>1]);
-                //进行友盟推送app状态栏
-
+                $t_icon += $giftData['spendcoin'];
             }
         }
+        $userData = M('users')->field('androidtoken,iphonetoken')->where("id={$room_history['user_id']}")->find();
+        //进行友盟推送app状态栏  title：娃娃退币  content：您连续次数达到保夹要求，共退币XXX币，祝你抓抓愉快咩~
+        $umengpush = [
+            'title'=>'保夹娃娃币退币',
+            'content'=>"您连续次数达到保夹要求，共退币{$t_icon}币，祝你抓抓愉快咩~",
+        ];
+        //测试专用
+        /*$userData = [
+            'androidtoken'=>'Ah4Bvt1luAec0H62jLjJlS26PSmkl362KQcu7e80oon4',
+            'iphonetoken'=>'464d62ef34d7cfa584b6265f41c54996ee531dcdc873859f34826b9527c38329'
+        ];*/
+        $this->umengpush($userData['androidtoken'],$userData['iphonetoken'],$umengpush['title'],$umengpush['content']);
 
     }
 
