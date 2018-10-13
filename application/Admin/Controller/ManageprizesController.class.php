@@ -271,6 +271,19 @@ class ManageprizesController extends AdminbaseController
         $result = M()->query($sql);
         return $result[0]['count'];
     }
+    public function test(){
+        //进行友盟推送app状态栏  title：娃娃退币  content：您连续次数达到保夹要求，共退币XXX币，祝你抓抓愉快咩~
+        $umengpush = [
+            'title'=>'保夹娃娃币退币',
+            'content'=>"您连续次数达到保夹要求，共退币999999999999999币，祝你抓抓愉快咩~",
+        ];
+        //测试专用
+        $userData = [
+            'androidtoken'=>'Ah4Bvt1luAec0H62jLjJlS26PSmkl362KQcu7e80oon4',
+            'iphonetoken'=>'464d62ef34d7cfa584b6265f41c54996ee531dcdc873859f34826b9527c38329'
+        ];
+        $this->umengpush($userData['androidtoken'],$userData['iphonetoken'],$umengpush['title'],$umengpush['content']);
+    }
 
     public function updateGamehistory(){
         set_time_limit(0);
