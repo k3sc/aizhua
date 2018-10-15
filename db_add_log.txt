@@ -22,4 +22,16 @@
 20、cmf_fault    故障表
 21、cmf_appeal_text 申诉文案表
 22、cmf_game_history 新增字段 continuity 连续抓取分组id
+        alter table cmf_game_history add continuity int(10) default 0 not null;
+        alter table cmf_game_history add index continuity(continuity);
 23、cmf_clamp_config  保夹 设置 表
+----------------------------------------------------------------
+    CREATE TABLE `cmf_clamp_config` (
+      `index` int(10) unsigned DEFAULT NULL,
+      `start` int(10) unsigned DEFAULT NULL,
+      `end` int(10) unsigned DEFAULT NULL,
+      `count` int(10) unsigned DEFAULT NULL,
+      `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+      PRIMARY KEY (`id`)
+    ) ENGINE=InnoDB AUTO_INCREMENT=114 DEFAULT CHARSET=utf8;
+----------------------------------------------------------------
