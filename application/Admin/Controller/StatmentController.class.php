@@ -232,13 +232,24 @@ class StatmentController extends AdminbaseController
             }
         }
 
-        $result = array();
+
         if ($get_time[2] == 'day' || $get_time[2] == 'week') {
 
             $d = date('Y-m-d');
 
             // 各个支付平台充值总额
             $pay = M('pay_record')->field('type, sum(money) as money')->where('paytime >= ' . $get_time[0] . ' and paytime <= ' . $get_time[1] . ' and status = 1')->group('type')->select();
+
+            //统计两个平台的充值总额
+            $ptpay = M('pay_record as pay')->field('pay.type, sum(pay.money) as ptmoney,u.id,u.sys')->join("left join cmf_users as u on u.id=pay.user_id")->where('paytime >= ' . $get_time[0] . ' and paytime <= ' . $get_time[1] . ' and status = 1')->group('u.sys')->select();
+            foreach ($ptpay as $key=>$val){
+                if($val['sys'] ==1){
+                    $result[$d]['android_pay'] = $val['ptmoney'];
+                }else{
+                    $result[$d]['iphone_pay'] = $val['ptmoney'];
+                }
+            }
+
             // 各个平台充值总额
             foreach ($pay as $k => $v) {
                 if ($v['type'] == 1) $result[$d]['wx_pay'] = $v['money']; // 微信支付总额
@@ -246,6 +257,7 @@ class StatmentController extends AdminbaseController
                 if ($v['type'] == 3) $result[$d]['paypal_pay'] = $v['money']; // paypal支付总额
                 if ($v['type'] == 4) $result[$d]['apple_pay'] = $v['money']; // ApplePay支付总额
             }
+
             // 充值总额
             $result[$d]['total_pay'] = $result[$d]['wx_pay'] + $result[$d]['zfb_pay'] + $result[$d]['paypal_pay'] + $result[$d]['apple_pay'];
 
@@ -314,6 +326,7 @@ class StatmentController extends AdminbaseController
             }
             // 支付宝充值总额
             $zfb_pay = M('pay_record')->field('sum(money) as money, left(FROM_UNIXTIME(ctime),' . $sTime . ') as time')->where('paytime >= ' . $get_time[0] . ' and paytime <= ' . $get_time[1] . ' and status = 1 and type = 2')->group('time')->select();
+
             foreach ($zfb_pay as $k => $v) {
                 $result[$v['time']]['zfb_pay'] = $v['money'];
             }
@@ -326,6 +339,17 @@ class StatmentController extends AdminbaseController
             $apple_pay = M('pay_record')->field('sum(money) as money, left(FROM_UNIXTIME(ctime),' . $sTime . ') as time')->where('paytime >= ' . $get_time[0] . ' and paytime <= ' . $get_time[1] . ' and status = 1 and type = 4')->group('time')->select();
             foreach ($apple_pay as $k => $v) {
                 $result[$v['time']]['apple_pay'] = $v['money'];
+            }
+
+            //统计安卓平台的充值总额
+            $ptpay = M('pay_record as pay')->field('pay.type, sum(pay.money) as ptmoney,u.id,u.sys,left(FROM_UNIXTIME(ctime),' . $sTime . ') as time')->join("left join cmf_users as u on u.id=pay.user_id")->where('paytime >= ' . $get_time[0] . ' and paytime <= ' . $get_time[1] . ' and status = 1 and u.sys=1')->group('time')->select();
+            foreach ($ptpay as $k => $v) {
+                $result[$v['time']]['android_pay'] = $v['ptmoney'];
+            }
+            //统计苹果平台的充值总额
+            $ptpay = M('pay_record as pay')->field('pay.type, sum(pay.money) as ptmoney,u.id,u.sys,left(FROM_UNIXTIME(ctime),' . $sTime . ') as time')->join("left join cmf_users as u on u.id=pay.user_id")->where('paytime >= ' . $get_time[0] . ' and paytime <= ' . $get_time[1] . ' and status = 1 and u.sys=2')->group('time')->select();
+            foreach ($ptpay as $k => $v) {
+                $result[$v['time']]['iphone_pay'] = $v['ptmoney'];
             }
 
             // 夹走娃娃总成本
