@@ -322,8 +322,8 @@ public function setWawa()
         }
         //充值金额搜索
         if($start_moeny && $start_moeny){
-            $map .= " and summoeny>={$start_moeny}";
-            $map .= " and summoeny<={$end_moeny}";
+            $map .= " and pay.summoney>={$start_moeny}";
+            $map .= " and pay.summoney<={$end_moeny}";
             $filter['start_moeny'] = $start_moeny;
             $filter['end_moeny'] = $end_moeny;
         }
@@ -406,7 +406,7 @@ public function setWawa()
 	                  `cmf_users` as u
 	            LEFT JOIN
                         (
-                        SELECT SUM(money) as summoeny,user_id FROM cmf_pay_record WHERE `status`=1 GROUP BY user_id
+                        SELECT SUM(money) as summoney,user_id FROM cmf_pay_record WHERE `status`=1 GROUP BY user_id
                         ) as pay on pay.user_id = u.id
                 WHERE
                     {$params['where']}
