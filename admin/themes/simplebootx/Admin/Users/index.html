@@ -6,13 +6,32 @@
 			<li class="active"><a href="">用户列表</a></li>
 			<!--<li><a href="{:U('Users/add')}">添加用户</a></li>-->
 		</ul>
-		<form method="post" class="well form-search" action="{:U('Users/index')}">
+		<form method="get" class="well form-search" action="{:U('Users/index')}" id="filter">
+            <input type="hidden" name="g" value="Admin">
+            <input type="hidden" name="m" value="Users">
+            <input type="hidden" name="a" value="index">
 			用户名：<input type="text" name="name" value="{$name}" style="width: 150px;">&nbsp;&nbsp;&nbsp;
 			<!--手机号：<input type="text" name="mobile" value="{$mobile}" style="width: 150px;">&nbsp;&nbsp;-->
 			注册时间：
 			<input type="text" name="start_time" class="js-date date" value="{$start_time}" style="width: 80px;" autocomplete="off">-
-			<input type="text" class="js-date date" name="end_time" value="{$end_time}" style="width: 80px;" autocomplete="off"> &nbsp; &nbsp;&nbsp;
+			<input type="text" class="js-date date" name="end_time" value="{$end_time}" style="width: 80px;" autocomplete="off">
+            最后登录时间：
+            <input type="text" name="start_lastlogin_time" class="js-date date" value="{$filter.start_lastlogin_time}" style="width: 80px;" autocomplete="off">-
+            <input type="text" class="js-date date" name="end_lastlogin_time" value="{$filter.end_lastlogin_time}" style="width: 80px;" autocomplete="off">
+            &nbsp; &nbsp;&nbsp;
 			用户ID：<input type="text" name="user_id" value="{$user_id}">
+            <br />
+            <br />
+            充值金额：
+            <input type="number" name="start_moeny" value="{$filter.start_moeny}" style="width: 50px;">
+            -
+            <input type="number" name="end_moeny" value="{$filter.end_moeny}" style="width: 50px;">
+            平台：<select name="sys">
+                <option value="0">--全部--</option>
+                <option <if condition="$filter.sys eq 1">selected</if> value="1">安卓</option>
+                <option <if condition="$filter.sys eq 2">selected</if> value="2">苹果</option>
+            </select>
+            <a href="{:U('Users/index')}"><input type="button" class="btn btn-primary" value="清除"></a>
 			<input type="submit" class="btn btn-primary" value="搜索">
 		</form>
 		<form method="post" class="js-ajax-form" action="{:U('Users/index')}">
@@ -23,10 +42,28 @@
 						<th>昵称</th>
 						<th>头像</th>
 						<!--<th>手机号</th>-->
-						<th>娃娃币余额</th>
-						<th>免费娃娃币余额</th>
-						<th>充值总额</th>
-						<th>娃娃总额</th>
+						<th  style="cursor:pointer;" onclick="orderby(this)" data-ordername=coin data-ordertype=
+                        <if condition="$filter[orderby]=='coin' && $filter[ordertype]=='desc'">desc
+                            <elseif condition="$filter[orderby]=='coin' && $filter[ordertype]=='asc'"/>asc
+                            <else/>0</if>
+                        >娃娃币余额</th>
+						<th  style="cursor:pointer;" onclick="orderby(this)" data-ordername=free_coin data-ordertype=
+                        <if condition="$filter[orderby]=='free_coin' && $filter[ordertype]=='desc'">desc
+                            <elseif condition="$filter[orderby]=='free_coin' && $filter[ordertype]=='asc'"/>asc
+                            <else/>0</if>
+                        >免费娃娃币余额</th>
+						<th  style="cursor:pointer;" onclick="orderby(this)" data-ordername=summoney data-ordertype=
+                        <if condition="$filter[orderby]=='summoney' && $filter[ordertype]=='desc'">desc
+                            <elseif condition="$filter[orderby]=='summoney' && $filter[ordertype]=='asc'"/>asc
+                            <else/>0</if>
+                        >
+
+                            充值总额</th>
+						<th style="cursor:pointer;" onclick="orderby(this)" data-ordername=total_get data-ordertype=
+                        <if condition="$filter[orderby]=='total_get' && $filter[ordertype]=='desc'">desc
+                            <elseif condition="$filter[orderby]=='total_get' && $filter[ordertype]=='asc'"/>asc
+                            <else/>0</if>
+                        >娃娃总额</th>
 						<!--<th>充值获赠娃娃币</th>-->
 						<th>夹娃娃次数</th>
 						<th>夹中次数</th>
@@ -34,8 +71,16 @@
 						<!--<th>剩余强抓力次数</th>-->
 						<th>登录方式</th>
 						<th>系统平台</th>
-						<th>注册时间</th>
-						<th>最后登录时间</th>
+						<th style="cursor:pointer;" onclick="orderby(this)" data-ordername=create_time data-ordertype=
+                        <if condition="$filter[orderby]=='create_time' && $filter[ordertype]=='desc'">desc
+                            <elseif condition="$filter[orderby]=='create_time' && $filter[ordertype]=='asc'"/>asc
+                            <else/>0</if>
+                        >注册时间</th>
+						<th style="cursor:pointer;" onclick="orderby(this)" data-ordername=last_login_time data-ordertype=
+                        <if condition="$filter[orderby]=='last_login_time' && $filter[ordertype]=='desc'">desc
+                            <elseif condition="$filter[orderby]=='last_login_time' && $filter[ordertype]=='asc'"/>asc
+                            <else/>0</if>
+                        >最后登录时间</th>
 						<!--<th>充值总额</th>-->
 
 						<th>用户等级</th>
@@ -56,7 +101,7 @@
 						<!--<td>{$vo.mobile}</td>-->
 						<td>{$vo.coin}</td>
 						<td>{$vo.free_coin}</td>
-						<td>{$vo.money}</td>
+						<td>{$vo.summoney}</td>
 						<td>{$vo.total_get}</td>
 						<!--<td>{$vo.coin_sys_give}</td>-->
 						<td>{$vo.bodyNums}</td>
@@ -96,12 +141,23 @@
 	</div>
 	<script src="__PUBLIC__/js/common.js"></script>
 <script>
-    $(function(){
+
+    function orderby(el){
+        var form = $('#filter');
+        var ordertype = $(el).attr('data-ordertype')!='desc'?'desc':'asc';
+        var ordername = $(el).attr('data-ordername');
+        var orderby = ordername+','+ordertype
+        var order_input = "<input type='hidden' name='orderby' value="+orderby+" >";
+        form.append(order_input);
+        form.submit();
+    }
+
+    /*$(function(){
         $('.table').tablesort().data('tablesort');
        
 
 
-    });
+    });*/
 </script>
 </body>
 </html>

@@ -276,10 +276,20 @@ public function setWawa()
     public function index()
     { //Log::record('sssssssfffffffffff',Log::ERR);
         $map = "user_type<>1";
+        $orderby = " create_time desc ";
         $name = I('name');
         $mobile = I('mobile');
+        $sys = I('sys');
+        $orderbys = I('orderby');
         $start_time = I('start_time');
         $end_time = I('end_time');
+        $start_lastlogin_time = I('start_lastlogin_time');
+        $end_lastlogin_time = I('end_lastlogin_time');
+
+        $start_moeny = I('start_moeny');
+        $end_moeny = I('end_moeny');
+
+        $end_lastlogin_time = I('end_lastlogin_time');
         $user_id = I('user_id','','intval');
         //用户名搜索
         if ($name !== '') {
@@ -303,33 +313,46 @@ public function setWawa()
             $this->assign('start_time', $start_time);
             $this->assign('end_time', $end_time);
         }
-//		}else{
-//			if($start_time !== ''){
-//				$map .=" and create_time>'{$start_time}'";
-//				$this->assign('start_time',$start_time);
-//			}
-//			if($end_time !== ''){
-//				$map .=" and create_time<='{$end_time}'";
-//				$this->assign('end_time',$end_time);
-//			}
-//		}
+        //最后登录时间搜索
+        if($start_lastlogin_time && $end_lastlogin_time){
+            $map .= " and unix_timestamp(last_login_time)>=" . strtotime($start_lastlogin_time . ' 00:00:00');
+            $map .= " and unix_timestamp(last_login_time)<=" . strtotime($end_lastlogin_time . ' 23:59:59');
+            $filter['start_lastlogin_time'] = $start_lastlogin_time;
+            $filter['end_lastlogin_time'] =  $end_lastlogin_time;
+        }
+        //充值金额搜索
+        if($start_moeny && $start_moeny){
+            $map .= " and summoeny>={$start_moeny}";
+            $map .= " and summoeny<={$end_moeny}";
+            $filter['start_moeny'] = $start_moeny;
+            $filter['end_moeny'] = $end_moeny;
+        }
+        //平台筛选
+        if($sys){
+            $map .= " and sys={$sys} ";
+            $filter['sys'] = $sys;
+        }
+        //排序处理
+        if($orderbys){
+            $orderbys = explode(',',$orderbys);
+            $orderby = " {$orderbys[0]} {$orderbys[1]} ";
+            $filter['orderby'] = $orderbys[0];
+            $filter['ordertype'] = $orderbys[1];
+        }
 
+        $params = [
+            'where'=>$map,
+            'orderby' =>$orderby
+        ];
         $model = M('users');
-        $count = $model->where($map)->count();
+        $count = $this->getCount($params);
         $page = $this->page($count, 20);
-        //用户列表
-        $list = $model
-            ->field('id,user_nicename,avatar,mobile,coin,free_coin,create_time,user_status,claw,strong,coin_sys_give,openid,sys,sex,last_login_time,
-            total_payed ,total_get,total_get_num,last_active_time')
-            ->order('create_time desc')
-            ->where($map)
-            ->limit($page->firstRow . ',' . $page->listRows)
-            ->select();
+        $list = $this->getData($params,$page);
 
         foreach ($list as $key => $value) {
-            //充值总金额
-            $money = M('pay_record')->where("user_id='{$value['id']}' and status=1")->sum('money');
-            $list[$key]['money'] = $money ?:0;
+
+            $list[$key]['summoney'] = $value['summoney'] ?:0;
+
             //抓娃娃总次数
             $list[$key]['bodyNums'] = M('game_history')->where("user_id='{$value['id']}'")->count();
             //抓中次数
@@ -345,12 +368,52 @@ public function setWawa()
             }
         }
 
+        $this->assign('filter', $filter);
         $this->assign("page", $page->show('Admin'));//分页
         $this->assign('list', $list);               //用户列表
         $this->assign('count', $count);               //总条数
         $this->display();
     }
 
+    public function getData($params,$page){
+        $field = "	u.`id`,u.`user_nicename`,u.`avatar`,u.`mobile`,
+	                u.`coin`,u.`free_coin`,u.`create_time`,u.`user_status`,u.`claw`,
+	                u.`strong`,u.`coin_sys_give`,u.`openid`,
+	                u.`sys`,u.`sex`,u.`last_login_time`,u.`total_payed`,
+	                u.`total_get`,u.`total_get_num`,u.`last_active_time`,pay.*";
+
+        $sql = "SELECT
+                      {$field}
+                FROM
+	                  `cmf_users` as u
+	            LEFT JOIN
+                        (
+                        SELECT SUM(money) as summoney,user_id FROM cmf_pay_record WHERE `status`=1 GROUP BY user_id
+                        ) as pay on pay.user_id = u.id
+                WHERE
+                    {$params['where']}
+                ORDER BY
+                    {$params['orderby']} 
+                    LIMIT {$page->firstRow} , {$page->listRows}";
+        $res = M()->query($sql);
+        return $res;
+    }
+    public function getCount($params){
+        $field = "count(id) as count";
+        $sql = "SELECT
+                      {$field}
+                FROM
+	                  `cmf_users` as u
+	            LEFT JOIN
+                        (
+                        SELECT SUM(money) as summoeny,user_id FROM cmf_pay_record WHERE `status`=1 GROUP BY user_id
+                        ) as pay on pay.user_id = u.id
+                WHERE
+                    {$params['where']}
+                ";
+        $res = M()->query($sql);
+        return $res[0]['count'];
+    }
 
     public function video()
     {
