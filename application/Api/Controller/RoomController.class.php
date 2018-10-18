@@ -1244,6 +1244,15 @@ class RoomController extends BaseController
                 }
             }
         }
+        $noticeData = [
+            'type'=>2,
+            'user_id'=>$room_history['user_id'],
+            'title'=>'保夹退币',
+            'content'=>"您连续次数达到保夹要求，共退币{$t_icon}币，祝你抓抓愉快咩~",
+            'desc'=>"您连续次数达到保夹要求，共退币{$t_icon}币，祝你抓抓愉快咩~",
+            'ctime'=>time()
+        ];
+        M('notice')->add($noticeData);
         $userData = M('users')->field('androidtoken,iphonetoken')->where("id={$room_history['user_id']}")->find();
         //进行友盟推送app状态栏  title：娃娃退币  content：您连续次数达到保夹要求，共退币XXX币，祝你抓抓愉快咩~
         $umengpush = [
