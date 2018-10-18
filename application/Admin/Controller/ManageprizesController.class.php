@@ -50,6 +50,11 @@ class ManageprizesController extends AdminbaseController
         foreach ($prizedata as $key=>$val){
             /* 获取用户的记录信息 */
             $hData = M('game_history as h')->where("id in ({$val['h_id_s']})")->select();
+
+            //退还币数
+            $retreat = M('game_history')->where("id in ({$val['h_id_s']}) and is_retreat=1")->sum('coin');
+            $prizedata[$key]['retreat'] = $retreat?:0;
+
             /*->field('h.*,u.user_nicename')->join('left join cmf_users as u on u.id=h.user_id')*/
 
             //获取用户的等级
@@ -60,9 +65,9 @@ class ManageprizesController extends AdminbaseController
             $prizedata[$key]['history'] = $hData;
             /*获取是否强抓力*/
             $prizedata[$key]['is_strong'] = end(explode(',',$val['h_is_strong_s']));
+            //获取退还币数
 
         }
-
         $this->assign('filter',$filter);
         $this->assign('row',array_values($prizedata));
         $this->assign('rowJson',json_encode($prizedata));
@@ -133,6 +138,8 @@ class ManageprizesController extends AdminbaseController
             GROUP BY
                 h.continuity
                 HAVING csuccess > 0
+            ORDER BY 
+	            h.continuity desc
               LIMIT {$page->firstRow},{$page->listRows}
         ";
         $result = M()->query($sql);

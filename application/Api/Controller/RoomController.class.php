@@ -295,14 +295,14 @@ class RoomController extends BaseController
 		$update['free_coin'] = $this->user['free_coin'];
         M("users")->where('id=' . $this->user_id)->save($update);
         //消费记录
-        $insert = array("type" => 'expend', "action" => 'zhuawawa', 
-			"uid" => $this->user_id, 
-			"touid" => 0, 
-			"giftid" => $gift['wawa_type_id'], 
-			"giftcount" => 0, 
-			"totalcoin" => $gift['spendcoin'], 
+        $insert = array("type" => 'expend', "action" => 'zhuawawa',
+			"uid" => $this->user_id,
+			"touid" => 0,
+			"giftid" => $gift['wawa_type_id'],
+			"giftcount" => 0,
+			"totalcoin" => $gift['spendcoin'],
 			"givecoin" => $coingive,
-			"showid" => $id, 
+			"showid" => $id,
 			"addtime" => $time,
 			'room_id' => $room_id,
 			'realmoney' => ($gift['spendcoin']-$coingive)/10,
@@ -311,10 +311,13 @@ class RoomController extends BaseController
         M('users_coinrecord')->add($insert);
 
         $history = M('game_history')->where('id=' . $id)->find();
-	
+
         // 读取设备信息
         $arrFacInfo           = M('device as a')->join('cmf_game_config as c on a.game_config_id=c.id', 'left')->field('c.*')->where('a.device_unique_code="' . $gift['fac_id'] . '"')->find();
+
+        //$history['tcpIP']='120.79.194.74';//测试服务器IP
         $history['tcpIP']='120.79.57.214';//服务器IP
+
         $history['tcpPort']='5188';//服务端口
         $history['webPort']='5189';//websocket服务端口
         $history['move_time'] = $arrFacInfo['qh_time'];//天车移动时间
@@ -422,7 +425,7 @@ class RoomController extends BaseController
                     $update = [];
                     $update['free_coin'] = array('free_coin', $this->user['free_coin']);
                     M("users")->where('id=' . $this->user_id)->save($update);
-                    
+
                     M("users")->where('id=' . $this->user_id)->setInc("consumption", $config['claw_coin']);
                     //消费记录
                     $insert = array("type" => 'expend', "action" => 'claw', "uid" => $this->user_id, "touid" => 0, "giftid" => 0, "giftcount" => 0, "totalcoin" => $config['claw_coin'], "showid" => $history['id'], "addtime" => time());
@@ -498,7 +501,7 @@ class RoomController extends BaseController
 			else{
 			    $this->user['free_coin'] = 0;
 			}
-			
+
 			/* 更新用户余额 消费 */
 			$update = array();
 			$update['coin'] = array('exp', 'coin-'.$coin);
@@ -507,9 +510,9 @@ class RoomController extends BaseController
 			$update['coin_sys_give'] = $this->user['coin_sys_give'];
 			M("users")->where('id=' . $this->user_id)->save($update);
             //消费记录
-            $insert = array("type" => 'expend', 
-				"action" => 'service', 
-				"uid" => $this->user_id, "touid" => 0, 
+            $insert = array("type" => 'expend',
+				"action" => 'service',
+				"uid" => $this->user_id, "touid" => 0,
 				"giftid" => 0, "giftcount" => 0, "totalcoin" => $coin, "givecoin" => $coingive,
 				"showid" => $newid, "addtime" => time(),
 				'realmoney' => ($coin-$coingive)/10,
@@ -571,10 +574,10 @@ class RoomController extends BaseController
 		if($room_ids){
             $this->notice_gameover('0', '{"type":18,"room_ids":"'.implode(',', $room_ids).'","room_nums":"'.implode(',', $room_nums).'"}');
 		}
-		
+
         $keys = $this->redis->keys('gamelock_*');
         if ($keys) {
-            foreach ($keys as $key) {				
+            foreach ($keys as $key) {
 				$gamelock = $this->redis->get($key);
 				if($gamelock && time() >= $gamelock['time']){
                     $this->redis->delete($key);
@@ -583,7 +586,7 @@ class RoomController extends BaseController
 					$this->notice_gameover($room_id, json_encode(array("success" => 0, "user_id" => 0, "user_nicename" => "", "game_id" => 0, "room_id" => $room_id, "type" => 10)));
 				}
 			}
-		}		
+		}
         $keys = $this->redis->keys('roomwaits_*');
         if ($keys) {
             foreach ($keys as $key) {
@@ -629,7 +632,7 @@ class RoomController extends BaseController
 							'gift' => 0,
 							'status' => 0,
 						);
-						$this->success();  
+						$this->success();
                     }
                 }
             }
@@ -844,8 +847,8 @@ class RoomController extends BaseController
             $is_strong    = $flag ? $flag : $sucflag;
             $is_strongdec = $flag;
 	    $is_sellmodel = $is_strong;
-	    $this->redis->set('userStrongDec_'.$this->user_id, 1);//$is_strongdec);		
-        }        
+	    $this->redis->set('userStrongDec_'.$this->user_id, 1);//$is_strongdec);
+        }
 
         // 读取设备信息
         $arrFacInfo = M('device as a')->join('cmf_game_config as c on a.game_config_id=c.id', 'left')->field('c.*')->where('a.device_unique_code="' . $arrFac['fac_id'] . '"')->find();
@@ -868,6 +871,9 @@ class RoomController extends BaseController
         $str = $this->_game_start($arrFac['fac_id'],$game_history_id,$params);
 		$this->log_message($str);
         $arr = json_decode($str, true);
+
+        error_log("\r\n".print_r($arr,1),3,"/home/wwwroot/default/data/runtime/1_test.log");
+
         if ($arr['code'] == 1 && is_numeric($arr['data']) && $arr['data'] == 0) {
             //强抓力减1
             //if ($is_strongdec) M("users")->where(['id' => $this->user_id])->setDec("strong", 1);
@@ -953,7 +959,7 @@ class RoomController extends BaseController
     public function success()
     {
 		//$this->log_message($_POST);
-		
+
         $macno = I('macno'); // 设备唯一码
         $sysnum = I('sysnum'); // 系统流水
         $gift = intval(I('gift')); // 大于0为抓取成功,为抓取数量
@@ -963,10 +969,10 @@ class RoomController extends BaseController
         M('device')->where(['device_unique_code' => $macno])->save(['beat_time' => time(),"status"=>1]);
         $roomInfo = M('game_room')->field("id as room_id,room_no,room_name,fac_id,type_id,wawa_num,yj_kc")->where('fac_id="' . $macno . '"')->find();
         if (!$roomInfo)  exit('1');
-		
+
 		//心跳
 		M('game_room')->where(['id' => $roomInfo['room_id']])->save(['beat_time' => time()]);
-		
+
         //记录故障
         //机器运行状态0：空闲，1：正在使用241：爪子上升超时。242：天车回原位超时243：前后电机电流异常244：左右电机电流异常245：上下电机电流异常246：爪子线圈电流异常247：光眼异常248：保留，无意义249：参数不合法
         $errornos = array(
@@ -1011,7 +1017,7 @@ class RoomController extends BaseController
             M('game_room')->where($room_where)->save(['status' => 0]);
         }
         if($room_ids)$this->notice_gameover('0', '{"type":15,"room_ids":"'.implode(',', $room_ids).'","status":'.$room_status.'}');
-		
+
         if ($status) exit('2');
         $roomgame = $this->redis->get('roomgame_' . $roomInfo['room_id']);
         if (!$roomgame) {
@@ -1121,10 +1127,10 @@ class RoomController extends BaseController
             //消费记录标志
             M('users_coinrecord')->where(['action' => "zhuawawa", 'showid' => $gameInfo['id']])->save(array('giftcount' => $gift));
             $giftdata['count_success'] = array('exp', 'count_success+1');
-			
+
 			$this->redis->delete('userStrongRand_'.$gameInfo['user_id']);
 			$is_strongdec = $this->redis->get('userStrongDec_'.$gameInfo['user_id']);
-			$this->redis->delete('userStrongDec_'.$gameInfo['user_id']);			
+			$this->redis->delete('userStrongDec_'.$gameInfo['user_id']);
 			if($is_strongdec)M("users")->where(['strong'=>['egt', 1],'id' => $gameInfo['user_id']])->setDec("strong", 1);
         }
         $giftdata['count'] = array('exp', 'count+1');
@@ -1176,20 +1182,21 @@ class RoomController extends BaseController
         //$e2 = microtime();
         //$this->log_message(array($b, $e1, $e2));
         //$this->log_message(array('ret2' => $ret2));
-		
+
         $this->redis->delete('roomgame_' . $roomInfo['room_id']);
         $this->redis->delete('gameuser_' . $roomInfo['room_id']);
-		
+
 		exit('4');
     }
     public function retreat($id){ //$id=730671 测试用
         $room_history = M('game_history')->field('continuity,user_id,room_id')->where("id={$id}")->find();
         //拿到娃娃的价格
         $roomData = M("game_room")->field('type_id')->where("id={$room_history['room_id']}")->find();
+
         $giftData = M("gift")->field('spendcoin')->where("id={$roomData['type_id']}")->find();
 
         //获取设置数据  必须在活动内哦
-        $clampData = M('clamp_config')->where("start<={$giftData['spendcoin']} and end > {$giftData['spendcoin']}")->find();
+        $clampData = M('clamp_config')->where("start<={$giftData['spendcoin']} and end > {$giftData['spendcoin']} ")->find();
         if(empty($clampData)){
             return;
         }
@@ -1201,18 +1208,40 @@ class RoomController extends BaseController
         if(count($groupData) <= $clampData['count']){  //抓的次数小于或者等于保夹 则不退币
             return;
         }
+
         //进行退币，并且记录退币的历史局
         $t_icon = 0;
+
+        //error_log("\r\n 娃娃id：".print_r($roomData['type_id']),3,'/home/wwwroot/default/data/runtime/tuibi.log');
+        //error_log("\r\n 娃娃价格：".print_r($giftData['spendcoin']),3,'/home/wwwroot/default/data/runtime/tuibi.log');
+        //error_log("\r\n".print_r($groupData,1),3,'/home/wwwroot/default/data/runtime/tuibi.log');
+
         foreach ($groupData as $key=>$val){
             if($key+1 > $clampData['count']){
-                //把币退给用户
-                $coinData = ['user_id'=>$room_history['user_id'],'log'=>'保夹退币','coin'=>$giftData['spendcoin'],'type'=>2,'ctime'=>time()];
-                M('coin_bill')->add($coinData);
-                M('users')->where("id={$room_history['user_id']}")->setInc('coin',$giftData['spendcoin']);
-                M('users')->where("id={$room_history['user_id']}")->setInc('free_coin',$giftData['spendcoin']);
-                //记录退币的历史
-                M('game_history')->where("id={$val['id']}")->save(['is_retreat'=>1]);
-                $t_icon += $giftData['spendcoin'];
+                //因为接口重复请求  退币前有个需求 就是自身状态为未退币状态
+                $dd_data = M('game_history')->field('is_retreat,user_id,room_id')->where("id={$val['id']}")->find();
+                if($dd_data['is_retreat'] == 0){
+                    //加入娃娃币账单
+                    $action = [
+                        'type'=>'income',
+                        'action'=>'retreat',
+                        'room_id'=>"{$dd_data['room_id']}",
+                        'uid'=>"{$dd_data['user_id']}",
+                        'giftid'=>"{$roomData['type_id']}",
+                        'totalcoin'=>"{$giftData['spendcoin']}",
+                        'addtime'=>time()
+                    ];
+                    M('users_coinrecord')->add($action);
+
+                    //把币退给用户
+                    M('users')->where("id={$room_history['user_id']}")->setInc('coin',$giftData['spendcoin']);
+                    M('users')->where("id={$room_history['user_id']}")->setInc('free_coin',$giftData['spendcoin']);
+                    //记录退币数据
+                    error_log("\r\n  退币成功：".print_r($val,1),3,'/home/wwwroot/default/data/runtime/tuibi.log');
+                    //记录退币的历史
+                    M('game_history')->where("id={$val['id']}")->save(['is_retreat'=>1]);
+                    $t_icon += $giftData['spendcoin'];
+                }
             }
         }
         $userData = M('users')->field('androidtoken,iphonetoken')->where("id={$room_history['user_id']}")->find();

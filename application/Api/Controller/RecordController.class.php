@@ -240,7 +240,8 @@ class RecordController extends BaseController
                 "active_dingshi" =>"定时活动",
                 "regcoin"        =>"注册送币",
                 "invite"         =>"邀请奖励",
-                "set_coin"       =>"娃娃换币"
+                "set_coin"       =>"娃娃换币",
+                "retreat"       =>"保夹退币"
             );
 			foreach($bill as &$v){
 				$v['actiontitle'] = trim($action[$v['action']]);
