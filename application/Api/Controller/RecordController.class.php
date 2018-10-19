@@ -245,6 +245,9 @@ class RecordController extends BaseController
             );
 			foreach($bill as &$v){
 				$v['actiontitle'] = trim($action[$v['action']]);
+                if($v['action']== 'retreat'){
+                    $v['actiontitle'] = "抓{$v['wawa_name']} 保夹退币";
+                }
 			}
 			unset($v);
             $data['list'] = $bill;

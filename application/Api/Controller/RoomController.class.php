@@ -1194,11 +1194,11 @@ class RoomController extends BaseController
 		exit('4');
     }
     public function retreat($id){ //$id=730671 测试用
-        $room_history = M('game_history')->field('continuity,user_id,room_id')->where("id={$id}")->find();
+        $room_history = M('game_history')->field('name,continuity,user_id,room_id')->where("id={$id}")->find();
         //拿到娃娃的价格
         $roomData = M("game_room")->field('type_id')->where("id={$room_history['room_id']}")->find();
 
-        $giftData = M("gift")->field('spendcoin')->where("id={$roomData['type_id']}")->find();
+        $giftData = M("gift")->field('spendcoin,giftname')->where("id={$roomData['type_id']}")->find();
 
         //获取设置数据  必须在活动内哦
         $clampData = M('clamp_config')->where("start<={$giftData['spendcoin']} and end > {$giftData['spendcoin']} ")->find();
@@ -1238,6 +1238,16 @@ class RoomController extends BaseController
                 }
             }
         }
+        //推送站内消息
+        $noticeData = [
+            'type'=>2,
+            'user_id'=>$room_history['user_id'],
+            'title'=>"抓{$room_history['name']}保夹退币",
+            'content'=>"您连续次数达到保夹要求，共退币{$t_icon}币，祝你抓抓愉快咩~",
+            'desc'=>"您连续次数达到保夹要求，共退币{$t_icon}币，祝你抓抓愉快咩~",
+            'ctime'=>time()
+        ];
+        M('notice')->add($noticeData);
 
         //加入娃娃币账单
         $action = [
@@ -1247,7 +1257,8 @@ class RoomController extends BaseController
             'uid'=>"{$room_history['user_id']}",
             'giftid'=>"{$roomData['type_id']}",
             'totalcoin'=>"{$t_icon}",
-            'addtime'=>time()
+            'addtime'=>time(),
+            'wawa_name'=>$giftData['giftname']
         ];
         M('users_coinrecord')->add($action);
 
