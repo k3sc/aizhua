@@ -1196,7 +1196,10 @@ class RoomController extends BaseController
     public function retreat($id){ //$id=730671 测试用
         $room_history = M('game_history')->field('name,continuity,user_id,room_id')->where("id={$id}")->find();
         //拿到娃娃的价格
-        $roomData = M("game_room")->field('type_id')->where("id={$room_history['room_id']}")->find();
+        $roomData = M("game_room")->field('type_id,is_retreat')->where("id={$room_history['room_id']}")->find();
+        if($roomData['is_retreat']==0){
+            return;
+        }
 
         $giftData = M("gift")->field('spendcoin,giftname')->where("id={$roomData['type_id']}")->find();
 
