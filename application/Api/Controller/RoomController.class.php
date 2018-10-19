@@ -1149,8 +1149,11 @@ class RoomController extends BaseController
             $this->retreat($gameInfo['id']);
         }
 
+
         M('game_room')->where('id=' . $gameInfo['room_id'])->save(array('status' => 0));
 		$this->notice_gameover('0', '{"type":15,"room_ids":"'.$gameInfo['room_id'].'","status":0}');
+
+
         //计算送甩抓
         $config = M('config')->field('claw_count')->find();
         if ($config['claw_count']) {
@@ -1160,6 +1163,7 @@ class RoomController extends BaseController
                 M('users')->where("id=" . $gameInfo['user_id'])->save(array("claw" => array('exp', 'claw+1'), "claw_give_time" => time()));
             }
         }
+
         //$b = microtime();
         //发通知给下一个人
         /*
@@ -1176,7 +1180,8 @@ class RoomController extends BaseController
         }*/
 		//锁定5秒
 		$this->redis->set('gamelock_'.$gameInfo['room_id'], ['user_id' => $gameInfo['user_id'], 'time' => time() + 8]);
-        //$e1 = microtime();
+
+		//$e1 = microtime();
         $ret2 = $this->notice_gameover($gameInfo['room_id'], json_encode(array("success" => $gift, "user_id" => $gameInfo['user_id'], "user_nicename" => $gameUser['user_nicename'], "game_id" => $gameInfo['id'], "room_id" => $gameInfo['room_id'], "type" => 10)));
 
         //$e2 = microtime();
@@ -1237,10 +1242,11 @@ class RoomController extends BaseController
                     M('users')->where("id={$room_history['user_id']}")->setInc('coin',$giftData['spendcoin']);
                     M('users')->where("id={$room_history['user_id']}")->setInc('free_coin',$giftData['spendcoin']);
                     //记录退币数据
-                    error_log("\r\n  退币成功：".print_r($val,1),3,'/home/wwwroot/default/data/runtime/tuibi.log');
+                    error_log("\r\n  退币成功：".print_r($val,1),3,'/home/wwwroot/default/data/runtime/tuibi_log.log');
                     //记录退币的历史
                     M('game_history')->where("id={$val['id']}")->save(['is_retreat'=>1]);
                     $t_icon += $giftData['spendcoin'];
+                    $room_history_ids .= " ".$val['id'];
                 }
             }
         }
@@ -1252,19 +1258,29 @@ class RoomController extends BaseController
             'desc'=>"您连续次数达到保夹要求，共退币{$t_icon}币，祝你抓抓愉快咩~",
             'ctime'=>time()
         ];
+
         M('notice')->add($noticeData);
-        $userData = M('users')->field('androidtoken,iphonetoken')->where("id={$room_history['user_id']}")->find();
-        //进行友盟推送app状态栏  title：娃娃退币  content：您连续次数达到保夹要求，共退币XXX币，祝你抓抓愉快咩~
-        $umengpush = [
-            'title'=>'保夹娃娃币退币',
-            'content'=>"您连续次数达到保夹要求，共退币{$t_icon}币，祝你抓抓愉快咩~",
-        ];
-        //测试专用
-        /*$userData = [
-            'androidtoken'=>'Ah4Bvt1luAec0H62jLjJlS26PSmkl362KQcu7e80oon4',
-            'iphonetoken'=>'464d62ef34d7cfa584b6265f41c54996ee531dcdc873859f34826b9527c38329'
-        ];*/
-        $this->umengpush($userData['androidtoken'],$userData['iphonetoken'],$umengpush['title'],$umengpush['content']);
+        //异常处理，即使友盟推送报错也强制执行
+        try{
+            $userData = M('users')->field('androidtoken,iphonetoken')->where("id={$room_history['user_id']}")->find();
+            //进行友盟推送app状态栏  title：娃娃退币  content：您连续次数达到保夹要求，共退币XXX币，祝你抓抓愉快咩~
+            $umengpush = [
+                'title'=>'保夹娃娃币退币',
+                'content'=>"您连续次数达到保夹要求，共退币{$t_icon}币，祝你抓抓愉快咩~",
+            ];
+            //测试专用
+            /*$userData = [
+                'androidtoken'=>'Ah4Bvt1luAec0H62jLjJlS26PSmkl362KQcu7e80oon4',
+                'iphonetoken'=>'464d62ef34d7cfa584b6265f41c54996ee531dcdc873859f34826b9527c38329'
+            ];*/
+            $res = $this->umengpush($userData['androidtoken'],$userData['iphonetoken'],$umengpush['title'],$umengpush['content']);
+        }catch (Exception $e){
+            $e->getMessage();
+        }finally {
+            //记录友盟推送错误的id
+            error_log("\r\n 友盟推送错误：id为{$room_history_ids}  时间为：".time(),3,"/home/wwwroot/default/data/runtime/umengpush_error_log.log");
+            return;
+        }
 
     }
 
