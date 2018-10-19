@@ -17,24 +17,26 @@ class RoomController extends AdminbaseController
     public function index()
     {
         $where = ' 1=1 ';
+
         if( IS_POST ){
             $status = I('status');
-            if( $status >= 0 ){
+            if( $status >= 0 && !empty($status)){
                 $where .= ' and a.status = '.$status;
                 $this->assign('status',$status);
             }
+
             $room_no = I('room_no');
-            if( $room_no ){
+            if( $room_no && !empty($room_no)){
                 $where .= ' and a.room_no like "%'.$room_no.'%"';
                 $this->assign('room_no',$room_no);
             }
             $room_name = I('room_name');
-            if( $room_name ){
+            if( $room_name && !empty($room_name)){
                 $where .= ' and a.room_name like "%'.$room_name.'%"';
                 $this->assign('room_name',$room_name);
             }
             $is_show = I('is_show');
-            if( $is_show >= 0 ){
+            if( $is_show >= 0 && !empty($is_show) ){
                 $where .= ' and a.is_show = '.$is_show;
                 $this->assign('is_show',$is_show);
             }
@@ -49,11 +51,15 @@ class RoomController extends AdminbaseController
             ->field('a.*,b.giftname,b.id as wawa_id,b.gifticon,b.wawa_no,b.spendcoin,c.deveci_no,c.device_addr,c.device_stock,d.addr,e.id as config_id,e.name as config_name')
             ->where($where)
             ->order('a.listorder')
-            ->limit($page->firstRow.','.$page->listRows)
+            //->limit($page->firstRow.','.$page->listRows)
             ->select();
 
+        $sj = I('sj');
+        if( $sj == 1 && !empty($sj) ){
+            shuffle($res);
+        }
         $this->assign('row',$res);
-        $this->assign('page',$page->show('Admin'));
+        //$this->assign('page',$page->show('Admin'));
         $this->assign('status_name',$this->statusarr);
         $this->assign('isshow_name',$this->isshowarr);
         $this->display();
