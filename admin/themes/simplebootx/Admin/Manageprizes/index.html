@@ -58,6 +58,10 @@
                     <td>
                         {$vo.giftname}&nbsp;&nbsp;
                         ( <php>echo str_pad($vo['wawa_id'],4,"0",STR_PAD_LEFT);</php> )
+                        <button class="btn btn-primary btn-small config_name" data-toggle="modal"
+                                data-target="#hGamehistory" data-index="{$key}" @click="setIndex($event)">
+                            查看
+                        </button>
                     </td>
                     <td><img src="{$vo.gifticon}" width="40" height="40"></td>
                     <td>{$vo.spendcoin}</td>
@@ -126,6 +130,40 @@
         </div>
     </div>
 
+    <!-- 模态框（Modal） -->
+    <div class="modal fade" id="hGamehistory" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        游戏过程{{hindex}}
+                    </h4>
+                </div>
+                <div class="modal-body" v-if="index!='false'">
+                    <p v-for="data in prizedata[index]['hhistory']">
+                        <b>{{prizedata[index]['user_nicename']}}</b>&nbsp;&nbsp;{{data.ctime|formatDate}}&nbsp;&nbsp;抓取&nbsp;&nbsp;<b>{{prizedata[index]['giftname']}}<b>
+                        &nbsp;&nbsp;
+                        <b class="text-error" v-if="data.success == 0">失败</b><b class="text-success" v-else>成功</b>
+                        <br />
+
+                        <b v-if="data.is_strong != 0">强抓力</b>
+                        <b v-else>非强抓力</b>
+                        &nbsp;&nbsp;
+                        <b v-if="data.is_retreat == 1">已退币</b>
+
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <div class="pagination">{$page}</div>
 </div>
@@ -139,13 +177,14 @@
         el: '#bbooddyy',
         data: {
             index: 'false',
+            hindex: 'false',
             prizedata: JSON.parse('{$rowJson}')
         },
         methods: {
             setIndex: function (el) {
                 var indexid = el.target.getAttribute('data-index')
                 this.index = indexid
-            }
+            },
         },
         filters: {
             formatDate: function (time) {
