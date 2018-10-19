@@ -1226,18 +1226,6 @@ class RoomController extends BaseController
                 //因为接口重复请求  退币前有个需求 就是自身状态为未退币状态
                 $dd_data = M('game_history')->field('is_retreat,user_id,room_id')->where("id={$val['id']}")->find();
                 if($dd_data['is_retreat'] == 0){
-                    //加入娃娃币账单
-                    $action = [
-                        'type'=>'income',
-                        'action'=>'retreat',
-                        'room_id'=>"{$dd_data['room_id']}",
-                        'uid'=>"{$dd_data['user_id']}",
-                        'giftid'=>"{$roomData['type_id']}",
-                        'totalcoin'=>"{$giftData['spendcoin']}",
-                        'addtime'=>time()
-                    ];
-                    M('users_coinrecord')->add($action);
-
                     //把币退给用户
                     M('users')->where("id={$room_history['user_id']}")->setInc('coin',$giftData['spendcoin']);
                     M('users')->where("id={$room_history['user_id']}")->setInc('free_coin',$giftData['spendcoin']);
@@ -1250,16 +1238,19 @@ class RoomController extends BaseController
                 }
             }
         }
-        $noticeData = [
-            'type'=>2,
-            'user_id'=>$room_history['user_id'],
-            'title'=>'保夹退币',
-            'content'=>"您连续次数达到保夹要求，共退币{$t_icon}币，祝你抓抓愉快咩~",
-            'desc'=>"您连续次数达到保夹要求，共退币{$t_icon}币，祝你抓抓愉快咩~",
-            'ctime'=>time()
-        ];
 
-        M('notice')->add($noticeData);
+        //加入娃娃币账单
+        $action = [
+            'type'=>'income',
+            'action'=>'retreat',
+            'room_id'=>"{$room_history['room_id']}",
+            'uid'=>"{$room_history['user_id']}",
+            'giftid'=>"{$roomData['type_id']}",
+            'totalcoin'=>"{$t_icon}",
+            'addtime'=>time()
+        ];
+        M('users_coinrecord')->add($action);
+
         //异常处理，即使友盟推送报错也强制执行
         try{
             $userData = M('users')->field('androidtoken,iphonetoken')->where("id={$room_history['user_id']}")->find();

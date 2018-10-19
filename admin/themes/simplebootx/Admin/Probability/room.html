@@ -7,6 +7,7 @@
 			<li class="active"><a href="">房间概率模式</a></li>
 			<li ><a href="{:U('Probability/sell')}">用户贩卖模式</a></li>
 			<li ><a href="{:U('Probability/grade')}">等级调节模式</a></li>
+            <li ><a href="{:U('Activeconfig/clamp')}">保夹设置</a></li>
 		</ul>
 
 
@@ -45,6 +46,7 @@
 					<th>概率</th>
 					<th align="center">{:L('ACTIONS')}</th>
 					<th>等级概率</th>
+					<th>保夹状态</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -82,10 +84,15 @@
 
 						<a href="javascript:;" data="{$vo.id}" <eq name="vo.is_roomgrademodel" value="0">class="btn btn-danger btn-small"<else/>class="btn btn-success btn-small"</eq> ><eq name="vo.is_roomgrademodel" value="0">停用<else/>启用</eq></a>
 					</td>
+
+					<td align="center" class="isretreat">
+						<a href="javascript:;" data="{$vo.id}" <eq name="vo.is_retreat" value="0">class="btn btn-danger btn-small"<else/>class="btn btn-success btn-small"</eq> ><eq name="vo.is_retreat" value="0">停用<else/>启用</eq></a>
+					</td>
 				</tr>
 				</foreach>
 			</tbody>
 		</table>
+
 		<div class="pagination">{$page}</div>
 
 		<button id="btn" class="btn btn-primary" data-toggle="modal" data-target="#modal">批量设置概率</button>
@@ -239,6 +246,24 @@
             var id = $(this).attr('data');
             $.ajax({
                 url : "{:U('Probability/isgradestart_room')}",
+                type : 'post',
+                dataType : 'json',
+                data : 'id='+id,
+                success : function (res) {
+                    if( res.status == 1 ){
+                        location.reload();
+                    }
+                },
+                error : function () {
+                    alert('错误');
+                }
+            });
+        });
+
+        $(".isretreat a").click(function () {
+            var id = $(this).attr('data');
+            $.ajax({
+                url : "{:U('Probability/isretreat_room')}",
                 type : 'post',
                 dataType : 'json',
                 data : 'id='+id,

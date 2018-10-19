@@ -337,12 +337,12 @@ class ActiveconfigController extends AdminbaseController
                 $res = M('clamp_config')->add($val);
                 if(!$res){
                     M()->rollback();
-                    echo json_encode(['info'=>'操作失败！','satus'=>0,'state'=>'error']);
+                    echo json_encode(['info'=>'操作失败！','status'=>0,'state'=>'error']);
                     exit;
                 }
             }
             M()->commit();
-            echo json_encode(['info'=>'操作成功！','satus'=>1,'state'=>'success']);
+            echo json_encode(['info'=>'操作成功！','status'=>1,'state'=>'success']);
             exit;
             //$this->success("操作成功！");
         }

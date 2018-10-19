@@ -4,6 +4,9 @@
 <body>
 <div class="wrap" id="config" >
     <ul class="nav nav-tabs">
+        <li ><a href="{:U('Probability/room')}">房间概率模式</a></li>
+        <li ><a href="{:U('Probability/sell')}">用户贩卖模式</a></li>
+        <li ><a href="{:U('Probability/grade')}">等级调节模式</a></li>
         <li class="active"><a href="javascript:;">保夹设置</a></li>
     </ul>
 
@@ -92,8 +95,8 @@
                     data: {data:this.data},
                     success: function(res){
                         res = JSON.parse(res)
-                        alert(res.info)
-                        if(status==1){
+                        //alert(res.info)
+                        if(res.status==1){
                             location.reload();
                         }
                     },

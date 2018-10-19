@@ -210,6 +210,23 @@ public function isgradestart_room(){
         $this->ajaxReturn(['status'=>0]);
     }
 }
+public function isretreat_room(){
+    if( IS_AJAX ){
+        $id = I('post.id');
+        if( $id ){
+            $res = M('game_room')->find($id);
+            $data = [];
+            if( $res['is_retreat'] == 1 ){
+                $data['is_retreat'] = 0;
+            }else{
+                $data['is_retreat'] = 1;
+            }
+            M('game_room')->where(['id'=>$id])->save($data);
+            $this->ajaxReturn(['status'=>1]);
+        }
+        $this->ajaxReturn(['status'=>0]);
+    }
+}
 
     /**
      * 批量操作用户贩卖模式
