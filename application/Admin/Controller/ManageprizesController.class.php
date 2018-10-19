@@ -52,6 +52,8 @@ class ManageprizesController extends AdminbaseController
             $hData = M('game_history as h')->where("id in ({$val['h_id_s']})")->select();
             $prizedata[$key]['history'] = $hData;
 
+
+
             //获取同一房间娃娃的最近20条记录
             $hh_data = M('game_history as h')->field("h.*,u.id,u.user_nicename")->join("left join cmf_users as u on u.id=h.user_id")->where("h.room_id={$val['room_id']}")->limit("0,20")->order("h.ctime desc")->select();
             $prizedata[$key]['hhistory'] = $hh_data;
@@ -67,9 +69,11 @@ class ManageprizesController extends AdminbaseController
             total_payed ,total_get,total_get_num,last_active_time')->where(['id'=>$val['user_id']])->find();
             $usersData = A('Users')->getGrade($user);
             $prizedata[$key]['level'] = $usersData['title'];
+
             /*获取是否强抓力*/
-            $prizedata[$key]['is_strong'] = end(explode(',',$val['h_is_strong_s']));
-            //获取退还币数
+            $prizedata[$key]['is_strong'] = end($hData)['is_strong'];
+            //$prizedata[$key]['is_strong'] = end(explode(',',$val['h_is_strong_s']));
+
         }
 
         $this->assign('filter',$filter);
