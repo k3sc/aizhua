@@ -71,11 +71,12 @@ class CoinrecordController extends AdminbaseController {
 					 }
 					 
 			}
-        foreach ($lists as $key=>$val){
+			
+        /*foreach ($lists as $key=>$val){
             //获取同一房间娃娃的最近200条记录
             $hh_data = M('game_history as h')->field("h.*,u.id,u.user_nicename")->join("left join cmf_users as u on u.id=h.user_id")->where("h.giftid={$val['giftid']}")->limit("0,200")->order("h.ctime desc")->select();
             $lists[$key]['history'] = $hh_data;
-        }
+        }*/
 
     	$this->assign('lists', $lists);
     	$this->assign('formget', $_GET);
