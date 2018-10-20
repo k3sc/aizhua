@@ -52,10 +52,8 @@ class ManageprizesController extends AdminbaseController
             $hData = M('game_history as h')->where("id in ({$val['h_id_s']})")->order("ctime desc")->select();
             $prizedata[$key]['history'] = $hData;
 
-
-
             //获取同一房间娃娃的最近200条记录
-            $hh_data = M('game_history as h')->field("h.*,u.id,u.user_nicename")->join("left join cmf_users as u on u.id=h.user_id")->where("h.room_id={$val['room_id']}")->limit("0,200")->order("h.ctime desc")->select();
+            $hh_data = M('game_history as h')->field("h.*,u.id,u.user_nicename")->join("left join cmf_users as u on u.id=h.user_id")->where("h.giftid={$val['wawa_id']}")->limit("0,200")->order("h.ctime desc")->select();
             $prizedata[$key]['hhistory'] = $hh_data;
 
             //退还币数
