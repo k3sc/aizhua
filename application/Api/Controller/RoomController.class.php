@@ -255,6 +255,7 @@ class RoomController extends BaseController
         if($bool < 4)$data['is_strong'] = $bool;//强抓力
 
 
+        error_log("\r\n".print_r($data,1), 3, '/home/wwwroot/default/data/runtime/game_history_id.log');
 
 		$id = M('game_history')->add($data);
         /*
