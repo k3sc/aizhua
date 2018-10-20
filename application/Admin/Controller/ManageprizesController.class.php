@@ -62,6 +62,7 @@ class ManageprizesController extends AdminbaseController
             $prizedata[$key]['level'] = $usersData['title'];
 
             /*获取是否强抓力*/
+            $hData = M('game_history as h')->field("h.*,u.user_nicename")->join('left join cmf_users as u on u.id=h.user_id')->where("h.id in ({$val['h_id_s']})")->order("h.ctime desc")->select();
             $prizedata[$key]['is_strong'] = end($hData)['is_strong'];
             //$prizedata[$key]['is_strong'] = end(explode(',',$val['h_is_strong_s']));
 
