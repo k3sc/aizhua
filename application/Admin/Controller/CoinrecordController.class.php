@@ -76,13 +76,28 @@ class CoinrecordController extends AdminbaseController {
             $hh_data = M('game_history as h')->field("h.*,u.id,u.user_nicename")->join("left join cmf_users as u on u.id=h.user_id")->where("h.giftid={$val['giftid']}")->limit("0,200")->order("h.ctime desc")->select();
             $lists[$key]['history'] = $hh_data;
         }
+
     	$this->assign('lists', $lists);
-    	$this->assign('listsJson', json_encode($lists));
     	$this->assign('formget', $_GET);
     	$this->assign("page", $page->show('Admin'));
     	
     	$this->display();
     }
+
+    public function ajaxGethistory(){
+        $giftid = I('giftid');
+        // history1 200条历史
+        if($giftid && !empty($giftid)){
+            //获取同一房间娃娃的最近200条记录
+            $hh_data = M('game_history as h')->field("h.*,u.id,u.user_nicename")->join("left join cmf_users as u on u.id=h.user_id")->where("h.giftid={$giftid}")->limit("0,200")->order("h.ctime desc")->select();
+            echo json_encode(['code'=>0,'msg'=>'获取成功','data'=>$hh_data]);
+        }else{
+            echo json_encode(['code'=>1,'msg'=>'获取数据失败，wawaid错误','data'=>'']);
+        }
+    }
+
+
+
 		
 		function del(){
 			 	$id=intval($_GET['id']);

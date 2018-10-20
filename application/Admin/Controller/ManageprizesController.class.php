@@ -48,13 +48,6 @@ class ManageprizesController extends AdminbaseController
         $prizedata = $this->getGameData($where,$page);
 
         foreach ($prizedata as $key=>$val){
-            /* 获取用户的记录信息 */
-            $hData = M('game_history as h')->where("id in ({$val['h_id_s']})")->order("ctime desc")->select();
-            $prizedata[$key]['history'] = $hData;
-
-            //获取同一房间娃娃的最近200条记录
-            $hh_data = M('game_history as h')->field("h.*,u.id,u.user_nicename")->join("left join cmf_users as u on u.id=h.user_id")->where("h.giftid={$val['wawa_id']}")->limit("0,200")->order("h.ctime desc")->select();
-            $prizedata[$key]['hhistory'] = $hh_data;
 
             //退还币数
             $retreat = M('game_history')->where("id in ({$val['h_id_s']}) and is_retreat=1")->sum('coin');
@@ -76,9 +69,27 @@ class ManageprizesController extends AdminbaseController
 
         $this->assign('filter',$filter);
         $this->assign('row',array_values($prizedata));
-        $this->assign('rowJson',json_encode($prizedata));
         $this->assign('page',$page->show('Admin'));
         $this->display();
+    }
+    public function ajaxGethistory(){
+        $giftid = I('giftid');
+        $type = I('type');
+        // history1 200条历史
+        if($type=='history1'){
+        //获取同一房间娃娃的最近200条记录
+            $hh_data = M('game_history as h')->field("h.*,u.id,u.user_nicename")->join("left join cmf_users as u on u.id=h.user_id")->where("h.giftid={$giftid}")->limit("0,200")->order("h.ctime desc")->select();
+            echo json_encode(['code'=>0,'msg'=>'获取成功','data'=>$hh_data]);
+        }else if($type=='history2'){
+            $hs = I('hs');
+            if(!$hs || empty($hs))
+                echo json_encode(['code'=>1,'msg'=>'获取数据失败，ids不能为空','data'=>'']);
+            /* 获取用户的记录信息 */
+            $hData = M('game_history as h')->field("h.*,u.user_nicename")->join('left join cmf_users as u on u.id=h.user_id')->where("h.id in ({$hs})")->order("h.ctime desc")->select();
+            echo json_encode(['code'=>0,'msg'=>'获取成功','data'=>$hData]);
+        }else{
+            echo json_encode(['code'=>1,'msg'=>'获取数据失败，获取数据类型错误','data'=>'']);
+        }
     }
     public function getGameCount($where){
         $sql = "

@@ -59,7 +59,7 @@
                         {$vo.giftname}&nbsp;&nbsp;
                         ( <php>echo str_pad($vo['wawa_id'],4,"0",STR_PAD_LEFT);</php> )
                         <button class="btn btn-primary btn-small config_name" data-toggle="modal"
-                                data-target="#hGamehistory" data-index="{$key}" @click="setIndex($event)">
+                                data-target="#hGamehistory" data-index="{$key}" data-hs="{$vo.h_id_s}" data-giftid="{$vo.wawa_id}"  @click="setIndex($event,'history1')">
                             查看
                         </button>
                     </td>
@@ -78,9 +78,10 @@
                         <b>{$vo.zhuacount}</b>
                         &nbsp;&nbsp;&nbsp;
                         <button class="btn btn-primary btn-small config_name" data-toggle="modal"
-                                data-target="#Gamehistory" data-index="{$key}" @click="setIndex($event)">
+                                data-target="#Gamehistory" data-index="{$key}" data-giftid="{$vo.wawa_id}" data-hs="{$vo.h_id_s}"  @click="setIndex($event,'history2')">
                             查看
                         </button>
+
                         </div>
                     </td>
                     <td>{$vo.retreat}</td>
@@ -110,8 +111,8 @@
                     </h4>
                 </div>
                 <div class="modal-body" v-if="index!='false'">
-                    <p v-for="data in prizedata[index]['history']">
-                        <b>{{prizedata[index]['user_nicename']}}</b>&nbsp;&nbsp;{{data.ctime|formatDate}}&nbsp;&nbsp;抓取&nbsp;&nbsp;<b>{{prizedata[index]['giftname']}}<b>
+                    <p v-for="data in datas">
+                        <b>{{data['user_nicename']}}</b>&nbsp;&nbsp;{{data.ctime|formatDate}}&nbsp;&nbsp;抓取&nbsp;&nbsp;<b>{{data['name']}}<b>
                         &nbsp;&nbsp;
                         <b class="text-error" v-if="data.success == 0">失败</b><b class="text-success" v-else>成功</b>
                         <br />
@@ -144,8 +145,8 @@
                     </h4>
                 </div>
                 <div class="modal-body" v-if="index!='false'">
-                    <p v-for="data in prizedata[index]['hhistory']">
-                        <b>{{data['user_nicename']}}（{{data['user_id']}}）</b>&nbsp;&nbsp;{{data.ctime|formatDate}}&nbsp;&nbsp;抓取&nbsp;&nbsp;<b>{{prizedata[index]['giftname']}}<b>
+                    <p v-for="data in datas">
+                        <b>{{data['user_nicename']}}（{{data['user_id']}}）</b>&nbsp;&nbsp;{{data.ctime|formatDate}}&nbsp;&nbsp;抓取&nbsp;&nbsp;<b>{{data['name']}}<b>
                         &nbsp;&nbsp;
                         <b class="text-error" v-if="data.success == 0">失败</b><b class="text-success" v-else>成功</b>
                         <br />
@@ -173,18 +174,45 @@
 
 <script>
     new Vue({
-//        el: '#Gamehistory',
         el: '#bbooddyy',
         data: {
             index: 'false',
             hindex: 'false',
-            prizedata: JSON.parse('{$rowJson}')
+            giftid: 'false',
+            hs: 'false',
+            type: 'false',
+            datas: {}
         },
         methods: {
-            setIndex: function (el) {
+            setIndex: function (el,type) {
+                this.type = type
                 var indexid = el.target.getAttribute('data-index')
+                var giftid = el.target.getAttribute('data-giftid')
+                var hs = el.target.getAttribute('data-hs')
                 this.index = indexid
+                this.giftid = giftid
+                this.hs = hs
+                this.getpull()
             },
+            getpull: function () {
+                that = this
+                $.ajax({
+                    type:'get',
+                    data:{giftid:this.giftid,type:this.type,hs:this.hs},
+                    url:'{:U('Manageprizes/ajaxGethistory')}',
+                    success:function(res){
+                        var datas = JSON.parse(res);
+                        if(datas.code != 0){
+                            alert(datas.msg)
+                        }else{
+                            that.datas = datas.data
+                        }
+                    },
+                    error:function(){
+                        alert('请求失败！')
+                    }
+                });
+            }
         },
         filters: {
             formatDate: function (time) {

@@ -78,7 +78,7 @@
 						<!--td><if condition="$vo.touid eq 0"> 平台 <else/> {$vo['touserinfo']['user_nicename']} ( {$vo['touid']} ) </if></td-->
 						<td>{$vo['giftinfo']['giftname']} ( {$vo['giftid']} )
                             <button class="btn btn-primary btn-small config_name" data-toggle="modal"
-                                    data-target="#Gamehistory" data-index="{$key}" @click="setIndex($event)">
+                                    data-target="#Gamehistory" data-index="{$key}" data-giftid="{$vo.giftid}"   @click="setIndex($event)">
                                 查看
                             </button>
                         </td>
@@ -113,11 +113,11 @@
                         &times;
                     </button>
                     <h4 class="modal-title" id="myModalLabel">
-                        游戏过程{{index}}
+                        游戏过程
                     </h4>
                 </div>
                 <div class="modal-body" v-if="index!='false'">
-                    <p v-for="data in prizedata[index]['history']">
+                    <p v-for="data in datas">
                         <b>{{data['user_nicename']}}</b>&nbsp;&nbsp;{{data.ctime|formatDate}}&nbsp;&nbsp;抓取&nbsp;&nbsp;<b>{{data['name']}}<b>
                                 &nbsp;&nbsp;
                                 <b class="text-error" v-if="data.success == 0">失败</b><b class="text-success" v-else>成功</b>
@@ -151,13 +151,36 @@
         data: {
             index: 'false',
             hindex: 'false',
-            prizedata: JSON.parse('{$listsJson}')
+            giftid: 'false',
+            datas: {}
         },
         methods: {
             setIndex: function (el) {
                 var indexid = el.target.getAttribute('data-index')
+                var giftid = el.target.getAttribute('data-giftid')
                 this.index = indexid
+                this.giftid = giftid
+                this.getpull()
             },
+            getpull: function () {
+                that = this
+                $.ajax({
+                    type:'get',
+                    data:{giftid:this.giftid},
+                    url:'{:U('Coinrecord/ajaxGethistory')}',
+                    success:function(res){
+                        var datas = JSON.parse(res);
+                        if(datas.code != 0){
+                            alert(datas.msg)
+                        }else{
+                            that.datas = datas.data
+                        }
+                    },
+                    error:function(){
+                        alert('请求失败！')
+                    }
+                });
+            }
         },
         filters: {
             formatDate: function (time) {
