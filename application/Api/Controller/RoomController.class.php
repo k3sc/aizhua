@@ -240,6 +240,7 @@ class RoomController extends BaseController
         }
         $gtime = M('device')->where('device_unique_code=' . $gift['fac_id'])->getField('game_time');
 
+        error_log("\r\n".print_r($gift,1), 3, '/home/wwwroot/default/data/runtime/game_history_id.log');
         $data = array(
             'room_id' => $room_id,
             'user_id' => $this->user_id,
