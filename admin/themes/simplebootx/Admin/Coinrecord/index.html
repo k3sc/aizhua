@@ -152,10 +152,11 @@
             index: 'false',
             hindex: 'false',
             giftid: 'false',
-            datas: {}
+            datas: {},
         },
         methods: {
             setIndex: function (el) {
+                this.datas = {}
                 var indexid = el.target.getAttribute('data-index')
                 var giftid = el.target.getAttribute('data-giftid')
                 this.index = indexid
