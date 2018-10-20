@@ -239,7 +239,18 @@ class RoomController extends BaseController
             $this->redis->lRemove('roomwaits_' . $mywait['room_id'], $this->user_id);
         }
         $gtime = M('device')->where('device_unique_code=' . $gift['fac_id'])->getField('game_time');
-        $data = array('room_id' => $room_id, 'user_id' => $this->user_id, 'name' => $gift['giftname'], 'img' => $gift['gifticon'], 'gametime' => $gtime ? $gtime : 30, 'ctime' => $time,'coin' => $gift['spendcoin']);
+
+        $data = array(
+            'room_id' => $room_id,
+            'user_id' => $this->user_id,
+            'name' => $gift['giftname'],
+            'img' => $gift['gifticon'],
+            'gametime' => $gtime ? $gtime : 30,
+            'ctime' => $time,
+            'coin' => $gift['spendcoin'],
+            'giftid'=>$gift['wawa_type_id']
+        );
+
         if($bool < 4)$data['is_strong'] = $bool;//强抓力
 
 
@@ -1247,7 +1258,7 @@ class RoomController extends BaseController
             'user_id'=>$room_history['user_id'],
             'title'=>"保夹退币！{$room_history['name']}",
             'content'=>"{$room_history['name']} 保夹退{$t_icon}娃娃币咩，祝你好运咩～",
-            'desc'=>"{$room_history['name']} 保夹退{$t_icon}娃娃币咩，祝你好运咩～",
+            'desc'=>"",
             'ctime'=>time()
         ];
         M('notice')->add($noticeData);
@@ -1270,8 +1281,8 @@ class RoomController extends BaseController
             $userData = M('users')->field('androidtoken,iphonetoken')->where("id={$room_history['user_id']}")->find();
             //进行友盟推送app状态栏  title：娃娃退币  content：您连续次数达到保夹要求，共退币XXX币，祝你抓抓愉快咩~
             $umengpush = [
-                'title'=>"保夹退币！{$room_history['name']}",
-                'content'=>"{$room_history['name']} 保夹退{$t_icon}娃娃币咩，祝你好运咩～",
+                'title'=>'保夹娃娃币退币',
+                'content'=>"您连续次数达到保夹要求，共退币{$t_icon}币，祝你抓抓愉快咩~",
             ];
             //测试专用
             /*$userData = [

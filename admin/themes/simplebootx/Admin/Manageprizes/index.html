@@ -140,12 +140,12 @@
                         &times;
                     </button>
                     <h4 class="modal-title" id="myModalLabel">
-                        游戏过程{{hindex}}
+                        游戏过程
                     </h4>
                 </div>
                 <div class="modal-body" v-if="index!='false'">
                     <p v-for="data in prizedata[index]['hhistory']">
-                        <b>{{prizedata[index]['user_nicename']}}</b>&nbsp;&nbsp;{{data.ctime|formatDate}}&nbsp;&nbsp;抓取&nbsp;&nbsp;<b>{{prizedata[index]['giftname']}}<b>
+                        <b>{{data['user_nicename']}}（{{data['user_id']}}）</b>&nbsp;&nbsp;{{data.ctime|formatDate}}&nbsp;&nbsp;抓取&nbsp;&nbsp;<b>{{prizedata[index]['giftname']}}<b>
                         &nbsp;&nbsp;
                         <b class="text-error" v-if="data.success == 0">失败</b><b class="text-success" v-else>成功</b>
                         <br />

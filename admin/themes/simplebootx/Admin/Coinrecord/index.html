@@ -1,7 +1,8 @@
 <admintpl file="header" />
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
 </head>
 <body>
-	<div class="wrap">
+	<div class="wrap" id="bbooddyy">
 		<ul class="nav nav-tabs">
 			<li class="active"><a >消费记录</a></li>
 		</ul>
@@ -75,7 +76,12 @@
 						<td>{$action[$vo['action']]}</td>
 						<td><if condition="$vo.uid eq 0"> 平台 <else/> {$vo['userinfo']['user_nicename']} ( {$vo['uid']} ) </if></td>
 						<!--td><if condition="$vo.touid eq 0"> 平台 <else/> {$vo['touserinfo']['user_nicename']} ( {$vo['touid']} ) </if></td-->
-						<td>{$vo['giftinfo']['giftname']} ( {$vo['giftid']} )</td>
+						<td>{$vo['giftinfo']['giftname']} ( {$vo['giftid']} )
+                            <button class="btn btn-primary btn-small config_name" data-toggle="modal"
+                                    data-target="#Gamehistory" data-index="{$key}" @click="setIndex($event)">
+                                查看
+                            </button>
+                        </td>
 						<td>{$vo['giftcount']}</td>
 						<td>{$vo['realmoney']}</td>
 						<td>{$vo['totalcoin']}</td>
@@ -96,7 +102,75 @@
 			<div class="pagination">{$page}</div>
 
 		</form>
-	</div>
+
+    <!-- 模态框（Modal） -->
+    <div class="modal fade" id="Gamehistory" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        游戏过程{{index}}
+                    </h4>
+                </div>
+                <div class="modal-body" v-if="index!='false'">
+                    <p v-for="data in prizedata[index]['history']">
+                        <b>{{data['user_nicename']}}</b>&nbsp;&nbsp;{{data.ctime|formatDate}}&nbsp;&nbsp;抓取&nbsp;&nbsp;<b>{{data['name']}}<b>
+                                &nbsp;&nbsp;
+                                <b class="text-error" v-if="data.success == 0">失败</b><b class="text-success" v-else>成功</b>
+                                <br />
+
+                                <b v-if="data.is_strong != 0">强抓力</b>
+                                <b v-else>非强抓力</b>
+                                &nbsp;&nbsp;
+                                <b v-if="data.is_retreat == 1">已退币</b>
+
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
 	<script src="__PUBLIC__/js/common.js"></script>
 </body>
 </html>
+
+<script>
+    new Vue({
+//        el: '#Gamehistory',
+        el: '#bbooddyy',
+        data: {
+            index: 'false',
+            hindex: 'false',
+            prizedata: JSON.parse('{$listsJson}')
+        },
+        methods: {
+            setIndex: function (el) {
+                var indexid = el.target.getAttribute('data-index')
+                this.index = indexid
+            },
+        },
+        filters: {
+            formatDate: function (time) {
+                var now = new Date(time*1000);
+                var   year=now.getFullYear();
+                var   month=now.getMonth()+1;
+                var   date=now.getDate();
+                var   hour=now.getHours();
+                var   minute=now.getMinutes();
+                var   second=now.getSeconds();
+                return   year+"-"+month+"-"+date+"   "+hour+":"+minute+":"+second;
+            }
+        }
+    })
+
+</script>

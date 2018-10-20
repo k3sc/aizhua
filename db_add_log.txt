@@ -21,9 +21,14 @@
 19、cmf_kd   快递公司表
 20、cmf_fault    故障表
 21、cmf_appeal_text 申诉文案表
+ ------------------ 开始 ------------
 22、cmf_game_history 新增字段 continuity 连续抓取分组id
-        alter table cmf_game_history add continuity int(10) default 0 not null;
+    增加游戏历史连续抓取分组    alter table cmf_game_history add continuity int(10) default 0 not null;
+    增加游戏历史是否退币    alter table cmf_game_history add is_retreat int(10) default 0 not null;
         alter table cmf_game_history add index continuity(continuity);
+    增加房间是否开启保夹    alter table cmf_game_room add is_retreat int(2) default 0 not null; //默认停用
+    账单记录增加娃娃名称  alter table cmf_users_coinrecord add wawa_name varchar(100) default '' not null;
+    游戏历史记录表加上娃娃id 防止更换房间导致混乱 alter table cmf_game_history add giftid int(10) UNSIGNED;
 23、cmf_clamp_config  保夹 设置 表
 ----------------------------------------------------------------
     CREATE TABLE `cmf_clamp_config` (
