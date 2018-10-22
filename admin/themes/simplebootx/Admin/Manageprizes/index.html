@@ -187,6 +187,7 @@
         },
         methods: {
             setIndex: function (el,type) {
+                this.isloading = true
                 this.datas = {}
                 this.type = type
                 var indexid = el.target.getAttribute('data-index')

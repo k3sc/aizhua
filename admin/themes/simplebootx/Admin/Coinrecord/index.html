@@ -162,6 +162,7 @@
         },
         methods: {
             setIndex: function (el) {
+                this.isloading = true
                 this.datas = {}
                 var indexid = el.target.getAttribute('data-index')
                 var giftid = el.target.getAttribute('data-giftid')
