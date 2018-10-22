@@ -121,7 +121,7 @@
                     </h4>
                 </div>
                 <div class="modal-body" v-if="index!='false'">
-                    <p  style="text-align: center;font-weight: bold">数据加载中......</p>
+                    <p  style="text-align: center;font-weight: bold" v-if="isloading">数据加载中......</p>
                     <p v-for="data in datas">
                         <b>{{data['user_nicename']}}</b>&nbsp;&nbsp;{{data.ctime|formatDate}}&nbsp;&nbsp;抓取&nbsp;&nbsp;<b>{{data['name']}}<b>
                                 &nbsp;&nbsp;
