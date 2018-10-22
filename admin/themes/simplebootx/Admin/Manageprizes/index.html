@@ -145,6 +145,7 @@
                     </h4>
                 </div>
                 <div class="modal-body" v-if="index!='false'">
+                    <p v-if="isloading" style="text-align: center;font-weight: bold">数据加载中......</p>
                     <p v-for="data in datas">
                         <b>{{data['user_nicename']}}（{{data['user_id']}}）</b>&nbsp;&nbsp;{{data.ctime|formatDate}}&nbsp;&nbsp;抓取&nbsp;&nbsp;<b>{{data['name']}}<b>
                         &nbsp;&nbsp;
@@ -181,6 +182,7 @@
             giftid: 'false',
             hs: 'false',
             type: 'false',
+            isloading: true,
             datas: {}
         },
         methods: {
@@ -213,6 +215,7 @@
                         alert('请求失败！')
                     }
                 });
+                that.isloading = false
             }
         },
         filters: {

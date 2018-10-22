@@ -77,10 +77,14 @@
 						<td><if condition="$vo.uid eq 0"> 平台 <else/> {$vo['userinfo']['user_nicename']} ( {$vo['uid']} ) </if></td>
 						<!--td><if condition="$vo.touid eq 0"> 平台 <else/> {$vo['touserinfo']['user_nicename']} ( {$vo['touid']} ) </if></td-->
 						<td>{$vo['giftinfo']['giftname']} ( {$vo['giftid']} )
-                            <button class="btn btn-primary btn-small config_name" data-toggle="modal"
+
+                            <if condition="$vo.giftid gt 0">
+                                <button class="btn btn-primary btn-small config_name" data-toggle="modal"
                                     data-target="#Gamehistory" data-index="{$key}" data-giftid="{$vo.giftid}"   @click="setIndex($event)">
                                 查看
-                            </button>
+                                </button>
+                            </if>
+
                         </td>
 						<td>{$vo['giftcount']}</td>
 						<td>{$vo['realmoney']}</td>
@@ -117,6 +121,7 @@
                     </h4>
                 </div>
                 <div class="modal-body" v-if="index!='false'">
+                    <p v-if="isloading" style="text-align: center;font-weight: bold">数据加载中......</p>
                     <p v-for="data in datas">
                         <b>{{data['user_nicename']}}</b>&nbsp;&nbsp;{{data.ctime|formatDate}}&nbsp;&nbsp;抓取&nbsp;&nbsp;<b>{{data['name']}}<b>
                                 &nbsp;&nbsp;
@@ -153,6 +158,7 @@
             hindex: 'false',
             giftid: 'false',
             datas: {},
+            isloading: true,
         },
         methods: {
             setIndex: function (el) {
@@ -181,6 +187,7 @@
                         alert('请求失败！')
                     }
                 });
+                that.isloading = false
             }
         },
         filters: {
