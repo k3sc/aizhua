@@ -204,13 +204,13 @@
                     data:{giftid:this.giftid,type:this.type,hs:this.hs},
                     url:'{:U('Manageprizes/ajaxGethistory')}',
                     success:function(res){
-                        //that.isloading = false
                         var datas = JSON.parse(res);
                         if(datas.code != 0){
                             alert(datas.msg)
                         }else{
                             that.datas = datas.data
                         }
+                        that.isloading = false
                     },
                     error:function(){
                         alert('请求失败！')
