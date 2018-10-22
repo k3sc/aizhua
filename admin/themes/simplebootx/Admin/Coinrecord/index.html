@@ -176,6 +176,7 @@
                     data:{giftid:this.giftid},
                     url:'{:U('Coinrecord/ajaxGethistory')}',
                     success:function(res){
+                        that.isloading = false
                         var datas = JSON.parse(res);
                         if(datas.code != 0){
                             alert(datas.msg)
@@ -187,7 +188,6 @@
                         alert('请求失败！')
                     }
                 });
-                that.isloading = false
             }
         },
         filters: {

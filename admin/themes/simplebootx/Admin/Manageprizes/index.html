@@ -145,7 +145,7 @@
                     </h4>
                 </div>
                 <div class="modal-body" v-if="index!='false'">
-                    <p  style="text-align: center;font-weight: bold">数据加载中......</p>
+                    <p v-if="isloading" style="text-align: center;font-weight: bold">数据加载中......</p>
                     <p v-for="data in datas">
                         <b>{{data['user_nicename']}}（{{data['user_id']}}）</b>&nbsp;&nbsp;{{data.ctime|formatDate}}&nbsp;&nbsp;抓取&nbsp;&nbsp;<b>{{data['name']}}<b>
                         &nbsp;&nbsp;
@@ -204,6 +204,7 @@
                     data:{giftid:this.giftid,type:this.type,hs:this.hs},
                     url:'{:U('Manageprizes/ajaxGethistory')}',
                     success:function(res){
+                        that.isloading = false
                         var datas = JSON.parse(res);
                         if(datas.code != 0){
                             alert(datas.msg)
@@ -215,7 +216,6 @@
                         alert('请求失败！')
                     }
                 });
-                that.isloading = false
             }
         },
         filters: {
