@@ -55,7 +55,38 @@ class UsercodeController extends BaseController
      */
     private function get_code()
     {
+        $code  = M('users')->where(['id'=>$this->user_id])->getField('user_activation_key');
+        if(!$code || empty($code)){
+            $newCode = $this->create_code();
+            $data = [
+                'user_activation_key'=>$newCode,
+            ];
+            $res = M('users')->where(['id'=>$this->user_id])->save($data);
+            if(!$res)  $this->_return(0,'生成邀请码失败,请稍后重试',[]);
+        }
         $this->_return(1,'获取成功',M('users')->where(['id'=>$this->user_id])->getField('user_activation_key'));
+    }
+
+    public function create_code(){
+        $str  = '0123456789';
+        $rand = mt_rand(10000000,99999999);
+        $len  = 6;
+        $code = '';
+        for ($i = 0;$i < $len;$i++){
+            $code .= $str{mt_rand(0,strlen($str)-1)};
+        }
+        $code   .= $rand;
+        $final_code = '';
+        for ($i = 0;$i < $len;$i++){
+            $start = mt_rand(0,strlen($code)-1);
+            $final_code .= substr($code,$start,1);
+        }
+        $res = M('users')->where(['user_activation_key'=>$final_code])->getField('id');
+        if($res || !empty($res)){
+            $this->get_code();
+        }else{
+            return $final_code;
+        }
     }
 
 
