@@ -112,7 +112,7 @@
                 </div>
                 <div class="modal-body" v-if="index!='false'">
                     <table style="font-weight: normal">
-                        <tr  v-for="data in datas">
+                        <tr  v-for="data in datas" style="border-bottom: 1px dashed #ccc">
                             <td style="font-weight: bold">{{data['user_nicename']}}</td>
                             <td>&nbsp;&nbsp;{{data.ctime|formatDate}}</td>
                             <td>&nbsp;&nbsp;抓取</td>
@@ -159,7 +159,7 @@
 
                     </p> -->
                     <table style="font-weight: normal">
-                        <tr  v-for="data in datas">
+                        <tr  v-for="data in datas" style="border-bottom: 1px dashed #ccc">
                             <td style="font-weight: bold">{{data['user_nicename']}}（{{data['user_id']}}）</td>
                             <td>&nbsp;&nbsp;{{data.ctime|formatDate}}</td>
                             <td>&nbsp;&nbsp;抓取</td>

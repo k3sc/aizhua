@@ -123,7 +123,7 @@
                 <div class="modal-body" v-if="index!='false'">
                     <p  style="text-align: center;font-weight: bold" v-if="isloading">数据加载中......</p>
                     <table>
-                        <tr  v-for="data in datas">
+                        <tr  v-for="data in datas" style="border-bottom: 1px dashed #ccc">
                             <td style="font-weight: bold">{{data['user_nicename']}}</td>
                             <td>&nbsp;&nbsp;{{data.ctime|formatDate}}</td>
                             <td>&nbsp;&nbsp;抓取</td>
