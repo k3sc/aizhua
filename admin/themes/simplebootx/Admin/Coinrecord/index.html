@@ -122,18 +122,17 @@
                 </div>
                 <div class="modal-body" v-if="index!='false'">
                     <p  style="text-align: center;font-weight: bold" v-if="isloading">数据加载中......</p>
-                    <p v-for="data in datas">
-                        <b>{{data['user_nicename']}}</b>&nbsp;&nbsp;{{data.ctime|formatDate}}&nbsp;&nbsp;抓取&nbsp;&nbsp;<b>{{data['name']}}<b>
-                                &nbsp;&nbsp;
-                                <b class="text-error" v-if="data.success == 0">失败</b><b class="text-success" v-else>成功</b>
-                                <br />
-
-                                <b v-if="data.is_strong != 0">强抓力</b>
-                                <b v-else>非强抓力</b>
-                                &nbsp;&nbsp;
-                                <b v-if="data.is_retreat == 1">已退币</b>
-
-                    </p>
+                    <table>
+                        <tr  v-for="data in datas">
+                            <td style="font-weight: bold">{{data['user_nicename']}}</td>
+                            <td>&nbsp;&nbsp;{{data.ctime|formatDate}}</td>
+                            <td>&nbsp;&nbsp;抓取</td>
+                            <td style="font-weight: bold">&nbsp;&nbsp;{{data['name']}}</td>
+                            <td>&nbsp;&nbsp;<b class="text-error" v-if="data.success == 0">失败</b><b class="text-success" v-else>成功</b></td>
+                            <td>&nbsp;&nbsp;<b v-if="data.is_strong != 0">强抓力</b><b v-else>非强抓力</b></td>
+                            <td>&nbsp;&nbsp;<b v-if="data.is_retreat == 1">已退币</b></td>
+                        </tr>
+                    </table>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
