@@ -124,7 +124,7 @@
                     <p  style="text-align: center;font-weight: bold" v-if="isloading">数据加载中......</p>
                     <table>
                         <tr  v-for="data in datas" style="border-bottom: 1px dashed #ccc">
-                            <td style="font-weight: bold">{{data['user_nicename']}}</td>
+                            <td style="font-weight: bold">{{data['user_nicename']}}（{{data['user_id']}}）</td>
                             <td>&nbsp;&nbsp;{{data.ctime|formatDate}}</td>
                             <td>&nbsp;&nbsp;抓取</td>
                             <td style="font-weight: bold">&nbsp;&nbsp;{{data['name']}}</td>
