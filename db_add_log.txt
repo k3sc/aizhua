@@ -21,6 +21,8 @@
 19、cmf_kd   快递公司表
 20、cmf_fault    故障表
 21、cmf_appeal_text 申诉文案表
+
+          ##############   重点-记得更新数据！！！！表字段缓存         ----￥############
  ------------------ 开始 ------------
 22、cmf_game_history 新增字段 continuity 连续抓取分组id
     增加游戏历史连续抓取分组    alter table cmf_game_history add continuity int(10) default 0 not null;
@@ -29,8 +31,10 @@
     增加房间是否开启保夹    alter table cmf_game_room add is_retreat int(2) default 0 not null; //默认停用
     账单记录增加娃娃名称  alter table cmf_users_coinrecord add wawa_name varchar(100) default '' not null;
     游戏历史记录表加上娃娃id 防止更换房间导致混乱 alter table cmf_game_history add giftid int(10) UNSIGNED;
-23、cmf_clamp_config  保夹 设置 表
+
 ----------------------------------------------------------------
+23、cmf_clamp_config  保夹 设置 表
+
     CREATE TABLE `cmf_clamp_config` (
       `index` int(10) unsigned DEFAULT NULL,
       `start` int(10) unsigned DEFAULT NULL,
@@ -39,4 +43,52 @@
       `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
       PRIMARY KEY (`id`)
     ) ENGINE=InnoDB AUTO_INCREMENT=114 DEFAULT CHARSET=utf8;
+
+24、商家账号表
+    CREATE TABLE `cmf_shop_account` (
+      `seller_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+      `account` char(100) NOT NULL,
+      `password` char(100) NOT NULL,
+      `disabled` tinyint(1) unsigned DEFAULT '0',
+      `create_time` int(10) unsigned DEFAULT '0',
+      `token` char(100) DEFAULT NULL,
+      `openid` char(100) DEFAULT NULL,
+      `last_time` int(10) unsigned DEFAULT NULL,
+      PRIMARY KEY (`seller_id`)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='商家账号登录信息表';
+
+25、商家入驻申请信息表
+    CREATE TABLE `cmf_shop_info` (
+      `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+      `shop_id` int(10) DEFAULT NULL COMMENT '商家信息表id',
+      `create_time` int(10) DEFAULT NULL,
+      `ip` char(30) DEFAULT NULL,
+      `status` tinyint(1) unsigned NOT NULL COMMENT '状态 2为待审核 1为通过 0为拒绝',
+      `weixin` varchar(100) DEFAULT NULL COMMENT '微信号',
+      `qq` char(30) DEFAULT NULL COMMENT 'qq号',
+      `callname` varchar(100) DEFAULT NULL COMMENT '称呼',
+      `mobile` int(11) unsigned DEFAULT NULL COMMENT '手机号码',
+      `openid` varchar(100) DEFAULT NULL COMMENT '微信的openid',
+      `spreadinfo` text COMMENT '推广手段',
+      PRIMARY KEY (`id`)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='商家申请入驻提交审核信息表';
+
+26、商家入驻平台信息表
+    CREATE TABLE `cmf_shop` (
+      `shop_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+      `create_time` int(10) unsigned DEFAULT NULL COMMENT '通过时间、创建时间',
+      `shop_name` char(30) DEFAULT NULL COMMENT '商家名称',
+      `openid` varchar(100) DEFAULT NULL COMMENT '微信openid',
+      `shop_addr` text COMMENT '商家地址',
+      `mobile` int(11) DEFAULT NULL COMMENT '手机号码、联系方式',
+      `downlineuser` int(10) DEFAULT NULL COMMENT '商家总下线用户',
+      `downlinepay` int(10) DEFAULT NULL COMMENT '下线用户充值总额',
+      `extract` int(10) DEFAULT NULL COMMENT '商家提成',
+      `extractpercent` char(10) DEFAULT NULL COMMENT '商家提成百分比率',
+      `qrurl` varchar(100) DEFAULT NULL COMMENT '商家推广地址',
+      `qrcode` varchar(100) DEFAULT NULL COMMENT '商家推广二维码',
+      `poster` varchar(100) DEFAULT NULL COMMENT '商家生成的分享海报图',
+      `update_time` int(10) DEFAULT NULL COMMENT '资料更新时间',
+      PRIMARY KEY (`shop_id`)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='商家入驻平台信息表';
 ----------------------------------------------------------------
