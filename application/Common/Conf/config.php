@@ -25,7 +25,7 @@ $configs= array(
         'THIRD_UDER_ACCESS'		=> false, //第三方用户是否有全部权限，没有则需绑定本地账号
         /* 标签库 */
         'TAGLIB_BUILD_IN' => THINKCMF_CORE_TAGLIBS,
-        'MODULE_ALLOW_LIST'  => array('Admin','Portal','Asset','Api','User','Wx','Comment','Qiushi','Tpl','Topic','Install','Bug','Better','Pay','Cas','Appapi','Home','Importexport'), //允许访问模块列表
+        'MODULE_ALLOW_LIST'  => array('Admin','Portal','Asset','Api','User','Wx','Comment','Qiushi','Tpl','Topic','Install','Bug','Better','Pay','Cas','Appapi','Home','Importexport','Shopapi'), //允许访问模块列表
         'TMPL_DETECT_THEME'     => false,       // 自动侦测模板主题
         'TMPL_TEMPLATE_SUFFIX'  => '.html',     // 默认模板文件后缀
         'DEFAULT_MODULE'        =>  'Home',  // 默认模块

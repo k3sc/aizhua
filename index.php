@@ -55,6 +55,8 @@ if(function_exists('saeAutoLoader') || isset($_SERVER['HTTP_BAE_ENV_APPID'])){
 		}
 	}
 }
+include SITE_PATH."extend/WeChatDeveloper/include.php";
+//We::WeChatOauth();
 //uc client root
 define("UC_CLIENT_ROOT", './api/uc_client/');
 
